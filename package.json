@@ -6,11 +6,15 @@
   "main": ".webpack/main",
   "scripts": {
     "rebuild": "electron-rebuild -f -w genshin-locker",
+    "format": "prettier . --check --ignore-path=\"./.gitignore\"",
+    "format:write": "prettier . --write --ignore-path=\"./.gitignore\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:write": "eslint --fix --ext .ts,.tsx .",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": {
@@ -35,8 +39,11 @@
     "css-loader": "^6.0.0",
     "electron": "20.0.0",
     "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.4",
     "node-loader": "^2.0.0",
     "prettier": "^2.8.0",
     "style-loader": "^3.0.0",
@@ -45,7 +52,6 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@lmdb/lmdb-win32-x64": "^2.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "ffi-napi": "4.0.3",
     "node-tesseract-ocr": "^2.2.1",
@@ -58,5 +64,9 @@
   },
   "engines": {
     "node": ">=16.13.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

@@ -17,7 +17,6 @@ export const rendererConfig: Configuration = {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
   },
   externals: { 
-    // 'ffi-napi':"require('ffi-napi')",
     'win32-api': 'require("win32-api")'
   }
 };
