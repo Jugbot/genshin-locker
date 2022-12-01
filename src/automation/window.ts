@@ -21,7 +21,7 @@ export class GenshinWindow {
       0,
       0,
       Buffer.from('UnityWndClass', 'ucs2'),
-      Buffer.from('Genshin Impact', 'ucs2'),
+      Buffer.from('Genshin Impact', 'ucs2')
     )
     user32.SetForegroundWindow(this.handle)
   }
