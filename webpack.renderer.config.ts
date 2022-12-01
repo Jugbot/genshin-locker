@@ -18,5 +18,7 @@ export const rendererConfig: Configuration = {
   },
   externals: {
     'win32-api': 'require("win32-api")',
+    'ffi-napi': 'require("ffi-napi")',
+    'ref-napi': 'require("ref-napi")',
   },
 }

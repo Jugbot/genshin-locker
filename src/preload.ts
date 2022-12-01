@@ -4,3 +4,4 @@
 import { GenshinWindow } from './automation/window'
 const window = new GenshinWindow()
 window.grabWindow()
+window.capture()
