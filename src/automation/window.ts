@@ -218,12 +218,12 @@ export class GenshinWindow {
 
     console.log({ bmfHeader, bmpInfo, imageBuf })
 
-    const fileName = path.join('.', `temp-${new Date().getTime()}.bmp`)
-    if (fs.existsSync('./temp.bmp')) {
-      fs.unlinkSync('./temp.bmp')
+    const fileName = path.join(os.tmpdir(), `temp-${new Date().getTime()}.bmp`)
+    if (fs.existsSync(fileName)) {
+      fs.unlinkSync(fileName)
     }
     fs.writeFile(
-      './temp.bmp',
+      fileName,
       Buffer.concat([bmfHeader.ref(), bmpInfo.ref(), imageBuf]),
       'binary',
       (err) => {
