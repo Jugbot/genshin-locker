@@ -1,5 +1,7 @@
 import { HANDLE } from 'win32-def'
 import fs from 'fs'
+import os from 'os'
+import path from 'path'
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
@@ -7,7 +9,8 @@ import refstruct from 'ref-struct-di'
 // @ts-expect-error idk
 // eslint-disable-next-line import/no-unresolved
 import * as W from 'win32-def/common.def'
-// import * as W from 'win32-def/src/index.def'
+// import * as WType from 'win32-def/src/index.def'
+// const W = WVal as typeof WType
 
 const Struct = refstruct(ref)
 
@@ -15,6 +18,7 @@ const Struct = refstruct(ref)
 const PW_CLIENTONLY = 1
 const BI_RGB = 0
 const DIB_RGB_COLORS = 0
+const SRCCOPY = 13369376
 
 function ucsBufferFrom(str: string | undefined | null): Buffer {
   if (typeof str === 'string' && str.length) {
@@ -78,6 +82,7 @@ const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [W.LPCTSTR, W.LPCTSTR]],
   SetForegroundWindow: [W.BOOL, [W.HWND]],
   GetDC: [W.HDC, [W.HWND]],
+  ReleaseDC: [W.INT, [W.HWND, W.HDC]],
   PrintWindow: [W.BOOL, [W.HWND, W.HBITMAP, W.UINT]],
   GetClientRect: [W.BOOL, [W.HWND, ref.refType(LPRECT)]],
 })
@@ -85,12 +90,17 @@ const user32 = ffi.Library('user32', {
 const gdi32 = ffi.Library('gdi32', {
   CreateCompatibleBitmap: [W.HBITMAP, [W.HDC, W.INT, W.INT]],
   CreateCompatibleDC: [W.HDC, [W.HDC]],
+  DeleteDC: [W.BOOL, [W.HDC]],
   SelectObject: [W.HBITMAP, [W.HDC, W.HBITMAP]],
   GetDeviceCaps: [W.INT, [W.HDC, W.INT]],
   GetObjectW: [W.INT, [W.HBITMAP, W.INT, ref.refType(BITMAP)]],
   GetDIBits: [
     W.INT,
     [W.HDC, W.HBITMAP, W.UINT, W.UINT, W.LPVOID, W.LPVOID, W.UINT],
+  ],
+  BitBlt: [
+    W.BOOL,
+    [W.HDC, W.INT, W.INT, W.INT, W.INT, W.HDC, W.INT, W.INT, W.DWORD],
   ],
 })
 
@@ -100,11 +110,12 @@ export class GenshinWindow {
   h = 10
 
   grabWindow() {
-    this.handle = user32.FindWindowW(
-      ucsBufferFrom('UnityWndClass'),
-      ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
-    )
-    user32.SetForegroundWindow(this.handle)
+    // this.handle = user32.FindWindowW(
+    //   ucsBufferFrom('UnityWndClass'),
+    //   ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
+    // )
+    this.handle = user32.FindWindowW(null, ucsBufferFrom('Task Manager'))
+    // user32.SetForegroundWindow(this.handle)
     // user32.ClientToScreen
   }
 
@@ -114,28 +125,39 @@ export class GenshinWindow {
       console.error('No window handle!')
       return
     }
-    // Gets the DC handle of the client rect of the window
+    // Gets the DC of the client rect of the window
     const hwndDC = user32.GetDC(this.handle)
     console.log({ hwndDC })
-    // Gets the DC memory ptr from the handle
+    // Gets a copy of the window DC for use
     const hdc = gdi32.CreateCompatibleDC(hwndDC)
     console.log({ hdc })
     //
-    // const width = gdi32.GetDeviceCaps(hdc, HORZRES)
-    // const height = gdi32.GetDeviceCaps(hdc, VERTRES)
     const rect = new LPRECT()
     user32.GetClientRect(this.handle, rect.ref())
     console.log({ rect })
     const width = rect.right - rect.left
     const height = rect.bottom - rect.top
     //
-    const hdcBlt = gdi32.CreateCompatibleBitmap(hdc, width, height)
+    const hdcBlt = gdi32.CreateCompatibleBitmap(hwndDC, width, height)
     console.log({ hdcBlt })
     // Select the bitmap for the print operation
     gdi32.SelectObject(hdc, hdcBlt)
 
-    const failure = user32.PrintWindow(this.handle, hdcBlt, PW_CLIENTONLY)
-    console.assert(!failure, 'Failed to capture screenshot.')
+    // const failure = user32.PrintWindow(this.handle, hdcBlt, PW_CLIENTONLY)
+    // console.assert(!failure, 'Failed to capture screenshot.')
+
+    const success = gdi32.BitBlt(
+      hdc,
+      0,
+      0,
+      width,
+      height,
+      hwndDC,
+      0,
+      0,
+      SRCCOPY
+    )
+    console.assert(success, 'BitBlt operation failed')
 
     const bmp = new BITMAP()
 
@@ -162,15 +184,20 @@ export class GenshinWindow {
       Math.ceil((bmp.bmWidth * bmpInfo.biBitCount) / 32) * 4 * bmp.bmHeight
     )
 
-    gdi32.GetDIBits(
+    const result = gdi32.GetDIBits(
       hwndDC,
       hdcBlt,
       0,
       bmp.bmHeight,
-      imageBuf.ref(),
+      imageBuf,
       bmpInfo.ref(),
       DIB_RGB_COLORS
     )
+    if (!result) {
+      console.error('Failed getting DIBits')
+      return
+    }
+    console.log({ rsultGetDIBits: result })
 
     console.log({ imageBuf })
 
@@ -191,11 +218,12 @@ export class GenshinWindow {
 
     console.log({ bmfHeader, bmpInfo, imageBuf })
 
-    if (fs.existsSync('./test.bmp')) {
-      fs.unlinkSync('./test.bmp')
+    const fileName = path.join('.', `temp-${new Date().getTime()}.bmp`)
+    if (fs.existsSync('./temp.bmp')) {
+      fs.unlinkSync('./temp.bmp')
     }
     fs.writeFile(
-      './test.bmp',
+      './temp.bmp',
       Buffer.concat([bmfHeader.ref(), bmpInfo.ref(), imageBuf]),
       'binary',
       (err) => {
@@ -206,28 +234,12 @@ export class GenshinWindow {
         }
       }
     )
+    console.log(fileName)
 
-    return
+    // after the recording is done, release the desktop context you got..
+    user32.ReleaseDC(this.handle, hwndDC)
 
-    // so we can all agree that a buffer with the int value written
-    // to it could be represented as an "int *"
-    const buf = Buffer.alloc(4)
-    buf.writeInt32LE(12345, 0)
-
-    // first, what is the memory address of the buffer?
-    console.log(buf.hexAddress()) // ← '7FA89D006FD8'
-
-    // using `ref`, you can set the "type", and gain magic abilities!
-    buf.type = ref.types.int
-
-    // now we can dereference to get the "meaningful" value
-    console.log(buf.deref()) // ← 12345
-
-    // you can also get references to the original buffer if you need it.
-    // this buffer could be thought of as an "int **"
-    const one = buf.ref()
-
-    // and you can dereference all the way back down to an int
-    console.log(one.deref().deref()) // ← 12345
+    // ..and delete the context you created
+    gdi32.DeleteDC(hdc)
   }
 }
