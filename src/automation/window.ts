@@ -5,7 +5,6 @@ import path from 'path'
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
-// import * as M from 'win32-def'
 // @ts-expect-error idk
 // eslint-disable-next-line import/no-unresolved
 import * as W from 'win32-def/common.def'
@@ -15,7 +14,6 @@ import * as W from 'win32-def/common.def'
 const Struct = refstruct(ref)
 
 // https://www.magnumdb.com/
-const PW_CLIENTONLY = 1
 const BI_RGB = 0
 const DIB_RGB_COLORS = 0
 const SRCCOPY = 13369376
@@ -26,9 +24,6 @@ function ucsBufferFrom(str: string | undefined | null): Buffer {
   }
   return ref.NULL
 }
-
-// const user32 = User32.load()
-// const gdi32 = Gdi32.load()
 
 const BITMAP = Struct(
   {
@@ -106,17 +101,21 @@ const gdi32 = ffi.Library('gdi32', {
 
 export class GenshinWindow {
   handle: HANDLE
-  w = 10
-  h = 10
+  width: number
+  height: number
 
-  grabWindow() {
+  constructor() {
     // this.handle = user32.FindWindowW(
     //   ucsBufferFrom('UnityWndClass'),
     //   ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
     // )
     this.handle = user32.FindWindowW(null, ucsBufferFrom('Task Manager'))
     // user32.SetForegroundWindow(this.handle)
-    // user32.ClientToScreen
+    const rect = new LPRECT()
+    user32.GetClientRect(this.handle, rect.ref())
+    console.log({ rect })
+    this.width = rect.right - rect.left
+    this.height = rect.bottom - rect.top
   }
 
   capture() {
@@ -132,26 +131,17 @@ export class GenshinWindow {
     const hdc = gdi32.CreateCompatibleDC(hwndDC)
     console.log({ hdc })
     //
-    const rect = new LPRECT()
-    user32.GetClientRect(this.handle, rect.ref())
-    console.log({ rect })
-    const width = rect.right - rect.left
-    const height = rect.bottom - rect.top
-    //
-    const hdcBlt = gdi32.CreateCompatibleBitmap(hwndDC, width, height)
+    const hdcBlt = gdi32.CreateCompatibleBitmap(hwndDC, this.width, this.height)
     console.log({ hdcBlt })
     // Select the bitmap for the print operation
     gdi32.SelectObject(hdc, hdcBlt)
-
-    // const failure = user32.PrintWindow(this.handle, hdcBlt, PW_CLIENTONLY)
-    // console.assert(!failure, 'Failed to capture screenshot.')
 
     const success = gdi32.BitBlt(
       hdc,
       0,
       0,
-      width,
-      height,
+      this.width,
+      this.height,
       hwndDC,
       0,
       0,
@@ -236,10 +226,7 @@ export class GenshinWindow {
     )
     console.log(fileName)
 
-    // after the recording is done, release the desktop context you got..
     user32.ReleaseDC(this.handle, hwndDC)
-
-    // ..and delete the context you created
     gdi32.DeleteDC(hdc)
   }
 }
