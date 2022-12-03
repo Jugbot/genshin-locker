@@ -5,18 +5,47 @@ import path from 'path'
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
+import refunion from 'ref-union-di'
 // @ts-expect-error idk
 // eslint-disable-next-line import/no-unresolved
 import * as W from 'win32-def/common.def'
-// import * as WType from 'win32-def/src/index.def'
+// import * as N from 'win32-def/src/index.def'
 // const W = WVal as typeof WType
 
 const Struct = refstruct(ref)
+const Union = refunion(ref)
 
 // https://www.magnumdb.com/
 const BI_RGB = 0
 const DIB_RGB_COLORS = 0
 const SRCCOPY = 13369376
+const WM_LBUTTONDOWN = 0x0201
+const WM_LBUTTONUP = 0x0202
+const WM_MOUSEMOVE = 0x0200
+const WM_MOUSEACTIVATE = 0x0021
+const WM_SETFOCUS = 0x0007
+const INPUT_MOUSE = 0
+const INPUT_KEYBOARD = 1
+const INPUT_HARDWARE = 2
+const MOUSEEVENTF_LEFTDOWN = 0x0002
+const MK_LBUTTON = 1
+
+enum MOUSEEVENTF {
+  MOVE = 0x0001, //	Movement occurred.
+  LEFTDOWN = 0x0002, //	The left button was pressed.
+  LEFTUP = 0x0004, //	The left button was released.
+  RIGHTDOWN = 0x0008, //	The right button was pressed.
+  RIGHTUP = 0x0010, //	The right button was released.
+  MIDDLEDOWN = 0x0020, //	The middle button was pressed.
+  MIDDLEUP = 0x0040, //	The middle button was released.
+  XDOWN = 0x0080, //	An X button was pressed.
+  XUP = 0x0100, //	An X button was released.
+  WHEEL = 0x0800, //	The wheel was moved, if the mouse has a wheel. The amount of movement is specified in mouseData.
+  HWHEEL = 0x1000, //	The wheel was moved horizontally, if the mouse has a wheel. The amount of movement is specified in mouseData. Windows XP/2000: This value is not supported.
+  MOVE_NOCOALESCE = 0x2000, //	The WM_MOUSEMOVE messages will not be coalesced. The default behavior is to coalesce WM_MOUSEMOVE messages. Windows XP/2000: This value is not supported.
+  VIRTUALDESK = 0x4000, //	Maps coordinates to the entire desktop. Must be used with MOUSEEVENTF_ABSOLUTE.
+  ABSOLUTE = 0x8000, //
+}
 
 function ucsBufferFrom(str: string | undefined | null): Buffer {
   if (typeof str === 'string' && str.length) {
@@ -24,6 +53,11 @@ function ucsBufferFrom(str: string | undefined | null): Buffer {
   }
   return ref.NULL
 }
+
+const POINT = Struct({
+  x: W.LONG,
+  y: W.LONG,
+})
 
 const BITMAP = Struct(
   {
@@ -73,6 +107,38 @@ const LPRECT = Struct({
   bottom: W.LONG,
 })
 
+const MOUSEINPUT = Struct({
+  dx: ref.types.long,
+  dy: ref.types.long,
+  mouseData: ref.types.uint32,
+  dwFlags: ref.types.uint32,
+  time: ref.types.uint32,
+  dwExtraInfo: ref.refType(ref.types.ulong),
+})
+
+const KEYBDINPUT = Struct({
+  wVk: ref.types.int16,
+  wScan: ref.types.int16,
+  dwFlags: ref.types.uint32,
+  time: ref.types.uint32,
+  dwExtraInfo: ref.refType(ref.types.ulong),
+})
+
+const HARDWAREINPUT = Struct({
+  uMsg: ref.types.uint32,
+  wParamL: ref.types.int16,
+  wParamH: ref.types.int16,
+})
+
+const INPUT = Struct({
+  type: ref.types.uint32,
+  dummyUnionName: Union({
+    mi: MOUSEINPUT,
+    ki: KEYBDINPUT,
+    hi: HARDWAREINPUT,
+  }),
+})
+
 const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [W.LPCTSTR, W.LPCTSTR]],
   SetForegroundWindow: [W.BOOL, [W.HWND]],
@@ -80,6 +146,10 @@ const user32 = ffi.Library('user32', {
   ReleaseDC: [W.INT, [W.HWND, W.HDC]],
   PrintWindow: [W.BOOL, [W.HWND, W.HBITMAP, W.UINT]],
   GetClientRect: [W.BOOL, [W.HWND, ref.refType(LPRECT)]],
+  SendMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
+  SendMessageA: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
+  PostMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
+  SendInput: ['uint', ['uint', ref.refType(INPUT), 'uint']],
 })
 
 const gdi32 = ffi.Library('gdi32', {
@@ -105,17 +175,54 @@ export class GenshinWindow {
   height: number
 
   constructor() {
+    this.handle = user32.FindWindowW(
+      ucsBufferFrom('UnityWndClass'),
+      ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
+    )
     // this.handle = user32.FindWindowW(
-    //   ucsBufferFrom('UnityWndClass'),
-    //   ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
+    //   null,
+    //   ucsBufferFrom('Untitled - Paint')
     // )
-    this.handle = user32.FindWindowW(null, ucsBufferFrom('Task Manager'))
     // user32.SetForegroundWindow(this.handle)
     const rect = new LPRECT()
     user32.GetClientRect(this.handle, rect.ref())
     console.log({ rect })
     this.width = rect.right - rect.left
     this.height = rect.bottom - rect.top
+  }
+
+  click(x: number, y: number) {
+    // const pt = (x << 16) | (y & 0xffff)
+    // let failure = 0
+    // failure += user32.SendMessageW(this.handle, WM_SETFOCUS, null, 0)
+    // failure += user32.SendMessageW(this.handle, WM_LBUTTONDOWN, MK_LBUTTON, pt)
+    // failure += user32.SendMessageW(this.handle, WM_LBUTTONUP, 0, pt)
+    // failure += user32.SendMessageW(this.handle, WM_MOUSEMOVE, 0, pt)
+    // if (failure) {
+    //   console.error("Failed " + failure)
+    //   return
+    // }
+    return
+    const mouseEvent = (event: MOUSEEVENTF) => {
+      const mi = MOUSEINPUT({
+        dx: x,
+        dy: y,
+        mouseData: 0,
+        dwFlags: event,
+        time: 0,
+        dwExtraInfo: ref.NULL,
+      })
+      const input = new INPUT({
+        type: 0,
+        dummyUnionName: { mi },
+      })
+      return input
+    }
+    const inputEvents = [
+      mouseEvent(MOUSEEVENTF.LEFTDOWN).ref(),
+      mouseEvent(MOUSEEVENTF.LEFTUP).ref(),
+    ]
+    user32.SendInput(inputEvents.length, Buffer.concat(inputEvents), INPUT.size)
   }
 
   capture() {
