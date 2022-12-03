@@ -6,6 +6,7 @@ import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
 import refunion from 'ref-union-di'
+import refarray from 'ref-array-di'
 // @ts-expect-error idk
 // eslint-disable-next-line import/no-unresolved
 import * as W from 'win32-def/common.def'
@@ -14,6 +15,7 @@ import * as W from 'win32-def/common.def'
 
 const Struct = refstruct(ref)
 const Union = refunion(ref)
+const RefArray = refarray(ref)
 
 // https://www.magnumdb.com/
 const BI_RGB = 0
@@ -130,14 +132,18 @@ const HARDWAREINPUT = Struct({
   wParamH: ref.types.int16,
 })
 
+const INPUT_UNION = new Union({
+  mi: MOUSEINPUT,
+  ki: KEYBDINPUT,
+  hi: HARDWAREINPUT,
+})
+
 const INPUT = Struct({
   type: ref.types.uint32,
-  dummyUnionName: Union({
-    mi: MOUSEINPUT,
-    ki: KEYBDINPUT,
-    hi: HARDWAREINPUT,
-  }),
+  dummyUnionName: INPUT_UNION,
 })
+
+const InputArray = RefArray(INPUT)
 
 const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [W.LPCTSTR, W.LPCTSTR]],
@@ -214,7 +220,7 @@ export class GenshinWindow {
       })
       const input = new INPUT({
         type: 0,
-        dummyUnionName: { mi },
+        dummyUnionName: new INPUT_UNION({ mi }),
       })
       return input
     }
@@ -222,7 +228,13 @@ export class GenshinWindow {
       mouseEvent(MOUSEEVENTF.LEFTDOWN).ref(),
       mouseEvent(MOUSEEVENTF.LEFTUP).ref(),
     ]
-    user32.SendInput(inputEvents.length, Buffer.concat(inputEvents), INPUT.size)
+    const inputBuffer = Buffer.concat(inputEvents)
+    inputBuffer.type = ref.refType(INPUT)
+    user32.SendInput(
+      inputEvents.length,
+      inputBuffer as ref.Pointer<any>,
+      INPUT.size
+    )
   }
 
   capture() {
