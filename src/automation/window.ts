@@ -198,17 +198,6 @@ export class GenshinWindow {
   }
 
   click(x: number, y: number) {
-    // const pt = (x << 16) | (y & 0xffff)
-    // let failure = 0
-    // failure += user32.SendMessageW(this.handle, WM_SETFOCUS, null, 0)
-    // failure += user32.SendMessageW(this.handle, WM_LBUTTONDOWN, MK_LBUTTON, pt)
-    // failure += user32.SendMessageW(this.handle, WM_LBUTTONUP, 0, pt)
-    // failure += user32.SendMessageW(this.handle, WM_MOUSEMOVE, 0, pt)
-    // if (failure) {
-    //   console.error("Failed " + failure)
-    //   return
-    // }
-    return
     const mouseEvent = (event: MOUSEEVENTF) => {
       const mi = MOUSEINPUT({
         dx: x,
@@ -235,6 +224,19 @@ export class GenshinWindow {
       inputBuffer as ref.Pointer<any>,
       INPUT.size
     )
+  }
+
+  clickDetach(x: number, y: number) {
+    const pt = (x << 16) | (y & 0xffff)
+    let failure = 0
+    failure += user32.SendMessageW(this.handle, WM_SETFOCUS, null, 0)
+    failure += user32.SendMessageW(this.handle, WM_LBUTTONDOWN, MK_LBUTTON, pt)
+    failure += user32.SendMessageW(this.handle, WM_LBUTTONUP, 0, pt)
+    failure += user32.SendMessageW(this.handle, WM_MOUSEMOVE, 0, pt)
+    if (failure) {
+      console.error('Failed ' + failure)
+      return
+    }
   }
 
   capture() {

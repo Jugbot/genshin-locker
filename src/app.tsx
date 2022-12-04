@@ -1,7 +1,11 @@
 import { createRoot } from 'react-dom/client'
 
 const App: React.FC = () => {
-  return <h2>Hello from React!</h2>
+  return (
+    <div>
+      <button onClick={actions.click}>Click!</button>
+    </div>
+  )
 }
 
 const container = document.getElementById('app')
