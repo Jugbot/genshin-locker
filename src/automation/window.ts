@@ -155,7 +155,7 @@ const user32 = ffi.Library('user32', {
   SendMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
   SendMessageA: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
   PostMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
-  SendInput: ['uint', ['uint', ref.refType(INPUT), 'uint']],
+  SendInput: ['uint', ['uint', InputArray, 'uint']],
 })
 
 const gdi32 = ffi.Library('gdi32', {
@@ -213,17 +213,14 @@ export class GenshinWindow {
       })
       return input
     }
-    const inputEvents = [
+    const inputEvents = Buffer.concat([
       mouseEvent(MOUSEEVENTF.LEFTDOWN).ref(),
       mouseEvent(MOUSEEVENTF.LEFTUP).ref(),
-    ]
-    const inputBuffer = Buffer.concat(inputEvents)
-    inputBuffer.type = ref.refType(INPUT)
-    user32.SendInput(
-      inputEvents.length,
-      inputBuffer as ref.Pointer<any>,
-      INPUT.size
-    )
+    ])
+
+    const inputArray = InputArray(inputEvents.reinterpret(INPUT.size * 2), 2)
+
+    user32.SendInput(inputEvents.length, inputArray, INPUT.size)
   }
 
   clickDetach(x: number, y: number) {
