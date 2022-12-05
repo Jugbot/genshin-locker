@@ -4,6 +4,7 @@ const App: React.FC = () => {
   return (
     <div>
       <button onClick={actions.click}>Click!</button>
+      <button onClick={actions.drag}>Drag!</button>
     </div>
   )
 }

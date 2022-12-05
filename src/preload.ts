@@ -9,6 +9,9 @@ contextBridge.exposeInMainWorld('actions', {
   click() {
     window.click(528, 960)
   },
+  drag() {
+    window.drag(0, 0, 0, -100)
+  },
   capture() {
     window.capture()
   },

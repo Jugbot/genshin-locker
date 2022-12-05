@@ -31,6 +31,7 @@ const INPUT_KEYBOARD = 1
 const INPUT_HARDWARE = 2
 const MOUSEEVENTF_LEFTDOWN = 0x0002
 const MK_LBUTTON = 1
+const WHEEL_DELTA = 120
 
 enum MOUSEEVENTF {
   MOVE = 0x0001, //	Movement occurred.
@@ -55,11 +56,6 @@ function ucsBufferFrom(str: string | undefined | null): Buffer {
   }
   return ref.NULL
 }
-
-const POINT = Struct({
-  x: W.LONG,
-  y: W.LONG,
-})
 
 const BITMAP = Struct(
   {
@@ -174,6 +170,28 @@ const gdi32 = ffi.Library('gdi32', {
     [W.HDC, W.INT, W.INT, W.INT, W.INT, W.HDC, W.INT, W.INT, W.DWORD],
   ],
 })
+MOUSEINPUT.fields
+const inputEvent = (
+  type: 0 | 1 | 2,
+  event: Parameters<typeof MOUSEINPUT>[0]
+) => {
+  const mi = MOUSEINPUT({
+    dx: 0,
+    dy: 0,
+    mouseData: 0,
+    dwFlags: MOUSEEVENTF.ABSOLUTE,
+    time: 0,
+    dwExtraInfo: ref.NULL,
+    ...event,
+  })
+  const input = new INPUT({
+    type,
+    dummyUnionName: new INPUT_UNION({ mi }),
+  })
+  return input
+}
+const mouseEvent = (event: Parameters<typeof inputEvent>[1]) =>
+  inputEvent(0, event)
 
 export class GenshinWindow {
   handle: HANDLE
@@ -198,32 +216,51 @@ export class GenshinWindow {
   }
 
   click(x: number, y: number) {
-    const mouseEvent = (event: MOUSEEVENTF) => {
-      const mi = MOUSEINPUT({
-        dx: x,
-        dy: y,
-        mouseData: 0,
-        dwFlags: event,
-        time: 0,
-        dwExtraInfo: ref.NULL,
-      })
-      const input = new INPUT({
-        type: 0,
-        dummyUnionName: new INPUT_UNION({ mi }),
-      })
-      return input
-    }
-    const inputEvents = Buffer.concat([
-      mouseEvent(MOUSEEVENTF.LEFTDOWN).ref(),
-      mouseEvent(MOUSEEVENTF.LEFTUP).ref(),
-    ])
+    const inputEvents = [
+      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTDOWN }).ref(),
+      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTUP }).ref(),
+    ]
 
-    const inputArray = InputArray(inputEvents.reinterpret(INPUT.size * 2), 2)
+    const inputArray = InputArray(
+      Buffer.concat(inputEvents).reinterpret(INPUT.size * inputEvents.length),
+      inputEvents.length
+    )
 
-    user32.SendInput(inputEvents.length, inputArray, INPUT.size)
+    user32.SendInput(inputArray.length, inputArray, INPUT.size)
   }
 
-  clickDetach(x: number, y: number) {
+  scroll(x: number, y: number, clicks: number) {
+    const inputEvent = mouseEvent({
+      dwFlags: MOUSEEVENTF.WHEEL,
+      mouseData: clicks * WHEEL_DELTA,
+    }).ref()
+
+    const inputArray = InputArray(inputEvent)
+
+    user32.SendInput(inputArray.length, inputArray, INPUT.size)
+  }
+
+  drag(x: number, y: number, dx: number, dy: number) {
+    const inputEvents = [
+      mouseEvent({
+        dwFlags: MOUSEEVENTF.LEFTDOWN | MOUSEEVENTF.MOVE,
+      }).ref(),
+      mouseEvent({
+        dx,
+        dy,
+        dwFlags: MOUSEEVENTF.LEFTUP | MOUSEEVENTF.MOVE,
+      }).ref(),
+    ]
+
+    const inputArray = InputArray(
+      Buffer.concat(inputEvents).reinterpret(INPUT.size * inputEvents.length),
+      inputEvents.length
+    )
+
+    user32.SendInput(inputArray.length, inputArray, INPUT.size)
+  }
+
+  clickDetached(x: number, y: number) {
     const pt = (x << 16) | (y & 0xffff)
     let failure = 0
     failure += user32.SendMessageW(this.handle, WM_SETFOCUS, null, 0)
