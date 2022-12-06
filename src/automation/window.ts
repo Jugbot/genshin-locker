@@ -199,14 +199,12 @@ export class GenshinWindow {
   height: number
 
   constructor() {
-    this.handle = user32.FindWindowW(
-      ucsBufferFrom('UnityWndClass'),
-      ucsBufferFrom('Genshin Impact') // Buffer.from('Genshin Impact', 'ucs2')
-    )
     // this.handle = user32.FindWindowW(
-    //   null,
-    //   ucsBufferFrom('Untitled - Paint')
+    //   ucsBufferFrom('UnityWndClass'),
+    //   ucsBufferFrom('Genshin Impact')
     // )
+    this.handle = user32.FindWindowW(null, ucsBufferFrom('Untitled - Paint'))
+    console.assert(this.handle, 'Handle not found.')
     // user32.SetForegroundWindow(this.handle)
     const rect = new LPRECT()
     user32.GetClientRect(this.handle, rect.ref())
@@ -241,9 +239,10 @@ export class GenshinWindow {
   }
 
   drag(x: number, y: number, dx: number, dy: number) {
+    // TODO: Bypass mouse acceleration with MOUSEEVENTF.ABSOLUTE
     const inputEvents = [
       mouseEvent({
-        dwFlags: MOUSEEVENTF.LEFTDOWN | MOUSEEVENTF.MOVE,
+        dwFlags: MOUSEEVENTF.LEFTDOWN,
       }).ref(),
       mouseEvent({
         dx,

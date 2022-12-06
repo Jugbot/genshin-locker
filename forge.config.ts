@@ -10,9 +10,9 @@ import { rendererConfig } from './webpack.renderer.config'
 
 const config: ForgeConfig = {
   packagerConfig: {
-    // win32metadata: {
-    //   'requested-execution-level': 'requireAdministrator'
-    // }
+    win32metadata: {
+      'requested-execution-level': 'requireAdministrator',
+    },
   },
   rebuildConfig: {},
   makers: [

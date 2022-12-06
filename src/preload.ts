@@ -3,6 +3,16 @@
 import { contextBridge } from 'electron'
 
 import { GenshinWindow } from './automation/window'
+import child_process from 'child_process'
+
+try {
+  child_process.execFileSync('net', ['session'], { stdio: 'ignore' })
+  console.log('Successfully gained priviledge')
+} catch (e) {
+  console.error('Requires elevated permssions')
+  throw e
+}
+
 const window = new GenshinWindow()
 
 contextBridge.exposeInMainWorld('actions', {
