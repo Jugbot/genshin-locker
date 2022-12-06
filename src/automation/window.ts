@@ -32,6 +32,7 @@ const INPUT_HARDWARE = 2
 const MOUSEEVENTF_LEFTDOWN = 0x0002
 const MK_LBUTTON = 1
 const WHEEL_DELTA = 120
+const SW_RESTORE = 9
 
 enum MOUSEEVENTF {
   MOVE = 0x0001, //	Movement occurred.
@@ -98,7 +99,7 @@ const BITMAPFILEHEADER = Struct(
   { packed: true }
 )
 
-const LPRECT = Struct({
+const RECT = Struct({
   left: W.LONG,
   top: W.LONG,
   right: W.LONG,
@@ -106,11 +107,11 @@ const LPRECT = Struct({
 })
 
 const MOUSEINPUT = Struct({
-  dx: ref.types.long,
-  dy: ref.types.long,
-  mouseData: ref.types.uint32,
-  dwFlags: ref.types.uint32,
-  time: ref.types.uint32,
+  dx: W.LONG,
+  dy: W.LONG,
+  mouseData: W.DWORD,
+  dwFlags: W.DWORD,
+  time: W.DWORD,
   dwExtraInfo: ref.refType(ref.types.ulong),
 })
 
@@ -139,19 +140,27 @@ const INPUT = Struct({
   dummyUnionName: INPUT_UNION,
 })
 
+const POINT = Struct({
+  x: W.LONG,
+  y: W.LONG,
+})
+
 const InputArray = RefArray(INPUT)
 
 const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [W.LPCTSTR, W.LPCTSTR]],
   SetForegroundWindow: [W.BOOL, [W.HWND]],
+  BringWindowToTop: [W.BOOL, [W.HWND]],
   GetDC: [W.HDC, [W.HWND]],
   ReleaseDC: [W.INT, [W.HWND, W.HDC]],
   PrintWindow: [W.BOOL, [W.HWND, W.HBITMAP, W.UINT]],
-  GetClientRect: [W.BOOL, [W.HWND, ref.refType(LPRECT)]],
+  GetClientRect: [W.BOOL, [W.HWND, ref.refType(RECT)]],
   SendMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
   SendMessageA: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
   PostMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
   SendInput: ['uint', ['uint', InputArray, 'uint']],
+  ShowWindow: [W.BOOL, [W.HWND, W.INT]],
+  ClientToScreen: [W.BOOL, [W.HWND, ref.refType(POINT)]],
 })
 
 const gdi32 = ffi.Library('gdi32', {
@@ -170,7 +179,7 @@ const gdi32 = ffi.Library('gdi32', {
     [W.HDC, W.INT, W.INT, W.INT, W.INT, W.HDC, W.INT, W.INT, W.DWORD],
   ],
 })
-MOUSEINPUT.fields
+
 const inputEvent = (
   type: 0 | 1 | 2,
   event: Parameters<typeof MOUSEINPUT>[0]
@@ -197,23 +206,42 @@ export class GenshinWindow {
   handle: HANDLE
   width: number
   height: number
+  x: number
+  y: number
 
   constructor() {
-    // this.handle = user32.FindWindowW(
-    //   ucsBufferFrom('UnityWndClass'),
-    //   ucsBufferFrom('Genshin Impact')
-    // )
-    this.handle = user32.FindWindowW(null, ucsBufferFrom('Untitled - Paint'))
+    this.handle = user32.FindWindowW(
+      ucsBufferFrom('UnityWndClass'),
+      ucsBufferFrom('Genshin Impact')
+    )
+    // this.handle = user32.FindWindowW(null, ucsBufferFrom('Untitled - Paint'))
     console.assert(this.handle, 'Handle not found.')
+    // user32.ShowWindow(this.handle, SW_RESTORE)
     // user32.SetForegroundWindow(this.handle)
-    const rect = new LPRECT()
+    const rect = new RECT()
     user32.GetClientRect(this.handle, rect.ref())
-    console.log({ rect })
-    this.width = rect.right - rect.left
+    const point = new POINT()
+    user32.ClientToScreen(this.handle, point.ref())
+    this.x = point.x
+    this.y = point.y
+    this.width = rect.right
     this.height = rect.bottom - rect.top
+    console.log(this)
   }
 
-  click(x: number, y: number) {
+  goto(x: number, y: number) {
+    user32.SendInput(
+      1,
+      InputArray(
+        mouseEvent({
+          dwFlags: MOUSEEVENTF.LEFTDOWN,
+        }).ref()
+      ),
+      INPUT.size
+    )
+  }
+
+  click() {
     const inputEvents = [
       mouseEvent({ dwFlags: MOUSEEVENTF.LEFTDOWN }).ref(),
       mouseEvent({ dwFlags: MOUSEEVENTF.LEFTUP }).ref(),
@@ -227,36 +255,84 @@ export class GenshinWindow {
     user32.SendInput(inputArray.length, inputArray, INPUT.size)
   }
 
-  scroll(x: number, y: number, clicks: number) {
+  scroll(dy: number, unit: 'px' | 'clicks' = 'px'): number {
+    let clicks = dy
+    let remainder = 0
+    if (unit === 'px') {
+      clicks = Math.trunc(dy / WHEEL_DELTA)
+      remainder = dy % WHEEL_DELTA
+    }
+    if (clicks === 0) {
+      return remainder
+    }
     const inputEvent = mouseEvent({
       dwFlags: MOUSEEVENTF.WHEEL,
-      mouseData: clicks * WHEEL_DELTA,
+      // Convert negatives to the 32-bit-two's-complement version
+      mouseData: (clicks * WHEEL_DELTA) >>> 0,
     }).ref()
 
     const inputArray = InputArray(inputEvent)
 
     user32.SendInput(inputArray.length, inputArray, INPUT.size)
+
+    return remainder
   }
 
-  drag(x: number, y: number, dx: number, dy: number) {
+  async drag(dx: number, dy: number, duration = 1000) {
     // TODO: Bypass mouse acceleration with MOUSEEVENTF.ABSOLUTE
-    const inputEvents = [
-      mouseEvent({
-        dwFlags: MOUSEEVENTF.LEFTDOWN,
-      }).ref(),
-      mouseEvent({
-        dx,
-        dy,
-        dwFlags: MOUSEEVENTF.LEFTUP | MOUSEEVENTF.MOVE,
-      }).ref(),
-    ]
 
-    const inputArray = InputArray(
-      Buffer.concat(inputEvents).reinterpret(INPUT.size * inputEvents.length),
-      inputEvents.length
+    user32.SendInput(
+      1,
+      InputArray(
+        mouseEvent({
+          dwFlags: MOUSEEVENTF.LEFTDOWN,
+        }).ref()
+      ),
+      INPUT.size
     )
 
-    user32.SendInput(inputArray.length, inputArray, INPUT.size)
+    const start = Date.now()
+    let lastx = 0,
+      lasty = 0
+    let difference = 0
+    const move = async (dx: number, dy: number) => {
+      if (dx === 0 && dy === 0) {
+        return
+      }
+      user32.SendInput(
+        1,
+        InputArray(
+          mouseEvent({
+            dx,
+            dy,
+            dwFlags: MOUSEEVENTF.MOVE,
+          }).ref()
+        ),
+        INPUT.size
+      )
+      // Surrender control to not block other async process (e.g. console.log)
+      await new Promise((r) => setTimeout(r, 10))
+    }
+
+    while ((difference = Date.now() - start) < duration) {
+      const percentComplete = Math.min(difference, duration) / duration
+      const toX = Math.floor(percentComplete * dx)
+      const toY = Math.floor(percentComplete * dy)
+      await move(toX - lastx, toY - lasty)
+      lastx = toX
+      lasty = toY
+    }
+    move(dx - lastx, dy - lasty)
+
+    user32.SendInput(
+      1,
+      InputArray(
+        mouseEvent({
+          dwFlags: MOUSEEVENTF.LEFTUP,
+        }).ref()
+      ),
+      INPUT.size
+    )
   }
 
   clickDetached(x: number, y: number) {

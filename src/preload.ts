@@ -13,16 +13,20 @@ try {
   throw e
 }
 
-const window = new GenshinWindow()
+const gwindow = new GenshinWindow()
 
 contextBridge.exposeInMainWorld('actions', {
   click() {
-    window.click(528, 960)
+    gwindow.click()
   },
   drag() {
-    window.drag(0, 0, 0, -100)
+    gwindow.drag(0, 120)
+  },
+  scroll() {
+    const rem = gwindow.scroll(140)
+    console.log({ rem })
   },
   capture() {
-    window.capture()
+    gwindow.capture()
   },
 })
