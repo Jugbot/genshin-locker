@@ -3,8 +3,12 @@ import { createRoot } from 'react-dom/client'
 const App: React.FC = () => {
   return (
     <div>
-      <button onClick={actions.click}>Click!</button>
-      <button onClick={actions.drag}>Drag!</button>
+      <button onClick={() => setTimeout((window as any).actions.click, 2000)}>
+        Click!
+      </button>
+      <button onClick={() => setTimeout((window as any).actions.drag, 2000)}>
+        Drag!
+      </button>
     </div>
   )
 }

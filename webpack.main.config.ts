@@ -15,8 +15,5 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
-  externals: {
-    // ffi: 'ffi',
-    // 'ffi-napi': 'ffi-napi'
-  },
+  externals: {},
 }
