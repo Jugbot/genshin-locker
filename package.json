@@ -62,8 +62,7 @@
     "react-dom": "^18.2.0",
     "ref-napi": "3.0.3",
     "ref-struct-di": "1.1.1",
-    "ref-union-di": "1.0.1",
-    "win32-api": "^20.1.0"
+    "ref-union-di": "1.0.1"
   },
   "engines": {
     "node": ">=16.13.0"

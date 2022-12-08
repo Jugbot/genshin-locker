@@ -892,11 +892,6 @@
   dependencies:
     resolve "^1.10.0"
 
-"@waiting/shared-types@^20.2.0":
-  version "20.5.0"
-  resolved "https://registry.yarnpkg.com/@waiting/shared-types/-/shared-types-20.5.0.tgz#e0ff23aec6cebcea15cb868ffd690fafb911a7dc"
-  integrity sha512-pHWvfA0IJ7ZeN18rBOeix1r0t1Yph1TkMUvRqw4MhOB9t0YmVwvIADI1429oag4ZiZym6CcScKkkaTzt1MWkUA==
-
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
@@ -6210,20 +6205,6 @@ wildcard@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.0.tgz#a77d20e5200c6faaac979e4b3aadc7b3dd7f8fec"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
-
-win32-api@^20.1.0:
-  version "20.1.0"
-  resolved "https://registry.yarnpkg.com/win32-api/-/win32-api-20.1.0.tgz#11d24b52e882a9c2ee321badce0da6cef08e4f02"
-  integrity sha512-hOOBZgVvbip5/0IJLbGAW9GUv4ETm32NITtjyjP7E2xGp8vKHTIPZUpaApx0bJjknJYXBPq14iLLeGGHyU+bNA==
-  dependencies:
-    win32-def "^20.0.0"
-
-win32-def@^20.0.0:
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/win32-def/-/win32-def-20.0.0.tgz#5d15d4476077af75b237d7426be574d24212dc61"
-  integrity sha512-iCR/xWCT+nhMezHWatP035u2FVduHmYcFVYbIrq3fhi1vufR9CevLZC+7c6d9trHNiGyYjOa91Ib6wQBhY5q9w==
-  dependencies:
-    "@waiting/shared-types" "^20.2.0"
 
 word-wrap@^1.2.3:
   version "1.2.3"

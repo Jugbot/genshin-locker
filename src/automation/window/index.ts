@@ -1,0 +1,1 @@
+export { GenshinWindow } from './window'

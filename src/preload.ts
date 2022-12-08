@@ -1,5 +1,3 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge } from 'electron'
 
 import { GenshinWindow } from './automation/window'
@@ -15,7 +13,7 @@ try {
 
 const gwindow = new GenshinWindow()
 
-contextBridge.exposeInMainWorld('actions', {
+const actions = {
   click() {
     gwindow.click()
   },
@@ -29,4 +27,12 @@ contextBridge.exposeInMainWorld('actions', {
   capture() {
     gwindow.capture()
   },
-})
+}
+
+contextBridge.exposeInMainWorld('actions', actions)
+
+declare global {
+  interface Window {
+    actions: typeof actions
+  }
+}
