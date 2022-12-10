@@ -5,16 +5,18 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "rebuild": "electron-rebuild -f -w genshin-locker",
-    "format": "prettier . --check --ignore-path=\"./.gitignore\"",
     "format:write": "prettier . --write --ignore-path=\"./.gitignore\"",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx .",
+    "format": "prettier . --check --ignore-path=\"./.gitignore\"",
     "lint:write": "eslint --fix --ext .ts,.tsx .",
-    "prepare": "husky install"
+    "lint": "eslint --ext .ts,.tsx .",
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "prepare": "husky install",
+    "publish": "electron-forge publish",
+    "rebuild": "electron-rebuild -f -w genshin-locker",
+    "start": "electron-forge start",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": {
@@ -32,6 +34,7 @@
     "@electron/rebuild": "^3.2.10",
     "@testing-library/react": "^13.4.0",
     "@types/ffi-napi": "^4.0.7",
+    "@types/jest": "^29.2.4",
     "@types/node": "^18.11.11",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
@@ -53,9 +56,10 @@
     "prettier": "^2.8.0",
     "ref-array-di": "^1.2.2",
     "style-loader": "^3.0.0",
+    "ts-jest": "^29.0.3",
     "ts-loader": "^9.2.2",
     "ts-node": "^10.0.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.0"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",

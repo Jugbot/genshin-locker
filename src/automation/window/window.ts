@@ -12,23 +12,16 @@ import {
   POINT,
   RECT,
   StringBuffer,
-  ImageBuffer,
 } from './winapi'
 import {
   MOUSEEVENTF,
   WHEEL_DELTA,
-  WM_SETFOCUS,
-  WM_LBUTTONDOWN,
-  MK_LBUTTON,
-  WM_LBUTTONUP,
-  WM_MOUSEMOVE,
   BI_RGB,
   DIB_RGB_COLORS,
   SRCCOPY,
 } from './winconst'
 import { mouseEvent, ucsBufferFrom } from './util'
 import { Pointer } from 'ref-napi'
-console.log('ho')
 
 export class GenshinWindow {
   handle: bigint
@@ -56,19 +49,10 @@ export class GenshinWindow {
     this.y = BigInt(point.y)
     this.width = BigInt(rect.right)
     this.height = BigInt(rect.bottom)
-    console.log(this)
   }
 
   goto(x: number, y: number) {
-    user32.SendInput(
-      1,
-      InputArray(
-        mouseEvent({
-          dwFlags: MOUSEEVENTF.LEFTDOWN,
-        }).ref()
-      ),
-      INPUT.size
-    )
+    user32.SetCursorPos(Number(this.x) + x, Number(this.y) + y)
   }
 
   click() {
@@ -163,14 +147,6 @@ export class GenshinWindow {
       ),
       INPUT.size
     )
-  }
-
-  clickDetached(x: number, y: number) {
-    const pt = (x << 16) | (y & 0xffff)
-    user32.SendMessageW(String(this.handle), WM_SETFOCUS, null, 0)
-    user32.SendMessageW(String(this.handle), WM_LBUTTONDOWN, MK_LBUTTON, pt)
-    user32.SendMessageW(String(this.handle), WM_LBUTTONUP, 0, pt)
-    user32.SendMessageW(String(this.handle), WM_MOUSEMOVE, 0, pt)
   }
 
   capture() {

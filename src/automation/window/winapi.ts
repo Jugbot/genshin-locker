@@ -144,11 +144,11 @@ export const user32 = ffi.Library('user32', {
   PrintWindow: [W.BOOL, [W.HWND, W.HBITMAP, W.UINT]],
   GetClientRect: [W.BOOL, [W.HWND, ref.refType(RECT)]],
   SendMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
-  // SendMessageW: [_WIN64 ? 'int64' : 'int32', ['uint64', 'uint', 'uint64', 'int64']],
   PostMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
-  SendInput: ['uint', ['uint', InputArray, 'uint']],
+  SendInput: [W.UINT, [W.UINT, InputArray, W.UINT]],
   ShowWindow: [W.BOOL, [W.HWND, W.INT]],
   ClientToScreen: [W.BOOL, [W.HWND, ref.refType(POINT)]],
+  SetCursorPos: [W.BOOL, [W.INT, W.INT]],
 })
 
 export const ImageBuffer = RefArray(ref.types.byte)
