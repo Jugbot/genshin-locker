@@ -2,6 +2,7 @@ import { contextBridge } from 'electron'
 
 import { GenshinWindow } from './automation/window'
 import child_process from 'child_process'
+import { Scraper } from './automation/scraper'
 
 try {
   child_process.execFileSync('net', ['session'], { stdio: 'ignore' })
@@ -11,21 +12,23 @@ try {
   throw e
 }
 
-const gwindow = new GenshinWindow()
-
 const actions = {
   click() {
-    gwindow.click()
+    const scraper = new Scraper()
+    scraper.gwindow.click()
   },
   drag() {
-    gwindow.drag(0, 120)
+    const scraper = new Scraper()
+    scraper.gwindow.drag(0, 120)
   },
   scroll() {
-    const rem = gwindow.scroll(140)
+    const scraper = new Scraper()
+    const rem = scraper.gwindow.scroll(140)
     console.log({ rem })
   },
   capture() {
-    gwindow.capture()
+    const scraper = new Scraper()
+    scraper.getArtifact()
   },
 }
 

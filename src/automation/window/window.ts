@@ -1,11 +1,7 @@
-import fs from 'fs'
-import os from 'os'
-import path from 'path'
 import {
   user32,
   gdi32,
   BITMAP,
-  BITMAPFILEHEADER,
   BITMAPINFOHEADER,
   INPUT,
   InputArray,
@@ -19,9 +15,11 @@ import {
   BI_RGB,
   DIB_RGB_COLORS,
   SRCCOPY,
+  SW_RESTORE,
 } from './winconst'
 import { mouseEvent, ucsBufferFrom } from './util'
 import { Pointer } from 'ref-napi'
+import sharp from 'sharp'
 
 export class GenshinWindow {
   handle: bigint
@@ -30,7 +28,7 @@ export class GenshinWindow {
   x: bigint
   y: bigint
 
-  constructor() {
+  grab() {
     this.handle = BigInt(
       user32.FindWindowW(
         StringBuffer(ucsBufferFrom('UnityWndClass')),
@@ -39,8 +37,8 @@ export class GenshinWindow {
     )
     // this.handle = BigInt(user32.FindWindowW(null, StringBuffer(ucsBufferFrom('Steam'))))
     console.assert(this.handle, 'Handle not found.')
-    // user32.ShowWindow(this.handle, SW_RESTORE)
-    // user32.SetForegroundWindow(this.handle)
+    user32.ShowWindow(String(this.handle), SW_RESTORE)
+    user32.SetForegroundWindow(String(this.handle))
     const rect = new RECT()
     user32.GetClientRect(String(this.handle), rect.ref())
     const point = new POINT()
@@ -49,6 +47,11 @@ export class GenshinWindow {
     this.y = BigInt(point.y)
     this.width = BigInt(rect.right)
     this.height = BigInt(rect.bottom)
+  }
+
+  show() {
+    user32.ShowWindow(String(this.handle), SW_RESTORE)
+    user32.SetForegroundWindow(String(this.handle))
   }
 
   goto(x: number, y: number) {
@@ -149,11 +152,10 @@ export class GenshinWindow {
     )
   }
 
-  capture() {
+  async capture() {
     //https://learn.microsoft.com/en-us/windows/win32/gdi/capturing-an-image
     if (!this.handle) {
-      console.error('No window handle!')
-      return
+      throw Error('No window handle!')
     }
     // Gets the DC of the client rect of the window
     const hwndDC = user32.GetDC(String(this.handle))
@@ -222,48 +224,32 @@ export class GenshinWindow {
       DIB_RGB_COLORS
     )
     if (!result) {
-      console.error('Failed getting DIBits')
-      return
+      throw Error('Failed getting DIBits')
     }
-    console.log({ rsultGetDIBits: result })
-
-    console.log({ imageBuf })
-
-    // Add the size of the headers to the size of the bitmap to get the total file size.
-    const dwSizeofDIB =
-      imageBuf.byteLength + BITMAPFILEHEADER.size + BITMAPINFOHEADER.size
-
-    const bmfHeader = new BITMAPFILEHEADER({
-      // Offset to where the actual bitmap bits start.
-      bfOffBits: BITMAPFILEHEADER.size + BITMAPINFOHEADER.size,
-
-      // Size of the file.
-      bfSize: dwSizeofDIB,
-
-      // bfType must always be BM for Bitmaps.
-      bfType: 0x4d42, // BM.
-    })
-
-    console.log({ bmfHeader, bmpInfo, imageBuf })
-
-    const fileName = path.join(os.tmpdir(), `temp-${new Date().getTime()}.bmp`)
-    const fileBuffer = Buffer.concat([bmfHeader.ref(), bmpInfo.ref(), imageBuf])
-    if (fs.existsSync(fileName)) {
-      fs.unlinkSync(fileName)
-    }
-    fs.writeFile(fileName, fileBuffer, 'binary', (err) => {
-      if (err) {
-        console.error(err)
-      } else {
-        console.log('The file was saved!')
-      }
-    })
-    console.log(fileName)
 
     user32.ReleaseDC(String(this.handle), hwndDC)
     gdi32.DeleteObject(hdcBlt)
     gdi32.DeleteDC(hdc)
 
-    return fileBuffer
+    // BGRA, we need RGBA
+    for (let i = 0; i < imageBuf.byteLength; i += 4) {
+      const b = imageBuf.readUInt8(i)
+      const r = imageBuf.readUInt8(i + 2)
+      imageBuf.writeUInt8(r, i)
+      imageBuf.writeUInt8(b, i + 2)
+    }
+
+    const sharpBitmap = sharp(imageBuf, {
+      raw: {
+        width: Number(bmp.bmWidth),
+        height: Number(bmp.bmHeight),
+        channels: 4,
+        // premultiplied: true
+      },
+    })
+      .flip()
+      .removeAlpha()
+
+    return sharpBitmap
   }
 }
