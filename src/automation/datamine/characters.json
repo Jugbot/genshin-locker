@@ -1,0 +1,297 @@
+{
+  "kamisatoayaka": {
+    "GOOD": "KamisatoAyaka",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "jean": {
+    "GOOD": "Jean",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "traveler": {
+    "GOOD": "Traveler",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "lisa": {
+    "GOOD": "Lisa",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "barbara": {
+    "GOOD": "Barbara",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "kaeya": {
+    "GOOD": "Kaeya",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "diluc": {
+    "GOOD": "Diluc",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 1
+  },
+  "razor": {
+    "GOOD": "Razor",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 1
+  },
+  "amber": {
+    "GOOD": "Amber",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "venti": {
+    "GOOD": "Venti",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "xiangling": {
+    "GOOD": "Xiangling",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 2
+  },
+  "beidou": {
+    "GOOD": "Beidou",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 1
+  },
+  "xingqiu": {
+    "GOOD": "Xingqiu",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "xiao": {
+    "GOOD": "Xiao",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "ningguang": {
+    "GOOD": "Ningguang",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "klee": {
+    "GOOD": "Klee",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "zhongli": {
+    "GOOD": "Zhongli",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "fischl": {
+    "GOOD": "Fischl",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
+  },
+  "bennett": {
+    "GOOD": "Bennett",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "tartaglia": {
+    "GOOD": "Tartaglia",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
+  },
+  "noelle": {
+    "GOOD": "Noelle",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 1
+  },
+  "qiqi": {
+    "GOOD": "Qiqi",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "chongyun": {
+    "GOOD": "Chongyun",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 1
+  },
+  "ganyu": {
+    "GOOD": "Ganyu",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "albedo": {
+    "GOOD": "Albedo",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "diona": {
+    "GOOD": "Diona",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "mona": {
+    "GOOD": "Mona",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "keqing": {
+    "GOOD": "Keqing",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "sucrose": {
+    "GOOD": "Sucrose",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "xinyan": {
+    "GOOD": "Xinyan",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 1
+  },
+  "rosaria": {
+    "GOOD": "Rosaria",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "hutao": {
+    "GOOD": "HuTao",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "kaedeharakazuha": {
+    "GOOD": "KaedeharaKazuha",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "yanfei": {
+    "GOOD": "Yanfei",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "yoimiya": {
+    "GOOD": "Yoimiya",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
+  },
+  "thoma": {
+    "GOOD": "Thoma",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "eula": {
+    "GOOD": "Eula",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 1
+  },
+  "raidenshogun": {
+    "GOOD": "RaidenShogun",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 2
+  },
+  "sayu": {
+    "GOOD": "Sayu",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 1
+  },
+  "sangonomiyakokomi": {
+    "GOOD": "SangonomiyaKokomi",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "gorou": {
+    "GOOD": "Gorou",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
+  },
+  "kujousara": {
+    "GOOD": "KujouSara",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "aratakiitto": {
+    "GOOD": "AratakiItto",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 1
+  },
+  "yaemiko": {
+    "GOOD": "YaeMiko",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "shikanoinheizou": {
+    "GOOD": "ShikanoinHeizou",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "yelan": {
+    "GOOD": "Yelan",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "aloy": {
+    "GOOD": "Aloy",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "shenhe": {
+    "GOOD": "Shenhe",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 2
+  },
+  "yunjin": {
+    "GOOD": "YunJin",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 2
+  },
+  "kukishinobu": {
+    "GOOD": "KukiShinobu",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "kamisatoayato": {
+    "GOOD": "KamisatoAyato",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  },
+  "collei": {
+    "GOOD": "Collei",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
+  },
+  "dori": {
+    "GOOD": "Dori",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 1
+  },
+  "tighnari": {
+    "GOOD": "Tighnari",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 3
+  },
+  "nilou": {
+    "GOOD": "Nilou",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 0
+  },
+  "cyno": {
+    "GOOD": "Cyno",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 2
+  },
+  "candace": {
+    "GOOD": "Candace",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 2
+  },
+  "nahida": {
+    "GOOD": "Nahida",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 4
+  },
+  "layla": {
+    "GOOD": "Layla",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 0
+  }
+}

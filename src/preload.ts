@@ -1,6 +1,5 @@
 import { contextBridge } from 'electron'
 
-import { GenshinWindow } from './automation/window'
 import child_process from 'child_process'
 import { Scraper } from './automation/scraper'
 
@@ -28,7 +27,7 @@ const actions = {
   },
   capture() {
     const scraper = new Scraper()
-    scraper.getArtifact()
+    console.log(scraper.getArtifact())
   },
 }
 
