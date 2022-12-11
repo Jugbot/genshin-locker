@@ -71,10 +71,8 @@ export class Scraper {
     return Promise.all(
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
-          return tesseract.recognize(
-            await image.extract(region).toBuffer(),
-            tessConfig
-          )
+          const imageRegion = image.extract(region).withMetadata().png()
+          return tesseract.recognize(await imageRegion.toBuffer(), tessConfig)
         }
       )
     )

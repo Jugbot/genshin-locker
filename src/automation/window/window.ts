@@ -159,17 +159,14 @@ export class GenshinWindow {
     }
     // Gets the DC of the client rect of the window
     const hwndDC = user32.GetDC(String(this.handle))
-    console.log({ hwndDC })
     // Gets a copy of the window DC for use
     const hdc = gdi32.CreateCompatibleDC(hwndDC)
-    console.log({ hdc })
     //
     const hdcBlt = gdi32.CreateCompatibleBitmap(
       hwndDC,
       Number(this.width),
       Number(this.height)
     )
-    console.log({ hdcBlt })
     // Select the bitmap for the print operation
     console.assert(gdi32.SelectObject(hdc, hdcBlt))
 
@@ -188,8 +185,7 @@ export class GenshinWindow {
 
     const bmp = new BITMAP()
 
-    const bsize = gdi32.GetObjectW(hdcBlt, BITMAP.size, bmp.ref())
-    console.log({ bmp, bsize })
+    gdi32.GetObjectW(hdcBlt, BITMAP.size, bmp.ref())
 
     const bmpInfo = new BITMAPINFOHEADER({
       biSize: BITMAPINFOHEADER.size,
@@ -204,8 +200,6 @@ export class GenshinWindow {
       biClrUsed: 0,
       biClrImportant: 0,
     })
-
-    console.log({ bmpInfo })
 
     const imageBuf = Buffer.alloc(
       Math.ceil((Number(bmp.bmWidth) * bmpInfo.biBitCount) / 32) *
@@ -249,6 +243,11 @@ export class GenshinWindow {
     })
       .flip()
       .removeAlpha()
+      // We need reinitialize in order to "apply" the flip transform. Otherwise `extract()` will reference the unflipped y value.
+      .withMetadata()
+      .png()
+      .toBuffer()
+      .then((data) => sharp(data))
 
     return sharpBitmap
   }
