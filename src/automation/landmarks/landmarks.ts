@@ -1,13 +1,9 @@
 import { XMLParser } from 'fast-xml-parser'
+import { Region } from 'sharp'
 import maps from './maps'
 
 export enum ScreenMap {
   ARTIFACTS = 'artifacts',
-}
-
-enum Direction {
-  ROW = 'row',
-  COL = 'col',
 }
 
 function reducedFraction(numerator: number, denominator: number) {
@@ -52,27 +48,69 @@ class Landmark {
     this.h = Number(boxes[0]['attr:height'])
   }
 
-  center() {
+  *#landmarks(): Generator<[x: number, y: number]> {
+    // Utility for iterating through the (upper-left) grid points
+    for (let x = 0; x < this.repeat_x; x += 1) {
+      for (let y = 0; y < this.repeat_y; y += 1) {
+        yield [this.x + x * this.w, this.y + y * this.h]
+      }
+    }
+  }
+
+  center(): [cx: number, cy: number] {
     return [this.x + this.w / 2, this.y + this.h / 2]
   }
 
-  *centers() {
-    const [cx, cy] = this.center()
-    for (let x = 0; x < this.repeat_x; x += 1) {
-      for (let y = 0; y < this.repeat_y; y += 1) {
-        yield [cx + x * this.w, cy + y * this.h]
+  *centers(): Generator<[cx: number, cy: number]> {
+    for (const [x, y] of this.#landmarks()) {
+      yield [x + this.w / 2, y + this.h / 2]
+    }
+  }
+
+  region(): Region {
+    return {
+      left: this.x,
+      top: this.y,
+      width: this.w,
+      height: this.h,
+    }
+  }
+
+  *regions(): Generator<Region> {
+    for (const [x, y] of this.#landmarks()) {
+      yield {
+        left: x,
+        top: y,
+        width: this.w,
+        height: this.h,
       }
     }
   }
 }
 
+export const landmarkKeys = {
+  [ScreenMap.ARTIFACTS]: new Set([
+    'card_level',
+    'card_lock',
+    'card_mainstat_key',
+    'card_mainstat_value',
+    'card_name',
+    'card_rarity',
+    'card_set',
+    'card_slot_type',
+    'card_substat',
+    'list_item',
+    'menu_artifacts',
+    'menu_artifacts',
+    'sort_dir',
+  ] as const),
+}
+
 export interface Landmarks {
-  [ScreenMap.ARTIFACTS]: {
-    card_lock: Landmark
-    menu_artifacts: Landmark
-    sort_dir: Landmark
-    list_item: Landmark
-  }
+  [ScreenMap.ARTIFACTS]: Record<
+    typeof landmarkKeys[ScreenMap.ARTIFACTS] extends Set<infer U> ? U : never,
+    Landmark
+  >
 }
 
 function flattenObjects(obj: object): object[] {
@@ -103,12 +141,12 @@ export function load(width: number, height: number): Landmarks | null {
   if (map in maps) {
     const data = flattenObjects(parser.parse(maps[map].artifacts))
     return {
-      [ScreenMap.ARTIFACTS]: {
-        card_lock: findLandmark(data, 'card_lock'),
-        menu_artifacts: findLandmark(data, 'menu_artifacts'),
-        sort_dir: findLandmark(data, 'sort_dir'),
-        list_item: findLandmark(data, 'list_item'),
-      },
+      [ScreenMap.ARTIFACTS]: Object.fromEntries(
+        Array.from(landmarkKeys[ScreenMap.ARTIFACTS]).map((id) => [
+          id,
+          findLandmark(data, id),
+        ])
+      ) as Landmarks[ScreenMap.ARTIFACTS],
     }
   } else {
     console.error(`Unsupported ratio ${w}:${h}`)
