@@ -69,20 +69,20 @@ class Landmark {
 
   region(): Region {
     return {
-      left: this.x,
-      top: this.y,
-      width: this.w,
-      height: this.h,
+      left: Math.floor(this.x),
+      top: Math.floor(this.y),
+      width: Math.floor(this.w),
+      height: Math.floor(this.h),
     }
   }
 
   *regions(): Generator<Region> {
     for (const [x, y] of this.#landmarks()) {
       yield {
-        left: x,
-        top: y,
-        width: this.w,
-        height: this.h,
+        left: Math.floor(x),
+        top: Math.floor(y),
+        width: Math.floor(this.w),
+        height: Math.floor(this.h),
       }
     }
   }

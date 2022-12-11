@@ -62,9 +62,6 @@ export class Scraper {
     image: Sharp,
     id: keyof Landmarks[ScreenMap.ARTIFACTS]
   ): Promise<string[]> {
-    const cropped = image.extract(
-      this.landmarks[ScreenMap.ARTIFACTS][id].region()
-    )
     const tessConfig: tesseract.Config = {
       // "tessdata-dir": "",
       // lang: "genshin_best_eng",
@@ -75,7 +72,7 @@ export class Scraper {
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
           return tesseract.recognize(
-            await cropped.extract(region).toBuffer(),
+            await image.extract(region).toBuffer(),
             tessConfig
           )
         }
@@ -205,12 +202,12 @@ const statMap: Record<string, string> = {
   'dendrodmgbonus%': 'dendro_dmg_',
 }
 
-const slotMap = {
-  PlumeofDeath: 'plume',
-  FlowerofLife: 'flower',
-  SandsofEon: 'sands',
-  CircletofLogos: 'circlet',
-  GobletofEonothem: 'goblet',
+const slotMap: Record<string, SlotKey> = {
+  PlumeofDeath: SlotKey.PLUME,
+  FlowerofLife: SlotKey.FLOWER,
+  SandsofEon: SlotKey.SANDS,
+  CircletofLogos: SlotKey.CIRCLET,
+  GobletofEonothem: SlotKey.GOBLET,
 }
 
 function stringToEnum<T extends string, TEnumValue extends string>(
@@ -266,4 +263,4 @@ const getArtifactSet = (txt: string): SetKey => {
   ] as SetKey
 }
 const getSlot = (txt: string): SlotKey =>
-  stringToEnum(removeWhitespace(txt), SlotKey)
+  stringToEnum(slotMap[removeWhitespace(txt)], SlotKey)
