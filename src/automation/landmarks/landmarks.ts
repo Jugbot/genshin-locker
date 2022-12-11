@@ -55,6 +55,15 @@ class Landmark {
   center() {
     return [this.x + this.w / 2, this.y + this.h / 2]
   }
+
+  *centers() {
+    const [cx, cy] = this.center()
+    for (let x = 0; x < this.repeat_x; x += 1) {
+      for (let y = 0; y < this.repeat_y; y += 1) {
+        yield [cx + x * this.w, cy + y * this.h]
+      }
+    }
+  }
 }
 
 export interface Landmarks {

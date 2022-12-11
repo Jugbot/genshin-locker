@@ -22,10 +22,20 @@ export class Scraper {
     this.landmarks = landmarks
   }
 
-  clickArtifactLock() {
-    const [x, y] = this.landmarks[ScreenMap.ARTIFACTS]['card_lock'].center()
+  click(id: keyof Landmarks[ScreenMap.ARTIFACTS]) {
+    const [x, y] = this.landmarks[ScreenMap.ARTIFACTS][id].center()
     this.gwindow.goto(x, y)
     this.gwindow.click()
+  }
+
+  *clickAll(id: keyof Landmarks[ScreenMap.ARTIFACTS]) {
+    const centers = this.landmarks[ScreenMap.ARTIFACTS][id].centers()
+    for (const point of centers) {
+      const [x, y] = point
+      this.gwindow.goto(x, y)
+      this.gwindow.click()
+      yield
+    }
   }
 
   async getArtifact() {
