@@ -78,7 +78,7 @@
     "node": ">=16.13.0"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx}": "eslint --cache --fix --max-warnings=0",
     "*.{ts,tsx,json}": "prettier --write"
   }
 }
