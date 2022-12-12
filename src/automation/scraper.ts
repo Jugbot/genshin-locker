@@ -15,8 +15,6 @@ import {
 import { datamine } from './datamine'
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
 import { exec } from 'child_process'
-console.log(__dirname)
-exec('dir', (err, std, stderr) => console.log(err, std, stderr))
 
 export class Scraper {
   gwindow: GenshinWindow
