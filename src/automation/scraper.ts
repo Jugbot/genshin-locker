@@ -14,7 +14,6 @@ import {
 } from './types'
 import { datamine } from './datamine'
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
-import { exec } from 'child_process'
 
 export class Scraper {
   gwindow: GenshinWindow
