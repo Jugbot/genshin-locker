@@ -11,6 +11,13 @@ rules.push(
   {
     test: /\.svg$/,
     type: 'asset/source',
+  },
+  {
+    test: /\.traineddata$/,
+    type: 'asset/resource',
+    generator: {
+      filename: 'tessdata/[hash][ext][query]',
+    },
   }
 )
 

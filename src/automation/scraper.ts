@@ -13,6 +13,10 @@ import {
   SubStatKey,
 } from './types'
 import { datamine } from './datamine'
+import traineddata from '../tessdata/genshin_best_eng.traineddata'
+import { exec } from 'child_process'
+console.log(__dirname)
+exec('dir', (err, std, stderr) => console.log(err, std, stderr))
 
 export class Scraper {
   gwindow: GenshinWindow
@@ -63,8 +67,8 @@ export class Scraper {
     id: keyof Landmarks[ScreenMap.ARTIFACTS]
   ): Promise<string[]> {
     const tessConfig: tesseract.Config = {
-      // "tessdata-dir": "",
-      // lang: "genshin_best_eng",
+      'tessdata-dir': path.join(__dirname, path.dirname(traineddata)),
+      lang: path.parse(traineddata).name,
       psm: 7,
       oem: 3,
     }
