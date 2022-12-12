@@ -71,7 +71,7 @@ export class Scraper {
     return Promise.all(
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
-          const imageRegion = image.extract(region).withMetadata().png()
+          const imageRegion = image.clone().extract(region).withMetadata().png()
           return tesseract.recognize(await imageRegion.toBuffer(), tessConfig)
         }
       )
@@ -91,8 +91,13 @@ export class Scraper {
     colorLower: number[],
     colorUpper: number[] = []
   ) {
-    const { height, channels } = await image.metadata()
-    if (!height || !channels) {
+    // TODO: We can use `extract()` instead of manually searching the bitmap
+    const { data: bytes, info } = await image
+      .clone()
+      .raw()
+      .toBuffer({ resolveWithObject: true })
+    const { channels, width } = info
+    if (!width || !channels) {
       throw Error('Missing image meta')
     }
     if (colorUpper.length === 0) {
@@ -106,16 +111,16 @@ export class Scraper {
         `Pixel test color range start or end are not of length ${channels}`
       )
     }
-    const bytes = await image.raw().toBuffer()
     const getPixel = (x: number, y: number) => {
-      const index = (y * height + x) * channels
+      const index = (y * width + x) * channels
       return Array.from(bytes.subarray(index, index + channels))
     }
     return Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers())
       .map(([cx, cy]) => getPixel(cx, cy))
       .filter((pixel) => {
-        pixel.every((_, i) => {
-          return colorLower[i] <= pixel[i] && pixel[i] <= colorUpper[i]
+        // console.log({pixel})
+        return pixel.every((color, i) => {
+          return colorLower[i] <= color && color <= colorUpper[i]
         })
       }).length
   }
@@ -123,8 +128,13 @@ export class Scraper {
   async getArtifact(): Promise<Artifact> {
     this.gwindow.grab()
     const image = await this.gwindow.capture()
-    const imageBW = image.toColorspace('b-w')
-    const imageBWInverted = imageBW.negate()
+    const imageBW = image.clone().toColorspace('b-w')
+    const imageBWInverted = imageBW.clone().negate()
+
+    // this.#debugPrint(imageBW.clone().threshold(230))
+    // console.log(await this.#pixelTest(image, 'card_rarity', [255, 204, 50]))
+    // return {} as Artifact
+
     const [
       card_set,
       card_slot_type,
@@ -140,19 +150,35 @@ export class Scraper {
       this.#readText(imageBWInverted, 'card_slot_type'),
       this.#pixelTest(image, 'card_rarity', [255, 204, 50]),
       this.#readText(imageBWInverted, 'card_mainstat_key'),
-      this.#readText(imageBW.threshold(230).negate(), 'card_level'),
+      this.#readText(imageBW.clone().threshold(230), 'card_level'),
       this.#readTexts(image, 'card_substat'),
-      this.#pixelTest(image.extractChannel('green'), 'card_lock', [0], [150]),
+      this.#pixelTest(
+        image.clone().extractChannel('green'),
+        'card_lock',
+        [0],
+        [150]
+      ),
       this.#readText(imageBWInverted, 'card_name'),
       this.#readText(imageBWInverted, 'card_mainstat_value'),
     ])
+    console.log({
+      card_set,
+      card_slot_type,
+      card_rarity,
+      card_mainstat_key,
+      card_level,
+      card_substat,
+      card_lock,
+      card_name,
+      card_mainstat_value,
+    })
     // Cleanup & Validation
     const slotKey = getSlot(card_slot_type)
     const [mainStatKey, mainStatValue] = getMainStat(
       card_mainstat_key,
       card_mainstat_value
     )
-    const level = Number(digitsOnly(card_level))
+    const level = getNumber(card_level)
     const substats = getSubstats(card_substat)
     const setKey = getArtifactSet(card_set[substats.length])
     const rarity = card_rarity
@@ -219,17 +245,23 @@ function stringToEnum<T extends string, TEnumValue extends string>(
   return value as TEnumValue
 }
 
-const removeWhitespace = (txt: string) => txt.replace(/\s+/, '')
-const digitsOnly = (txt: string) => txt.replace(/\D+/, '')
+const removeWhitespace = (txt: string) => txt.replaceAll(/\s+/g, '')
+const digitsOnly = (txt: string) => txt.replaceAll(/\D+/g, '')
+const getNumber = (txt: string) => {
+  const num = Number.parseInt(digitsOnly(txt))
+  if (isNaN(num)) {
+    throw Error(`Could not parse integer from "${txt}"`)
+  }
+  return num
+}
 const cleanedStat = (key: string, val: string): [key: string, val: number] => {
   if (val.endsWith('%')) {
     key = `${key}%`
-    val = val.replace('%', '')
+    val = val.replaceAll('%', '')
   }
   key = key.toLowerCase()
   key = key in statMap ? statMap[key] : ''
-  // val = (val.replace(',', ''))
-  return [key, Number(val)]
+  return [key, getNumber(val)]
 }
 const getMainStat = (
   key: string,
@@ -251,7 +283,7 @@ const getSubstats = (txts: string[]): SubStat[] => {
     })
 }
 const getArtifactSet = (txt: string): SetKey => {
-  const normalizedTxt = txt.toLowerCase().replace(/[^a-z]+/, '')
+  const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')
   const artifactData = datamine.artifacts
   if (!(normalizedTxt in artifactData)) {
     throw Error(`"${normalizedTxt}" not a valid artifact set`)
@@ -260,5 +292,6 @@ const getArtifactSet = (txt: string): SetKey => {
     'GOOD'
   ] as SetKey
 }
-const getSlot = (txt: string): SlotKey =>
-  stringToEnum(slotMap[removeWhitespace(txt)], SlotKey)
+const getSlot = (txt: string): SlotKey => {
+  return stringToEnum(slotMap[removeWhitespace(txt)], SlotKey)
+}

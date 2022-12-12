@@ -36,16 +36,16 @@ class Landmark {
   /** A rectangle or grid of rectangles */
   constructor(...boxes: SVGRect[]) {
     const aboutEquals = (a: number, b: number) => Math.abs(a - b) < 1
-    this.x = Math.min(...boxes.map((box) => Number(box['attr:x'])))
-    this.y = Math.min(...boxes.map((box) => Number(box['attr:y'])))
+    this.x = Math.round(Math.min(...boxes.map((box) => Number(box['attr:x']))))
+    this.y = Math.round(Math.min(...boxes.map((box) => Number(box['attr:y']))))
     this.repeat_x = boxes.filter((box) =>
       aboutEquals(Number(box['attr:y']), this.y)
     ).length
     this.repeat_y = boxes.filter((box) =>
       aboutEquals(Number(box['attr:x']), this.x)
     ).length
-    this.w = Number(boxes[0]['attr:width'])
-    this.h = Number(boxes[0]['attr:height'])
+    this.w = Math.round(Number(boxes[0]['attr:width']))
+    this.h = Math.round(Number(boxes[0]['attr:height']))
   }
 
   *#landmarks(): Generator<[x: number, y: number]> {
@@ -58,31 +58,31 @@ class Landmark {
   }
 
   center(): [cx: number, cy: number] {
-    return [this.x + this.w / 2, this.y + this.h / 2]
+    return [Math.trunc(this.x + this.w / 2), Math.trunc(this.y + this.h / 2)]
   }
 
   *centers(): Generator<[cx: number, cy: number]> {
     for (const [x, y] of this.#landmarks()) {
-      yield [x + this.w / 2, y + this.h / 2]
+      yield [Math.trunc(x + this.w / 2), Math.trunc(y + this.h / 2)]
     }
   }
 
   region(): Region {
     return {
-      left: Math.floor(this.x),
-      top: Math.floor(this.y),
-      width: Math.floor(this.w),
-      height: Math.floor(this.h),
+      left: this.x,
+      top: this.y,
+      width: this.w,
+      height: this.h,
     }
   }
 
   *regions(): Generator<Region> {
     for (const [x, y] of this.#landmarks()) {
       yield {
-        left: Math.floor(x),
-        top: Math.floor(y),
-        width: Math.floor(this.w),
-        height: Math.floor(this.h),
+        left: x,
+        top: y,
+        width: this.w,
+        height: this.h,
       }
     }
   }

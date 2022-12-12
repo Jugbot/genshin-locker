@@ -27,7 +27,7 @@ const actions = {
   },
   capture() {
     const scraper = new Scraper()
-    console.log(scraper.getArtifact())
+    scraper.getArtifact().then(console.log)
   },
 }
 
