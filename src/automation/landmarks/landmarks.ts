@@ -26,33 +26,50 @@ type SVGRect = {
 }
 
 class Landmark {
-  repeat_x: number
-  repeat_y: number
-  x: number
-  y: number
-  w: number
-  h: number
+  readonly repeat_x: number
+  readonly repeat_y: number
+  readonly x: number
+  readonly y: number
+  readonly w: number
+  readonly h: number
 
-  /** A rectangle or grid of rectangles */
-  constructor(...boxes: SVGRect[]) {
-    const aboutEquals = (a: number, b: number) => Math.abs(a - b) < 1
-    this.x = Math.round(Math.min(...boxes.map((box) => Number(box['attr:x']))))
-    this.y = Math.round(Math.min(...boxes.map((box) => Number(box['attr:y']))))
-    this.repeat_x = boxes.filter((box) =>
-      aboutEquals(Number(box['attr:y']), this.y)
-    ).length
-    this.repeat_y = boxes.filter((box) =>
-      aboutEquals(Number(box['attr:x']), this.x)
-    ).length
-    this.w = Math.round(Number(boxes[0]['attr:width']))
-    this.h = Math.round(Number(boxes[0]['attr:height']))
+  private constructor(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    repeat_x: number,
+    repeat_y: number
+  ) {
+    this.repeat_x = repeat_x
+    this.repeat_y = repeat_y
+    this.x = x
+    this.y = y
+    this.w = w
+    this.h = h
   }
 
-  *#landmarks(): Generator<[x: number, y: number]> {
+  /** A rectangle or grid of rectangles */
+  static from(...boxes: SVGRect[]): Landmark {
+    const aboutEquals = (a: number, b: number) => Math.abs(a - b) < 1
+    const x = Math.round(Math.min(...boxes.map((box) => Number(box['attr:x']))))
+    const y = Math.round(Math.min(...boxes.map((box) => Number(box['attr:y']))))
+    const repeat_x = boxes.filter((box) =>
+      aboutEquals(Number(box['attr:y']), y)
+    ).length
+    const repeat_y = boxes.filter((box) =>
+      aboutEquals(Number(box['attr:x']), x)
+    ).length
+    const w = Math.round(Number(boxes[0]['attr:width']))
+    const h = Math.round(Number(boxes[0]['attr:height']))
+    return new Landmark(x, y, w, h, repeat_x, repeat_y)
+  }
+
+  *landmarks(): Generator<Landmark> {
     // Utility for iterating through the (upper-left) grid points
     for (let x = 0; x < this.repeat_x; x += 1) {
       for (let y = 0; y < this.repeat_y; y += 1) {
-        yield [this.x + x * this.w, this.y + y * this.h]
+        yield this.at(x, y)
       }
     }
   }
@@ -62,9 +79,23 @@ class Landmark {
   }
 
   *centers(): Generator<[cx: number, cy: number]> {
-    for (const [x, y] of this.#landmarks()) {
-      yield [Math.trunc(x + this.w / 2), Math.trunc(y + this.h / 2)]
+    for (const landmark of this.landmarks()) {
+      yield landmark.center()
     }
+  }
+
+  at(x: number, y: number) {
+    if (!(0 <= x && x < this.repeat_x) || !(0 <= y && y < this.repeat_y)) {
+      throw Error('Index out of range')
+    }
+    return new Landmark(
+      this.x + x * this.w,
+      this.y + y * this.h,
+      this.w,
+      this.h,
+      0,
+      0
+    )
   }
 
   region(): Region {
@@ -77,13 +108,8 @@ class Landmark {
   }
 
   *regions(): Generator<Region> {
-    for (const [x, y] of this.#landmarks()) {
-      yield {
-        left: x,
-        top: y,
-        width: this.w,
-        height: this.h,
-      }
+    for (const landmark of this.landmarks()) {
+      yield landmark.region()
     }
   }
 }
@@ -103,6 +129,7 @@ export const landmarkKeys = {
     'menu_artifacts',
     'menu_artifacts',
     'sort_dir',
+    'artifact_count',
   ] as const),
 }
 
@@ -127,7 +154,7 @@ function findLandmark(data: object[], name: string) {
     (box): box is SVGRect =>
       'attr:inkscape:label' in box && box['attr:inkscape:label'] === name
   )
-  return new Landmark(...boxes)
+  return Landmark.from(...boxes)
 }
 
 export function load(width: number, height: number): Landmarks | null {

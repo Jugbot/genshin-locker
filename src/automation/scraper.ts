@@ -41,9 +41,10 @@ export class Scraper {
     const centers = this.landmarks[ScreenMap.ARTIFACTS][id].centers()
     for (const point of centers) {
       const [x, y] = point
-      this.gwindow.goto(x, y)
-      this.gwindow.click()
-      yield
+      yield () => {
+        this.gwindow.goto(x, y)
+        this.gwindow.click()
+      }
     }
   }
 
@@ -126,8 +127,23 @@ export class Scraper {
       }).length
   }
 
+  async scrollArtifacts(rows: number) {
+    const landmark = this.landmarks[ScreenMap.ARTIFACTS]['list_item']
+    const from = landmark.at(0, landmark.repeat_y - 1).center()
+    this.gwindow.goto(...from)
+    console.log(landmark.h * rows)
+    await this.gwindow.drag(0, -landmark.h * rows, 1000)
+    // Prevent momentum after drag
+    await this.gwindow.click()
+  }
+
+  async getArtifactCount(): Promise<number> {
+    const image = await this.gwindow.capture()
+    const line = await this.#readText(image, 'artifact_count')
+    return Number.parseInt(line.trim().split(/[\s/]+/)[1])
+  }
+
   async getArtifact(): Promise<Artifact> {
-    this.gwindow.grab()
     const image = await this.gwindow.capture()
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()

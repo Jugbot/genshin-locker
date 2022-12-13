@@ -20,10 +20,16 @@ const actions = {
     const scraper = new Scraper()
     scraper.gwindow.drag(0, 120)
   },
-  scroll() {
+  async scroll() {
     const scraper = new Scraper()
-    const rem = scraper.gwindow.scroll(140)
-    console.log({ rem })
+    scraper.gwindow.grab()
+    await scraper.scrollArtifacts(1)
+    await new Promise((res) => setTimeout(res, 200))
+    await scraper.scrollArtifacts(2)
+    await new Promise((res) => setTimeout(res, 200))
+    await scraper.scrollArtifacts(3)
+    await new Promise((res) => setTimeout(res, 200))
+    await scraper.scrollArtifacts(4)
   },
   capture() {
     const scraper = new Scraper()
