@@ -75,7 +75,7 @@ class Landmark {
   }
 
   center(): [cx: number, cy: number] {
-    return [Math.trunc(this.x + this.w / 2), Math.trunc(this.y + this.h / 2)]
+    return [this.x + this.w / 2, this.y + this.h / 2]
   }
 
   *centers(): Generator<[cx: number, cy: number]> {

@@ -72,6 +72,30 @@ export class GenshinWindow {
     user32.SendInput(inputArray.length, inputArray, INPUT.size)
   }
 
+  mouseDown() {
+    user32.SendInput(
+      1,
+      InputArray(
+        mouseEvent({
+          dwFlags: MOUSEEVENTF.LEFTDOWN,
+        }).ref()
+      ),
+      INPUT.size
+    )
+  }
+
+  mouseUp() {
+    user32.SendInput(
+      1,
+      InputArray(
+        mouseEvent({
+          dwFlags: MOUSEEVENTF.LEFTUP,
+        }).ref()
+      ),
+      INPUT.size
+    )
+  }
+
   scroll(dy: number, unit: 'px' | 'clicks' = 'px'): number {
     let clicks = dy
     let remainder = 0
@@ -96,23 +120,18 @@ export class GenshinWindow {
   }
 
   async drag(dx: number, dy: number, duration = 1000) {
+    this.mouseDown()
+    await this.move(dx, dy, duration)
+    this.mouseUp()
+  }
+
+  async move(dx: number, dy: number, duration = 1000) {
     // TODO: Bypass mouse acceleration with MOUSEEVENTF.ABSOLUTE
-
-    user32.SendInput(
-      1,
-      InputArray(
-        mouseEvent({
-          dwFlags: MOUSEEVENTF.LEFTDOWN,
-        }).ref()
-      ),
-      INPUT.size
-    )
-
     const start = Date.now()
-    let lastx = 0,
-      lasty = 0
+    let lastx = 0
+    let lasty = 0
     let difference = 0
-    const move = async (dx: number, dy: number) => {
+    const move = (dx: number, dy: number) => {
       if (dx === 0 && dy === 0) {
         return
       }
@@ -127,29 +146,20 @@ export class GenshinWindow {
         ),
         INPUT.size
       )
-      // Surrender control to not block other async process (e.g. console.log)
-      await new Promise((r) => setTimeout(r, 10))
     }
 
     while ((difference = Date.now() - start) < duration) {
       const percentComplete = Math.min(difference, duration) / duration
-      const toX = Math.floor(percentComplete * dx)
-      const toY = Math.floor(percentComplete * dy)
-      await move(toX - lastx, toY - lasty)
+      const toX = Math.trunc(percentComplete * dx)
+      const toY = Math.trunc(percentComplete * dy)
+      move(toX - lastx, toY - lasty)
       lastx = toX
       lasty = toY
+      // Surrender control to not block other async process (e.g. console.log)
+      await new Promise((r) => setTimeout(r, 10))
     }
     move(dx - lastx, dy - lasty)
-
-    user32.SendInput(
-      1,
-      InputArray(
-        mouseEvent({
-          dwFlags: MOUSEEVENTF.LEFTUP,
-        }).ref()
-      ),
-      INPUT.size
-    )
+    // await new Promise(res => setTimeout(res, 1000))
   }
 
   async capture() {

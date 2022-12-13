@@ -131,10 +131,15 @@ export class Scraper {
     const landmark = this.landmarks[ScreenMap.ARTIFACTS]['list_item']
     const from = landmark.at(0, landmark.repeat_y - 1).center()
     this.gwindow.goto(...from)
-    console.log(landmark.h * rows)
-    await this.gwindow.drag(0, -landmark.h * rows, 1000)
+    this.gwindow.mouseDown()
+    // Break mouse drag deadzone
+    await this.gwindow.move(100, 0, 100)
+    await this.gwindow.move(-100, 0, 100)
+    await this.gwindow.move(0, -landmark.h * rows, 1000)
+    await new Promise((res) => setTimeout(res, 1000))
+    this.gwindow.mouseUp()
     // Prevent momentum after drag
-    await this.gwindow.click()
+    this.gwindow.click()
   }
 
   async getArtifactCount(): Promise<number> {
