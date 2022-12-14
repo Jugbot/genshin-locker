@@ -145,7 +145,7 @@ export class Scraper {
   async getArtifactCount(): Promise<number> {
     const image = await this.gwindow.capture()
     const line = await this.#readText(image, 'artifact_count')
-    return Number.parseInt(line.trim().split(/[\s/]+/)[1])
+    return Number.parseInt(line.match(/\d+/g)?.[1] ?? '')
   }
 
   async getArtifact(): Promise<Artifact> {
