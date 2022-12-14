@@ -15,7 +15,7 @@ import {
 import { datamine } from './datamine'
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
 
-export class Scraper {
+export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
   constructor() {
@@ -220,6 +220,10 @@ export class Scraper {
       slotKey,
       substats,
     }
+  }
+
+  async pause() {
+    return Promise.resolve()
   }
 }
 
