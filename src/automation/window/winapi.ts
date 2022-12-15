@@ -25,6 +25,7 @@ const HBITMAP = HANDLE
 const UINT = 'uint'
 const UINT_PTR = _WIN64 ? 'uint64' : 'uint32'
 const HGDIOBJ = HANDLE
+const SHORT = 'short'
 
 export const W = {
   HANDLE,
@@ -42,6 +43,7 @@ export const W = {
   UINT,
   UINT_PTR,
   HGDIOBJ,
+  SHORT,
 } as const
 
 export const BITMAP = RefStruct(
@@ -149,6 +151,7 @@ export const user32 = ffi.Library('user32', {
   ShowWindow: [W.BOOL, [W.HWND, W.INT]],
   ClientToScreen: [W.BOOL, [W.HWND, ref.refType(POINT)]],
   SetCursorPos: [W.BOOL, [W.INT, W.INT]],
+  GetAsyncKeyState: [W.SHORT, [W.INT]],
 })
 
 export const ImageBuffer = RefArray(ref.types.byte)

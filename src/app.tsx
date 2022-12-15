@@ -15,6 +15,7 @@ const App: React.FC = () => {
       <button onClick={() => setTimeout(window.actions.capture, 2000)}>
         Capture!
       </button>
+      <button onClick={window.actions.routine}>Routine~</button>
     </div>
   )
 }

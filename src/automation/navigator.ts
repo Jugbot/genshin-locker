@@ -145,7 +145,7 @@ export class Navigator {
   async getArtifactCount(): Promise<number> {
     const image = await this.gwindow.capture()
     const line = await this.#readText(image, 'artifact_count')
-    return Number.parseInt(line.match(/\d+/g)?.[1] ?? '')
+    return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
   }
 
   async getArtifact(): Promise<Artifact> {

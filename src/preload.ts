@@ -2,6 +2,7 @@ import { contextBridge } from 'electron'
 
 import child_process from 'child_process'
 import { Navigator } from './automation/navigator'
+import { readArtifacts } from './automation/routines'
 
 try {
   child_process.execFileSync('net', ['session'], { stdio: 'ignore' })
@@ -31,6 +32,9 @@ const actions = {
   capture() {
     const scraper = new Navigator()
     scraper.getArtifact().then(console.log)
+  },
+  routine() {
+    readArtifacts()
   },
 }
 

@@ -16,6 +16,7 @@ import {
   DIB_RGB_COLORS,
   SRCCOPY,
   SW_RESTORE,
+  VK,
 } from './winconst'
 import { mouseEvent, ucsBufferFrom } from './util'
 import { Pointer } from 'ref-napi'
@@ -52,6 +53,12 @@ export class GenshinWindow {
   show() {
     user32.ShowWindow(String(this.handle), SW_RESTORE)
     user32.SetForegroundWindow(String(this.handle))
+  }
+
+  keydown(char: VK): boolean {
+    const state = user32.GetAsyncKeyState(char)
+    // Most significant bit is "pressed" state
+    return Boolean(state & 0x8000)
   }
 
   goto(x: number, y: number) {
