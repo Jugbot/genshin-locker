@@ -153,8 +153,7 @@ export class Navigator {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 
-    // this.#debugPrint(imageBW.clone().threshold(230))
-    // console.log(await this.#pixelTest(image, 'card_rarity', [255, 204, 50]))
+    // this.#debugPrint(image)
     // return {} as Artifact
 
     const [

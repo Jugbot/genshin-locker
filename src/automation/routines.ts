@@ -14,9 +14,15 @@ export async function readArtifacts() {
   navigator.click('sort_dir')
   await sleep(200)
   navigator.click('sort_dir')
+  await sleep(200)
+
+  navigator.gwindow.goto(
+    ...navigator.landmarks[ScreenMap.ARTIFACTS].card_name.center()
+  )
+  navigator.gwindow.scroll(100, 'clicks')
 
   const total = await navigator.getArtifactCount()
-  console.log(total)
+  console.log({ total })
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0
@@ -26,6 +32,7 @@ export async function readArtifacts() {
   while (true) {
     for (const click of navigator.clickAll('list_item')) {
       click()
+      await sleep(200)
       count += 1
       const artifact = await navigator.getArtifact()
       if (artifact.rarity < 5) {
@@ -39,11 +46,13 @@ export async function readArtifacts() {
         throw Error('Keyboard Interrupt')
       }
     }
+    console.log('next row')
     const remaining = total - count
     const remainingRows = Math.min(
       Math.floor(remaining / itemsPerRow),
       rowsPerPage
     )
-    navigator.scrollArtifacts(remainingRows)
+    console.log({ remainingRows })
+    await navigator.scrollArtifacts(remainingRows)
   }
 }
