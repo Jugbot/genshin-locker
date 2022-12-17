@@ -21,6 +21,7 @@ import {
 import { mouseEvent, ucsBufferFrom } from './util'
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
+import { GBRAtoRGB } from '../util'
 
 export class GenshinWindow {
   handle: bigint
@@ -167,6 +168,10 @@ export class GenshinWindow {
     }
     move(dx - lastx, dy - lasty)
     // await new Promise(res => setTimeout(res, 1000))
+  }
+
+  async capture() {
+    return this.captureBGRA().then(GBRAtoRGB)
   }
 
   async captureBGRA() {
