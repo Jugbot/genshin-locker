@@ -169,7 +169,7 @@ export class GenshinWindow {
     // await new Promise(res => setTimeout(res, 1000))
   }
 
-  async capture() {
+  async captureBGRA() {
     //https://learn.microsoft.com/en-us/windows/win32/gdi/capturing-an-image
     if (!this.handle) {
       throw Error('No window handle!')
@@ -222,7 +222,7 @@ export class GenshinWindow {
       Math.ceil((Number(bmp.bmWidth) * bmpInfo.biBitCount) / 32) *
         4 *
         Number(bmp.bmHeight)
-    ) as Pointer<number>
+    )
 
     // FIXME: HDR causes previous images to get written..?
     const result = gdi32.GetDIBits(
@@ -230,7 +230,7 @@ export class GenshinWindow {
       hdcBlt,
       0,
       Number(bmp.bmHeight),
-      imageBuf,
+      imageBuf as Pointer<number>,
       bmpInfo.ref(),
       DIB_RGB_COLORS
     )
@@ -242,30 +242,12 @@ export class GenshinWindow {
     gdi32.DeleteObject(hdcBlt)
     gdi32.DeleteDC(hdc)
 
-    // BGRA, we need RGBA
-    for (let i = 0; i < imageBuf.byteLength; i += 4) {
-      const b = imageBuf.readUInt8(i)
-      const r = imageBuf.readUInt8(i + 2)
-      imageBuf.writeUInt8(r, i)
-      imageBuf.writeUInt8(b, i + 2)
-    }
-
-    const sharpBitmap = sharp(imageBuf, {
+    return sharp(imageBuf, {
       raw: {
         width: Number(bmp.bmWidth),
         height: Number(bmp.bmHeight),
         channels: 4,
-        // premultiplied: true
       },
     })
-      .flip()
-      .removeAlpha()
-      // We need reinitialize in order to "apply" the flip transform. Otherwise `extract()` will reference the unflipped y value.
-      .withMetadata()
-      .png()
-      .toBuffer()
-      .then((data) => sharp(data))
-
-    return sharpBitmap
   }
 }

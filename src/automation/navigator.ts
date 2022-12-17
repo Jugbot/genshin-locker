@@ -48,6 +48,21 @@ export class Navigator {
     }
   }
 
+  async scrollArtifacts(rows: number) {
+    const landmark = this.landmarks[ScreenMap.ARTIFACTS]['list_item']
+    const from = landmark.at(0, landmark.repeat_y - 1).center()
+    this.gwindow.goto(...from)
+    this.gwindow.mouseDown()
+    // Break mouse drag deadzone
+    await this.gwindow.move(100, 0, 100)
+    await this.gwindow.move(-100, 0, 100)
+    await this.gwindow.move(0, -landmark.h * rows, 1000)
+    await new Promise((res) => setTimeout(res, 1000))
+    this.gwindow.mouseUp()
+    // Prevent momentum after drag
+    this.gwindow.click()
+  }
+
   #debugPrint(image: Sharp) {
     const fileName = path.join(os.tmpdir(), `temp-${new Date().getTime()}.png`)
     image.toFile(fileName, (err) => {
@@ -127,29 +142,12 @@ export class Navigator {
       }).length
   }
 
-  async scrollArtifacts(rows: number) {
-    const landmark = this.landmarks[ScreenMap.ARTIFACTS]['list_item']
-    const from = landmark.at(0, landmark.repeat_y - 1).center()
-    this.gwindow.goto(...from)
-    this.gwindow.mouseDown()
-    // Break mouse drag deadzone
-    await this.gwindow.move(100, 0, 100)
-    await this.gwindow.move(-100, 0, 100)
-    await this.gwindow.move(0, -landmark.h * rows, 1000)
-    await new Promise((res) => setTimeout(res, 1000))
-    this.gwindow.mouseUp()
-    // Prevent momentum after drag
-    this.gwindow.click()
-  }
-
-  async getArtifactCount(): Promise<number> {
-    const image = await this.gwindow.capture()
+  async getArtifactCount(image: Sharp): Promise<number> {
     const line = await this.#readText(image, 'artifact_count')
     return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
   }
 
-  async getArtifact(): Promise<Artifact> {
-    const image = await this.gwindow.capture()
+  async getArtifact(image: Sharp): Promise<Artifact> {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 

@@ -1,7 +1,6 @@
 import { contextBridge } from 'electron'
 
 import child_process from 'child_process'
-import { Navigator } from './automation/navigator'
 import { readArtifacts } from './automation/routines'
 
 try {
@@ -13,28 +12,8 @@ try {
 }
 
 const actions = {
-  click() {
-    const scraper = new Navigator()
-    scraper.gwindow.click()
-  },
-  drag() {
-    const scraper = new Navigator()
-    scraper.gwindow.drag(0, 120)
-  },
-  async scroll() {
-    const scraper = new Navigator()
-    scraper.gwindow.grab()
-    for (let i = 0; i < 5; i++) {
-      await scraper.scrollArtifacts(4)
-      await new Promise((res) => setTimeout(res, 200))
-    }
-  },
-  capture() {
-    const scraper = new Navigator()
-    scraper.getArtifact().then(console.log)
-  },
   routine() {
-    readArtifacts()
+    readArtifacts().then(console.log)
   },
 }
 

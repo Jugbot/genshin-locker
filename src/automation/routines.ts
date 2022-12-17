@@ -1,6 +1,7 @@
 import { ScreenMap } from './landmarks/landmarks'
 import { Navigator } from './navigator'
 import { Artifact } from './types'
+import { GBRAtoRGB } from './util'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -20,27 +21,30 @@ export async function readArtifacts() {
     ...navigator.landmarks[ScreenMap.ARTIFACTS].card_name.center()
   )
   navigator.gwindow.scroll(100, 'clicks')
+  await sleep(200)
 
-  const total = await navigator.getArtifactCount()
+  const total = await navigator.getArtifactCount(
+    await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
+  )
   console.log({ total })
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0
 
-  const totalArtifacts: Artifact[] = []
+  const totalArtifacts: Promise<Artifact>[] = []
   // eslint-disable-next-line no-constant-condition
   while (true) {
     for (const click of navigator.clickAll('list_item')) {
       click()
       await sleep(200)
       count += 1
-      const artifact = await navigator.getArtifact()
-      if (artifact.rarity < 5) {
-        return totalArtifacts
-      }
-      totalArtifacts.push(artifact)
+      const imageBGRA = await navigator.gwindow.captureBGRA()
+      const artifactPromise = GBRAtoRGB(imageBGRA).then((image) =>
+        navigator.getArtifact(image)
+      )
+      totalArtifacts.push(artifactPromise)
       if (count === total) {
-        return totalArtifacts
+        return Promise.all(totalArtifacts)
       }
       if (navigator.gwindow.keydown(VK.SPACE)) {
         throw Error('Keyboard Interrupt')
