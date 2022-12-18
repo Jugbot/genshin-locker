@@ -18,6 +18,7 @@ const theme = {
     bgActionPrimary: '$yellow3',
     bgActionPrimaryHover: '$yellow4',
     bgActionPrimaryPressed: '$yellow5',
+    textDefault: '$sand12',
     textPrimary: '$yellow11',
     textDisabled: '',
   },
@@ -106,6 +107,6 @@ const theme = {
     space16: '64px',
   },
   transitions: {},
-}
+} as const
 
 export default theme
