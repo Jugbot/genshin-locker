@@ -1,22 +1,13 @@
 import { createRoot } from 'react-dom/client'
+import { Box, Button } from './components'
 
 const App: React.FC = () => {
   return (
-    <div style={{ display: 'flex' }}>
-      <button onClick={() => setTimeout(window.actions.click, 2000)}>
-        Click!
-      </button>
-      <button onClick={() => setTimeout(window.actions.drag, 2000)}>
-        Drag!
-      </button>
-      <button onClick={() => setTimeout(window.actions.scroll, 2000)}>
-        Scroll!
-      </button>
-      <button onClick={() => setTimeout(window.actions.capture, 2000)}>
-        Capture!
-      </button>
-      <button onClick={window.actions.routine}>Routine~</button>
-    </div>
+    <Box
+      css={{ backgroundColor: '$appBackground', position: 'fixed', inset: 0 }}
+    >
+      <Button onClick={window.actions.routine}>Routine</Button>
+    </Box>
   )
 }
 

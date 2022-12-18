@@ -50,7 +50,6 @@ export async function readArtifacts() {
         throw Error('Keyboard Interrupt')
       }
     }
-    console.log('next row')
     const remaining = total - count
     const remainingRows = Math.min(
       Math.floor(remaining / itemsPerRow),

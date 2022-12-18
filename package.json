@@ -63,6 +63,9 @@
     "typescript": "^4.9.0"
   },
   "dependencies": {
+    "@radix-ui/colors": "^0.1.8",
+    "@radix-ui/react-popover": "^1.0.2",
+    "@stitches/react": "^1.2.8",
     "electron-squirrel-startup": "^1.0.0",
     "fast-xml-parser": "^4.0.12",
     "ffi-napi": "4.0.3",
