@@ -1182,5 +1182,69 @@
         "normalizedName": "thesunkenyears"
       }
     }
+  },
+  "desertpavilionchronicle": {
+    "GOOD": "DesertPavilionChronicle",
+    "setName": "Desert Pavilion Chronicle",
+    "rarities": [4, 5],
+    "artifacts": {
+      "goblet": {
+        "GOOD": "DefenderOfTheEnchantingDream",
+        "artifactName": "Defender of the Enchanting Dream",
+        "normalizedName": "defenderoftheenchantingdream"
+      },
+      "plume": {
+        "GOOD": "EndOfTheGoldenRealm",
+        "artifactName": "End of the Golden Realm",
+        "normalizedName": "endofthegoldenrealm"
+      },
+      "circlet": {
+        "GOOD": "LegacyOfTheDesertHighBorn",
+        "artifactName": "Legacy of the Desert High-Born",
+        "normalizedName": "legacyofthedeserthighborn"
+      },
+      "flower": {
+        "GOOD": "TheFirstDaysOfTheCityOfKings",
+        "artifactName": "The First Days of the City of Kings",
+        "normalizedName": "thefirstdaysofthecityofkings"
+      },
+      "sands": {
+        "GOOD": "TimepieceOfTheLostPath",
+        "artifactName": "Timepiece of the Lost Path",
+        "normalizedName": "timepieceofthelostpath"
+      }
+    }
+  },
+  "flowerofparadiselost": {
+    "GOOD": "FlowerOfParadiseLost",
+    "setName": "Flower of Paradise Lost",
+    "rarities": [4, 5],
+    "artifacts": {
+      "goblet": {
+        "GOOD": "SecretKeepersMagicBottle",
+        "artifactName": "Secret-Keeper's Magic Bottle",
+        "normalizedName": "secretkeepersmagicbottle"
+      },
+      "plume": {
+        "GOOD": "WiltingFeast",
+        "artifactName": "Wilting Feast",
+        "normalizedName": "wiltingfeast"
+      },
+      "circlet": {
+        "GOOD": "AmethystCrown",
+        "artifactName": "Amethyst Crown",
+        "normalizedName": "amethystcrown"
+      },
+      "flower": {
+        "GOOD": "AyKhanoumsMyriad",
+        "artifactName": "Ay-Khanoum's Myriad",
+        "normalizedName": "aykhanoumsmyriad"
+      },
+      "sands": {
+        "GOOD": "AMomentCongealed",
+        "artifactName": "A Moment Congealed",
+        "normalizedName": "amomentcongealed"
+      }
+    }
   }
 }

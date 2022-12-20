@@ -1,19 +1,18 @@
 import tesseract from 'node-tesseract-ocr'
-import { Landmarks, load, ScreenMap } from './landmarks/landmarks'
-import { GenshinWindow } from './window'
-import { Sharp } from 'sharp'
-import path from 'path'
 import os from 'os'
-import {
-  Artifact,
-  MainStatKey,
-  SetKey,
-  SlotKey,
-  SubStat,
-  SubStatKey,
-} from './types'
-import { datamine } from './datamine'
+import path from 'path'
+import { Sharp } from 'sharp'
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
+import { Landmarks, ScreenMap, load } from './landmarks/landmarks'
+import { Artifact } from './types'
+import {
+  getArtifactSet,
+  getMainStat,
+  getNumber,
+  getSlot,
+  getSubstats,
+} from './util/scraper'
+import { GenshinWindow } from './window'
 
 export class Navigator {
   gwindow: GenshinWindow
@@ -218,103 +217,4 @@ export class Navigator {
       substats,
     }
   }
-
-  async pause() {
-    return Promise.resolve()
-  }
-}
-
-const statMap: Record<string, string> = {
-  hp: 'hp',
-  'hp%': 'hp_',
-  atk: 'atk',
-  'atk%': 'atk_',
-  def: 'def',
-  'def%': 'def_',
-  'energyrecharge%': 'enerRech_',
-  energyrecharge: 'enerRech_',
-  elementalmastery: 'eleMas',
-  'critrate%': 'critRate_',
-  critrate: 'critRate_',
-  'critdmg%': 'critDMG_',
-  critdmg: 'critDMG_',
-  'healingbonus%': 'heal_',
-  'physicaldmgbonus%': 'physical_dmg_',
-  'anemodmgbonus%': 'anemo_dmg_',
-  'geodmgbonus%': 'geo_dmg_',
-  'electrodmgbonus%': 'electro_dmg_',
-  'hydrodmgbonus%': 'hydro_dmg_',
-  'pyrodmgbonus%': 'pyro_dmg_',
-  'cryodmgbonus%': 'cryo_dmg_',
-  'dendrodmgbonus%': 'dendro_dmg_',
-}
-
-const slotMap: Record<string, SlotKey> = {
-  PlumeofDeath: SlotKey.PLUME,
-  FlowerofLife: SlotKey.FLOWER,
-  SandsofEon: SlotKey.SANDS,
-  CircletofLogos: SlotKey.CIRCLET,
-  GobletofEonothem: SlotKey.GOBLET,
-}
-
-function stringToEnum<T extends string, TEnumValue extends string>(
-  value: string,
-  enumVariable: { [key in T]: TEnumValue }
-): TEnumValue {
-  const enumValues = Object.values(enumVariable)
-  if (!enumValues.includes(value)) {
-    throw Error(`"${value}" does not satisfy enum ${enumVariable}`)
-  }
-  return value as TEnumValue
-}
-
-const removeWhitespace = (txt: string) => txt.replaceAll(/\s+/g, '')
-const digitsOnly = (txt: string) => txt.replaceAll(/\D+/g, '')
-const getNumber = (txt: string) => {
-  const num = Number.parseInt(digitsOnly(txt))
-  if (isNaN(num)) {
-    throw Error(`Could not parse integer from "${txt}"`)
-  }
-  return num
-}
-const cleanedStat = (key: string, val: string): [key: string, val: number] => {
-  if (val.endsWith('%')) {
-    key = `${key}%`
-    val = val.replaceAll('%', '')
-  }
-  key = key.toLowerCase()
-  key = key in statMap ? statMap[key] : ''
-  return [key, getNumber(val)]
-}
-const getMainStat = (
-  key: string,
-  val: string
-): [mainStatKey: MainStatKey, mainStatValue: number] => {
-  const [mainStatKey, mainStatValue] = cleanedStat(
-    removeWhitespace(key),
-    removeWhitespace(val)
-  )
-  return [stringToEnum(mainStatKey, MainStatKey), mainStatValue]
-}
-const getSubstats = (txts: string[]): SubStat[] => {
-  return txts
-    .filter((txt) => txt.includes('+'))
-    .map((txt) => {
-      const split = removeWhitespace(txt).split('+')
-      const [key, value] = cleanedStat(split[0], split[1])
-      return { key: stringToEnum(key, SubStatKey), value }
-    })
-}
-const getArtifactSet = (txt: string): SetKey => {
-  const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')
-  const artifactData = datamine.artifacts
-  if (!(normalizedTxt in artifactData)) {
-    throw Error(`"${normalizedTxt}" not a valid artifact set`)
-  }
-  return artifactData[normalizedTxt as keyof typeof artifactData][
-    'GOOD'
-  ] as SetKey
-}
-const getSlot = (txt: string): SlotKey => {
-  return stringToEnum(slotMap[removeWhitespace(txt)], SlotKey)
 }

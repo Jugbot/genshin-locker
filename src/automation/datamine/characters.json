@@ -293,5 +293,15 @@
     "GOOD": "Layla",
     "ConstellationOrder": ["skill", "burst"],
     "WeaponType": 0
+  },
+  "wanderer": {
+    "GOOD": "Wanderer",
+    "ConstellationOrder": ["burst", "skill"],
+    "WeaponType": 4
+  },
+  "faruzan": {
+    "GOOD": "Faruzan",
+    "ConstellationOrder": ["skill", "burst"],
+    "WeaponType": 3
   }
 }

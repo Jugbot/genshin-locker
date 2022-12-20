@@ -1,7 +1,7 @@
 import { ScreenMap } from './landmarks/landmarks'
 import { Navigator } from './navigator'
 import { Artifact } from './types'
-import { GBRAtoRGB } from './util'
+import { GBRAtoRGB } from './util/image'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -26,7 +26,7 @@ export async function readArtifacts() {
   const total = await navigator.getArtifactCount(
     await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
   )
-  console.log({ total })
+  console.log(`Reading ${total} artifacts total`)
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0

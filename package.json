@@ -16,7 +16,8 @@
     "rebuild": "electron-rebuild -f -w genshin-locker",
     "start": "electron-forge start",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "scrape-data": "ts-node scripts/lineupScraper.ts"
   },
   "keywords": [],
   "author": {

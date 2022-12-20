@@ -21,7 +21,7 @@ import {
 import { mouseEvent, ucsBufferFrom } from './util'
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
-import { GBRAtoRGB } from '../util'
+import { GBRAtoRGB } from '../util/image'
 
 export class GenshinWindow {
   handle: bigint
