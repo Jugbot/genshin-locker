@@ -1,6 +1,7 @@
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 import fs from 'fs'
 import path from 'path'
+import { combinations } from '../src/automation/util/statistics'
 
 type Payload = {
   data: {
@@ -178,10 +179,6 @@ async function createStatistics(limit = 100_000) {
   }
 
   return results
-}
-
-function combinations<T>(array: T[]) {
-  return array.flatMap((v, i) => array.slice(i + 1).map((w) => new Set([v, w])))
 }
 
 const deepGet = (data: Record<string, unknown>, keys: string[]) => {

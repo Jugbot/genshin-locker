@@ -32,8 +32,8 @@ export async function readArtifacts() {
   let count = 0
 
   const totalArtifacts: Promise<Artifact>[] = []
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (count < total) {
+    const artifactsInPage: Promise<Artifact>[] = []
     for (const click of navigator.clickAll('list_item')) {
       click()
       await sleep(200)
@@ -43,13 +43,20 @@ export async function readArtifacts() {
         navigator.getArtifact(image)
       )
       totalArtifacts.push(artifactPromise)
+      artifactsInPage.push(
+        artifactPromise.then((artifact) => {
+          // TODO: Get artifacts to lock
+          return artifact
+        })
+      )
       if (count === total) {
-        return Promise.all(totalArtifacts)
+        break
       }
       if (navigator.gwindow.keydown(VK.SPACE)) {
         throw Error('Keyboard Interrupt')
       }
     }
+    await Promise.all(artifactsInPage)
     const remaining = total - count
     const remainingRows = Math.min(
       Math.floor(remaining / itemsPerRow),
@@ -58,4 +65,6 @@ export async function readArtifacts() {
     console.log({ remainingRows })
     await navigator.scrollArtifacts(remainingRows)
   }
+
+  return Promise.all(totalArtifacts)
 }
