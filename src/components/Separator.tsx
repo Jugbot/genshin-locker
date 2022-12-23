@@ -1,5 +1,5 @@
-import * as RadixSeparator from '@radix-ui/react-separator';
-import { styled } from '../stitches.config';
+import * as RadixSeparator from '@radix-ui/react-separator'
+import { styled } from '../stitches.config'
 
 export const Separator = styled(RadixSeparator.Root, {
   backgroundColor: '$textDefault',
@@ -12,5 +12,5 @@ export const Separator = styled(RadixSeparator.Root, {
     my: '$space2',
     width: '100%',
     height: '$borderWidths$borderWidth1',
-  }
+  },
 })

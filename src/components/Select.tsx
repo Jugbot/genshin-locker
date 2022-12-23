@@ -1,4 +1,4 @@
-import * as RadixSelect from '@radix-ui/react-select';
+import * as RadixSelect from '@radix-ui/react-select'
 
 export const Select = {
   Root: RadixSelect.Root,
@@ -12,6 +12,5 @@ export const Select = {
   Label: RadixSelect.Label,
   Item: RadixSelect.Item,
   ItemText: RadixSelect.ItemText,
-  ItemIndicator: RadixSelect.ItemIndicator
+  ItemIndicator: RadixSelect.ItemIndicator,
 }
-
