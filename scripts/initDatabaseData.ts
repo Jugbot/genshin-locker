@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs'
+import { existsSync, unlinkSync, writeFileSync } from 'fs'
 import { getDatabase } from '../src/automation/database'
 import { datamine } from '../src/automation/datamine'
 import {
@@ -13,6 +13,7 @@ import {
   substatDistribution,
 } from '../src/automation/util/statistics'
 import artifactPopularity from '../src/automation/crowdsourced/crowdsourced.json'
+import path from 'path'
 
 const allArtifacts = Object.values(datamine.artifacts).map(
   (o) => o.GOOD as SetKey
@@ -63,6 +64,11 @@ type ArtifactPopularity = PartialRecord<
   >
 >
 
+const writePath = path.resolve(
+  __dirname,
+  '../src/automation/database/data.json'
+)
+
 async function generateScores() {
   const db = await getDatabase()
   for (const pseudoArtifact of generateAll()) {
@@ -76,7 +82,7 @@ async function generateScores() {
           0
         )
       : 0
-    await db.default.insert({
+    await db.default.upsert({
       set: pseudoArtifact.setKey,
       slot: pseudoArtifact.slotKey,
       main: pseudoArtifact.mainStatKey,
@@ -85,10 +91,10 @@ async function generateScores() {
     })
   }
   const json = await db.exportJSON()
-  writeFileSync(
-    '../src/automation/database/default.data.json',
-    JSON.stringify(json)
-  )
+  if (existsSync(writePath)) {
+    unlinkSync(writePath)
+  }
+  writeFileSync(writePath, JSON.stringify(json))
 }
 
 generateScores()

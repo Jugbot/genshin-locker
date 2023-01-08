@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { Box, Button, Heading, Separator, Text } from './components'
-import { FaceIcon, ImageIcon, SunIcon } from '@radix-ui/react-icons'
+import { SunIcon } from '@radix-ui/react-icons'
 
 const App: React.FC = () => {
   return (

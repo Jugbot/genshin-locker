@@ -10,6 +10,7 @@ import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
 import { getRxStorageMemory } from 'rxdb/plugins/memory'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
+import databaseData from './data.json'
 
 addRxPlugin(RxDBJsonDumpPlugin)
 addRxPlugin(RxDBQueryBuilderPlugin)
@@ -74,6 +75,9 @@ export async function getDatabase() {
       schema: defaultSchema,
     },
   })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await db.importJSON(databaseData as any)
 
   return db
 }
