@@ -17,7 +17,8 @@
     "start": "electron-forge start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "scrape-data": "ts-node scripts/lineupScraper.ts"
+    "scrape-data": "ts-node scripts/lineupScraper.ts",
+    "initdb": "ts-node scripts/initDatabaseData.ts"
   },
   "keywords": [],
   "author": {
@@ -78,6 +79,8 @@
     "ref-napi": "3.0.3",
     "ref-struct-di": "1.1.1",
     "ref-union-di": "1.0.1",
+    "rxdb": "^13.17.1",
+    "rxjs": "^7.8.0",
     "sharp": "^0.31.2"
   },
   "engines": {

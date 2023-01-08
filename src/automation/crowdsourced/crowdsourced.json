@@ -1,200 +1,6269 @@
 {
-  "set": {
-    "DesertPavilionChronicle": 0.0050787728026534,
-    "EmblemOfSeveredFate": 0.15298507462686567,
-    "HuskOfOpulentDreams": 0.037201147042564955,
-    "TenacityOfTheMillelith": 0.08823072139303482,
-    "TheExile": 0.003083540630182421,
-    "MaidenBeloved": 0.010641238253178552,
-    "ThunderingFury": 0.03837582918739635,
-    "WanderersTroupe": 0.03743435599778883,
-    "ViridescentVenerer": 0.1027587755666114,
-    "NoblesseOblige": 0.12072450248756218,
-    "DeepwoodMemories": 0.07660482310668879,
-    "FlowerOfParadiseLost": 0.0020470563847429517,
-    "GildedDreams": 0.04871475953565506,
-    "OceanHuedClam": 0.03326250690989497,
-    "ShimenawasReminiscence": 0.03823763128800442,
-    "HeartOfDepth": 0.040440160309563294,
-    "BlizzardStrayer": 0.03089586788280818,
-    "VermillionHereafter": 0.006858070757324489,
-    "GladiatorsFinale": 0.05123687119955777,
-    "CrimsonWitchOfFlames": 0.0357500690989497,
-    "Instructor": 0.003601782752902156,
-    "RetracingBolide": 0.0027553206191265893,
-    "ArchaicPetra": 0.014225746268656716,
-    "EchoesOfAnOffering": 0.00777363184079602,
-    "BloodstainedChivalry": 0.0019952321724709785,
-    "PaleFlame": 0.006167081260364842,
-    "Thundersoother": 0.0016670121614151465,
-    "Lavawalker": 0.0004750552791597568,
-    "TravelingDoctor": 0.0000777363184079602,
-    "Adventurer": 0.0003109452736318408,
-    "DefendersWill": 0.0000777363184079602,
-    "Scholar": 0.0000777363184079602,
-    "Berserker": 0.0001554726368159204,
-    "BraveHeart": 0.0000777363184079602
-  },
-  "slot": {
-    "sands": {
-      "atk_": 0.3151979361444699,
-      "enerRech_": 0.19773615846890719,
-      "def_": 0.045576809623326366,
-      "hp_": 0.2175047746657734,
-      "eleMas": 0.22398432109752317
-    },
-    "goblet": {
-      "anemo_dmg_": 0.060555761096723226,
-      "def_": 0.02148849580529363,
-      "hp_": 0.15849890507664463,
-      "geo_dmg_": 0.06214564980451368,
-      "cryo_dmg_": 0.052606317557770954,
-      "electro_dmg_": 0.10597258191926565,
-      "eleMas": 0.14277000609957302,
-      "pyro_dmg_": 0.11557190996630236,
-      "dendro_dmg_": 0.06631535792494525,
-      "hydro_dmg_": 0.1440199186056976,
-      "atk_": 0.06271560990730649,
-      "physical_dmg_": 0.007339486235963482
-    },
-    "circlet": {
-      "critDMG_": 0.2990690651654384,
-      "atk_": 0.033687641865069444,
-      "def_": 0.015608907376483646,
-      "hp_": 0.10504264701470897,
-      "critRate_": 0.32313738038337314,
-      "eleMas": 0.1504194706370554,
-      "heal_": 0.07303488755787095
-    },
+  "DesertPavilionChronicle": {
     "flower": {
-      "hp": 1
+      "hp": {
+        "critDMG_": 1409,
+        "total": 5339,
+        "enerRech_": 719,
+        "critRate_": 1363,
+        "hp_": 22,
+        "atk_": 1064,
+        "eleMas": 236,
+        "atk": 451,
+        "hp": 22,
+        "def": 21,
+        "def_": 32
+      }
     },
     "plume": {
-      "atk": 1
+      "atk": {
+        "critDMG_": 1409,
+        "total": 5339,
+        "enerRech_": 719,
+        "critRate_": 1363,
+        "hp_": 22,
+        "atk_": 1064,
+        "eleMas": 236,
+        "atk": 451,
+        "hp": 22,
+        "def": 21,
+        "def_": 32
+      }
+    },
+    "sands": {
+      "hp_": {
+        "critDMG_": 11,
+        "total": 99,
+        "enerRech_": 11,
+        "critRate_": 11,
+        "hp_": 22,
+        "hp": 11,
+        "def": 11,
+        "def_": 11,
+        "atk_": 11
+      },
+      "atk_": {
+        "critDMG_": 1289,
+        "total": 4858,
+        "critRate_": 1275,
+        "atk_": 998,
+        "enerRech_": 621,
+        "eleMas": 214,
+        "atk": 430,
+        "hp": 11,
+        "def": 10,
+        "def_": 10
+      },
+      "enerRech_": {
+        "enerRech_": 76,
+        "total": 294,
+        "atk_": 44,
+        "critRate_": 66,
+        "critDMG_": 76,
+        "atk": 21,
+        "eleMas": 11
+      },
+      "def_": {
+        "critDMG_": 11,
+        "total": 33,
+        "def_": 11,
+        "atk_": 11
+      },
+      "eleMas": {
+        "critRate_": 11,
+        "total": 55,
+        "critDMG_": 22,
+        "eleMas": 11,
+        "enerRech_": 11
+      }
+    },
+    "goblet": {
+      "anemo_dmg_": {
+        "critDMG_": 1311,
+        "total": 4926,
+        "enerRech_": 698,
+        "critRate_": 1287,
+        "hp_": 11,
+        "atk_": 1009,
+        "eleMas": 203,
+        "atk": 387,
+        "def": 10,
+        "def_": 10
+      },
+      "hp_": {
+        "hp": 11,
+        "total": 55,
+        "hp_": 11,
+        "def": 11,
+        "def_": 11,
+        "atk_": 11
+      },
+      "atk_": {
+        "critDMG_": 66,
+        "total": 230,
+        "atk_": 33,
+        "atk": 54,
+        "critRate_": 44,
+        "def_": 11,
+        "eleMas": 11,
+        "hp": 11
+      },
+      "eleMas": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "enerRech_": 11,
+        "eleMas": 11
+      },
+      "dendro_dmg_": {
+        "critDMG_": 11,
+        "total": 44,
+        "critRate_": 11,
+        "eleMas": 11,
+        "atk_": 11
+      },
+      "physical_dmg_": {
+        "critDMG_": 10,
+        "total": 40,
+        "critRate_": 10,
+        "enerRech_": 10,
+        "atk": 10
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "critDMG_": 850,
+        "total": 3275,
+        "enerRech_": 438,
+        "critRate_": 858,
+        "hp_": 11,
+        "atk_": 719,
+        "eleMas": 150,
+        "atk": 249
+      },
+      "atk_": {
+        "critRate_": 33,
+        "total": 118,
+        "critDMG_": 43,
+        "atk": 21,
+        "eleMas": 11,
+        "enerRech_": 10
+      },
+      "critRate_": {
+        "critDMG_": 494,
+        "total": 1814,
+        "critRate_": 461,
+        "atk_": 334,
+        "enerRech_": 249,
+        "atk": 181,
+        "def_": 21,
+        "eleMas": 53,
+        "hp": 11,
+        "def": 10
+      },
+      "heal_": {
+        "hp": 11,
+        "total": 44,
+        "hp_": 11,
+        "def": 11,
+        "def_": 11
+      },
+      "hp_": {
+        "atk_": 11,
+        "total": 11
+      },
+      "eleMas": {
+        "critRate_": 11,
+        "total": 77,
+        "critDMG_": 22,
+        "enerRech_": 22,
+        "eleMas": 22
+      }
     }
   },
-  "substat": {
-    "critDMG_": 0.2020164095220632,
-    "critRate_": 0.21158038424709166,
-    "atk_": 0.1094734574961945,
-    "atk": 0.030129721957849822,
-    "enerRech_": 0.19311894429552273,
-    "def_": 0.013766768243878446,
-    "def": 0.006863010469147013,
-    "hp_": 0.07443950625907719,
-    "hp": 0.03475745166350875,
-    "eleMas": 0.12385434584566667
+  "ViridescentVenerer": {
+    "flower": {
+      "hp": {
+        "enerRech_": 8751,
+        "total": 36620,
+        "critRate_": 7275,
+        "critDMG_": 6864,
+        "eleMas": 8526,
+        "atk_": 3696,
+        "atk": 1228,
+        "hp": 118,
+        "hp_": 129,
+        "def_": 22,
+        "def": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 8751,
+        "total": 36620,
+        "critRate_": 7275,
+        "critDMG_": 6864,
+        "eleMas": 8526,
+        "atk_": 3696,
+        "atk": 1228,
+        "hp": 118,
+        "hp_": 129,
+        "def_": 22,
+        "def": 11
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 1239,
+        "total": 4474,
+        "critRate_": 998,
+        "critDMG_": 893,
+        "eleMas": 698,
+        "hp_": 22,
+        "atk_": 481,
+        "hp": 22,
+        "atk": 121
+      },
+      "eleMas": {
+        "eleMas": 6938,
+        "total": 22379,
+        "enerRech_": 5798,
+        "critRate_": 3942,
+        "critDMG_": 3647,
+        "atk_": 1384,
+        "hp": 43,
+        "atk": 562,
+        "hp_": 54,
+        "def_": 11
+      },
+      "atk_": {
+        "eleMas": 857,
+        "total": 9591,
+        "enerRech_": 1692,
+        "atk_": 1809,
+        "critDMG_": 2302,
+        "critRate_": 2302,
+        "atk": 534,
+        "def_": 11,
+        "hp": 53,
+        "hp_": 31
+      },
+      "hp_": {
+        "critRate_": 22,
+        "total": 88,
+        "eleMas": 22,
+        "hp_": 11,
+        "enerRech_": 22,
+        "critDMG_": 11
+      },
+      "def_": {
+        "def": 11,
+        "total": 88,
+        "atk": 11,
+        "atk_": 22,
+        "hp_": 11,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "eleMas": 11
+      }
+    },
+    "goblet": {
+      "anemo_dmg_": {
+        "enerRech_": 3118,
+        "total": 15958,
+        "critRate_": 3680,
+        "critDMG_": 3839,
+        "eleMas": 2446,
+        "atk_": 2168,
+        "hp_": 54,
+        "atk": 589,
+        "hp": 42,
+        "def_": 22
+      },
+      "eleMas": {
+        "eleMas": 5739,
+        "total": 18036,
+        "enerRech_": 5153,
+        "critRate_": 3118,
+        "critDMG_": 2526,
+        "atk_": 1020,
+        "atk": 436,
+        "hp": 11,
+        "hp_": 33
+      },
+      "atk_": {
+        "atk_": 454,
+        "total": 2246,
+        "enerRech_": 426,
+        "critRate_": 401,
+        "critDMG_": 434,
+        "atk": 181,
+        "hp": 43,
+        "eleMas": 287,
+        "hp_": 20
+      },
+      "pyro_dmg_": {
+        "eleMas": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "critRate_": 11,
+        "critDMG_": 11
+      },
+      "hp_": {
+        "critRate_": 22,
+        "total": 120,
+        "eleMas": 21,
+        "hp_": 11,
+        "enerRech_": 22,
+        "hp": 22,
+        "critDMG_": 11,
+        "atk": 11
+      },
+      "physical_dmg_": {
+        "critRate_": 22,
+        "total": 88,
+        "critDMG_": 22,
+        "enerRech_": 11,
+        "atk_": 22,
+        "eleMas": 11
+      },
+      "hydro_dmg_": {
+        "def": 11,
+        "total": 44,
+        "atk": 11,
+        "atk_": 11,
+        "hp_": 11
+      },
+      "electro_dmg_": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "atk_": 11,
+        "eleMas": 11
+      },
+      "dendro_dmg_": {
+        "enerRech_": 10,
+        "total": 40,
+        "critRate_": 10,
+        "critDMG_": 10,
+        "atk_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 1633,
+        "total": 7681,
+        "critRate_": 1906,
+        "critDMG_": 1830,
+        "eleMas": 983,
+        "atk_": 1091,
+        "atk": 196,
+        "def_": 11,
+        "hp_": 21,
+        "hp": 10
+      },
+      "heal_": {
+        "enerRech_": 184,
+        "total": 853,
+        "critRate_": 205,
+        "critDMG_": 172,
+        "eleMas": 140,
+        "atk": 32,
+        "atk_": 65,
+        "hp_": 33,
+        "hp": 22
+      },
+      "eleMas": {
+        "eleMas": 6220,
+        "total": 19541,
+        "enerRech_": 5519,
+        "critRate_": 3296,
+        "critDMG_": 2868,
+        "atk_": 1093,
+        "atk": 491,
+        "hp_": 44,
+        "hp": 10
+      },
+      "critDMG_": {
+        "atk_": 1212,
+        "total": 7110,
+        "enerRech_": 1093,
+        "critRate_": 1720,
+        "critDMG_": 1770,
+        "hp": 32,
+        "atk": 349,
+        "eleMas": 914,
+        "hp_": 20
+      },
+      "atk_": {
+        "eleMas": 269,
+        "total": 1391,
+        "atk_": 224,
+        "enerRech_": 311,
+        "critDMG_": 213,
+        "critRate_": 148,
+        "atk": 160,
+        "hp": 44,
+        "def": 11,
+        "hp_": 11
+      },
+      "hp_": {
+        "atk_": 11,
+        "total": 44,
+        "def_": 11,
+        "enerRech_": 11,
+        "critDMG_": 11
+      }
+    }
   },
-  "association": {
-    "critDMG_": {
-      "critRate_": 0.1410319751063959,
-      "atk_": 0.06715509096740083,
-      "atk": 0.014449038319855076,
-      "enerRech_": 0.09573896386440267,
-      "hp_": 0.02493694255922199,
-      "hp": 0.006238569484532508,
-      "def_": 0.0064032555841589305,
-      "def": 0.0023619453762210607,
-      "eleMas": 0.06115921678758093
+  "TenacityOfTheMillelith": {
+    "flower": {
+      "hp": {
+        "critRate_": 6216,
+        "total": 35461,
+        "def_": 204,
+        "critDMG_": 5402,
+        "enerRech_": 6521,
+        "hp_": 8940,
+        "eleMas": 1858,
+        "hp": 4213,
+        "atk_": 1633,
+        "atk": 314,
+        "def": 160
+      }
     },
-    "critRate_": {
-      "critDMG_": 0.1410319751063959,
-      "atk_": 0.06850291667750127,
-      "atk": 0.01419334148096142,
-      "enerRech_": 0.1032365152421319,
-      "hp_": 0.028024806927217413,
-      "hp": 0.007787918974438984,
-      "def_": 0.007909266626795294,
-      "def": 0.0031767081848991514,
-      "eleMas": 0.06403472276395282
+    "plume": {
+      "atk": {
+        "critRate_": 6216,
+        "total": 35461,
+        "def_": 204,
+        "critDMG_": 5402,
+        "enerRech_": 6521,
+        "hp_": 8940,
+        "eleMas": 1858,
+        "hp": 4213,
+        "atk_": 1633,
+        "atk": 314,
+        "def": 160
+      }
     },
-    "atk_": {
-      "critDMG_": 0.06715509096740083,
-      "critRate_": 0.06850291667750127,
-      "atk": 0.009644971439963249,
-      "enerRech_": 0.0477004619878479,
-      "def_": 0.0011549696197484638,
-      "def": 0.000340206811070373,
-      "hp_": 0.008325315720588363,
-      "hp": 0.002769326780560106,
-      "eleMas": 0.02623926289968883
+    "sands": {
+      "hp_": {
+        "critRate_": 5327,
+        "total": 30457,
+        "def_": 150,
+        "critDMG_": 4535,
+        "enerRech_": 5468,
+        "hp_": 8187,
+        "eleMas": 1343,
+        "hp": 3932,
+        "atk_": 1162,
+        "atk": 237,
+        "def": 116
+      },
+      "eleMas": {
+        "eleMas": 331,
+        "total": 1121,
+        "hp_": 269,
+        "critRate_": 95,
+        "critDMG_": 83,
+        "enerRech_": 235,
+        "hp": 108
+      },
+      "enerRech_": {
+        "critRate_": 386,
+        "total": 2175,
+        "critDMG_": 355,
+        "enerRech_": 626,
+        "atk_": 193,
+        "hp_": 376,
+        "def_": 22,
+        "hp": 119,
+        "eleMas": 76,
+        "def": 11,
+        "atk": 11
+      },
+      "atk_": {
+        "critDMG_": 387,
+        "total": 1538,
+        "enerRech_": 171,
+        "hp_": 97,
+        "atk": 55,
+        "hp": 43,
+        "critRate_": 366,
+        "atk_": 278,
+        "eleMas": 108,
+        "def_": 11,
+        "def": 22
+      },
+      "def_": {
+        "critRate_": 42,
+        "total": 170,
+        "critDMG_": 42,
+        "hp_": 11,
+        "enerRech_": 21,
+        "def_": 21,
+        "def": 11,
+        "hp": 11,
+        "atk": 11
+      }
     },
-    "atk": {
-      "critDMG_": 0.014449038319855076,
-      "critRate_": 0.01419334148096142,
-      "atk_": 0.009644971439963249,
-      "def_": 0.0002947014414367562,
-      "def": 0.0004940582988792677,
-      "hp_": 0.002034740099331721,
-      "hp": 0.0030921982127224347,
-      "enerRech_": 0.00916608159762852,
-      "eleMas": 0.004951417600610205
+    "goblet": {
+      "geo_dmg_": {
+        "critRate_": 1865,
+        "total": 7722,
+        "def_": 76,
+        "critDMG_": 1865,
+        "enerRech_": 976,
+        "hp_": 1739,
+        "atk_": 634,
+        "hp": 385,
+        "atk": 85,
+        "def": 75,
+        "eleMas": 22
+      },
+      "hp_": {
+        "hp_": 6232,
+        "total": 21742,
+        "eleMas": 1194,
+        "enerRech_": 4366,
+        "hp": 3452,
+        "atk_": 562,
+        "atk": 152,
+        "critRate_": 3159,
+        "critDMG_": 2463,
+        "def": 54,
+        "def_": 108
+      },
+      "hydro_dmg_": {
+        "critRate_": 583,
+        "total": 2658,
+        "critDMG_": 518,
+        "hp_": 584,
+        "enerRech_": 519,
+        "atk_": 118,
+        "eleMas": 118,
+        "atk": 44,
+        "hp": 174
+      },
+      "electro_dmg_": {
+        "critRate_": 259,
+        "total": 1026,
+        "critDMG_": 259,
+        "enerRech_": 162,
+        "atk_": 194,
+        "atk": 11,
+        "eleMas": 108,
+        "hp_": 22,
+        "hp": 11
+      },
+      "cryo_dmg_": {
+        "critRate_": 43,
+        "total": 305,
+        "critDMG_": 43,
+        "enerRech_": 52,
+        "hp_": 53,
+        "hp": 62,
+        "eleMas": 32,
+        "atk_": 10,
+        "def": 10
+      },
+      "eleMas": {
+        "eleMas": 319,
+        "total": 1127,
+        "hp_": 268,
+        "enerRech_": 265,
+        "critDMG_": 74,
+        "critRate_": 106,
+        "hp": 85,
+        "def": 10
+      },
+      "pyro_dmg_": {
+        "critRate_": 32,
+        "total": 128,
+        "critDMG_": 32,
+        "eleMas": 32,
+        "hp_": 21,
+        "enerRech_": 11
+      },
+      "anemo_dmg_": {
+        "enerRech_": 95,
+        "total": 315,
+        "critRate_": 84,
+        "critDMG_": 73,
+        "atk_": 63
+      },
+      "atk_": {
+        "critDMG_": 54,
+        "total": 247,
+        "critRate_": 53,
+        "enerRech_": 32,
+        "atk": 22,
+        "eleMas": 11,
+        "atk_": 42,
+        "hp_": 11,
+        "hp": 22
+      },
+      "dendro_dmg_": {
+        "critDMG_": 11,
+        "total": 44,
+        "critRate_": 11,
+        "eleMas": 11,
+        "enerRech_": 11
+      },
+      "def_": {
+        "hp": 22,
+        "total": 147,
+        "enerRech_": 32,
+        "eleMas": 11,
+        "def": 11,
+        "critRate_": 21,
+        "atk_": 10,
+        "hp_": 10,
+        "def_": 20,
+        "critDMG_": 10
+      }
     },
-    "enerRech_": {
-      "atk_": 0.0477004619878479,
-      "critDMG_": 0.09573896386440267,
-      "critRate_": 0.1032365152421319,
-      "def_": 0.00603271185999948,
-      "def": 0.0021452531398705047,
-      "eleMas": 0.057029062762739335,
-      "hp_": 0.03770661604736025,
-      "hp": 0.015675516377599223,
-      "atk": 0.00916608159762852
+    "circlet": {
+      "def_": {
+        "critRate_": 21,
+        "total": 136,
+        "def_": 31,
+        "critDMG_": 32,
+        "enerRech_": 21,
+        "def": 11,
+        "atk_": 10,
+        "hp_": 10
+      },
+      "heal_": {
+        "hp_": 921,
+        "total": 3188,
+        "eleMas": 502,
+        "enerRech_": 822,
+        "hp": 557,
+        "critDMG_": 119,
+        "atk_": 117,
+        "critRate_": 129,
+        "atk": 21
+      },
+      "hp_": {
+        "hp_": 5031,
+        "total": 17705,
+        "hp": 2863,
+        "eleMas": 906,
+        "enerRech_": 3340,
+        "atk_": 519,
+        "atk": 151,
+        "critRate_": 2608,
+        "critDMG_": 2094,
+        "def": 74,
+        "def_": 119
+      },
+      "critRate_": {
+        "critRate_": 2257,
+        "total": 8990,
+        "critDMG_": 2000,
+        "hp_": 1837,
+        "enerRech_": 1474,
+        "atk_": 667,
+        "eleMas": 205,
+        "atk": 44,
+        "hp": 441,
+        "def_": 22,
+        "def": 43
+      },
+      "eleMas": {
+        "eleMas": 170,
+        "total": 637,
+        "hp_": 160,
+        "critRate_": 52,
+        "critDMG_": 51,
+        "enerRech_": 118,
+        "hp": 64,
+        "def_": 11,
+        "def": 11
+      },
+      "critDMG_": {
+        "critDMG_": 1095,
+        "total": 4699,
+        "enerRech_": 725,
+        "hp_": 971,
+        "atk": 87,
+        "critRate_": 1138,
+        "hp": 288,
+        "atk_": 309,
+        "def_": 11,
+        "eleMas": 64,
+        "def": 11
+      },
+      "atk_": {
+        "eleMas": 11,
+        "total": 106,
+        "atk_": 11,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "atk": 11,
+        "enerRech_": 21,
+        "def": 10,
+        "def_": 10,
+        "hp_": 10
+      }
+    }
+  },
+  "EmblemOfSeveredFate": {
+    "flower": {
+      "hp": {
+        "enerRech_": 17454,
+        "total": 68662,
+        "critRate_": 16816,
+        "critDMG_": 16447,
+        "atk_": 8634,
+        "eleMas": 4215,
+        "hp_": 2422,
+        "atk": 1358,
+        "def_": 429,
+        "def": 141,
+        "hp": 746
+      }
     },
-    "def_": {
-      "def": 0.0036685995614149135,
-      "enerRech_": 0.00603271185999948,
-      "atk_": 0.0011549696197484638,
-      "critDMG_": 0.0064032555841589305,
-      "critRate_": 0.007909266626795294,
-      "atk": 0.0002947014414367562,
-      "eleMas": 0.00029903528616376734,
-      "hp_": 0.0007584228272269461,
-      "hp": 0.0004312175503376065
+    "plume": {
+      "atk": {
+        "enerRech_": 17454,
+        "total": 68662,
+        "critRate_": 16816,
+        "critDMG_": 16447,
+        "atk_": 8634,
+        "eleMas": 4215,
+        "hp_": 2422,
+        "atk": 1358,
+        "def_": 429,
+        "def": 141,
+        "hp": 746
+      }
     },
-    "def": {
-      "def_": 0.0036685995614149135,
-      "enerRech_": 0.0021452531398705047,
-      "atk_": 0.000340206811070373,
-      "critDMG_": 0.0023619453762210607,
-      "critRate_": 0.0031767081848991514,
-      "atk": 0.0004940582988792677,
-      "hp_": 0.00050272598833329,
-      "hp": 0.0005352298237858734,
-      "eleMas": 0.0001365161089008503
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 9880,
+        "total": 37132,
+        "critRate_": 9163,
+        "critDMG_": 8924,
+        "atk_": 4996,
+        "eleMas": 2478,
+        "def_": 152,
+        "def": 55,
+        "atk": 892,
+        "hp_": 506,
+        "hp": 86
+      },
+      "hp_": {
+        "critRate_": 1947,
+        "total": 8753,
+        "critDMG_": 1892,
+        "hp_": 1786,
+        "atk_": 175,
+        "hp": 607,
+        "enerRech_": 1969,
+        "eleMas": 270,
+        "atk": 63,
+        "def_": 33,
+        "def": 11
+      },
+      "atk_": {
+        "critRate_": 5103,
+        "total": 20176,
+        "critDMG_": 5123,
+        "enerRech_": 4947,
+        "atk_": 3430,
+        "atk": 359,
+        "hp_": 97,
+        "eleMas": 1086,
+        "def": 11,
+        "hp": 20
+      },
+      "eleMas": {
+        "enerRech_": 403,
+        "total": 1688,
+        "eleMas": 381,
+        "critDMG_": 370,
+        "critRate_": 402,
+        "hp": 33,
+        "hp_": 33,
+        "atk": 44,
+        "atk_": 22
+      },
+      "def_": {
+        "enerRech_": 255,
+        "total": 913,
+        "def_": 244,
+        "critDMG_": 138,
+        "critRate_": 201,
+        "def": 64,
+        "atk_": 11
+      }
     },
-    "hp_": {
-      "hp": 0.019573809709545725,
-      "critRate_": 0.028024806927217413,
-      "critDMG_": 0.02493694255922199,
-      "atk_": 0.008325315720588363,
-      "atk": 0.002034740099331721,
-      "enerRech_": 0.03770661604736025,
-      "eleMas": 0.015881374002132253,
-      "def": 0.00050272598833329,
-      "def_": 0.0007584228272269461
+    "goblet": {
+      "electro_dmg_": {
+        "enerRech_": 3836,
+        "total": 14747,
+        "critRate_": 3733,
+        "critDMG_": 3677,
+        "atk_": 2410,
+        "eleMas": 532,
+        "atk": 504,
+        "hp_": 22,
+        "def_": 33
+      },
+      "hydro_dmg_": {
+        "enerRech_": 5643,
+        "total": 22893,
+        "atk_": 2633,
+        "critRate_": 5719,
+        "eleMas": 934,
+        "critDMG_": 5663,
+        "hp_": 1658,
+        "hp": 373,
+        "atk": 270
+      },
+      "geo_dmg_": {
+        "critRate_": 66,
+        "total": 363,
+        "critDMG_": 88,
+        "hp_": 33,
+        "atk_": 33,
+        "enerRech_": 99,
+        "def_": 33,
+        "def": 11
+      },
+      "atk_": {
+        "critRate_": 2723,
+        "total": 10968,
+        "critDMG_": 2711,
+        "enerRech_": 2865,
+        "atk_": 1903,
+        "atk": 382,
+        "hp_": 11,
+        "eleMas": 373
+      },
+      "def_": {
+        "enerRech_": 385,
+        "total": 1325,
+        "critRate_": 309,
+        "def_": 352,
+        "def": 119,
+        "critDMG_": 160
+      },
+      "pyro_dmg_": {
+        "critRate_": 2939,
+        "total": 11773,
+        "critDMG_": 2970,
+        "enerRech_": 2939,
+        "atk_": 1076,
+        "eleMas": 1753,
+        "atk": 85,
+        "hp_": 11
+      },
+      "cryo_dmg_": {
+        "critRate_": 215,
+        "total": 893,
+        "critDMG_": 162,
+        "enerRech_": 215,
+        "atk_": 182,
+        "hp": 11,
+        "hp_": 22,
+        "eleMas": 54,
+        "atk": 21,
+        "def": 11
+      },
+      "eleMas": {
+        "critRate_": 97,
+        "total": 546,
+        "hp": 22,
+        "eleMas": 138,
+        "enerRech_": 149,
+        "critDMG_": 86,
+        "hp_": 11,
+        "atk_": 32,
+        "atk": 11
+      },
+      "anemo_dmg_": {
+        "enerRech_": 468,
+        "total": 1705,
+        "atk_": 246,
+        "critRate_": 426,
+        "critDMG_": 416,
+        "eleMas": 85,
+        "hp": 11,
+        "atk": 53
+      },
+      "hp_": {
+        "hp": 329,
+        "total": 2860,
+        "enerRech_": 716,
+        "critRate_": 439,
+        "critDMG_": 375,
+        "hp_": 654,
+        "eleMas": 227,
+        "def_": 11,
+        "atk_": 77,
+        "atk": 32
+      },
+      "dendro_dmg_": {
+        "critDMG_": 118,
+        "total": 505,
+        "critRate_": 129,
+        "eleMas": 119,
+        "enerRech_": 118,
+        "atk_": 21
+      },
+      "physical_dmg_": {
+        "critRate_": 21,
+        "total": 84,
+        "critDMG_": 21,
+        "enerRech_": 21,
+        "atk_": 21
+      }
     },
-    "hp": {
-      "hp_": 0.019573809709545725,
-      "critRate_": 0.007787918974438984,
-      "critDMG_": 0.006238569484532508,
-      "atk_": 0.002769326780560106,
-      "atk": 0.0030921982127224347,
-      "eleMas": 0.007075001516845655,
-      "enerRech_": 0.015675516377599223,
-      "def": 0.0005352298237858734,
-      "def_": 0.0004312175503376065
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 9865,
+        "total": 38699,
+        "critRate_": 9732,
+        "critDMG_": 9517,
+        "atk_": 5263,
+        "eleMas": 2417,
+        "hp_": 820,
+        "def_": 245,
+        "def": 65,
+        "atk": 531,
+        "hp": 244
+      },
+      "atk_": {
+        "enerRech_": 378,
+        "total": 1571,
+        "critDMG_": 314,
+        "critRate_": 315,
+        "atk_": 260,
+        "atk": 142,
+        "hp_": 33,
+        "eleMas": 107,
+        "hp": 11,
+        "def": 11
+      },
+      "critDMG_": {
+        "critDMG_": 6014,
+        "total": 23969,
+        "critRate_": 6082,
+        "atk_": 2969,
+        "enerRech_": 5939,
+        "hp_": 849,
+        "hp": 235,
+        "atk": 631,
+        "eleMas": 1250
+      },
+      "eleMas": {
+        "eleMas": 203,
+        "total": 622,
+        "enerRech_": 182,
+        "atk_": 33,
+        "critDMG_": 75,
+        "critRate_": 96,
+        "hp": 11,
+        "hp_": 11,
+        "atk": 11
+      },
+      "heal_": {
+        "hp": 64,
+        "total": 623,
+        "enerRech_": 183,
+        "critRate_": 97,
+        "critDMG_": 75,
+        "atk_": 32,
+        "atk": 21,
+        "hp_": 75,
+        "eleMas": 65,
+        "def_": 11
+      },
+      "hp_": {
+        "hp_": 634,
+        "total": 2715,
+        "eleMas": 173,
+        "enerRech_": 756,
+        "critDMG_": 409,
+        "critRate_": 419,
+        "hp": 181,
+        "def_": 44,
+        "atk_": 77,
+        "atk": 22
+      },
+      "def_": {
+        "enerRech_": 151,
+        "total": 463,
+        "def_": 129,
+        "critDMG_": 43,
+        "critRate_": 75,
+        "def": 65
+      }
+    }
+  },
+  "NoblesseOblige": {
+    "flower": {
+      "hp": {
+        "enerRech_": 12905,
+        "total": 51992,
+        "critRate_": 10314,
+        "critDMG_": 9434,
+        "eleMas": 2253,
+        "atk_": 5531,
+        "def_": 388,
+        "hp_": 6728,
+        "atk": 1717,
+        "hp": 2464,
+        "def": 258
+      }
     },
-    "eleMas": {
-      "critRate_": 0.06403472276395282,
-      "critDMG_": 0.06115921678758093,
-      "atk_": 0.02623926289968883,
-      "enerRech_": 0.057029062762739335,
-      "hp_": 0.015881374002132253,
-      "hp": 0.007075001516845655,
-      "atk": 0.004951417600610205,
-      "def_": 0.00029903528616376734,
-      "def": 0.0001365161089008503
+    "plume": {
+      "atk": {
+        "enerRech_": 12905,
+        "total": 51992,
+        "critRate_": 10314,
+        "critDMG_": 9434,
+        "eleMas": 2253,
+        "atk_": 5531,
+        "def_": 388,
+        "hp_": 6728,
+        "atk": 1717,
+        "hp": 2464,
+        "def": 258
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 6777,
+        "total": 24105,
+        "critRate_": 4706,
+        "critDMG_": 4136,
+        "eleMas": 1089,
+        "atk_": 2045,
+        "hp_": 3409,
+        "atk": 607,
+        "hp": 1090,
+        "def_": 139,
+        "def": 107
+      },
+      "atk_": {
+        "critDMG_": 3457,
+        "total": 15083,
+        "critRate_": 3501,
+        "enerRech_": 3170,
+        "atk_": 2855,
+        "eleMas": 475,
+        "atk": 800,
+        "hp_": 589,
+        "hp": 193,
+        "def_": 22,
+        "def": 21
+      },
+      "def_": {
+        "enerRech_": 130,
+        "total": 765,
+        "def_": 205,
+        "critDMG_": 139,
+        "critRate_": 117,
+        "def": 119,
+        "atk_": 22,
+        "hp": 11,
+        "atk": 11,
+        "hp_": 11
+      },
+      "hp_": {
+        "critRate_": 1732,
+        "total": 10644,
+        "hp": 1149,
+        "enerRech_": 2517,
+        "atk": 247,
+        "hp_": 2697,
+        "eleMas": 333,
+        "critDMG_": 1433,
+        "atk_": 514,
+        "def": 11,
+        "def_": 11
+      },
+      "eleMas": {
+        "eleMas": 356,
+        "total": 1395,
+        "critRate_": 258,
+        "critDMG_": 269,
+        "hp": 21,
+        "enerRech_": 311,
+        "def_": 11,
+        "hp_": 22,
+        "atk_": 95,
+        "atk": 52
+      }
+    },
+    "goblet": {
+      "cryo_dmg_": {
+        "enerRech_": 434,
+        "total": 1809,
+        "critRate_": 455,
+        "critDMG_": 435,
+        "atk_": 318,
+        "eleMas": 53,
+        "atk": 61,
+        "hp": 11,
+        "hp_": 42
+      },
+      "dendro_dmg_": {
+        "enerRech_": 146,
+        "total": 607,
+        "critRate_": 147,
+        "eleMas": 126,
+        "critDMG_": 126,
+        "atk": 21,
+        "atk_": 41
+      },
+      "pyro_dmg_": {
+        "critRate_": 2544,
+        "total": 11858,
+        "critDMG_": 2535,
+        "atk_": 1262,
+        "enerRech_": 3085,
+        "hp_": 1246,
+        "eleMas": 648,
+        "atk": 301,
+        "hp": 237
+      },
+      "atk_": {
+        "critDMG_": 580,
+        "total": 3660,
+        "critRate_": 581,
+        "enerRech_": 840,
+        "atk_": 708,
+        "atk": 398,
+        "eleMas": 186,
+        "hp_": 217,
+        "hp": 150
+      },
+      "def_": {
+        "enerRech_": 194,
+        "total": 979,
+        "def_": 248,
+        "critDMG_": 128,
+        "critRate_": 182,
+        "def": 172,
+        "hp": 11,
+        "atk": 11,
+        "atk_": 11,
+        "hp_": 22
+      },
+      "hp_": {
+        "enerRech_": 4695,
+        "total": 16796,
+        "hp_": 4471,
+        "critRate_": 2428,
+        "critDMG_": 1673,
+        "eleMas": 487,
+        "atk_": 697,
+        "hp": 1881,
+        "atk": 432,
+        "def": 32
+      },
+      "geo_dmg_": {
+        "critRate_": 938,
+        "total": 3890,
+        "enerRech_": 557,
+        "critDMG_": 992,
+        "atk_": 432,
+        "hp": 120,
+        "atk": 65,
+        "hp_": 592,
+        "def": 54,
+        "def_": 129,
+        "eleMas": 11
+      },
+      "hydro_dmg_": {
+        "enerRech_": 1969,
+        "total": 8437,
+        "atk": 225,
+        "critRate_": 2105,
+        "critDMG_": 2075,
+        "atk_": 1474,
+        "eleMas": 430,
+        "hp": 43,
+        "hp_": 116
+      },
+      "anemo_dmg_": {
+        "enerRech_": 487,
+        "total": 1942,
+        "critRate_": 468,
+        "critDMG_": 457,
+        "atk_": 329,
+        "eleMas": 117,
+        "atk": 84
+      },
+      "eleMas": {
+        "enerRech_": 152,
+        "total": 500,
+        "eleMas": 131,
+        "critRate_": 87,
+        "critDMG_": 65,
+        "def_": 11,
+        "hp_": 22,
+        "atk": 11,
+        "hp": 11,
+        "atk_": 10
+      },
+      "electro_dmg_": {
+        "enerRech_": 335,
+        "total": 1426,
+        "atk_": 238,
+        "critRate_": 357,
+        "critDMG_": 346,
+        "atk": 97,
+        "eleMas": 53
+      },
+      "physical_dmg_": {
+        "critRate_": 22,
+        "total": 88,
+        "critDMG_": 22,
+        "atk": 11,
+        "atk_": 11,
+        "eleMas": 11,
+        "enerRech_": 11
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 5207,
+        "total": 21281,
+        "critRate_": 5093,
+        "critDMG_": 4777,
+        "eleMas": 875,
+        "atk_": 2753,
+        "hp_": 1552,
+        "atk": 432,
+        "hp": 290,
+        "def_": 205,
+        "def": 97
+      },
+      "def_": {
+        "enerRech_": 86,
+        "total": 429,
+        "def_": 118,
+        "critDMG_": 53,
+        "critRate_": 42,
+        "def": 97,
+        "atk_": 22,
+        "hp_": 11
+      },
+      "heal_": {
+        "enerRech_": 3001,
+        "total": 10049,
+        "hp_": 2495,
+        "critRate_": 1359,
+        "critDMG_": 1054,
+        "eleMas": 314,
+        "hp": 989,
+        "atk_": 525,
+        "atk": 290,
+        "def": 22
+      },
+      "hp_": {
+        "enerRech_": 1736,
+        "total": 6792,
+        "hp_": 1787,
+        "critRate_": 929,
+        "critDMG_": 716,
+        "hp": 874,
+        "eleMas": 312,
+        "atk_": 267,
+        "atk": 161,
+        "def": 10
+      },
+      "atk_": {
+        "enerRech_": 587,
+        "total": 2643,
+        "atk": 386,
+        "critRate_": 365,
+        "critDMG_": 386,
+        "atk_": 566,
+        "eleMas": 118,
+        "hp_": 139,
+        "hp": 85,
+        "def_": 11
+      },
+      "critDMG_": {
+        "critRate_": 2399,
+        "total": 9988,
+        "critDMG_": 2332,
+        "enerRech_": 2084,
+        "atk_": 1346,
+        "eleMas": 388,
+        "hp": 215,
+        "atk": 416,
+        "hp_": 733,
+        "def": 32,
+        "def_": 43
+      },
+      "eleMas": {
+        "enerRech_": 204,
+        "total": 810,
+        "eleMas": 246,
+        "critRate_": 127,
+        "critDMG_": 116,
+        "def_": 11,
+        "hp_": 11,
+        "atk_": 52,
+        "atk": 32,
+        "hp": 11
+      }
+    }
+  },
+  "CrimsonWitchOfFlames": {
+    "flower": {
+      "hp": {
+        "critRate_": 2785,
+        "total": 11826,
+        "critDMG_": 2923,
+        "enerRech_": 1011,
+        "hp": 439,
+        "eleMas": 1650,
+        "atk_": 1217,
+        "hp_": 1095,
+        "atk": 619,
+        "def_": 54,
+        "def": 33
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 2785,
+        "total": 11826,
+        "critDMG_": 2923,
+        "enerRech_": 1011,
+        "hp": 439,
+        "eleMas": 1650,
+        "atk_": 1217,
+        "hp_": 1095,
+        "atk": 619,
+        "def_": 54,
+        "def": 33
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "critRate_": 239,
+        "total": 1386,
+        "critDMG_": 261,
+        "enerRech_": 313,
+        "eleMas": 238,
+        "atk_": 184,
+        "hp": 11,
+        "hp_": 65,
+        "atk": 42,
+        "def_": 33
+      },
+      "eleMas": {
+        "hp": 21,
+        "total": 845,
+        "critDMG_": 216,
+        "critRate_": 206,
+        "eleMas": 195,
+        "enerRech_": 44,
+        "hp_": 97,
+        "atk_": 44,
+        "atk": 22
+      },
+      "hp_": {
+        "hp": 332,
+        "total": 4779,
+        "critDMG_": 1232,
+        "critRate_": 1178,
+        "eleMas": 718,
+        "hp_": 804,
+        "enerRech_": 160,
+        "atk_": 216,
+        "atk": 107,
+        "def_": 21,
+        "def": 11
+      },
+      "atk_": {
+        "critRate_": 1162,
+        "total": 4805,
+        "critDMG_": 1214,
+        "atk_": 773,
+        "enerRech_": 494,
+        "atk": 448,
+        "eleMas": 499,
+        "hp_": 129,
+        "hp": 75,
+        "def": 11
+      },
+      "def_": {
+        "def": 11,
+        "total": 11
+      }
+    },
+    "goblet": {
+      "pyro_dmg_": {
+        "critRate_": 2604,
+        "total": 10786,
+        "critDMG_": 2731,
+        "enerRech_": 840,
+        "hp": 374,
+        "eleMas": 1553,
+        "atk_": 1120,
+        "hp_": 998,
+        "atk": 533,
+        "def": 11,
+        "def_": 22
+      },
+      "hp_": {
+        "critRate_": 76,
+        "total": 348,
+        "hp": 55,
+        "enerRech_": 76,
+        "hp_": 55,
+        "critDMG_": 54,
+        "eleMas": 11,
+        "atk": 11,
+        "atk_": 10
+      },
+      "atk_": {
+        "atk_": 54,
+        "total": 398,
+        "critRate_": 53,
+        "critDMG_": 86,
+        "hp_": 22,
+        "eleMas": 55,
+        "enerRech_": 64,
+        "atk": 53,
+        "def_": 11
+      },
+      "geo_dmg_": {
+        "def_": 11,
+        "total": 44,
+        "def": 11,
+        "atk_": 11,
+        "atk": 11
+      },
+      "eleMas": {
+        "critRate_": 31,
+        "total": 136,
+        "critDMG_": 31,
+        "atk_": 11,
+        "atk": 11,
+        "eleMas": 31,
+        "enerRech_": 21
+      },
+      "electro_dmg_": {
+        "critRate_": 11,
+        "total": 33,
+        "critDMG_": 11,
+        "atk_": 11
+      },
+      "physical_dmg_": {
+        "def": 11,
+        "total": 51,
+        "hp_": 10,
+        "hp": 10,
+        "critDMG_": 10,
+        "critRate_": 10
+      },
+      "def_": {
+        "def_": 10,
+        "total": 30,
+        "hp_": 10,
+        "enerRech_": 10
+      }
+    },
+    "circlet": {
+      "heal_": {
+        "critRate_": 22,
+        "total": 132,
+        "critDMG_": 22,
+        "enerRech_": 33,
+        "hp_": 11,
+        "atk_": 11,
+        "def_": 11,
+        "eleMas": 11,
+        "atk": 11
+      },
+      "critDMG_": {
+        "hp": 245,
+        "total": 5760,
+        "critDMG_": 1517,
+        "critRate_": 1432,
+        "eleMas": 706,
+        "atk_": 670,
+        "enerRech_": 379,
+        "hp_": 470,
+        "atk": 319,
+        "def_": 11,
+        "def": 11
+      },
+      "critRate_": {
+        "hp_": 517,
+        "total": 4580,
+        "critDMG_": 1157,
+        "critRate_": 1137,
+        "enerRech_": 365,
+        "atk_": 376,
+        "eleMas": 719,
+        "atk": 159,
+        "hp": 150
+      },
+      "atk_": {
+        "atk": 120,
+        "total": 835,
+        "atk_": 129,
+        "critRate_": 98,
+        "critDMG_": 153,
+        "enerRech_": 118,
+        "eleMas": 130,
+        "hp_": 54,
+        "def": 11,
+        "def_": 22
+      },
+      "hp_": {
+        "critRate_": 64,
+        "total": 330,
+        "hp": 44,
+        "enerRech_": 74,
+        "hp_": 33,
+        "critDMG_": 53,
+        "eleMas": 42,
+        "atk_": 20
+      },
+      "eleMas": {
+        "eleMas": 42,
+        "total": 148,
+        "enerRech_": 32,
+        "critDMG_": 21,
+        "critRate_": 32,
+        "atk_": 11,
+        "atk": 10
+      },
+      "def_": {
+        "def": 11,
+        "total": 41,
+        "def_": 10,
+        "hp_": 10,
+        "enerRech_": 10
+      }
+    }
+  },
+  "HeartOfDepth": {
+    "flower": {
+      "hp": {
+        "eleMas": 1115,
+        "total": 15031,
+        "enerRech_": 2619,
+        "critRate_": 3574,
+        "critDMG_": 3638,
+        "hp_": 900,
+        "atk_": 2186,
+        "atk": 645,
+        "hp": 311,
+        "def": 21,
+        "def_": 22
+      }
+    },
+    "plume": {
+      "atk": {
+        "eleMas": 1115,
+        "total": 15031,
+        "enerRech_": 2619,
+        "critRate_": 3574,
+        "critDMG_": 3638,
+        "hp_": 900,
+        "atk_": 2186,
+        "atk": 645,
+        "hp": 311,
+        "def": 21,
+        "def_": 22
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "eleMas": 150,
+        "total": 2222,
+        "enerRech_": 590,
+        "critRate_": 536,
+        "critDMG_": 536,
+        "atk": 97,
+        "atk_": 237,
+        "hp_": 55,
+        "def_": 11,
+        "hp": 10
+      },
+      "hp_": {
+        "critRate_": 684,
+        "total": 3024,
+        "critDMG_": 597,
+        "hp_": 696,
+        "enerRech_": 447,
+        "eleMas": 170,
+        "hp": 259,
+        "atk_": 97,
+        "atk": 64,
+        "def": 10
+      },
+      "atk_": {
+        "critRate_": 2257,
+        "total": 9276,
+        "critDMG_": 2408,
+        "enerRech_": 1474,
+        "eleMas": 697,
+        "atk_": 1819,
+        "atk": 441,
+        "hp_": 138,
+        "hp": 31,
+        "def": 11
+      },
+      "eleMas": {
+        "atk": 43,
+        "total": 465,
+        "atk_": 22,
+        "eleMas": 87,
+        "enerRech_": 108,
+        "critRate_": 86,
+        "critDMG_": 86,
+        "hp_": 11,
+        "def_": 11,
+        "hp": 11
+      },
+      "def_": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "eleMas": 11,
+        "atk_": 11
+      }
+    },
+    "goblet": {
+      "hydro_dmg_": {
+        "eleMas": 1018,
+        "total": 13585,
+        "enerRech_": 2447,
+        "critRate_": 3286,
+        "critDMG_": 3360,
+        "hp_": 685,
+        "atk_": 2048,
+        "atk": 516,
+        "hp": 203,
+        "def": 11,
+        "def_": 11
+      },
+      "hp_": {
+        "critDMG_": 117,
+        "total": 619,
+        "hp_": 149,
+        "critRate_": 128,
+        "enerRech_": 96,
+        "hp": 76,
+        "atk": 11,
+        "eleMas": 42
+      },
+      "eleMas": {
+        "atk": 11,
+        "total": 140,
+        "atk_": 11,
+        "eleMas": 33,
+        "enerRech_": 32,
+        "hp_": 11,
+        "critRate_": 21,
+        "critDMG_": 11,
+        "def": 10
+      },
+      "atk_": {
+        "enerRech_": 44,
+        "total": 665,
+        "atk": 96,
+        "critRate_": 139,
+        "critDMG_": 139,
+        "hp_": 55,
+        "eleMas": 22,
+        "atk_": 127,
+        "def_": 11,
+        "hp": 32
+      },
+      "def_": {
+        "critDMG_": 11,
+        "total": 22,
+        "atk": 11
+      }
+    },
+    "circlet": {
+      "atk_": {
+        "eleMas": 32,
+        "total": 582,
+        "enerRech_": 118,
+        "critRate_": 107,
+        "critDMG_": 118,
+        "atk": 86,
+        "atk_": 66,
+        "hp_": 22,
+        "def": 11,
+        "def_": 11,
+        "hp": 11
+      },
+      "critRate_": {
+        "critRate_": 1721,
+        "total": 7061,
+        "critDMG_": 1754,
+        "hp_": 366,
+        "enerRech_": 1293,
+        "atk_": 1066,
+        "eleMas": 525,
+        "atk": 261,
+        "hp": 75
+      },
+      "critDMG_": {
+        "critRate_": 1597,
+        "total": 6384,
+        "critDMG_": 1617,
+        "enerRech_": 1027,
+        "eleMas": 438,
+        "atk_": 1012,
+        "hp_": 278,
+        "hp": 139,
+        "atk": 276
+      },
+      "hp_": {
+        "hp_": 192,
+        "total": 746,
+        "hp": 55,
+        "critRate_": 116,
+        "critDMG_": 116,
+        "enerRech_": 127,
+        "eleMas": 87,
+        "atk": 22,
+        "atk_": 21,
+        "def": 10
+      },
+      "heal_": {
+        "critDMG_": 11,
+        "total": 126,
+        "critRate_": 11,
+        "enerRech_": 21,
+        "eleMas": 11,
+        "hp_": 31,
+        "hp": 31,
+        "atk_": 10
+      },
+      "eleMas": {
+        "enerRech_": 22,
+        "total": 88,
+        "eleMas": 22,
+        "critDMG_": 22,
+        "critRate_": 22
+      },
+      "def_": {
+        "enerRech_": 11,
+        "total": 44,
+        "hp_": 11,
+        "def_": 11,
+        "atk_": 11
+      }
+    }
+  },
+  "ThunderingFury": {
+    "flower": {
+      "hp": {
+        "enerRech_": 1989,
+        "total": 14833,
+        "eleMas": 2310,
+        "atk_": 2637,
+        "critRate_": 3615,
+        "critDMG_": 3649,
+        "atk": 513,
+        "hp_": 76,
+        "hp": 44
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 1989,
+        "total": 14833,
+        "eleMas": 2310,
+        "atk_": 2637,
+        "critRate_": 3615,
+        "critDMG_": 3649,
+        "atk": 513,
+        "hp_": 76,
+        "hp": 44
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 310,
+        "total": 1110,
+        "eleMas": 107,
+        "atk_": 150,
+        "critRate_": 234,
+        "atk": 64,
+        "critDMG_": 245
+      },
+      "atk_": {
+        "critRate_": 2791,
+        "total": 11307,
+        "critDMG_": 2898,
+        "atk_": 2174,
+        "eleMas": 1604,
+        "atk": 406,
+        "enerRech_": 1391,
+        "hp": 22,
+        "hp_": 21
+      },
+      "eleMas": {
+        "critDMG_": 462,
+        "total": 2196,
+        "critRate_": 535,
+        "eleMas": 577,
+        "atk_": 302,
+        "enerRech_": 266,
+        "atk": 32,
+        "hp_": 11,
+        "hp": 11
+      },
+      "def_": {
+        "critRate_": 11,
+        "total": 44,
+        "eleMas": 11,
+        "atk": 11,
+        "enerRech_": 11
+      },
+      "hp_": {
+        "atk_": 11,
+        "total": 176,
+        "critRate_": 44,
+        "critDMG_": 44,
+        "hp_": 44,
+        "enerRech_": 11,
+        "eleMas": 11,
+        "hp": 11
+      }
+    },
+    "goblet": {
+      "electro_dmg_": {
+        "enerRech_": 1752,
+        "total": 13483,
+        "eleMas": 2024,
+        "atk_": 2466,
+        "critRate_": 3346,
+        "critDMG_": 3382,
+        "atk": 426,
+        "hp_": 54,
+        "hp": 33
+      },
+      "eleMas": {
+        "enerRech_": 75,
+        "total": 542,
+        "critDMG_": 95,
+        "critRate_": 107,
+        "eleMas": 169,
+        "atk_": 74,
+        "hp_": 11,
+        "hp": 11
+      },
+      "atk_": {
+        "atk_": 86,
+        "total": 570,
+        "atk": 87,
+        "enerRech_": 108,
+        "critRate_": 108,
+        "eleMas": 74,
+        "critDMG_": 107
+      },
+      "hydro_dmg_": {
+        "critRate_": 11,
+        "total": 33,
+        "enerRech_": 11,
+        "critDMG_": 11
+      },
+      "hp_": {
+        "hp_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "critRate_": 11,
+        "critDMG_": 11
+      },
+      "physical_dmg_": {
+        "critDMG_": 43,
+        "total": 161,
+        "critRate_": 32,
+        "atk_": 11,
+        "eleMas": 43,
+        "enerRech_": 32
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 921,
+        "total": 6903,
+        "eleMas": 908,
+        "atk_": 1378,
+        "critRate_": 1762,
+        "critDMG_": 1731,
+        "hp_": 11,
+        "atk": 181,
+        "hp": 11
+      },
+      "critDMG_": {
+        "critRate_": 1649,
+        "total": 6732,
+        "critDMG_": 1661,
+        "atk_": 1121,
+        "eleMas": 1170,
+        "atk": 235,
+        "enerRech_": 853,
+        "hp_": 32,
+        "hp": 11
+      },
+      "atk_": {
+        "atk": 75,
+        "total": 727,
+        "enerRech_": 108,
+        "critDMG_": 182,
+        "critRate_": 139,
+        "eleMas": 95,
+        "atk_": 117,
+        "hp": 11
+      },
+      "eleMas": {
+        "enerRech_": 96,
+        "total": 383,
+        "eleMas": 126,
+        "critRate_": 43,
+        "critDMG_": 53,
+        "atk": 22,
+        "hp_": 11,
+        "hp": 11,
+        "atk_": 21
+      },
+      "heal_": {
+        "hp_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "critRate_": 11,
+        "critDMG_": 11
+      },
+      "hp_": {
+        "hp_": 11,
+        "total": 44,
+        "eleMas": 11,
+        "critRate_": 11,
+        "critDMG_": 11
+      }
+    }
+  },
+  "GildedDreams": {
+    "flower": {
+      "hp": {
+        "enerRech_": 2700,
+        "total": 16044,
+        "critRate_": 2991,
+        "atk_": 1321,
+        "eleMas": 4492,
+        "critDMG_": 2865,
+        "hp_": 1052,
+        "hp": 354,
+        "atk": 236,
+        "def_": 22,
+        "def": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 2700,
+        "total": 16044,
+        "critRate_": 2991,
+        "atk_": 1321,
+        "eleMas": 4492,
+        "critDMG_": 2865,
+        "hp_": 1052,
+        "hp": 354,
+        "atk": 236,
+        "def_": 22,
+        "def": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "enerRech_": 279,
+        "total": 2805,
+        "critRate_": 644,
+        "atk_": 449,
+        "eleMas": 644,
+        "critDMG_": 653,
+        "atk": 116,
+        "hp_": 10,
+        "hp": 10
+      },
+      "eleMas": {
+        "enerRech_": 1969,
+        "total": 11169,
+        "eleMas": 3351,
+        "critDMG_": 1937,
+        "critRate_": 2063,
+        "atk_": 818,
+        "hp_": 665,
+        "hp": 246,
+        "atk": 109,
+        "def_": 11
+      },
+      "hp_": {
+        "eleMas": 311,
+        "total": 1338,
+        "hp_": 355,
+        "critRate_": 121,
+        "critDMG_": 132,
+        "hp": 98,
+        "enerRech_": 267,
+        "def_": 11,
+        "atk_": 32,
+        "atk": 11
+      },
+      "enerRech_": {
+        "eleMas": 186,
+        "total": 699,
+        "critRate_": 152,
+        "critDMG_": 132,
+        "enerRech_": 185,
+        "atk_": 22,
+        "hp_": 22
+      },
+      "def_": {
+        "critDMG_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "def": 11
+      }
+    },
+    "goblet": {
+      "electro_dmg_": {
+        "enerRech_": 543,
+        "total": 4157,
+        "critRate_": 1005,
+        "atk_": 535,
+        "eleMas": 1016,
+        "critDMG_": 942,
+        "atk": 64,
+        "def_": 11,
+        "hp_": 31,
+        "hp": 10
+      },
+      "eleMas": {
+        "enerRech_": 1468,
+        "total": 7222,
+        "eleMas": 2304,
+        "critDMG_": 974,
+        "critRate_": 1047,
+        "atk_": 409,
+        "hp_": 697,
+        "hp": 257,
+        "def_": 11,
+        "atk": 55
+      },
+      "dendro_dmg_": {
+        "critRate_": 711,
+        "total": 3005,
+        "critDMG_": 711,
+        "enerRech_": 398,
+        "atk_": 323,
+        "eleMas": 775,
+        "atk": 76,
+        "hp": 11
+      },
+      "anemo_dmg_": {
+        "eleMas": 44,
+        "total": 143,
+        "enerRech_": 44,
+        "critRate_": 22,
+        "critDMG_": 22,
+        "atk_": 11
+      },
+      "hp_": {
+        "eleMas": 246,
+        "total": 971,
+        "hp": 76,
+        "hp_": 291,
+        "critRate_": 88,
+        "critDMG_": 77,
+        "enerRech_": 182,
+        "atk_": 11
+      },
+      "atk_": {
+        "critRate_": 53,
+        "total": 243,
+        "critDMG_": 63,
+        "atk_": 11,
+        "enerRech_": 33,
+        "eleMas": 42,
+        "atk": 41
+      },
+      "hydro_dmg_": {
+        "critDMG_": 44,
+        "total": 143,
+        "critRate_": 33,
+        "eleMas": 33,
+        "enerRech_": 11,
+        "atk_": 11,
+        "hp_": 11
+      },
+      "pyro_dmg_": {
+        "critRate_": 21,
+        "total": 117,
+        "critDMG_": 21,
+        "eleMas": 32,
+        "hp_": 22,
+        "enerRech_": 11,
+        "atk_": 10
+      },
+      "geo_dmg_": {
+        "critDMG_": 11,
+        "total": 43,
+        "critRate_": 11,
+        "def": 11,
+        "enerRech_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 463,
+        "total": 3401,
+        "critRate_": 804,
+        "atk_": 362,
+        "eleMas": 836,
+        "critDMG_": 839,
+        "hp_": 33,
+        "atk": 64
+      },
+      "eleMas": {
+        "enerRech_": 1514,
+        "total": 7062,
+        "eleMas": 2255,
+        "critDMG_": 899,
+        "critRate_": 1038,
+        "atk_": 411,
+        "hp_": 644,
+        "hp": 235,
+        "def_": 11,
+        "atk": 55
+      },
+      "critDMG_": {
+        "critRate_": 1018,
+        "total": 4153,
+        "critDMG_": 1006,
+        "enerRech_": 467,
+        "atk_": 484,
+        "eleMas": 1050,
+        "atk": 95,
+        "hp_": 22,
+        "def": 11
+      },
+      "hp_": {
+        "eleMas": 212,
+        "total": 922,
+        "hp": 76,
+        "hp_": 246,
+        "critRate_": 77,
+        "critDMG_": 77,
+        "enerRech_": 202,
+        "def_": 11,
+        "atk_": 21
+      },
+      "heal_": {
+        "hp_": 107,
+        "total": 309,
+        "eleMas": 106,
+        "enerRech_": 32,
+        "hp": 32,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "atk_": 10
+      },
+      "atk_": {
+        "enerRech_": 22,
+        "total": 197,
+        "eleMas": 33,
+        "critDMG_": 33,
+        "critRate_": 43,
+        "atk": 22,
+        "atk_": 33,
+        "hp": 11
+      }
+    }
+  },
+  "OceanHuedClam": {
+    "flower": {
+      "hp": {
+        "hp_": 3162,
+        "total": 11548,
+        "enerRech_": 2593,
+        "atk_": 739,
+        "hp": 2263,
+        "eleMas": 1738,
+        "critRate_": 398,
+        "critDMG_": 321,
+        "atk": 250,
+        "def_": 63,
+        "def": 21
+      }
+    },
+    "plume": {
+      "atk": {
+        "hp_": 3162,
+        "total": 11548,
+        "enerRech_": 2593,
+        "atk_": 739,
+        "hp": 2263,
+        "eleMas": 1738,
+        "critRate_": 398,
+        "critDMG_": 321,
+        "atk": 250,
+        "def_": 63,
+        "def": 21
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "hp_": 119,
+        "total": 488,
+        "enerRech_": 130,
+        "atk_": 43,
+        "hp": 76,
+        "atk": 33,
+        "critRate_": 22,
+        "eleMas": 65
+      },
+      "hp_": {
+        "hp_": 2947,
+        "total": 10009,
+        "hp": 2102,
+        "enerRech_": 2273,
+        "eleMas": 1579,
+        "critRate_": 250,
+        "atk_": 493,
+        "critDMG_": 184,
+        "atk": 118,
+        "def_": 42,
+        "def": 21
+      },
+      "atk_": {
+        "atk_": 192,
+        "total": 812,
+        "atk": 99,
+        "critRate_": 106,
+        "critDMG_": 117,
+        "enerRech_": 138,
+        "hp_": 54,
+        "hp": 64,
+        "eleMas": 42
+      },
+      "eleMas": {
+        "hp_": 42,
+        "total": 187,
+        "eleMas": 52,
+        "hp": 21,
+        "enerRech_": 31,
+        "atk_": 11,
+        "critDMG_": 20,
+        "critRate_": 10
+      },
+      "def_": {
+        "def_": 21,
+        "total": 52,
+        "enerRech_": 21,
+        "critRate_": 10
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "hp_": 2164,
+        "total": 7344,
+        "enerRech_": 1686,
+        "atk_": 269,
+        "hp": 1642,
+        "critRate_": 207,
+        "eleMas": 1098,
+        "critDMG_": 151,
+        "atk": 86,
+        "def_": 31,
+        "def": 10
+      },
+      "hydro_dmg_": {
+        "hp_": 901,
+        "total": 3063,
+        "hp": 513,
+        "enerRech_": 686,
+        "eleMas": 524,
+        "atk_": 277,
+        "critRate_": 54,
+        "critDMG_": 54,
+        "atk": 54
+      },
+      "cryo_dmg_": {
+        "hp": 44,
+        "total": 186,
+        "enerRech_": 21,
+        "hp_": 22,
+        "critDMG_": 33,
+        "critRate_": 33,
+        "def_": 11,
+        "def": 11,
+        "atk": 11
+      },
+      "atk_": {
+        "atk_": 171,
+        "total": 563,
+        "atk": 77,
+        "critRate_": 73,
+        "critDMG_": 73,
+        "enerRech_": 105,
+        "hp_": 22,
+        "eleMas": 21,
+        "hp": 21
+      },
+      "electro_dmg_": {
+        "hp_": 11,
+        "total": 44,
+        "hp": 11,
+        "enerRech_": 11,
+        "eleMas": 11
+      },
+      "eleMas": {
+        "eleMas": 73,
+        "total": 230,
+        "hp_": 31,
+        "enerRech_": 63,
+        "atk": 11,
+        "atk_": 11,
+        "hp": 21,
+        "critDMG_": 10,
+        "critRate_": 10
+      },
+      "def_": {
+        "def_": 21,
+        "total": 74,
+        "enerRech_": 21,
+        "atk": 11,
+        "atk_": 11,
+        "critRate_": 10
+      },
+      "physical_dmg_": {
+        "hp_": 11,
+        "total": 44,
+        "eleMas": 11,
+        "critRate_": 11,
+        "hp": 11
+      }
+    },
+    "circlet": {
+      "heal_": {
+        "hp_": 2180,
+        "total": 7794,
+        "enerRech_": 1891,
+        "atk_": 493,
+        "hp": 1475,
+        "eleMas": 1199,
+        "critRate_": 235,
+        "critDMG_": 169,
+        "def_": 22,
+        "def": 11,
+        "atk": 119
+      },
+      "hp_": {
+        "hp": 745,
+        "total": 3253,
+        "hp_": 918,
+        "enerRech_": 651,
+        "eleMas": 497,
+        "atk_": 171,
+        "critRate_": 77,
+        "atk": 76,
+        "critDMG_": 77,
+        "def_": 31,
+        "def": 10
+      },
+      "critRate_": {
+        "hp": 11,
+        "total": 151,
+        "critRate_": 43,
+        "critDMG_": 33,
+        "atk": 22,
+        "hp_": 11,
+        "atk_": 11,
+        "def_": 10,
+        "enerRech_": 10
+      },
+      "critDMG_": {
+        "atk_": 11,
+        "total": 120,
+        "atk": 11,
+        "critRate_": 33,
+        "critDMG_": 22,
+        "hp_": 11,
+        "eleMas": 11,
+        "hp": 11,
+        "enerRech_": 10
+      },
+      "atk_": {
+        "hp_": 22,
+        "total": 160,
+        "enerRech_": 21,
+        "atk_": 53,
+        "atk": 22,
+        "eleMas": 11,
+        "hp": 11,
+        "critRate_": 10,
+        "critDMG_": 10
+      },
+      "eleMas": {
+        "eleMas": 20,
+        "total": 70,
+        "enerRech_": 10,
+        "hp_": 20,
+        "hp": 10,
+        "critDMG_": 10
+      }
+    }
+  },
+  "ShimenawasReminiscence": {
+    "flower": {
+      "hp": {
+        "critRate_": 3833,
+        "total": 15409,
+        "critDMG_": 3718,
+        "atk_": 3192,
+        "eleMas": 1492,
+        "enerRech_": 1773,
+        "atk": 991,
+        "hp_": 324,
+        "hp": 64,
+        "def": 22
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 3833,
+        "total": 15409,
+        "critDMG_": 3718,
+        "atk_": 3192,
+        "eleMas": 1492,
+        "enerRech_": 1773,
+        "atk": 991,
+        "hp_": 324,
+        "hp": 64,
+        "def": 22
+      }
+    },
+    "sands": {
+      "atk_": {
+        "critRate_": 3274,
+        "total": 13077,
+        "critDMG_": 3159,
+        "atk_": 2882,
+        "eleMas": 1190,
+        "atk": 906,
+        "hp_": 65,
+        "enerRech_": 1579,
+        "def": 11,
+        "hp": 11
+      },
+      "enerRech_": {
+        "eleMas": 22,
+        "total": 501,
+        "atk_": 109,
+        "enerRech_": 130,
+        "atk": 43,
+        "hp": 11,
+        "critRate_": 88,
+        "critDMG_": 98
+      },
+      "eleMas": {
+        "critDMG_": 180,
+        "total": 719,
+        "critRate_": 179,
+        "eleMas": 149,
+        "atk_": 148,
+        "enerRech_": 32,
+        "atk": 21,
+        "hp_": 10
+      },
+      "hp_": {
+        "critDMG_": 281,
+        "total": 1101,
+        "critRate_": 292,
+        "hp_": 249,
+        "eleMas": 131,
+        "hp": 42,
+        "enerRech_": 32,
+        "atk_": 53,
+        "atk": 21
+      },
+      "def_": {
+        "def": 11,
+        "total": 11
+      }
+    },
+    "goblet": {
+      "electro_dmg_": {
+        "critRate_": 1124,
+        "total": 4561,
+        "critDMG_": 1135,
+        "atk_": 998,
+        "eleMas": 566,
+        "enerRech_": 578,
+        "atk": 160
+      },
+      "atk_": {
+        "atk_": 546,
+        "total": 2289,
+        "atk": 329,
+        "hp_": 21,
+        "eleMas": 55,
+        "enerRech_": 439,
+        "critDMG_": 429,
+        "critRate_": 470
+      },
+      "anemo_dmg_": {
+        "critDMG_": 430,
+        "total": 1798,
+        "critRate_": 492,
+        "atk_": 417,
+        "enerRech_": 287,
+        "atk": 98,
+        "eleMas": 74
+      },
+      "pyro_dmg_": {
+        "atk": 276,
+        "total": 4144,
+        "hp": 54,
+        "critDMG_": 1053,
+        "critRate_": 1097,
+        "enerRech_": 131,
+        "atk_": 731,
+        "hp_": 217,
+        "eleMas": 585
+      },
+      "cryo_dmg_": {
+        "critRate_": 157,
+        "total": 678,
+        "critDMG_": 167,
+        "enerRech_": 94,
+        "atk_": 125,
+        "atk": 42,
+        "eleMas": 73,
+        "hp": 10,
+        "hp_": 10
+      },
+      "hydro_dmg_": {
+        "critDMG_": 238,
+        "total": 906,
+        "critRate_": 237,
+        "atk": 32,
+        "eleMas": 75,
+        "enerRech_": 140,
+        "atk_": 162,
+        "def": 11,
+        "hp_": 11
+      },
+      "geo_dmg_": {
+        "critRate_": 181,
+        "total": 712,
+        "critDMG_": 191,
+        "atk_": 148,
+        "atk": 43,
+        "enerRech_": 94,
+        "hp_": 44,
+        "def": 11
+      },
+      "eleMas": {
+        "eleMas": 22,
+        "total": 66,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "atk_": 11,
+        "atk": 11
+      },
+      "dendro_dmg_": {
+        "critDMG_": 42,
+        "total": 168,
+        "critRate_": 42,
+        "atk_": 32,
+        "eleMas": 42,
+        "enerRech_": 10
+      },
+      "hp_": {
+        "hp_": 21,
+        "total": 54,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "atk_": 11
+      },
+      "physical_dmg_": {
+        "atk_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "critDMG_": 11
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "critRate_": 1930,
+        "total": 7404,
+        "critDMG_": 1865,
+        "atk_": 1552,
+        "eleMas": 790,
+        "enerRech_": 658,
+        "atk": 489,
+        "hp_": 99,
+        "hp": 21
+      },
+      "critRate_": {
+        "eleMas": 615,
+        "total": 6184,
+        "atk_": 1189,
+        "enerRech_": 742,
+        "atk": 267,
+        "hp": 32,
+        "critDMG_": 1573,
+        "critRate_": 1594,
+        "hp_": 172
+      },
+      "atk_": {
+        "atk_": 408,
+        "total": 1638,
+        "atk": 202,
+        "hp_": 33,
+        "eleMas": 54,
+        "enerRech_": 341,
+        "critDMG_": 269,
+        "critRate_": 309,
+        "def": 11,
+        "hp": 11
+      },
+      "heal_": {
+        "atk_": 33,
+        "total": 131,
+        "atk": 33,
+        "enerRech_": 32,
+        "eleMas": 11,
+        "critDMG_": 11,
+        "def": 11
+      },
+      "eleMas": {
+        "eleMas": 22,
+        "total": 22
+      },
+      "hp_": {
+        "hp_": 20,
+        "total": 30,
+        "atk_": 10
+      }
+    }
+  },
+  "DeepwoodMemories": {
+    "flower": {
+      "hp": {
+        "eleMas": 6574,
+        "total": 24618,
+        "critRate_": 5582,
+        "critDMG_": 5306,
+        "enerRech_": 4378,
+        "atk_": 2066,
+        "atk": 398,
+        "hp": 97,
+        "hp_": 163,
+        "def_": 32,
+        "def": 22
+      }
+    },
+    "plume": {
+      "atk": {
+        "eleMas": 6574,
+        "total": 24618,
+        "critRate_": 5582,
+        "critDMG_": 5306,
+        "enerRech_": 4378,
+        "atk_": 2066,
+        "atk": 398,
+        "hp": 97,
+        "hp_": 163,
+        "def_": 32,
+        "def": 22
+      }
+    },
+    "sands": {
+      "eleMas": {
+        "eleMas": 5452,
+        "total": 19056,
+        "critRate_": 4364,
+        "critDMG_": 4118,
+        "enerRech_": 3393,
+        "atk_": 1447,
+        "atk": 195,
+        "hp": 43,
+        "hp_": 44
+      },
+      "enerRech_": {
+        "critRate_": 654,
+        "total": 2747,
+        "enerRech_": 672,
+        "eleMas": 542,
+        "critDMG_": 569,
+        "atk_": 223,
+        "atk": 65,
+        "def_": 11,
+        "def": 11
+      },
+      "atk_": {
+        "eleMas": 503,
+        "total": 2379,
+        "critDMG_": 565,
+        "critRate_": 521,
+        "atk_": 374,
+        "atk": 138,
+        "enerRech_": 247,
+        "def": 11,
+        "hp_": 10,
+        "def_": 10
+      },
+      "hp_": {
+        "hp_": 98,
+        "total": 392,
+        "critRate_": 32,
+        "critDMG_": 43,
+        "eleMas": 77,
+        "hp": 54,
+        "enerRech_": 66,
+        "atk_": 22
+      },
+      "def_": {
+        "hp_": 11,
+        "total": 44,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "def_": 11
+      }
+    },
+    "goblet": {
+      "eleMas": {
+        "eleMas": 2775,
+        "total": 9261,
+        "critRate_": 1960,
+        "critDMG_": 1833,
+        "enerRech_": 1879,
+        "atk_": 662,
+        "hp": 32,
+        "atk": 87,
+        "hp_": 33
+      },
+      "dendro_dmg_": {
+        "eleMas": 3564,
+        "total": 14106,
+        "atk_": 1266,
+        "enerRech_": 2326,
+        "critRate_": 3431,
+        "critDMG_": 3230,
+        "atk": 235,
+        "hp_": 22,
+        "def_": 21,
+        "hp": 11
+      },
+      "atk_": {
+        "critRate_": 107,
+        "total": 621,
+        "critDMG_": 138,
+        "eleMas": 128,
+        "enerRech_": 86,
+        "atk": 55,
+        "atk_": 96,
+        "def": 11
+      },
+      "hp_": {
+        "hp_": 108,
+        "total": 367,
+        "critRate_": 32,
+        "critDMG_": 42,
+        "eleMas": 76,
+        "hp": 54,
+        "enerRech_": 44,
+        "atk_": 11
+      },
+      "electro_dmg_": {
+        "enerRech_": 32,
+        "total": 135,
+        "eleMas": 31,
+        "atk_": 21,
+        "critDMG_": 31,
+        "critRate_": 20
+      },
+      "geo_dmg_": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "def_": 11,
+        "def": 11
+      },
+      "physical_dmg_": {
+        "enerRech_": 11,
+        "total": 84,
+        "atk": 21,
+        "critRate_": 21,
+        "critDMG_": 21,
+        "atk_": 10
+      }
+    },
+    "circlet": {
+      "eleMas": {
+        "eleMas": 3168,
+        "total": 10416,
+        "critRate_": 2126,
+        "critDMG_": 2020,
+        "enerRech_": 2078,
+        "atk_": 773,
+        "atk": 175,
+        "hp": 32,
+        "hp_": 44
+      },
+      "critRate_": {
+        "eleMas": 1816,
+        "total": 7559,
+        "atk_": 629,
+        "enerRech_": 1261,
+        "critRate_": 1954,
+        "critDMG_": 1804,
+        "atk": 42,
+        "def_": 11,
+        "def": 22,
+        "hp_": 10,
+        "hp": 10
+      },
+      "critDMG_": {
+        "eleMas": 1409,
+        "total": 5662,
+        "critDMG_": 1356,
+        "critRate_": 1376,
+        "atk_": 558,
+        "hp": 11,
+        "enerRech_": 847,
+        "atk": 95,
+        "hp_": 10
+      },
+      "hp_": {
+        "hp_": 66,
+        "total": 275,
+        "critRate_": 44,
+        "critDMG_": 33,
+        "eleMas": 22,
+        "hp": 22,
+        "enerRech_": 44,
+        "def_": 11,
+        "atk_": 22,
+        "atk": 11
+      },
+      "atk_": {
+        "eleMas": 106,
+        "total": 526,
+        "critRate_": 62,
+        "critDMG_": 73,
+        "atk_": 84,
+        "atk": 75,
+        "enerRech_": 116,
+        "def_": 10
+      },
+      "heal_": {
+        "hp_": 33,
+        "total": 140,
+        "hp": 22,
+        "enerRech_": 22,
+        "eleMas": 43,
+        "critRate_": 10,
+        "critDMG_": 10
+      },
+      "def_": {
+        "eleMas": 10,
+        "total": 40,
+        "critRate_": 10,
+        "critDMG_": 10,
+        "enerRech_": 10
+      }
+    }
+  },
+  "BlizzardStrayer": {
+    "flower": {
+      "hp": {
+        "atk_": 2260,
+        "total": 11616,
+        "critDMG_": 3020,
+        "critRate_": 2819,
+        "atk": 836,
+        "enerRech_": 1933,
+        "eleMas": 437,
+        "hp_": 172,
+        "hp": 128,
+        "def": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk_": 2260,
+        "total": 11616,
+        "critDMG_": 3020,
+        "critRate_": 2819,
+        "atk": 836,
+        "enerRech_": 1933,
+        "eleMas": 437,
+        "hp_": 172,
+        "hp": 128,
+        "def": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk_": 2103,
+        "total": 10110,
+        "critDMG_": 2705,
+        "critRate_": 2522,
+        "atk": 760,
+        "enerRech_": 1625,
+        "eleMas": 330,
+        "hp_": 32,
+        "hp": 22,
+        "def": 11
+      },
+      "hp_": {
+        "enerRech_": 86,
+        "total": 631,
+        "hp_": 140,
+        "hp": 106,
+        "critRate_": 106,
+        "eleMas": 33,
+        "critDMG_": 95,
+        "atk": 33,
+        "atk_": 32
+      },
+      "eleMas": {
+        "critDMG_": 63,
+        "total": 275,
+        "critRate_": 43,
+        "enerRech_": 64,
+        "eleMas": 63,
+        "atk": 11,
+        "atk_": 31
+      },
+      "enerRech_": {
+        "critDMG_": 157,
+        "total": 600,
+        "atk_": 94,
+        "enerRech_": 158,
+        "critRate_": 148,
+        "atk": 32,
+        "eleMas": 11
+      }
+    },
+    "goblet": {
+      "cryo_dmg_": {
+        "atk_": 2176,
+        "total": 10694,
+        "critDMG_": 2860,
+        "critRate_": 2658,
+        "atk": 707,
+        "enerRech_": 1794,
+        "eleMas": 350,
+        "hp_": 96,
+        "hp": 42,
+        "def": 11
+      },
+      "atk_": {
+        "atk_": 73,
+        "total": 521,
+        "atk": 85,
+        "enerRech_": 85,
+        "eleMas": 43,
+        "critRate_": 107,
+        "critDMG_": 128
+      },
+      "hp_": {
+        "enerRech_": 43,
+        "total": 280,
+        "hp_": 76,
+        "hp": 64,
+        "critRate_": 32,
+        "eleMas": 22,
+        "atk": 11,
+        "atk_": 11,
+        "critDMG_": 21
+      },
+      "electro_dmg_": {
+        "atk": 11,
+        "total": 11
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 44,
+        "atk": 11,
+        "hp": 11,
+        "critRate_": 11
+      },
+      "physical_dmg_": {
+        "critDMG_": 11,
+        "total": 44,
+        "critRate_": 11,
+        "enerRech_": 11,
+        "eleMas": 11
+      },
+      "def_": {
+        "hp": 11,
+        "total": 22,
+        "atk": 11
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "atk_": 1687,
+        "total": 8154,
+        "critDMG_": 2198,
+        "critRate_": 2008,
+        "atk": 578,
+        "enerRech_": 1386,
+        "eleMas": 244,
+        "hp_": 22,
+        "hp": 31
+      },
+      "heal_": {
+        "atk_": 11,
+        "total": 161,
+        "atk": 11,
+        "enerRech_": 22,
+        "eleMas": 11,
+        "hp_": 21,
+        "hp": 32,
+        "critRate_": 32,
+        "critDMG_": 21
+      },
+      "critRate_": {
+        "critRate_": 670,
+        "total": 2523,
+        "atk": 161,
+        "enerRech_": 375,
+        "critDMG_": 671,
+        "eleMas": 107,
+        "atk_": 519,
+        "hp_": 20
+      },
+      "atk_": {
+        "critDMG_": 86,
+        "total": 407,
+        "eleMas": 53,
+        "hp_": 11,
+        "enerRech_": 85,
+        "critRate_": 65,
+        "atk": 64,
+        "atk_": 21,
+        "hp": 11,
+        "def": 11
+      },
+      "hp_": {
+        "critDMG_": 33,
+        "total": 338,
+        "critRate_": 33,
+        "hp_": 98,
+        "enerRech_": 54,
+        "hp": 54,
+        "eleMas": 22,
+        "atk": 22,
+        "atk_": 22
+      },
+      "eleMas": {
+        "enerRech_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "critDMG_": 11
+      }
+    }
+  },
+  "GladiatorsFinale": {
+    "flower": {
+      "hp": {
+        "critDMG_": 4744,
+        "total": 19921,
+        "critRate_": 4704,
+        "enerRech_": 3023,
+        "atk_": 4064,
+        "atk": 1075,
+        "hp_": 472,
+        "eleMas": 1537,
+        "hp": 160,
+        "def_": 98,
+        "def": 44
+      }
+    },
+    "plume": {
+      "atk": {
+        "critDMG_": 4744,
+        "total": 19921,
+        "critRate_": 4704,
+        "enerRech_": 3023,
+        "atk_": 4064,
+        "atk": 1075,
+        "hp_": 472,
+        "eleMas": 1537,
+        "hp": 160,
+        "def_": 98,
+        "def": 44
+      }
+    },
+    "sands": {
+      "atk_": {
+        "critDMG_": 4107,
+        "total": 16713,
+        "critRate_": 4066,
+        "enerRech_": 2487,
+        "atk_": 3663,
+        "atk": 943,
+        "hp_": 218,
+        "eleMas": 1154,
+        "hp": 64,
+        "def": 11
+      },
+      "hp_": {
+        "critDMG_": 200,
+        "total": 845,
+        "critRate_": 157,
+        "enerRech_": 108,
+        "hp_": 189,
+        "hp": 74,
+        "eleMas": 21,
+        "atk_": 52,
+        "def_": 11,
+        "atk": 33
+      },
+      "enerRech_": {
+        "critDMG_": 162,
+        "total": 1003,
+        "critRate_": 184,
+        "enerRech_": 279,
+        "hp_": 32,
+        "atk_": 170,
+        "eleMas": 88,
+        "atk": 55,
+        "hp": 22,
+        "def": 11
+      },
+      "eleMas": {
+        "eleMas": 274,
+        "total": 1067,
+        "enerRech_": 117,
+        "critRate_": 221,
+        "critDMG_": 199,
+        "atk": 44,
+        "hp_": 33,
+        "atk_": 168,
+        "def_": 11
+      },
+      "def_": {
+        "def_": 76,
+        "total": 293,
+        "atk_": 11,
+        "critRate_": 76,
+        "critDMG_": 76,
+        "enerRech_": 32,
+        "def": 22
+      }
+    },
+    "goblet": {
+      "atk_": {
+        "critDMG_": 443,
+        "total": 2720,
+        "critRate_": 495,
+        "enerRech_": 520,
+        "atk_": 710,
+        "atk": 362,
+        "eleMas": 105,
+        "def": 11,
+        "hp": 42,
+        "hp_": 32
+      },
+      "anemo_dmg_": {
+        "critDMG_": 849,
+        "total": 3373,
+        "critRate_": 852,
+        "atk_": 756,
+        "enerRech_": 561,
+        "hp_": 33,
+        "atk": 173,
+        "eleMas": 149
+      },
+      "geo_dmg_": {
+        "atk_": 355,
+        "total": 1759,
+        "enerRech_": 256,
+        "critDMG_": 472,
+        "critRate_": 441,
+        "hp_": 86,
+        "def_": 76,
+        "atk": 51,
+        "def": 22
+      },
+      "pyro_dmg_": {
+        "critRate_": 148,
+        "total": 728,
+        "critDMG_": 148,
+        "atk_": 135,
+        "enerRech_": 85,
+        "eleMas": 86,
+        "atk": 84,
+        "hp": 11,
+        "hp_": 31
+      },
+      "hydro_dmg_": {
+        "critDMG_": 896,
+        "total": 3491,
+        "critRate_": 896,
+        "atk_": 573,
+        "hp_": 152,
+        "eleMas": 304,
+        "enerRech_": 528,
+        "atk": 120,
+        "hp": 22
+      },
+      "electro_dmg_": {
+        "atk_": 1147,
+        "total": 5728,
+        "eleMas": 713,
+        "critDMG_": 1440,
+        "critRate_": 1430,
+        "enerRech_": 830,
+        "def": 11,
+        "atk": 157
+      },
+      "eleMas": {
+        "eleMas": 73,
+        "total": 292,
+        "enerRech_": 31,
+        "critRate_": 63,
+        "critDMG_": 63,
+        "atk": 11,
+        "atk_": 31,
+        "hp_": 10,
+        "hp": 10
+      },
+      "cryo_dmg_": {
+        "hp": 11,
+        "total": 1090,
+        "hp_": 21,
+        "enerRech_": 147,
+        "eleMas": 42,
+        "critDMG_": 283,
+        "critRate_": 251,
+        "atk_": 251,
+        "atk": 73,
+        "def_": 11
+      },
+      "dendro_dmg_": {
+        "critDMG_": 65,
+        "total": 315,
+        "critRate_": 54,
+        "eleMas": 65,
+        "atk_": 65,
+        "hp_": 11,
+        "def_": 11,
+        "enerRech_": 11,
+        "atk": 22,
+        "hp": 11
+      },
+      "physical_dmg_": {
+        "critRate_": 32,
+        "total": 107,
+        "critDMG_": 32,
+        "atk": 11,
+        "enerRech_": 11,
+        "atk_": 21
+      },
+      "hp_": {
+        "enerRech_": 43,
+        "total": 318,
+        "hp_": 96,
+        "hp": 53,
+        "critRate_": 42,
+        "critDMG_": 53,
+        "atk": 11,
+        "atk_": 20
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "critDMG_": 1848,
+        "total": 7376,
+        "critRate_": 1848,
+        "enerRech_": 1167,
+        "atk_": 1531,
+        "hp_": 140,
+        "eleMas": 584,
+        "atk": 172,
+        "def_": 54,
+        "def": 11,
+        "hp": 21
+      },
+      "atk_": {
+        "atk_": 564,
+        "total": 2274,
+        "enerRech_": 445,
+        "critDMG_": 352,
+        "critRate_": 361,
+        "atk": 338,
+        "eleMas": 106,
+        "def": 22,
+        "hp": 22,
+        "hp_": 42,
+        "def_": 22
+      },
+      "critDMG_": {
+        "critDMG_": 2415,
+        "total": 9524,
+        "critRate_": 2388,
+        "atk_": 1874,
+        "enerRech_": 1303,
+        "hp_": 184,
+        "eleMas": 774,
+        "atk": 510,
+        "hp": 54,
+        "def_": 11,
+        "def": 11
+      },
+      "heal_": {
+        "critDMG_": 44,
+        "total": 304,
+        "critRate_": 33,
+        "enerRech_": 65,
+        "hp_": 32,
+        "atk_": 44,
+        "atk": 44,
+        "eleMas": 21,
+        "hp": 21
+      },
+      "eleMas": {
+        "eleMas": 42,
+        "total": 127,
+        "enerRech_": 22,
+        "critRate_": 21,
+        "critDMG_": 21,
+        "hp_": 11,
+        "atk_": 10
+      },
+      "def_": {
+        "def_": 11,
+        "total": 66,
+        "atk_": 11,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "hp_": 11,
+        "enerRech_": 11
+      },
+      "hp_": {
+        "hp": 42,
+        "total": 250,
+        "hp_": 52,
+        "critRate_": 42,
+        "critDMG_": 53,
+        "atk": 11,
+        "atk_": 30,
+        "enerRech_": 10,
+        "eleMas": 10
+      }
+    }
+  },
+  "HuskOfOpulentDreams": {
+    "flower": {
+      "hp": {
+        "def_": 4735,
+        "total": 19834,
+        "critDMG_": 3957,
+        "critRate_": 4699,
+        "def": 2039,
+        "enerRech_": 3457,
+        "atk_": 613,
+        "eleMas": 53,
+        "atk": 119,
+        "hp_": 107,
+        "hp": 55
+      }
+    },
+    "plume": {
+      "atk": {
+        "def_": 4735,
+        "total": 19834,
+        "critDMG_": 3957,
+        "critRate_": 4699,
+        "def": 2039,
+        "enerRech_": 3457,
+        "atk_": 613,
+        "eleMas": 53,
+        "atk": 119,
+        "hp_": 107,
+        "hp": 55
+      }
+    },
+    "sands": {
+      "def_": {
+        "def_": 4348,
+        "total": 17566,
+        "critDMG_": 3642,
+        "critRate_": 4225,
+        "def": 1801,
+        "enerRech_": 2809,
+        "atk_": 548,
+        "eleMas": 42,
+        "atk": 87,
+        "hp_": 53,
+        "hp": 11
+      },
+      "enerRech_": {
+        "enerRech_": 396,
+        "total": 1363,
+        "critRate_": 311,
+        "def_": 322,
+        "def": 194,
+        "critDMG_": 119,
+        "eleMas": 11,
+        "hp_": 10
+      },
+      "hp_": {
+        "critDMG_": 55,
+        "total": 429,
+        "critRate_": 66,
+        "enerRech_": 209,
+        "hp_": 44,
+        "hp": 44,
+        "def": 11
+      },
+      "eleMas": {
+        "critDMG_": 11,
+        "total": 22,
+        "def_": 11
+      },
+      "atk_": {
+        "def": 33,
+        "total": 454,
+        "atk_": 65,
+        "critDMG_": 130,
+        "critRate_": 97,
+        "enerRech_": 43,
+        "def_": 54,
+        "atk": 32
+      }
+    },
+    "goblet": {
+      "geo_dmg_": {
+        "def_": 3141,
+        "total": 13301,
+        "critDMG_": 3331,
+        "critRate_": 3298,
+        "def": 1116,
+        "enerRech_": 1772,
+        "atk_": 483,
+        "atk": 97,
+        "hp": 11,
+        "hp_": 21,
+        "eleMas": 31
+      },
+      "def_": {
+        "enerRech_": 1456,
+        "total": 6032,
+        "critRate_": 1336,
+        "def_": 1583,
+        "def": 901,
+        "critDMG_": 550,
+        "atk_": 119,
+        "eleMas": 22,
+        "atk": 22,
+        "hp_": 32,
+        "hp": 11
+      },
+      "cryo_dmg_": {
+        "critDMG_": 22,
+        "total": 66,
+        "critRate_": 22,
+        "enerRech_": 22
+      },
+      "anemo_dmg_": {
+        "enerRech_": 22,
+        "total": 22
+      },
+      "electro_dmg_": {
+        "enerRech_": 121,
+        "total": 121
+      },
+      "hp_": {
+        "hp_": 54,
+        "total": 249,
+        "hp": 33,
+        "critDMG_": 32,
+        "critRate_": 43,
+        "enerRech_": 54,
+        "def_": 11,
+        "def": 22
+      },
+      "hydro_dmg_": {
+        "critDMG_": 11,
+        "total": 32,
+        "atk_": 11,
+        "enerRech_": 10
+      },
+      "pyro_dmg_": {
+        "critDMG_": 11,
+        "total": 11
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "def_": 1307,
+        "total": 5833,
+        "critDMG_": 1447,
+        "critRate_": 1518,
+        "def": 537,
+        "enerRech_": 778,
+        "atk_": 204,
+        "atk": 32,
+        "hp_": 10
+      },
+      "critRate_": {
+        "def_": 2264,
+        "total": 9305,
+        "enerRech_": 1447,
+        "critDMG_": 2045,
+        "critRate_": 2425,
+        "def": 748,
+        "atk_": 280,
+        "atk": 65,
+        "hp_": 21,
+        "eleMas": 10
+      },
+      "def_": {
+        "enerRech_": 1014,
+        "total": 4218,
+        "def_": 1121,
+        "critDMG_": 422,
+        "critRate_": 681,
+        "def": 743,
+        "atk_": 118,
+        "atk": 22,
+        "hp_": 43,
+        "eleMas": 32,
+        "hp": 22
+      },
+      "atk_": {
+        "def_": 11,
+        "total": 118,
+        "atk_": 11,
+        "critRate_": 32,
+        "eleMas": 11,
+        "enerRech_": 21,
+        "critDMG_": 21,
+        "def": 11
+      },
+      "hp_": {
+        "enerRech_": 165,
+        "total": 286,
+        "hp_": 33,
+        "hp": 33,
+        "critDMG_": 22,
+        "critRate_": 33
+      },
+      "heal_": {
+        "def_": 32,
+        "total": 74,
+        "enerRech_": 32,
+        "critRate_": 10
+      }
+    }
+  },
+  "FlowerOfParadiseLost": {
+    "flower": {
+      "hp": {
+        "critDMG_": 270,
+        "total": 2038,
+        "critRate_": 283,
+        "atk_": 98,
+        "eleMas": 561,
+        "hp_": 236,
+        "enerRech_": 378,
+        "hp": 115,
+        "atk": 87,
+        "def": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "critDMG_": 270,
+        "total": 2038,
+        "critRate_": 283,
+        "atk_": 98,
+        "eleMas": 561,
+        "hp_": 236,
+        "enerRech_": 378,
+        "hp": 115,
+        "atk": 87,
+        "def": 10
+      }
+    },
+    "sands": {
+      "eleMas": {
+        "critDMG_": 195,
+        "total": 1432,
+        "critRate_": 185,
+        "atk_": 76,
+        "eleMas": 453,
+        "hp_": 149,
+        "enerRech_": 249,
+        "hp": 93,
+        "atk": 22,
+        "def": 10
+      },
+      "hp_": {
+        "enerRech_": 65,
+        "total": 261,
+        "hp_": 76,
+        "eleMas": 54,
+        "critRate_": 33,
+        "hp": 22,
+        "critDMG_": 11
+      },
+      "atk_": {
+        "atk_": 11,
+        "total": 128,
+        "eleMas": 32,
+        "atk": 22,
+        "enerRech_": 21,
+        "critDMG_": 21,
+        "critRate_": 21
+      },
+      "enerRech_": {
+        "enerRech_": 43,
+        "total": 217,
+        "eleMas": 22,
+        "critRate_": 44,
+        "hp_": 11,
+        "atk_": 11,
+        "atk": 43,
+        "critDMG_": 43
+      }
+    },
+    "goblet": {
+      "electro_dmg_": {
+        "critDMG_": 22,
+        "total": 118,
+        "critRate_": 22,
+        "atk_": 11,
+        "eleMas": 32,
+        "atk": 11,
+        "enerRech_": 10,
+        "hp_": 10
+      },
+      "eleMas": {
+        "eleMas": 347,
+        "total": 1017,
+        "hp_": 118,
+        "enerRech_": 196,
+        "hp": 63,
+        "critDMG_": 120,
+        "atk_": 54,
+        "critRate_": 109,
+        "def": 10
+      },
+      "hp_": {
+        "enerRech_": 86,
+        "total": 364,
+        "hp_": 87,
+        "eleMas": 85,
+        "critRate_": 44,
+        "hp": 52,
+        "critDMG_": 10
+      },
+      "atk_": {
+        "atk_": 22,
+        "total": 132,
+        "eleMas": 22,
+        "atk": 33,
+        "enerRech_": 11,
+        "critRate_": 22,
+        "critDMG_": 22
+      },
+      "hydro_dmg_": {
+        "eleMas": 21,
+        "total": 117,
+        "critRate_": 32,
+        "critDMG_": 32,
+        "hp_": 21,
+        "enerRech_": 11
+      },
+      "dendro_dmg_": {
+        "eleMas": 32,
+        "total": 128,
+        "enerRech_": 32,
+        "critRate_": 32,
+        "critDMG_": 32
+      },
+      "anemo_dmg_": {
+        "critDMG_": 32,
+        "total": 162,
+        "critRate_": 22,
+        "eleMas": 22,
+        "atk": 43,
+        "atk_": 11,
+        "enerRech_": 32
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "critDMG_": 76,
+        "total": 326,
+        "critRate_": 87,
+        "atk_": 11,
+        "eleMas": 65,
+        "enerRech_": 54,
+        "atk": 22,
+        "hp_": 11
+      },
+      "eleMas": {
+        "eleMas": 377,
+        "total": 1128,
+        "hp_": 139,
+        "enerRech_": 227,
+        "hp": 93,
+        "critDMG_": 108,
+        "critRate_": 98,
+        "atk_": 65,
+        "atk": 11,
+        "def": 10
+      },
+      "hp_": {
+        "enerRech_": 43,
+        "total": 224,
+        "hp_": 64,
+        "eleMas": 53,
+        "critRate_": 32,
+        "hp": 22,
+        "critDMG_": 10
+      },
+      "atk_": {
+        "atk_": 22,
+        "total": 118,
+        "eleMas": 11,
+        "atk": 32,
+        "enerRech_": 21,
+        "critRate_": 11,
+        "critDMG_": 21
+      },
+      "critDMG_": {
+        "critRate_": 55,
+        "total": 209,
+        "critDMG_": 55,
+        "eleMas": 44,
+        "enerRech_": 22,
+        "atk": 22,
+        "hp_": 11
+      },
+      "heal_": {
+        "hp_": 11,
+        "total": 33,
+        "enerRech_": 11,
+        "eleMas": 11
+      }
+    }
+  },
+  "WanderersTroupe": {
+    "flower": {
+      "hp": {
+        "hp_": 385,
+        "total": 11892,
+        "enerRech_": 1335,
+        "critDMG_": 2708,
+        "critRate_": 2655,
+        "hp": 169,
+        "eleMas": 2467,
+        "atk_": 1766,
+        "atk": 397,
+        "def_": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "hp_": 385,
+        "total": 11892,
+        "enerRech_": 1335,
+        "critDMG_": 2708,
+        "critRate_": 2655,
+        "hp": 169,
+        "eleMas": 2467,
+        "atk_": 1766,
+        "atk": 397,
+        "def_": 10
+      }
+    },
+    "sands": {
+      "hp_": {
+        "hp_": 204,
+        "total": 807,
+        "enerRech_": 140,
+        "critDMG_": 108,
+        "critRate_": 97,
+        "hp": 66,
+        "eleMas": 160,
+        "atk": 11,
+        "atk_": 21
+      },
+      "eleMas": {
+        "critRate_": 866,
+        "total": 4220,
+        "critDMG_": 856,
+        "eleMas": 1165,
+        "atk_": 513,
+        "enerRech_": 578,
+        "atk": 42,
+        "hp_": 138,
+        "hp": 62
+      },
+      "enerRech_": {
+        "eleMas": 107,
+        "total": 583,
+        "enerRech_": 138,
+        "critRate_": 127,
+        "atk_": 53,
+        "critDMG_": 105,
+        "hp_": 32,
+        "hp": 21
+      },
+      "atk_": {
+        "critDMG_": 1639,
+        "total": 6282,
+        "critRate_": 1565,
+        "atk_": 1179,
+        "eleMas": 1035,
+        "enerRech_": 479,
+        "atk": 344,
+        "hp_": 11,
+        "hp": 20,
+        "def_": 10
+      }
+    },
+    "goblet": {
+      "hydro_dmg_": {
+        "hp_": 44,
+        "total": 662,
+        "enerRech_": 108,
+        "critDMG_": 181,
+        "critRate_": 139,
+        "atk_": 74,
+        "eleMas": 106,
+        "atk": 10
+      },
+      "hp_": {
+        "hp": 96,
+        "total": 503,
+        "hp_": 150,
+        "enerRech_": 107,
+        "eleMas": 128,
+        "critDMG_": 11,
+        "critRate_": 11
+      },
+      "eleMas": {
+        "critRate_": 205,
+        "total": 1407,
+        "critDMG_": 173,
+        "eleMas": 440,
+        "atk_": 118,
+        "enerRech_": 322,
+        "hp_": 117,
+        "hp": 32
+      },
+      "electro_dmg_": {
+        "critDMG_": 452,
+        "total": 1851,
+        "critRate_": 473,
+        "atk_": 289,
+        "eleMas": 388,
+        "enerRech_": 249
+      },
+      "dendro_dmg_": {
+        "eleMas": 608,
+        "total": 2337,
+        "enerRech_": 203,
+        "atk_": 342,
+        "critDMG_": 598,
+        "critRate_": 566,
+        "atk": 20
+      },
+      "cryo_dmg_": {
+        "critRate_": 748,
+        "total": 2939,
+        "critDMG_": 792,
+        "atk_": 620,
+        "enerRech_": 154,
+        "eleMas": 412,
+        "hp_": 22,
+        "atk": 181,
+        "hp": 10
+      },
+      "anemo_dmg_": {
+        "enerRech_": 64,
+        "total": 279,
+        "critRate_": 33,
+        "atk_": 21,
+        "eleMas": 86,
+        "critDMG_": 43,
+        "atk": 22,
+        "hp": 10
+      },
+      "pyro_dmg_": {
+        "critRate_": 278,
+        "total": 1048,
+        "critDMG_": 256,
+        "atk_": 184,
+        "enerRech_": 63,
+        "atk": 55,
+        "eleMas": 161,
+        "hp_": 31,
+        "hp": 10,
+        "def_": 10
+      },
+      "atk_": {
+        "atk_": 118,
+        "total": 778,
+        "eleMas": 127,
+        "atk": 98,
+        "enerRech_": 54,
+        "critDMG_": 191,
+        "critRate_": 180,
+        "hp_": 10
+      },
+      "geo_dmg_": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "enerRech_": 11,
+        "atk": 11
+      },
+      "physical_dmg_": {
+        "hp_": 11,
+        "total": 44,
+        "eleMas": 11,
+        "critRate_": 11,
+        "hp": 11
+      }
+    },
+    "circlet": {
+      "heal_": {
+        "hp_": 43,
+        "total": 185,
+        "enerRech_": 33,
+        "critDMG_": 22,
+        "critRate_": 22,
+        "eleMas": 44,
+        "atk": 11,
+        "hp": 10
+      },
+      "hp_": {
+        "hp": 77,
+        "total": 445,
+        "hp_": 130,
+        "enerRech_": 108,
+        "eleMas": 108,
+        "critDMG_": 11,
+        "critRate_": 11
+      },
+      "critRate_": {
+        "critRate_": 893,
+        "total": 3582,
+        "critDMG_": 927,
+        "eleMas": 639,
+        "atk_": 609,
+        "enerRech_": 278,
+        "hp_": 54,
+        "atk": 162,
+        "hp": 10,
+        "def_": 10
+      },
+      "critDMG_": {
+        "critDMG_": 1502,
+        "total": 5839,
+        "critRate_": 1483,
+        "atk_": 965,
+        "eleMas": 1134,
+        "enerRech_": 501,
+        "hp_": 53,
+        "atk": 180,
+        "hp": 21
+      },
+      "eleMas": {
+        "eleMas": 509,
+        "total": 1657,
+        "critDMG_": 225,
+        "enerRech_": 372,
+        "atk": 11,
+        "critRate_": 235,
+        "atk_": 149,
+        "hp_": 105,
+        "hp": 51
+      },
+      "atk_": {
+        "atk": 33,
+        "total": 184,
+        "atk_": 43,
+        "critRate_": 11,
+        "critDMG_": 21,
+        "enerRech_": 43,
+        "eleMas": 33
+      }
+    }
+  },
+  "MaidenBeloved": {
+    "flower": {
+      "hp": {
+        "def_": 54,
+        "total": 4567,
+        "critDMG_": 247,
+        "critRate_": 301,
+        "def": 54,
+        "hp_": 1073,
+        "eleMas": 533,
+        "atk": 183,
+        "atk_": 236,
+        "enerRech_": 1049,
+        "hp": 837
+      }
+    },
+    "plume": {
+      "atk": {
+        "def_": 54,
+        "total": 4567,
+        "critDMG_": 247,
+        "critRate_": 301,
+        "def": 54,
+        "hp_": 1073,
+        "eleMas": 533,
+        "atk": 183,
+        "atk_": 236,
+        "enerRech_": 1049,
+        "hp": 837
+      }
+    },
+    "sands": {
+      "def_": {
+        "def_": 43,
+        "total": 205,
+        "critDMG_": 21,
+        "critRate_": 32,
+        "def": 22,
+        "hp": 22,
+        "hp_": 22,
+        "atk": 11,
+        "atk_": 11,
+        "enerRech_": 21
+      },
+      "hp_": {
+        "hp_": 952,
+        "total": 3135,
+        "eleMas": 369,
+        "critDMG_": 107,
+        "hp": 728,
+        "enerRech_": 702,
+        "atk_": 63,
+        "atk": 43,
+        "critRate_": 161,
+        "def": 10
+      },
+      "atk_": {
+        "atk": 85,
+        "total": 507,
+        "atk_": 107,
+        "enerRech_": 119,
+        "critRate_": 54,
+        "critDMG_": 65,
+        "eleMas": 44,
+        "hp_": 33
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 77,
+        "hp_": 11,
+        "enerRech_": 22,
+        "def_": 11,
+        "def": 11,
+        "atk": 11
+      },
+      "enerRech_": {
+        "hp_": 55,
+        "total": 643,
+        "enerRech_": 185,
+        "eleMas": 109,
+        "atk_": 55,
+        "atk": 33,
+        "hp": 87,
+        "def": 11,
+        "critRate_": 54,
+        "critDMG_": 54
+      }
+    },
+    "goblet": {
+      "def_": {
+        "def_": 33,
+        "total": 99,
+        "critDMG_": 11,
+        "critRate_": 22,
+        "def": 11,
+        "enerRech_": 11,
+        "hp_": 11
+      },
+      "hp_": {
+        "hp_": 911,
+        "total": 3084,
+        "eleMas": 359,
+        "critDMG_": 96,
+        "hp": 717,
+        "enerRech_": 746,
+        "atk_": 52,
+        "critRate_": 150,
+        "def": 32,
+        "atk": 21
+      },
+      "atk_": {
+        "atk": 118,
+        "total": 606,
+        "atk_": 151,
+        "enerRech_": 141,
+        "critRate_": 43,
+        "critDMG_": 54,
+        "eleMas": 55,
+        "hp": 11,
+        "hp_": 11,
+        "def_": 11,
+        "def": 11
+      },
+      "cryo_dmg_": {
+        "hp_": 22,
+        "total": 117,
+        "hp": 22,
+        "atk_": 11,
+        "atk": 11,
+        "eleMas": 21,
+        "enerRech_": 10,
+        "critRate_": 10,
+        "critDMG_": 10
+      },
+      "anemo_dmg_": {
+        "enerRech_": 44,
+        "total": 154,
+        "critRate_": 33,
+        "critDMG_": 33,
+        "eleMas": 22,
+        "hp_": 22
+      },
+      "eleMas": {
+        "eleMas": 33,
+        "total": 110,
+        "hp_": 11,
+        "enerRech_": 33,
+        "hp": 11,
+        "atk": 11,
+        "atk_": 11
+      },
+      "hydro_dmg_": {
+        "hp_": 52,
+        "total": 148,
+        "hp": 32,
+        "enerRech_": 32,
+        "eleMas": 32
+      },
+      "pyro_dmg_": {
+        "hp": 11,
+        "total": 110,
+        "atk": 11,
+        "enerRech_": 22,
+        "hp_": 11,
+        "critRate_": 22,
+        "critDMG_": 22,
+        "eleMas": 11
+      },
+      "electro_dmg_": {
+        "hp_": 22,
+        "total": 66,
+        "hp": 22,
+        "critRate_": 11,
+        "critDMG_": 11
+      },
+      "geo_dmg_": {
+        "hp": 11,
+        "total": 73,
+        "atk": 11,
+        "atk_": 11,
+        "def_": 10,
+        "enerRech_": 10,
+        "critRate_": 10,
+        "critDMG_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "def_": 21,
+        "total": 104,
+        "critDMG_": 21,
+        "critRate_": 21,
+        "def": 11,
+        "enerRech_": 20,
+        "hp": 10
+      },
+      "heal_": {
+        "hp_": 665,
+        "total": 2936,
+        "eleMas": 380,
+        "atk": 119,
+        "atk_": 184,
+        "enerRech_": 728,
+        "critRate_": 172,
+        "critDMG_": 130,
+        "hp": 536,
+        "def": 11,
+        "def_": 11
+      },
+      "hp_": {
+        "critDMG_": 54,
+        "total": 1232,
+        "hp_": 377,
+        "hp": 258,
+        "enerRech_": 249,
+        "eleMas": 142,
+        "atk_": 21,
+        "atk": 22,
+        "critRate_": 76,
+        "def": 22,
+        "def_": 11
+      },
+      "critDMG_": {
+        "hp": 22,
+        "total": 96,
+        "atk": 11,
+        "critRate_": 11,
+        "critDMG_": 21,
+        "hp_": 21,
+        "enerRech_": 10
+      },
+      "eleMas": {
+        "enerRech_": 22,
+        "total": 55,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "eleMas": 11
+      },
+      "def_": {
+        "def_": 11,
+        "total": 44,
+        "hp": 11,
+        "atk": 11,
+        "atk_": 11
+      },
+      "atk_": {
+        "critRate_": 10,
+        "total": 100,
+        "critDMG_": 10,
+        "atk_": 20,
+        "atk": 20,
+        "enerRech_": 20,
+        "hp_": 10,
+        "def": 10
+      }
+    }
+  },
+  "Instructor": {
+    "flower": {
+      "hp": {
+        "enerRech_": 307,
+        "total": 1068,
+        "critRate_": 179,
+        "eleMas": 235,
+        "critDMG_": 95,
+        "atk_": 85,
+        "hp_": 104,
+        "hp": 43,
+        "atk": 20
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 307,
+        "total": 1068,
+        "critRate_": 179,
+        "eleMas": 235,
+        "critDMG_": 95,
+        "atk_": 85,
+        "hp_": 104,
+        "hp": 43,
+        "atk": 20
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 201,
+        "total": 579,
+        "critRate_": 115,
+        "eleMas": 97,
+        "critDMG_": 74,
+        "atk_": 42,
+        "hp_": 30,
+        "hp": 10,
+        "atk": 10
+      },
+      "atk_": {
+        "enerRech_": 43,
+        "total": 172,
+        "critRate_": 32,
+        "atk_": 43,
+        "eleMas": 43,
+        "critDMG_": 11
+      },
+      "hp_": {
+        "hp_": 64,
+        "total": 194,
+        "critRate_": 22,
+        "eleMas": 33,
+        "enerRech_": 42,
+        "hp": 33
+      },
+      "eleMas": {
+        "eleMas": 62,
+        "total": 123,
+        "enerRech_": 21,
+        "atk": 10,
+        "critRate_": 10,
+        "critDMG_": 10,
+        "hp_": 10
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "enerRech_": 83,
+        "total": 326,
+        "critRate_": 63,
+        "hp_": 94,
+        "eleMas": 43,
+        "hp": 43
+      },
+      "anemo_dmg_": {
+        "eleMas": 32,
+        "total": 87,
+        "enerRech_": 22,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "atk_": 11
+      },
+      "hydro_dmg_": {
+        "enerRech_": 31,
+        "total": 124,
+        "eleMas": 11,
+        "critRate_": 31,
+        "critDMG_": 31,
+        "atk_": 20
+      },
+      "dendro_dmg_": {
+        "critRate_": 74,
+        "total": 318,
+        "critDMG_": 42,
+        "enerRech_": 86,
+        "eleMas": 74,
+        "atk_": 32,
+        "atk": 10
+      },
+      "eleMas": {
+        "eleMas": 53,
+        "total": 105,
+        "enerRech_": 42,
+        "hp_": 10
+      },
+      "electro_dmg_": {
+        "enerRech_": 11,
+        "total": 33,
+        "eleMas": 11,
+        "atk_": 11
+      },
+      "pyro_dmg_": {
+        "eleMas": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "atk_": 11,
+        "critDMG_": 11
+      },
+      "def_": {
+        "enerRech_": 11,
+        "total": 11
+      },
+      "atk_": {
+        "atk": 10,
+        "total": 20,
+        "enerRech_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "enerRech_": 128,
+        "total": 437,
+        "critRate_": 96,
+        "critDMG_": 43,
+        "eleMas": 86,
+        "atk_": 43,
+        "hp_": 21,
+        "hp": 10,
+        "atk": 10
+      },
+      "eleMas": {
+        "eleMas": 107,
+        "total": 299,
+        "enerRech_": 86,
+        "critDMG_": 32,
+        "critRate_": 32,
+        "atk_": 22,
+        "atk": 10,
+        "hp_": 10
+      },
+      "hp_": {
+        "hp": 22,
+        "total": 96,
+        "hp_": 42,
+        "critRate_": 11,
+        "eleMas": 11,
+        "enerRech_": 10
+      },
+      "heal_": {
+        "hp_": 31,
+        "total": 135,
+        "enerRech_": 52,
+        "eleMas": 21,
+        "hp": 11,
+        "critRate_": 20
+      },
+      "critDMG_": {
+        "enerRech_": 31,
+        "total": 91,
+        "critDMG_": 20,
+        "atk_": 20,
+        "critRate_": 20
+      },
+      "atk_": {
+        "eleMas": 10,
+        "total": 10
+      }
+    }
+  },
+  "EchoesOfAnOffering": {
+    "flower": {
+      "hp": {
+        "critRate_": 966,
+        "total": 3774,
+        "critDMG_": 934,
+        "atk_": 834,
+        "enerRech_": 346,
+        "hp_": 185,
+        "eleMas": 217,
+        "atk": 248,
+        "def": 11,
+        "hp": 33
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 966,
+        "total": 3774,
+        "critDMG_": 934,
+        "atk_": 834,
+        "enerRech_": 346,
+        "hp_": 185,
+        "eleMas": 217,
+        "atk": 248,
+        "def": 11,
+        "hp": 33
+      }
+    },
+    "sands": {
+      "atk_": {
+        "critRate_": 889,
+        "total": 3403,
+        "critDMG_": 857,
+        "atk_": 791,
+        "enerRech_": 292,
+        "hp_": 175,
+        "eleMas": 162,
+        "hp": 22,
+        "atk": 215
+      },
+      "enerRech_": {
+        "atk_": 32,
+        "total": 283,
+        "enerRech_": 54,
+        "critDMG_": 66,
+        "critRate_": 66,
+        "eleMas": 33,
+        "atk": 22,
+        "hp_": 10
+      },
+      "def_": {
+        "atk": 11,
+        "total": 44,
+        "def": 11,
+        "hp": 11,
+        "atk_": 11
+      },
+      "hp_": {
+        "eleMas": 11,
+        "total": 11
+      },
+      "eleMas": {
+        "critDMG_": 11,
+        "total": 33,
+        "eleMas": 11,
+        "critRate_": 11
+      }
+    },
+    "goblet": {
+      "cryo_dmg_": {
+        "critRate_": 32,
+        "total": 128,
+        "critDMG_": 32,
+        "atk_": 32,
+        "enerRech_": 22,
+        "atk": 10
+      },
+      "hydro_dmg_": {
+        "critDMG_": 582,
+        "total": 2229,
+        "critRate_": 604,
+        "atk_": 472,
+        "hp_": 164,
+        "enerRech_": 165,
+        "eleMas": 110,
+        "hp": 22,
+        "atk": 110
+      },
+      "atk_": {
+        "atk_": 76,
+        "total": 335,
+        "enerRech_": 54,
+        "critDMG_": 54,
+        "critRate_": 75,
+        "atk": 43,
+        "eleMas": 22,
+        "hp_": 11
+      },
+      "anemo_dmg_": {
+        "critRate_": 98,
+        "total": 372,
+        "critDMG_": 109,
+        "eleMas": 11,
+        "atk_": 88,
+        "enerRech_": 33,
+        "atk": 33
+      },
+      "electro_dmg_": {
+        "critRate_": 116,
+        "total": 442,
+        "critDMG_": 116,
+        "enerRech_": 41,
+        "atk_": 105,
+        "eleMas": 43,
+        "atk": 21
+      },
+      "pyro_dmg_": {
+        "critDMG_": 41,
+        "total": 194,
+        "critRate_": 41,
+        "enerRech_": 21,
+        "eleMas": 31,
+        "atk_": 40,
+        "atk": 20
+      },
+      "geo_dmg_": {
+        "atk": 11,
+        "total": 44,
+        "def": 11,
+        "hp": 11,
+        "atk_": 11
+      },
+      "hp_": {
+        "atk_": 10,
+        "total": 30,
+        "hp_": 10,
+        "enerRech_": 10
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "critRate_": 601,
+        "total": 2230,
+        "critDMG_": 579,
+        "atk_": 470,
+        "enerRech_": 143,
+        "hp_": 131,
+        "eleMas": 164,
+        "atk": 131,
+        "hp": 11
+      },
+      "atk_": {
+        "atk_": 96,
+        "total": 408,
+        "enerRech_": 85,
+        "critDMG_": 55,
+        "critRate_": 65,
+        "atk": 64,
+        "def": 11,
+        "hp": 11,
+        "eleMas": 11,
+        "hp_": 10
+      },
+      "critRate_": {
+        "critDMG_": 300,
+        "total": 1125,
+        "critRate_": 300,
+        "atk_": 268,
+        "enerRech_": 118,
+        "hp_": 44,
+        "eleMas": 31,
+        "hp": 11,
+        "atk": 53
+      },
+      "hp_": {
+        "eleMas": 11,
+        "total": 11
+      }
+    }
+  },
+  "ArchaicPetra": {
+    "flower": {
+      "hp": {
+        "atk_": 900,
+        "total": 6539,
+        "enerRech_": 726,
+        "critDMG_": 1574,
+        "critRate_": 1553,
+        "hp_": 939,
+        "hp": 203,
+        "atk": 181,
+        "def": 172,
+        "def_": 280,
+        "eleMas": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk_": 900,
+        "total": 6539,
+        "enerRech_": 726,
+        "critDMG_": 1574,
+        "critRate_": 1553,
+        "hp_": 939,
+        "hp": 203,
+        "atk": 181,
+        "def": 172,
+        "def_": 280,
+        "eleMas": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk_": 548,
+        "total": 2376,
+        "enerRech_": 225,
+        "critDMG_": 645,
+        "critRate_": 624,
+        "hp": 33,
+        "atk": 128,
+        "hp_": 162,
+        "def_": 11
+      },
+      "enerRech_": {
+        "hp_": 31,
+        "total": 212,
+        "enerRech_": 43,
+        "critDMG_": 42,
+        "critRate_": 53,
+        "atk_": 21,
+        "def_": 11,
+        "def": 11
+      },
+      "hp_": {
+        "hp_": 735,
+        "total": 2936,
+        "enerRech_": 339,
+        "critRate_": 660,
+        "critDMG_": 660,
+        "hp": 170,
+        "atk_": 278,
+        "atk": 42,
+        "def": 31,
+        "def_": 21
+      },
+      "def_": {
+        "def": 130,
+        "total": 1004,
+        "critRate_": 216,
+        "critDMG_": 227,
+        "def_": 237,
+        "enerRech_": 119,
+        "atk_": 53,
+        "hp_": 11,
+        "atk": 11
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 11
+      }
+    },
+    "goblet": {
+      "geo_dmg_": {
+        "atk_": 869,
+        "total": 5552,
+        "enerRech_": 566,
+        "critDMG_": 1394,
+        "critRate_": 1373,
+        "hp_": 705,
+        "hp": 108,
+        "atk": 160,
+        "def": 140,
+        "def_": 237
+      },
+      "hp_": {
+        "hp_": 224,
+        "total": 788,
+        "enerRech_": 128,
+        "critRate_": 138,
+        "critDMG_": 139,
+        "hp": 95,
+        "atk": 21,
+        "atk_": 21,
+        "def": 11,
+        "def_": 11
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 21,
+        "enerRech_": 10
+      },
+      "def_": {
+        "def_": 32,
+        "total": 128,
+        "enerRech_": 22,
+        "critRate_": 32,
+        "critDMG_": 21,
+        "def": 21
+      },
+      "atk_": {
+        "critDMG_": 10,
+        "total": 10
+      },
+      "pyro_dmg_": {
+        "critRate_": 10,
+        "total": 40,
+        "atk_": 10,
+        "critDMG_": 10,
+        "hp_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "atk_": 397,
+        "total": 2702,
+        "enerRech_": 323,
+        "critDMG_": 665,
+        "critRate_": 685,
+        "hp": 44,
+        "def": 44,
+        "hp_": 384,
+        "def_": 119,
+        "atk": 41
+      },
+      "hp_": {
+        "hp_": 225,
+        "total": 917,
+        "enerRech_": 116,
+        "critDMG_": 160,
+        "critRate_": 171,
+        "atk_": 65,
+        "hp": 106,
+        "atk": 42,
+        "def": 21,
+        "def_": 11
+      },
+      "critDMG_": {
+        "hp": 53,
+        "total": 2697,
+        "atk": 87,
+        "critRate_": 686,
+        "critDMG_": 706,
+        "hp_": 320,
+        "enerRech_": 245,
+        "atk_": 427,
+        "def_": 108,
+        "def": 65
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 11
+      },
+      "def_": {
+        "critDMG_": 32,
+        "total": 161,
+        "enerRech_": 32,
+        "def": 32,
+        "atk_": 11,
+        "def_": 32,
+        "critRate_": 11,
+        "atk": 11
+      },
+      "atk_": {
+        "critDMG_": 11,
+        "total": 51,
+        "enerRech_": 10,
+        "def": 10,
+        "def_": 10,
+        "hp_": 10
+      }
+    }
+  },
+  "TheExile": {
+    "flower": {
+      "hp": {
+        "enerRech_": 418,
+        "total": 1387,
+        "def_": 254,
+        "def": 119,
+        "atk_": 96,
+        "hp_": 44,
+        "critRate_": 299,
+        "eleMas": 43,
+        "critDMG_": 104,
+        "atk": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 418,
+        "total": 1387,
+        "def_": 254,
+        "def": 119,
+        "atk_": 96,
+        "hp_": 44,
+        "critRate_": 299,
+        "eleMas": 43,
+        "critDMG_": 104,
+        "atk": 10
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "enerRech_": 352,
+        "total": 1117,
+        "def_": 232,
+        "def": 97,
+        "atk_": 64,
+        "hp_": 22,
+        "critRate_": 245,
+        "eleMas": 22,
+        "critDMG_": 83
+      },
+      "def_": {
+        "def_": 22,
+        "total": 121,
+        "enerRech_": 33,
+        "atk_": 11,
+        "critRate_": 22,
+        "def": 22,
+        "hp_": 11
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      },
+      "atk_": {
+        "eleMas": 11,
+        "total": 76,
+        "enerRech_": 22,
+        "critRate_": 22,
+        "critDMG_": 11,
+        "atk_": 10
+      },
+      "eleMas": {
+        "critRate_": 10,
+        "total": 40,
+        "critDMG_": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    },
+    "goblet": {
+      "def_": {
+        "enerRech_": 266,
+        "total": 840,
+        "def_": 211,
+        "def": 108,
+        "hp_": 22,
+        "critRate_": 192,
+        "atk_": 11,
+        "critDMG_": 30
+      },
+      "geo_dmg_": {
+        "enerRech_": 54,
+        "total": 194,
+        "def_": 43,
+        "atk_": 11,
+        "critRate_": 43,
+        "critDMG_": 32,
+        "def": 11
+      },
+      "hp_": {
+        "critRate_": 11,
+        "total": 77,
+        "enerRech_": 22,
+        "atk_": 22,
+        "hp_": 22
+      },
+      "electro_dmg_": {
+        "enerRech_": 11,
+        "total": 33,
+        "eleMas": 11,
+        "atk_": 11
+      },
+      "anemo_dmg_": {
+        "enerRech_": 43,
+        "total": 106,
+        "eleMas": 11,
+        "atk_": 21,
+        "critRate_": 21,
+        "critDMG_": 10
+      },
+      "cryo_dmg_": {
+        "eleMas": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "critRate_": 11,
+        "critDMG_": 11
+      },
+      "atk_": {
+        "enerRech_": 11,
+        "total": 43,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "atk_": 10
+      },
+      "dendro_dmg_": {
+        "critRate_": 10,
+        "total": 40,
+        "critDMG_": 10,
+        "eleMas": 10,
+        "atk": 10
+      },
+      "hydro_dmg_": {
+        "atk_": 10,
+        "total": 10
+      }
+    },
+    "circlet": {
+      "def_": {
+        "enerRech_": 97,
+        "total": 313,
+        "def_": 75,
+        "def": 65,
+        "atk_": 22,
+        "critRate_": 43,
+        "hp_": 11
+      },
+      "hp_": {
+        "hp_": 11,
+        "total": 44,
+        "def_": 11,
+        "enerRech_": 11,
+        "critRate_": 11
+      },
+      "critRate_": {
+        "critRate_": 213,
+        "total": 774,
+        "enerRech_": 245,
+        "atk_": 31,
+        "hp_": 11,
+        "def_": 158,
+        "def": 44,
+        "critDMG_": 72
+      },
+      "eleMas": {
+        "enerRech_": 22,
+        "total": 66,
+        "eleMas": 22,
+        "atk_": 22
+      },
+      "heal_": {
+        "enerRech_": 21,
+        "total": 63,
+        "hp_": 11,
+        "atk_": 11,
+        "def_": 10,
+        "def": 10
+      },
+      "critDMG_": {
+        "eleMas": 21,
+        "total": 117,
+        "enerRech_": 22,
+        "critRate_": 32,
+        "critDMG_": 32,
+        "atk": 10
+      },
+      "atk_": {
+        "atk_": 10,
+        "total": 10
+      }
+    }
+  },
+  "RetracingBolide": {
+    "flower": {
+      "hp": {
+        "hp_": 97,
+        "total": 787,
+        "enerRech_": 98,
+        "critRate_": 173,
+        "critDMG_": 184,
+        "eleMas": 22,
+        "def_": 75,
+        "hp": 65,
+        "atk_": 42,
+        "atk": 21,
+        "def": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "hp_": 97,
+        "total": 787,
+        "enerRech_": 98,
+        "critRate_": 173,
+        "critDMG_": 184,
+        "eleMas": 22,
+        "def_": 75,
+        "hp": 65,
+        "atk_": 42,
+        "atk": 21,
+        "def": 10
+      }
+    },
+    "sands": {
+      "hp_": {
+        "hp_": 97,
+        "total": 367,
+        "enerRech_": 43,
+        "critRate_": 76,
+        "critDMG_": 76,
+        "hp": 65,
+        "def_": 10
+      },
+      "atk_": {
+        "critDMG_": 53,
+        "total": 180,
+        "eleMas": 22,
+        "critRate_": 42,
+        "atk_": 42,
+        "atk": 21
+      },
+      "def_": {
+        "critRate_": 33,
+        "total": 152,
+        "critDMG_": 33,
+        "def_": 43,
+        "enerRech_": 33,
+        "def": 10
+      },
+      "enerRech_": {
+        "critRate_": 22,
+        "total": 88,
+        "critDMG_": 22,
+        "enerRech_": 22,
+        "def_": 22
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "hp_": 76,
+        "total": 282,
+        "enerRech_": 11,
+        "critRate_": 76,
+        "critDMG_": 65,
+        "hp": 54
+      },
+      "cryo_dmg_": {
+        "critDMG_": 11,
+        "total": 22,
+        "eleMas": 11
+      },
+      "geo_dmg_": {
+        "critRate_": 86,
+        "total": 378,
+        "critDMG_": 97,
+        "def_": 55,
+        "enerRech_": 66,
+        "atk_": 31,
+        "atk": 21,
+        "hp": 11,
+        "hp_": 11
+      },
+      "electro_dmg_": {
+        "enerRech_": 11,
+        "total": 11
+      },
+      "pyro_dmg_": {
+        "critRate_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "atk_": 11,
+        "eleMas": 11
+      },
+      "def_": {
+        "def_": 20,
+        "total": 50,
+        "hp_": 10,
+        "enerRech_": 10,
+        "def": 10
+      }
+    },
+    "circlet": {
+      "hp_": {
+        "hp_": 54,
+        "total": 205,
+        "enerRech_": 22,
+        "critRate_": 54,
+        "critDMG_": 43,
+        "hp": 32
+      },
+      "atk_": {
+        "critDMG_": 11,
+        "total": 22,
+        "eleMas": 11
+      },
+      "critDMG_": {
+        "critRate_": 64,
+        "total": 246,
+        "critDMG_": 64,
+        "def_": 33,
+        "enerRech_": 33,
+        "hp": 11,
+        "hp_": 11,
+        "atk_": 20,
+        "atk": 10
+      },
+      "critRate_": {
+        "critRate_": 44,
+        "total": 220,
+        "critDMG_": 55,
+        "enerRech_": 33,
+        "def_": 22,
+        "atk_": 22,
+        "eleMas": 11,
+        "atk": 11,
+        "hp": 11,
+        "hp_": 11
+      },
+      "heal_": {
+        "hp_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "hp": 11
+      },
+      "def_": {
+        "def_": 20,
+        "total": 50,
+        "hp_": 10,
+        "enerRech_": 10,
+        "def": 10
+      }
+    }
+  },
+  "PaleFlame": {
+    "flower": {
+      "hp": {
+        "critRate_": 594,
+        "total": 2363,
+        "critDMG_": 595,
+        "atk": 195,
+        "atk_": 497,
+        "enerRech_": 420,
+        "eleMas": 42,
+        "hp": 10,
+        "hp_": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 594,
+        "total": 2363,
+        "critDMG_": 595,
+        "atk": 195,
+        "atk_": 497,
+        "enerRech_": 420,
+        "eleMas": 42,
+        "hp": 10,
+        "hp_": 10
+      }
+    },
+    "sands": {
+      "atk_": {
+        "critRate_": 542,
+        "total": 2105,
+        "critDMG_": 543,
+        "atk": 164,
+        "atk_": 477,
+        "enerRech_": 368,
+        "eleMas": 11
+      },
+      "enerRech_": {
+        "critRate_": 41,
+        "total": 164,
+        "critDMG_": 41,
+        "enerRech_": 31,
+        "atk": 31,
+        "atk_": 10,
+        "eleMas": 10
+      },
+      "eleMas": {
+        "enerRech_": 21,
+        "total": 74,
+        "critDMG_": 11,
+        "eleMas": 21,
+        "critRate_": 11,
+        "atk_": 10
+      },
+      "hp_": {
+        "hp": 10,
+        "total": 20,
+        "hp_": 10
+      }
+    },
+    "goblet": {
+      "physical_dmg_": {
+        "critRate_": 511,
+        "total": 1991,
+        "critDMG_": 512,
+        "atk": 174,
+        "atk_": 436,
+        "enerRech_": 347,
+        "eleMas": 11
+      },
+      "cryo_dmg_": {
+        "critDMG_": 42,
+        "total": 168,
+        "critRate_": 42,
+        "atk_": 21,
+        "enerRech_": 42,
+        "atk": 11,
+        "eleMas": 10
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 64,
+        "critDMG_": 11,
+        "eleMas": 11,
+        "critRate_": 11,
+        "hp": 10,
+        "hp_": 10
+      },
+      "electro_dmg_": {
+        "atk_": 10,
+        "total": 40,
+        "atk": 10,
+        "critRate_": 10,
+        "critDMG_": 10
+      },
+      "atk_": {
+        "critDMG_": 20,
+        "total": 100,
+        "critRate_": 20,
+        "atk_": 30,
+        "enerRech_": 20,
+        "eleMas": 10
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "critRate_": 302,
+        "total": 1175,
+        "critDMG_": 302,
+        "atk": 109,
+        "atk_": 249,
+        "enerRech_": 203,
+        "eleMas": 10
+      },
+      "critRate_": {
+        "critRate_": 259,
+        "total": 1006,
+        "critDMG_": 260,
+        "atk_": 216,
+        "enerRech_": 196,
+        "eleMas": 11,
+        "atk": 64
+      },
+      "heal_": {
+        "atk_": 22,
+        "total": 88,
+        "atk": 22,
+        "critDMG_": 22,
+        "critRate_": 22
+      },
+      "eleMas": {
+        "enerRech_": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "eleMas": 11,
+        "critRate_": 11
+      },
+      "hp_": {
+        "hp": 10,
+        "total": 20,
+        "hp_": 10
+      },
+      "atk_": {
+        "atk_": 10,
+        "total": 30,
+        "enerRech_": 10,
+        "eleMas": 10
+      }
+    }
+  },
+  "BloodstainedChivalry": {
+    "flower": {
+      "hp": {
+        "atk": 64,
+        "total": 1041,
+        "atk_": 217,
+        "critDMG_": 260,
+        "enerRech_": 186,
+        "critRate_": 260,
+        "eleMas": 32,
+        "hp_": 11,
+        "hp": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk": 64,
+        "total": 1041,
+        "atk_": 217,
+        "critDMG_": 260,
+        "enerRech_": 186,
+        "critRate_": 260,
+        "eleMas": 32,
+        "hp_": 11,
+        "hp": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk": 64,
+        "total": 942,
+        "atk_": 206,
+        "critDMG_": 249,
+        "enerRech_": 164,
+        "critRate_": 227,
+        "eleMas": 32
+      },
+      "enerRech_": {
+        "critRate_": 33,
+        "total": 99,
+        "enerRech_": 22,
+        "critDMG_": 11,
+        "atk_": 11,
+        "hp_": 11,
+        "hp": 11
+      }
+    },
+    "goblet": {
+      "cryo_dmg_": {
+        "atk": 21,
+        "total": 84,
+        "atk_": 21,
+        "critDMG_": 21,
+        "enerRech_": 11,
+        "critRate_": 10
+      },
+      "atk_": {
+        "atk_": 21,
+        "total": 117,
+        "critDMG_": 32,
+        "critRate_": 32,
+        "enerRech_": 22,
+        "eleMas": 10
+      },
+      "physical_dmg_": {
+        "critRate_": 175,
+        "total": 688,
+        "critDMG_": 175,
+        "enerRech_": 120,
+        "eleMas": 22,
+        "atk": 43,
+        "atk_": 153
+      },
+      "anemo_dmg_": {
+        "critRate_": 22,
+        "total": 88,
+        "enerRech_": 22,
+        "critDMG_": 22,
+        "atk_": 22
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 44,
+        "hp_": 11,
+        "hp": 11,
+        "critRate_": 11
+      },
+      "hydro_dmg_": {
+        "critRate_": 10,
+        "total": 20,
+        "critDMG_": 10
+      }
+    },
+    "circlet": {
+      "critDMG_": {
+        "atk": 43,
+        "total": 497,
+        "atk_": 119,
+        "critDMG_": 119,
+        "enerRech_": 76,
+        "critRate_": 119,
+        "eleMas": 21
+      },
+      "atk_": {
+        "atk_": 11,
+        "total": 97,
+        "critDMG_": 32,
+        "critRate_": 32,
+        "enerRech_": 22
+      },
+      "critRate_": {
+        "critRate_": 98,
+        "total": 403,
+        "critDMG_": 109,
+        "enerRech_": 77,
+        "eleMas": 11,
+        "atk": 21,
+        "atk_": 87
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 44,
+        "hp_": 11,
+        "hp": 11,
+        "critRate_": 11
+      }
+    }
+  },
+  "DefendersWill": {
+    "flower": {
+      "hp": {
+        "def_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "def_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "def_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      }
+    },
+    "goblet": {
+      "def_": {
+        "def_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      }
+    },
+    "circlet": {
+      "def_": {
+        "def_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      }
+    }
+  },
+  "VermillionHereafter": {
+    "flower": {
+      "hp": {
+        "critRate_": 941,
+        "total": 3781,
+        "critDMG_": 942,
+        "atk_": 827,
+        "enerRech_": 610,
+        "atk": 245,
+        "hp_": 32,
+        "def_": 22,
+        "def": 32,
+        "hp": 11,
+        "eleMas": 119
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 941,
+        "total": 3781,
+        "critDMG_": 942,
+        "atk_": 827,
+        "enerRech_": 610,
+        "atk": 245,
+        "hp_": 32,
+        "def_": 22,
+        "def": 32,
+        "hp": 11,
+        "eleMas": 119
+      }
+    },
+    "sands": {
+      "atk_": {
+        "critRate_": 898,
+        "total": 3509,
+        "critDMG_": 888,
+        "atk_": 794,
+        "enerRech_": 555,
+        "atk": 234,
+        "hp_": 22,
+        "def_": 11,
+        "eleMas": 86,
+        "def": 21
+      },
+      "enerRech_": {
+        "critDMG_": 22,
+        "total": 110,
+        "enerRech_": 33,
+        "critRate_": 11,
+        "atk_": 22,
+        "def_": 11,
+        "eleMas": 11
+      },
+      "def_": {
+        "atk": 11,
+        "total": 44,
+        "def": 11,
+        "hp": 11,
+        "atk_": 11
+      },
+      "eleMas": {
+        "critRate_": 22,
+        "total": 88,
+        "critDMG_": 22,
+        "eleMas": 22,
+        "enerRech_": 22
+      },
+      "hp_": {
+        "hp_": 10,
+        "total": 30,
+        "critDMG_": 10,
+        "critRate_": 10
+      }
+    },
+    "goblet": {
+      "anemo_dmg_": {
+        "critRate_": 696,
+        "total": 2675,
+        "critDMG_": 696,
+        "atk_": 621,
+        "enerRech_": 416,
+        "atk": 181,
+        "hp_": 11,
+        "def_": 11,
+        "eleMas": 22,
+        "def": 21
+      },
+      "hydro_dmg_": {
+        "critDMG_": 32,
+        "total": 96,
+        "enerRech_": 22,
+        "critRate_": 21,
+        "atk_": 11,
+        "hp_": 10
+      },
+      "geo_dmg_": {
+        "critRate_": 22,
+        "total": 110,
+        "critDMG_": 22,
+        "atk_": 33,
+        "atk": 11,
+        "def": 11,
+        "hp": 11
+      },
+      "electro_dmg_": {
+        "critRate_": 75,
+        "total": 280,
+        "critDMG_": 75,
+        "enerRech_": 33,
+        "eleMas": 43,
+        "atk_": 33,
+        "atk": 21
+      },
+      "pyro_dmg_": {
+        "atk_": 33,
+        "total": 216,
+        "enerRech_": 32,
+        "critRate_": 54,
+        "critDMG_": 54,
+        "eleMas": 43
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 11
+      },
+      "atk_": {
+        "critRate_": 63,
+        "total": 353,
+        "critDMG_": 53,
+        "enerRech_": 86,
+        "atk_": 96,
+        "atk": 22,
+        "def_": 11,
+        "eleMas": 11,
+        "hp_": 11
+      },
+      "cryo_dmg_": {
+        "atk": 10,
+        "total": 40,
+        "enerRech_": 10,
+        "critRate_": 10,
+        "critDMG_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "critRate_": 173,
+        "total": 671,
+        "critDMG_": 195,
+        "atk_": 141,
+        "enerRech_": 119,
+        "atk": 11,
+        "hp_": 21,
+        "def_": 11
+      },
+      "critDMG_": {
+        "critDMG_": 737,
+        "total": 2883,
+        "critRate_": 758,
+        "atk_": 631,
+        "enerRech_": 447,
+        "atk": 191,
+        "eleMas": 108,
+        "def": 11
+      },
+      "atk_": {
+        "atk": 43,
+        "total": 183,
+        "def": 21,
+        "hp": 11,
+        "atk_": 44,
+        "enerRech_": 33,
+        "hp_": 11,
+        "critDMG_": 10,
+        "critRate_": 10
+      },
+      "heal_": {
+        "enerRech_": 11,
+        "total": 44,
+        "atk_": 11,
+        "def_": 11,
+        "eleMas": 11
+      }
+    }
+  },
+  "Thundersoother": {
+    "flower": {
+      "hp": {
+        "atk": 33,
+        "total": 575,
+        "critDMG_": 141,
+        "critRate_": 141,
+        "eleMas": 77,
+        "atk_": 119,
+        "enerRech_": 64
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk": 33,
+        "total": 575,
+        "critDMG_": 141,
+        "critRate_": 141,
+        "eleMas": 77,
+        "atk_": 119,
+        "enerRech_": 64
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk": 33,
+        "total": 337,
+        "critDMG_": 87,
+        "critRate_": 87,
+        "eleMas": 44,
+        "atk_": 65,
+        "enerRech_": 21
+      },
+      "eleMas": {
+        "critDMG_": 11,
+        "total": 44,
+        "critRate_": 11,
+        "eleMas": 11,
+        "atk_": 11
+      },
+      "enerRech_": {
+        "critRate_": 43,
+        "total": 194,
+        "critDMG_": 43,
+        "atk_": 43,
+        "enerRech_": 43,
+        "eleMas": 22
+      }
+    },
+    "goblet": {
+      "electro_dmg_": {
+        "atk": 33,
+        "total": 575,
+        "critDMG_": 141,
+        "critRate_": 141,
+        "eleMas": 77,
+        "atk_": 119,
+        "enerRech_": 64
+      }
+    },
+    "circlet": {
+      "eleMas": {
+        "atk": 11,
+        "total": 44,
+        "critDMG_": 11,
+        "critRate_": 11,
+        "eleMas": 11
+      },
+      "critRate_": {
+        "critRate_": 53,
+        "total": 212,
+        "critDMG_": 53,
+        "atk_": 53,
+        "eleMas": 33,
+        "enerRech_": 20
+      },
+      "critDMG_": {
+        "critDMG_": 77,
+        "total": 297,
+        "critRate_": 77,
+        "atk_": 66,
+        "atk": 22,
+        "enerRech_": 33,
+        "eleMas": 22
+      },
+      "atk_": {
+        "eleMas": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    }
+  },
+  "Lavawalker": {
+    "flower": {
+      "hp": {
+        "hp_": 11,
+        "total": 150,
+        "atk_": 11,
+        "enerRech_": 32,
+        "critDMG_": 43,
+        "eleMas": 21,
+        "critRate_": 32
+      }
+    },
+    "plume": {
+      "atk": {
+        "hp_": 11,
+        "total": 150,
+        "atk_": 11,
+        "enerRech_": 32,
+        "critDMG_": 43,
+        "eleMas": 21,
+        "critRate_": 32
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "hp_": 11,
+        "total": 44,
+        "atk_": 11,
+        "enerRech_": 11,
+        "critDMG_": 11
+      },
+      "atk_": {
+        "critDMG_": 11,
+        "total": 33,
+        "eleMas": 11,
+        "critRate_": 11
+      },
+      "eleMas": {
+        "critDMG_": 21,
+        "total": 73,
+        "critRate_": 21,
+        "enerRech_": 21,
+        "eleMas": 10
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "hp_": 11,
+        "total": 44,
+        "atk_": 11,
+        "enerRech_": 11,
+        "critDMG_": 11
+      },
+      "hydro_dmg_": {
+        "critDMG_": 11,
+        "total": 33,
+        "eleMas": 11,
+        "critRate_": 11
+      },
+      "pyro_dmg_": {
+        "critDMG_": 11,
+        "total": 33,
+        "critRate_": 11,
+        "enerRech_": 11
+      },
+      "cryo_dmg_": {
+        "critDMG_": 10,
+        "total": 40,
+        "enerRech_": 10,
+        "eleMas": 10,
+        "critRate_": 10
+      }
+    },
+    "circlet": {
+      "heal_": {
+        "hp_": 11,
+        "total": 44,
+        "atk_": 11,
+        "enerRech_": 11,
+        "critDMG_": 11
+      },
+      "critRate_": {
+        "critDMG_": 32,
+        "total": 106,
+        "eleMas": 21,
+        "critRate_": 32,
+        "enerRech_": 21
+      }
+    }
+  },
+  "Berserker": {
+    "flower": {
+      "hp": {
+        "critRate_": 87,
+        "total": 408,
+        "critDMG_": 76,
+        "atk_": 63,
+        "enerRech_": 76,
+        "eleMas": 54,
+        "atk": 21,
+        "hp_": 21,
+        "def": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 87,
+        "total": 408,
+        "critDMG_": 76,
+        "atk_": 63,
+        "enerRech_": 76,
+        "eleMas": 54,
+        "atk": 21,
+        "hp_": 21,
+        "def": 10
+      }
+    },
+    "sands": {
+      "enerRech_": {
+        "critRate_": 22,
+        "total": 88,
+        "critDMG_": 22,
+        "atk_": 22,
+        "enerRech_": 22
+      },
+      "eleMas": {
+        "eleMas": 22,
+        "total": 88,
+        "enerRech_": 22,
+        "critRate_": 22,
+        "critDMG_": 22
+      },
+      "atk_": {
+        "atk": 21,
+        "total": 212,
+        "atk_": 31,
+        "critRate_": 43,
+        "eleMas": 32,
+        "enerRech_": 32,
+        "critDMG_": 32,
+        "hp_": 11,
+        "def": 10
+      },
+      "hp_": {
+        "hp_": 10,
+        "total": 20,
+        "atk_": 10
+      }
+    },
+    "goblet": {
+      "cryo_dmg_": {
+        "critRate_": 33,
+        "total": 132,
+        "critDMG_": 33,
+        "atk_": 22,
+        "enerRech_": 33,
+        "eleMas": 11
+      },
+      "pyro_dmg_": {
+        "eleMas": 11,
+        "total": 88,
+        "enerRech_": 22,
+        "critRate_": 22,
+        "critDMG_": 22,
+        "hp_": 11
+      },
+      "atk_": {
+        "atk": 11,
+        "total": 104,
+        "atk_": 31,
+        "critRate_": 11,
+        "eleMas": 21,
+        "enerRech_": 10,
+        "def": 10,
+        "hp_": 10
+      },
+      "eleMas": {
+        "eleMas": 11,
+        "total": 44,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "enerRech_": 11
+      },
+      "electro_dmg_": {
+        "critRate_": 10,
+        "total": 40,
+        "critDMG_": 10,
+        "atk": 10,
+        "atk_": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "critRate_": 22,
+        "total": 98,
+        "critDMG_": 22,
+        "atk_": 21,
+        "enerRech_": 22,
+        "eleMas": 11
+      },
+      "critDMG_": {
+        "critDMG_": 32,
+        "total": 128,
+        "critRate_": 32,
+        "enerRech_": 22,
+        "atk_": 21,
+        "eleMas": 11,
+        "atk": 10
+      },
+      "atk_": {
+        "atk": 11,
+        "total": 118,
+        "atk_": 11,
+        "critRate_": 22,
+        "eleMas": 32,
+        "critDMG_": 11,
+        "enerRech_": 21,
+        "def": 10
+      },
+      "hp_": {
+        "enerRech_": 11,
+        "total": 64,
+        "hp_": 21,
+        "critRate_": 11,
+        "critDMG_": 11,
+        "atk_": 10
+      }
+    }
+  },
+  "ResolutionOfSojourner": {
+    "flower": {
+      "hp": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "goblet": {
+      "physical_dmg_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "circlet": {
+      "atk_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    }
+  },
+  "MartialArtist": {
+    "flower": {
+      "hp": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "goblet": {
+      "physical_dmg_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    },
+    "circlet": {
+      "atk_": {
+        "atk_": 11,
+        "total": 22,
+        "enerRech_": 11
+      }
+    }
+  },
+  "Adventurer": {
+    "flower": {
+      "hp": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      }
+    },
+    "sands": {
+      "hp_": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      }
+    },
+    "circlet": {
+      "heal_": {
+        "enerRech_": 11,
+        "total": 33,
+        "hp_": 11,
+        "atk_": 11
+      }
+    }
+  },
+  "BraveHeart": {
+    "flower": {
+      "hp": {
+        "critRate_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "def_": 11,
+        "def": 11
+      }
+    },
+    "plume": {
+      "atk": {
+        "critRate_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "def_": 11,
+        "def": 11
+      }
+    },
+    "sands": {
+      "def_": {
+        "critRate_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "def_": 11,
+        "def": 11
+      }
+    },
+    "goblet": {
+      "def_": {
+        "critRate_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "def_": 11,
+        "def": 11
+      }
+    },
+    "circlet": {
+      "def_": {
+        "critRate_": 11,
+        "total": 44,
+        "enerRech_": 11,
+        "def_": 11,
+        "def": 11
+      }
+    }
+  },
+  "TravelingDoctor": {
+    "flower": {
+      "hp": {
+        "hp_": 10,
+        "total": 40,
+        "hp": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    },
+    "plume": {
+      "atk": {
+        "hp_": 10,
+        "total": 40,
+        "hp": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    },
+    "sands": {
+      "hp_": {
+        "hp_": 10,
+        "total": 40,
+        "hp": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    },
+    "goblet": {
+      "hp_": {
+        "hp_": 10,
+        "total": 40,
+        "hp": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    },
+    "circlet": {
+      "hp_": {
+        "hp_": 10,
+        "total": 40,
+        "hp": 10,
+        "eleMas": 10,
+        "atk": 10
+      }
+    }
+  },
+  "Gambler": {
+    "flower": {
+      "hp": {
+        "atk_": 20,
+        "total": 20
+      }
+    },
+    "plume": {
+      "atk": {
+        "atk_": 20,
+        "total": 20
+      }
+    },
+    "sands": {
+      "atk_": {
+        "atk_": 10,
+        "total": 10
+      },
+      "hp_": {
+        "atk_": 10,
+        "total": 10
+      }
+    },
+    "goblet": {
+      "atk_": {
+        "atk_": 10,
+        "total": 10
+      },
+      "electro_dmg_": {
+        "atk_": 10,
+        "total": 10
+      }
+    },
+    "circlet": {
+      "critRate_": {
+        "atk_": 10,
+        "total": 10
+      },
+      "atk_": {
+        "atk_": 10,
+        "total": 10
+      }
     }
   }
 }

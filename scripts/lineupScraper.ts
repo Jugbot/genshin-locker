@@ -1,7 +1,6 @@
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 import fs from 'fs'
 import path from 'path'
-import { combinations } from '../src/automation/util/statistics'
 
 type Payload = {
   data: {
@@ -99,85 +98,48 @@ async function* fetchLineupSimulatorBuilds(limit = 1000) {
   }
 }
 
-async function createStatistics(limit = 100_000) {
+async function createStatisticsV2(limit = 100_000) {
   const results: Record<string, number> = {}
-  const totals = {
-    characters: 0,
-    artifactSets: 0,
-    substats: 0,
-    substatPairs: 0,
-  }
   let count = 0
   for await (const teams of fetchLineupSimulatorBuilds()) {
     for (const team of teams.avatar_group) {
       for (const character of team.group) {
-        totals.characters += 1
-        for (const artifactSet of character.set_list) {
-          totals.artifactSets += 1
-          setOrIncrement(results, ['set', getArtifactSet(artifactSet['name'])])
-        }
-        const [sands, goblet, circlet] = character.first_attr.sort(
-          (a, b) => a.cat_id - b.cat_id
-        )
-        setOrIncrement(results, ['slot', 'sands', getStatKey(sands.name)])
-        setOrIncrement(results, ['slot', 'goblet', getStatKey(goblet.name)])
-        setOrIncrement(results, ['slot', 'circlet', getStatKey(circlet.name)])
+        count += 1
         const substatKeys = character.secondary_attr_name.map((stat) =>
           getStatKey(stat.name)
         )
-        for (const substat of substatKeys) {
-          totals.substats += 1
-          setOrIncrement(results, ['substat', substat])
+        for (const artifactSet of character.set_list) {
+          const [sands, goblet, circlet] = character.first_attr
+            .sort((a, b) => a.cat_id - b.cat_id)
+            .map((s) => s.name)
+          const slots = {
+            flower: 'HP',
+            plume: 'ATK',
+            sands,
+            goblet,
+            circlet,
+          }
+          for (const [type, mainStat] of Object.entries(slots)) {
+            for (const substat of substatKeys) {
+              setOrIncrement(results, [
+                getArtifactSet(artifactSet['name']),
+                type,
+                getStatKey(mainStat),
+                substat,
+              ])
+              setOrIncrement(results, [
+                getArtifactSet(artifactSet['name']),
+                type,
+                getStatKey(mainStat),
+                'total',
+              ])
+            }
+          }
         }
-        for (const [keyA, keyB] of combinations(substatKeys)) {
-          totals.substatPairs += 1
-          setOrIncrement(results, ['association', keyA, keyB])
-          setOrIncrement(results, ['association', keyB, keyA])
-        }
-        count += 1
       }
     }
     if (count > limit) break
   }
-  setOrIncrement(results, ['slot', `flower`, 'hp'], totals['characters'])
-  setOrIncrement(results, ['slot', `plume`, 'atk'], totals['characters'])
-
-  for (const artifactSet in deepGet(results, ['set'])) {
-    deepSet(
-      results,
-      ['set', artifactSet],
-      (value: number) => value / totals.artifactSets
-    )
-  }
-  for (const artifactSlot in deepGet(results, ['slot'])) {
-    for (const artifactStat in deepGet(results, ['slot', artifactSlot])) {
-      deepSet(
-        results,
-        ['slot', artifactSlot, artifactStat],
-        (value: number) => value / totals.characters
-      )
-    }
-  }
-  for (const artifactStat in deepGet(results, ['substat'])) {
-    deepSet(
-      results,
-      ['substat', artifactStat],
-      (value: number) => value / totals.substats
-    )
-  }
-  for (const artifactStatA in deepGet(results, ['association'])) {
-    for (const artifactStatB in deepGet(results, [
-      'association',
-      artifactStatA,
-    ])) {
-      deepSet(
-        results,
-        ['association', artifactStatA, artifactStatB],
-        (value: number) => value / totals.substatPairs
-      )
-    }
-  }
-
   return results
 }
 
@@ -210,7 +172,7 @@ const setOrIncrement = (
   deepSet(data, keys, (prev) => ((prev as number) ?? 0) + value)
 }
 
-createStatistics().then((data) =>
+createStatisticsV2().then((data) =>
   fs.writeFileSync(
     path.join(__dirname, '../src/automation/crowdsourced/crowdsourced.json'),
     JSON.stringify(data, null, 2)
