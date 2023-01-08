@@ -110,6 +110,13 @@ export function artifactRarity(artifact: Artifact) {
   return rarity
 }
 
+export function artifactPopularity(artifact: Artifact) {
+  if (artifact.substats.length < artifact.rarity - 1) {
+    // If the artifact does not have the max number of substats for its rarity, take the weighted average of each possible upgraded artifact.
+    // const artifactLookup: Artifact[] = []
+  }
+}
+
 export function* permutations<T>(arr: T[], size = arr.length) {
   // adapted from Generatorics
   const len = arr.length

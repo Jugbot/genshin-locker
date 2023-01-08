@@ -78,7 +78,7 @@ async function generateScores() {
     const popularity = substatCounts
       ? pseudoArtifact.substats.reduce(
           (acc, substat) =>
-            acc + (substatCounts?.[substat] ?? 0 / substatCounts.total),
+            acc + (substatCounts?.[substat] ?? 0) / substatCounts.total,
           0
         )
       : 0
@@ -94,7 +94,7 @@ async function generateScores() {
   if (existsSync(writePath)) {
     unlinkSync(writePath)
   }
-  writeFileSync(writePath, JSON.stringify(json))
+  writeFileSync(writePath, JSON.stringify(json, null, 2))
 }
 
 generateScores()
