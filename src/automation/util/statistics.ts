@@ -113,22 +113,46 @@ export function artifactRarity(artifact: Artifact) {
 
 export async function artifactPopularity(artifact: Artifact) {
   const db = await getDatabase()
+  const substatKeys = artifact.substats.map((s) => s.key)
   if (artifact.substats.length < artifact.rarity - 1) {
-    // If the artifact does not have the max number of substats for its rarity, take the weighted average of each possible upgraded artifact.
-    // const artifactLookup: Artifact[] = []
+    // If the artifact does not have the max number of substats for its rarity,
+    // take the weighted average of each possible upgraded artifact.
+    let weightedSum = 0
+    let divisor = 0
     for (const possibleSubstat of Object.values(SubStatKey)) {
-      const substatKeys = artifact.substats.map((s) => s.key)
-      // const chance = subStatRollChance(possibleSubstat, artifact.mainStatKey, new Set(substatKeys))
-      db.default.find({
-        selector: {
-          set: artifact.setKey,
-          slot: artifact.slotKey,
-          main: artifact.mainStatKey,
-          subs: [...substatKeys, possibleSubstat].sort().join(','),
-        },
-      })
+      const chance = subStatRollChance(
+        possibleSubstat,
+        artifact.mainStatKey,
+        new Set(substatKeys)
+      )
+      const pages = await db.default
+        .find({
+          selector: {
+            set: artifact.setKey,
+            slot: artifact.slotKey,
+            main: artifact.mainStatKey,
+            subs: [...substatKeys, possibleSubstat].sort().join(','),
+          },
+        })
+        .exec()
+      const score = pages[0].popularity ?? 0
+      weightedSum += score * chance
+      divisor += chance
     }
+    return weightedSum / divisor
   }
+  const pages = await db.default
+    .find({
+      selector: {
+        set: artifact.setKey,
+        slot: artifact.slotKey,
+        main: artifact.mainStatKey,
+        subs: substatKeys.sort().join(','),
+      },
+    })
+    .exec()
+
+  return pages[0].popularity ?? 0
 }
 
 export function* permutations<T>(arr: T[], size = arr.length) {
