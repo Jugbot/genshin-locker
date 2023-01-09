@@ -86,7 +86,7 @@ async function generateScores() {
       set: pseudoArtifact.setKey,
       slot: pseudoArtifact.slotKey,
       main: pseudoArtifact.mainStatKey,
-      subs: pseudoArtifact.substats.join(','),
+      subs: pseudoArtifact.substats.sort().join(','),
       popularity,
     })
   }

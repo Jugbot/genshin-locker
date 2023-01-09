@@ -5,6 +5,7 @@ import {
   RxCollection,
   toTypedRxJsonSchema,
   ExtractDocumentTypeFromTypedRxJsonSchema,
+  RxDatabase,
 } from 'rxdb'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
@@ -61,10 +62,12 @@ type RxDocType = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schemaTyped>
 
 const defaultSchema: RxJsonSchema<RxDocType> = schemaTyped
 
+let db: RxDatabase<{
+  default: RxCollection<RxDocType>
+}>
 export async function getDatabase() {
-  const db = await createRxDatabase<{
-    default: RxCollection<RxDocType>
-  }>({
+  if (db) return db
+  db = await createRxDatabase({
     name: 'default',
     storage: getRxStorageMemory(),
   })

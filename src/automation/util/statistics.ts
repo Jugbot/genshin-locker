@@ -1,3 +1,4 @@
+import { getDatabase } from '../database'
 import { Artifact, MainStatKey, SlotKey, SubStatKey } from '../types'
 
 export const mainStatDistribution: Record<
@@ -110,10 +111,23 @@ export function artifactRarity(artifact: Artifact) {
   return rarity
 }
 
-export function artifactPopularity(artifact: Artifact) {
+export async function artifactPopularity(artifact: Artifact) {
+  const db = await getDatabase()
   if (artifact.substats.length < artifact.rarity - 1) {
     // If the artifact does not have the max number of substats for its rarity, take the weighted average of each possible upgraded artifact.
     // const artifactLookup: Artifact[] = []
+    for (const possibleSubstat of Object.values(SubStatKey)) {
+      const substatKeys = artifact.substats.map((s) => s.key)
+      // const chance = subStatRollChance(possibleSubstat, artifact.mainStatKey, new Set(substatKeys))
+      db.default.find({
+        selector: {
+          set: artifact.setKey,
+          slot: artifact.slotKey,
+          main: artifact.mainStatKey,
+          subs: [...substatKeys, possibleSubstat].sort().join(','),
+        },
+      })
+    }
   }
 }
 
