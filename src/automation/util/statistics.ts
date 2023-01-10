@@ -113,8 +113,10 @@ export function artifactRarity(artifact: Artifact) {
 
 export async function artifactPopularity(artifact: Artifact) {
   const db = await getDatabase()
+  const maxSubstats = artifact.rarity - 1
   const substatKeys = artifact.substats.map((s) => s.key)
-  if (artifact.substats.length < artifact.rarity - 1) {
+  let score = 0
+  if (artifact.substats.length < maxSubstats) {
     // If the artifact does not have the max number of substats for its rarity,
     // take the weighted average of each possible upgraded artifact.
     let weightedSum = 0
@@ -131,7 +133,7 @@ export async function artifactPopularity(artifact: Artifact) {
             set: artifact.setKey,
             slot: artifact.slotKey,
             main: artifact.mainStatKey,
-            subs: [...substatKeys, possibleSubstat].sort().join(','),
+            sub: possibleSubstat,
           },
         })
         .exec()
@@ -139,20 +141,60 @@ export async function artifactPopularity(artifact: Artifact) {
       weightedSum += score * chance
       divisor += chance
     }
-    return weightedSum / divisor
+    score = weightedSum / divisor
   }
-  const pages = await db.default
-    .find({
-      selector: {
-        set: artifact.setKey,
-        slot: artifact.slotKey,
-        main: artifact.mainStatKey,
-        subs: substatKeys.sort().join(','),
-      },
-    })
-    .exec()
+  // Averages the popularity for each set/slot/main/substat combo of the artifacct (i.e. each substat of the artifact)
+  for (const substat of substatKeys) {
+    const pages = await db.default
+      .find({
+        selector: {
+          set: artifact.setKey,
+          slot: artifact.slotKey,
+          main: artifact.mainStatKey,
+          subs: substat,
+        },
+      })
+      .exec()
 
-  return pages[0].popularity ?? 0
+    score += pages[0].popularity ?? 0
+  }
+  return score / maxSubstats
+}
+
+function percentileScore(target: number, scores: number[]) {
+  const sorted = scores.slice().sort((a, b) => a - b)
+  const targetIndex = (sorted.length - 1) * target
+  const targetLow = Math.floor(targetIndex)
+  const targetHigh = Math.ceil(targetIndex)
+  const targetRemainder = targetIndex - targetLow
+  // Use remainder to interpolate score betweeen low and high
+  return (
+    sorted[targetHigh] * targetRemainder +
+    sorted[targetLow] * (1 - targetRemainder)
+  )
+}
+
+export async function getTargetScores(
+  percentile: number,
+  options: { set: boolean; slot: boolean; main: boolean; sub: boolean }
+) {
+  const db = await getDatabase()
+  const docs = await db.default.find({}).exec()
+  const aggregates: Record<string, number[]> = {}
+  for (const doc of docs) {
+    const keys = Object.entries(options)
+      .filter(([, val]) => val)
+      .map(([key]) => doc[key as keyof typeof options])
+    const key = keys.join('|')
+    if (!aggregates[key]) aggregates[key] = []
+    aggregates[key].push(doc.popularity ?? 0)
+  }
+  return Object.fromEntries(
+    Object.entries(aggregates).map(([key, val]) => [
+      key,
+      percentileScore(percentile, val),
+    ])
+  )
 }
 
 export function* permutations<T>(arr: T[], size = arr.length) {

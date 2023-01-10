@@ -17,8 +17,7 @@
     "start": "electron-forge start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "scrape-data": "ts-node scripts/lineupScraper.ts",
-    "initdb": "ts-node scripts/initDatabaseData.ts"
+    "scrape-data": "ts-node scripts/lineupScraper.ts"
   },
   "keywords": [],
   "author": {
@@ -35,6 +34,7 @@
     "@electron-forge/plugin-webpack": "^6.0.3",
     "@electron/rebuild": "^3.2.10",
     "@testing-library/react": "^13.4.0",
+    "@types/cli-progress": "^3.11.0",
     "@types/ffi-napi": "^4.0.7",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.11",
@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "cli-progress": "^3.11.2",
     "css-loader": "^6.0.0",
     "electron": "20.0.0",
     "eslint": "^8.0.1",

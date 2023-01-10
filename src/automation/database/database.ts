@@ -12,7 +12,9 @@ import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
 import { getRxStorageMemory } from 'rxdb/plugins/memory'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
 import databaseData from './data.json'
+import { RxDBUpdatePlugin } from 'rxdb/plugins/update'
 
+addRxPlugin(RxDBUpdatePlugin)
 addRxPlugin(RxDBJsonDumpPlugin)
 addRxPlugin(RxDBQueryBuilderPlugin)
 addRxPlugin(RxDBDevModePlugin)
@@ -23,7 +25,7 @@ const defaultSchemaLiteral = {
   version: 0,
   primaryKey: {
     key: 'id',
-    fields: ['set', 'slot', 'main', 'subs'],
+    fields: ['set', 'slot', 'main', 'sub'],
     separator: '|',
   },
   type: 'object',
@@ -41,7 +43,7 @@ const defaultSchemaLiteral = {
     main: {
       type: 'string',
     },
-    subs: {
+    sub: {
       type: 'string',
     },
     popularity: {
@@ -53,34 +55,35 @@ const defaultSchemaLiteral = {
       default: 0,
     },
   },
-  required: ['set', 'slot', 'main', 'subs'],
+  required: ['set', 'slot', 'main', 'sub'],
 } as const
 
 const schemaTyped = toTypedRxJsonSchema(defaultSchemaLiteral)
 
 type RxDocType = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schemaTyped>
 
-const defaultSchema: RxJsonSchema<RxDocType> = schemaTyped
+export const defaultSchema: RxJsonSchema<RxDocType> = schemaTyped
 
 let db: RxDatabase<{
   default: RxCollection<RxDocType>
 }>
-export async function getDatabase() {
+export async function getDatabase(importData = true) {
   if (db) return db
   db = await createRxDatabase({
     name: 'default',
     storage: getRxStorageMemory(),
   })
 
-  console.log('creating collection..')
   await db.addCollections({
     default: {
       schema: defaultSchema,
     },
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await db.importJSON(databaseData as any)
+  if (importData) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await db.importJSON(databaseData as any)
+  }
 
   return db
 }

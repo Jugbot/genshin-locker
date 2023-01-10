@@ -1,6 +1,8 @@
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 import fs from 'fs'
 import path from 'path'
+import { getDatabase } from '../src/automation/database'
+import { SingleBar } from 'cli-progress'
 
 type Payload = {
   data: {
@@ -91,20 +93,27 @@ async function* fetchLineupSimulatorBuilds(limit = 1000) {
     request.searchParams.set('roles', '')
     request.searchParams.set('order', 'Hot')
     request.searchParams.set('lang', 'en-us')
-    const data = await fetch(request)
-    const jsonData = (await data.json()) as Payload
-    nextPageToken = jsonData.data['next_page_token']
-    yield* jsonData.data['list']
+    try {
+      const data = await fetch(request)
+      const jsonData = (await data.json()) as Payload
+      nextPageToken = jsonData.data['next_page_token']
+      yield* jsonData.data['list']
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 
-async function createStatisticsV2(limit = 100_000) {
-  const results: Record<string, number> = {}
+async function createStatistics(limit = 100_000) {
+  const db = await getDatabase(false)
   let count = 0
+  const bar = new SingleBar({})
+  bar.start(limit, 0)
   for await (const teams of fetchLineupSimulatorBuilds()) {
     for (const team of teams.avatar_group) {
       for (const character of team.group) {
         count += 1
+        bar.increment(1)
         const substatKeys = character.secondary_attr_name.map((stat) =>
           getStatKey(stat.name)
         )
@@ -121,18 +130,25 @@ async function createStatisticsV2(limit = 100_000) {
           }
           for (const [type, mainStat] of Object.entries(slots)) {
             for (const substat of substatKeys) {
-              setOrIncrement(results, [
-                getArtifactSet(artifactSet['name']),
-                type,
-                getStatKey(mainStat),
-                substat,
-              ])
-              setOrIncrement(results, [
-                getArtifactSet(artifactSet['name']),
-                type,
-                getStatKey(mainStat),
-                'total',
-              ])
+              const row = {
+                set: getArtifactSet(artifactSet['name']),
+                slot: type,
+                main: getStatKey(mainStat),
+                sub: substat,
+              }
+              let doc = await db.default
+                .findOne({
+                  selector: row,
+                })
+                .exec()
+              if (!doc) {
+                doc = await db.default.insert(row)
+              }
+              await doc.update({
+                $inc: {
+                  popularity: 1,
+                },
+              })
             }
           }
         }
@@ -140,41 +156,13 @@ async function createStatisticsV2(limit = 100_000) {
     }
     if (count > limit) break
   }
-  return results
+  bar.stop()
+  return db.exportJSON()
 }
 
-const deepGet = (data: Record<string, unknown>, keys: string[]) => {
-  let deepData = data
-  for (const key of keys) {
-    if (!(key in deepData)) {
-      deepData[key] = {}
-    }
-    deepData = deepData[key] as Record<string, unknown>
-  }
-  return deepData
-}
-
-const deepSet = (
-  data: Record<string, unknown>,
-  keys: string[],
-  value: (existing: unknown) => unknown
-): void => {
-  const deepData = deepGet(data, keys.slice(0, -1))
-  const key = keys.at(-1) as string
-  deepData[key] = value(deepData[key])
-}
-
-const setOrIncrement = (
-  data: Record<string, unknown>,
-  keys: string[],
-  value = 1
-): void => {
-  deepSet(data, keys, (prev) => ((prev as number) ?? 0) + value)
-}
-
-createStatisticsV2().then((data) =>
+createStatistics(10000).then((data) =>
   fs.writeFileSync(
-    path.join(__dirname, '../src/automation/crowdsourced/crowdsourced.json'),
+    path.join(__dirname, '../src/automation/database/data.json'),
     JSON.stringify(data, null, 2)
   )
 )

@@ -33,7 +33,7 @@ export async function readArtifacts() {
 
   const totalArtifacts: Promise<Artifact>[] = []
   while (count < total) {
-    const artifactsInPage: Promise<Artifact>[] = []
+    const pageActions: Promise<Artifact>[] = []
     for (const click of navigator.clickAll('list_item')) {
       click()
       await sleep(200)
@@ -43,7 +43,7 @@ export async function readArtifacts() {
         navigator.getArtifact(image)
       )
       totalArtifacts.push(artifactPromise)
-      artifactsInPage.push(
+      pageActions.push(
         artifactPromise.then((artifact) => {
           // TODO: Get artifacts to lock
           return artifact
@@ -56,7 +56,7 @@ export async function readArtifacts() {
         throw Error('Keyboard Interrupt')
       }
     }
-    await Promise.all(artifactsInPage)
+    await Promise.all(pageActions)
     const remaining = total - count
     const remainingRows = Math.min(
       Math.floor(remaining / itemsPerRow),
