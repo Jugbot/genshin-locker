@@ -141,7 +141,7 @@ export async function artifactPopularity(artifact: Artifact) {
       weightedSum += score * chance
       divisor += chance
     }
-    score = weightedSum / divisor
+    score += weightedSum / divisor
   }
   // Averages the popularity for each set/slot/main/substat combo of the artifacct (i.e. each substat of the artifact)
   for (const substat of substatKeys) {
@@ -161,9 +161,14 @@ export async function artifactPopularity(artifact: Artifact) {
   return score / maxSubstats
 }
 
-function percentileScore(target: number, scores: number[]) {
+/**
+ * @param percentile range [0, 1]
+ * @param scores array of arbitrary score values, unsorted is fine.
+ * @returns the interpolated score at the target percentile
+ */
+function percentileScore(percentile: number, scores: number[]) {
   const sorted = scores.slice().sort((a, b) => a - b)
-  const targetIndex = (sorted.length - 1) * target
+  const targetIndex = (sorted.length - 1) * percentile
   const targetLow = Math.floor(targetIndex)
   const targetHigh = Math.ceil(targetIndex)
   const targetRemainder = targetIndex - targetLow
@@ -174,7 +179,7 @@ function percentileScore(target: number, scores: number[]) {
   )
 }
 
-export async function getTargetScores(
+export async function setTargetScores(
   percentile: number,
   options: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 ) {
@@ -182,19 +187,51 @@ export async function getTargetScores(
   const docs = await db.default.find({}).exec()
   const aggregates: Record<string, number[]> = {}
   for (const doc of docs) {
-    const keys = Object.entries(options)
-      .filter(([, val]) => val)
-      .map(([key]) => doc[key as keyof typeof options])
+    const keys = Object.entries(options).map(([key, val]) => [
+      key,
+      val ? doc[key as keyof typeof options] : '',
+    ])
     const key = keys.join('|')
     if (!aggregates[key]) aggregates[key] = []
     aggregates[key].push(doc.popularity ?? 0)
   }
-  return Object.fromEntries(
-    Object.entries(aggregates).map(([key, val]) => [
-      key,
-      percentileScore(percentile, val),
-    ])
+
+  await Promise.all(
+    Object.entries(aggregates).map(async ([key, val]) => {
+      const [set, slot, main, sub] = key.split('|')
+      db.targetScore.insert({
+        set,
+        slot,
+        main,
+        sub,
+        score: percentileScore(percentile, val),
+      })
+    })
   )
+}
+
+export async function getTargetScore(
+  artifact: Artifact,
+  mask: { set: boolean; slot: boolean; main: boolean; sub: boolean }
+) {
+  const db = await getDatabase()
+  const scores = await db.targetScore
+    .find({ selector: { score: {} } })
+    .where({
+      selector: {
+        set: mask.set ? artifact.setKey : '',
+        slot: mask.slot ? artifact.slotKey : '',
+        main: mask.main ? artifact.mainStatKey : '',
+        sub: mask.sub
+          ? {
+              $in: artifact.substats.map((stat) => stat.key),
+            }
+          : '',
+      },
+    })
+    .exec()
+  // return an average of target scores in the case of substats being a bucket identifier
+  return scores.reduce((acc, val) => acc + val.score, 0) / scores.length
 }
 
 export function* permutations<T>(arr: T[], size = arr.length) {

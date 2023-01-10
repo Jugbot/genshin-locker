@@ -13,7 +13,10 @@ try {
 
 const actions = {
   routine() {
-    readArtifacts().then(console.log)
+    readArtifacts({
+      percentile: 0.5,
+      targetAttributes: { set: true, slot: true, main: false, sub: false },
+    }).then(console.log)
   },
 }
 
