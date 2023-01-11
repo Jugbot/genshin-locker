@@ -1,39 +1,48 @@
-import { defaultSchema, getDatabase } from '../database'
-import { getTargetScores } from './statistics'
+import { getDatabase } from '../database'
+import { setTargetScores } from './statistics'
 
 describe('statistics', () => {
   beforeEach(async () => {
+    // remove test data
     const db = await getDatabase(false)
-    // insert test data
-    await db.default.remove()
-    await db.addCollections({ default: { schema: defaultSchema } })
-    await db.default.bulkInsert([
-      {
-        set: 'SetA',
-        slot: 'plume',
-        main: 'atk_',
-        sub: 'atk',
-        popularity: 200,
-      },
-      {
-        set: 'SetA',
-        slot: 'plume',
-        main: 'atk_',
-        sub: 'def',
-        popularity: 100,
-      },
-    ])
+    await db.default.find().remove()
   })
   describe('getTargetScores', () => {
     it('interpolates', async () => {
-      const scoreDict = await getTargetScores(0.95, {
+      const db = await getDatabase(false)
+      await db.default.bulkInsert([
+        {
+          set: 'SetA',
+          slot: 'plume',
+          main: 'atk_',
+          sub: 'atk',
+          popularity: 200,
+        },
+        {
+          set: 'SetA',
+          slot: 'plume',
+          main: 'atk_',
+          sub: 'def',
+          popularity: 100,
+        },
+      ])
+
+      await setTargetScores(0.95, {
         set: true,
         slot: true,
         main: true,
         sub: false,
       })
-      expect(scoreDict).toEqual({
-        'SetA|plume|atk_': 195,
+
+      const result = await db.targetscore.findOne().exec()
+      if (!result) throw Error()
+      const { set, slot, main, sub, score } = result
+      expect({ set, slot, main, sub, score }).toEqual({
+        set: 'SetA',
+        slot: 'plume',
+        main: 'atk_',
+        sub: '',
+        score: 195,
       })
     })
   })

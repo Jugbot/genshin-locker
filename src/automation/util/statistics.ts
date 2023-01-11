@@ -127,8 +127,8 @@ export async function artifactPopularity(artifact: Artifact) {
         artifact.mainStatKey,
         new Set(substatKeys)
       )
-      const pages = await db.default
-        .find({
+      const doc = await db.default
+        .findOne({
           selector: {
             set: artifact.setKey,
             slot: artifact.slotKey,
@@ -137,7 +137,7 @@ export async function artifactPopularity(artifact: Artifact) {
           },
         })
         .exec()
-      const score = pages[0].popularity ?? 0
+      const score = doc?.popularity ?? 0
       weightedSum += score * chance
       divisor += chance
     }
@@ -145,18 +145,18 @@ export async function artifactPopularity(artifact: Artifact) {
   }
   // Averages the popularity for each set/slot/main/substat combo of the artifacct (i.e. each substat of the artifact)
   for (const substat of substatKeys) {
-    const pages = await db.default
-      .find({
+    const doc = await db.default
+      .findOne({
         selector: {
           set: artifact.setKey,
           slot: artifact.slotKey,
           main: artifact.mainStatKey,
-          subs: substat,
+          sub: substat,
         },
       })
       .exec()
 
-    score += pages[0].popularity ?? 0
+    score += doc?.popularity ?? 0
   }
   return score / maxSubstats
 }
@@ -184,22 +184,24 @@ export async function setTargetScores(
   options: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 ) {
   const db = await getDatabase()
+  await db.targetscore.find({}).remove()
   const docs = await db.default.find({}).exec()
   const aggregates: Record<string, number[]> = {}
   for (const doc of docs) {
-    const keys = Object.entries(options).map(([key, val]) => [
-      key,
-      val ? doc[key as keyof typeof options] : '',
-    ])
+    const keys = Object.entries(options).map(([key, val]) =>
+      val ? doc[key as keyof typeof options] : ''
+    )
     const key = keys.join('|')
     if (!aggregates[key]) aggregates[key] = []
     aggregates[key].push(doc.popularity ?? 0)
   }
 
+  console.log(aggregates)
+
   await Promise.all(
     Object.entries(aggregates).map(async ([key, val]) => {
       const [set, slot, main, sub] = key.split('|')
-      db.targetScore.insert({
+      db.targetscore.insert({
         set,
         slot,
         main,
@@ -215,21 +217,18 @@ export async function getTargetScore(
   mask: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 ) {
   const db = await getDatabase()
-  const scores = await db.targetScore
-    .find({ selector: { score: {} } })
-    .where({
-      selector: {
-        set: mask.set ? artifact.setKey : '',
-        slot: mask.slot ? artifact.slotKey : '',
-        main: mask.main ? artifact.mainStatKey : '',
-        sub: mask.sub
-          ? {
-              $in: artifact.substats.map((stat) => stat.key),
-            }
-          : '',
-      },
-    })
-    .exec()
+  const query = {
+    set: mask.set ? artifact.setKey : '',
+    slot: mask.slot ? artifact.slotKey : '',
+    main: mask.main ? artifact.mainStatKey : '',
+    sub: mask.sub
+      ? {
+          $in: artifact.substats.map((stat) => stat.key),
+        }
+      : '',
+  }
+  const scores = await db.targetscore.find({ selector: query }).exec()
+  if (!scores.length) return 0
   // return an average of target scores in the case of substats being a bucket identifier
   return scores.reduce((acc, val) => acc + val.score, 0) / scores.length
 }

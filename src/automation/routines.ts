@@ -47,21 +47,21 @@ export async function readArtifacts({
 
   const totalArtifacts: Promise<Artifact>[] = []
   while (count < total) {
-    const pageActions: Promise<unknown>[] = []
+    const pageActions: (() => Promise<unknown>)[] = []
     for (const click of navigator.clickAll('list_item')) {
-      click()
-      await sleep(200)
-      count += 1
-      const imageBGRA = await navigator.gwindow.captureBGRA()
-      const artifactPromise = GBRAtoRGB(imageBGRA).then((image) =>
-        navigator.getArtifact(image)
-      )
-      totalArtifacts.push(artifactPromise)
-      pageActions.push(
-        artifactPromise.then((artifact) => {
-          const targetScore = getTargetScore(artifact, targetAttributes)
-          const artifactScore = artifactPopularity(artifact)
-          const shouldBeLocked = artifactScore > targetScore
+      pageActions.push(async () => {
+        click()
+        await sleep(200)
+        const imageBGRA = await navigator.gwindow.captureBGRA()
+        const artifactPromise = GBRAtoRGB(imageBGRA).then((image) =>
+          navigator.getArtifact(image)
+        )
+        totalArtifacts.push(artifactPromise)
+        artifactPromise.then(async (artifact) => {
+          const targetScore = await getTargetScore(artifact, targetAttributes)
+          const artifactScore = await artifactPopularity(artifact)
+          console.log({ artifactScore, targetScore })
+          const shouldBeLocked = artifactScore >= targetScore
           if (shouldBeLocked !== artifact.lock) {
             const lockArtifact = async () => {
               // navigate to the artifact we want to lock again
@@ -70,23 +70,23 @@ export async function readArtifacts({
               navigator.click('card_lock')
               await sleep(200)
             }
-            pageActions.push(lockArtifact())
+            pageActions.push(lockArtifact)
           }
-          return artifact
         })
-      )
+      })
+      count += 1
       if (count === total) {
         break
-      }
-      if (navigator.gwindow.keydown(VK.SPACE)) {
-        throw Error('Keyboard Interrupt')
       }
     }
     // Wait for all artifacts to be read
     // await Promise.all(totalArtifacts)
     // Exhaust sequential actions on artifacts
     for (const action of pageActions) {
-      await action
+      await action()
+      if (navigator.gwindow.keydown(VK.SPACE)) {
+        throw Error('Keyboard Interrupt')
+      }
     }
     const remaining = total - count
     const remainingRows = Math.min(

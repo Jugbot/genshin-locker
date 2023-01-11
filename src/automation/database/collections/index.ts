@@ -1,17 +1,17 @@
 import type { RxCollection, RxCollectionCreator } from 'rxdb'
 import * as Default from './default'
-import * as TargetScore from './targetScore'
+import * as TargetScore from './targetscore'
 
 export type Collections = {
   default: RxCollection<Default.RxDocType>
-  targetScore: RxCollection<TargetScore.RxDocType>
+  targetscore: RxCollection<TargetScore.RxDocType>
 }
 
 export const collections: Record<keyof Collections, RxCollectionCreator> = {
   default: {
     schema: Default.schema,
   },
-  targetScore: {
+  targetscore: {
     schema: TargetScore.schema,
   },
 }

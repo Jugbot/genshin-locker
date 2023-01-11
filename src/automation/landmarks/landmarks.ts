@@ -67,8 +67,8 @@ class Landmark {
 
   *landmarks(): Generator<Landmark> {
     // Utility for iterating through the (upper-left) grid points
-    for (let x = 0; x < this.repeat_x; x += 1) {
-      for (let y = 0; y < this.repeat_y; y += 1) {
+    for (let y = 0; y < this.repeat_y; y += 1) {
+      for (let x = 0; x < this.repeat_x; x += 1) {
         yield this.at(x, y)
       }
     }
