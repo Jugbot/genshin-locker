@@ -12,8 +12,14 @@ const App: React.FC = () => {
         color: '$textDefault',
       }}
     >
-      <Button onClick={window.actions.routine}>Routine</Button>
-      <Button>
+      <Button
+        size="large"
+        onClick={window.actions.routine}
+        css={{ mr: '$space1' }}
+      >
+        Routine
+      </Button>
+      <Button icon>
         <SunIcon />
       </Button>
       <Separator />
