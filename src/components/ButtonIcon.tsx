@@ -1,27 +1,27 @@
 import { styled } from '../stitches.config'
 import { ButtonBase } from './ButtonBase'
 
-export const Button = styled(ButtonBase, {
-  borderRadius: '$radius1',
+export const ButtonIcon = styled(ButtonBase, {
+  borderRadius: '$radiusMax',
 
   variants: {
     size: {
       small: {
-        minHeight: '$size8',
-        py: '$space1',
-        px: '$space4',
+        width: '$size8',
+        height: '$size8',
+        padding: '$space1',
         fontSize: '$fontSize2',
       },
       medium: {
-        minHeight: '$size10',
-        py: '$space1',
-        px: '$space6',
+        width: '$size10',
+        height: '$size10',
+        padding: '$space1',
         fontSize: '$fontSize3',
       },
       large: {
-        minHeight: '$size11',
-        py: '$space1',
-        px: '$space6',
+        width: '$size11',
+        height: '$size11',
+        padding: '$space1',
         fontSize: '$fontSize4',
       },
     },

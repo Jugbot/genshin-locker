@@ -3,6 +3,8 @@ import { styled } from '../stitches.config'
 export const Text = styled('p', {
   fontFamily: '$body',
   fontVariantNumeric: 'tabular-nums',
+  margin: 0,
+
   variants: {
     variant: {
       body: {
