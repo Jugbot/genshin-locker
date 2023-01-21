@@ -1,8 +1,10 @@
-import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 import fs from 'fs'
 import path from 'path'
-import { getDatabase } from '../src/automation/database'
+
 import { SingleBar } from 'cli-progress'
+
+import { getDatabase } from '../src/automation/database'
+import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 
 type Payload = {
   data: {

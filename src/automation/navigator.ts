@@ -1,8 +1,11 @@
-import tesseract from 'node-tesseract-ocr'
 import os from 'os'
 import path from 'path'
+
+import tesseract from 'node-tesseract-ocr'
 import { Sharp } from 'sharp'
+
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
+
 import { Landmarks, ScreenMap, load } from './landmarks/landmarks'
 import { Artifact } from './types'
 import {

@@ -1,4 +1,5 @@
 import { getDatabase } from '../database'
+
 import { setTargetScores } from './statistics'
 
 describe('statistics', () => {

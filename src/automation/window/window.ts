@@ -1,3 +1,9 @@
+import { Pointer } from 'ref-napi'
+import sharp from 'sharp'
+
+import { GBRAtoRGB } from '../util/image'
+
+import { mouseEvent, ucsBufferFrom } from './util'
 import {
   user32,
   gdi32,
@@ -18,10 +24,6 @@ import {
   SW_RESTORE,
   VK,
 } from './winconst'
-import { mouseEvent, ucsBufferFrom } from './util'
-import { Pointer } from 'ref-napi'
-import sharp from 'sharp'
-import { GBRAtoRGB } from '../util/image'
 
 export class GenshinWindow {
   handle: bigint

@@ -1,6 +1,7 @@
 import ref from 'ref-napi'
-import { MOUSEEVENTF } from './winconst'
+
 import { MOUSEINPUT, INPUT, INPUT_UNION } from './winapi'
+import { MOUSEEVENTF } from './winconst'
 
 export function ucsBufferFrom(str: string | undefined | null) {
   if (typeof str === 'string' && str.length) {

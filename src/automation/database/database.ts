@@ -1,11 +1,12 @@
 import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb'
-import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
-import { getRxStorageMemory } from 'rxdb/plugins/memory'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
-import databaseData from './data.json'
+import { getRxStorageMemory } from 'rxdb/plugins/memory'
+import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update'
+
 import { Collections, collections } from './collections'
+import databaseData from './data.json'
 
 addRxPlugin(RxDBUpdatePlugin)
 addRxPlugin(RxDBJsonDumpPlugin)

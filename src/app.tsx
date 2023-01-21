@@ -1,4 +1,6 @@
+import { PlayIcon } from '@radix-ui/react-icons'
 import { createRoot } from 'react-dom/client'
+
 import {
   Box,
   Button,
@@ -9,7 +11,6 @@ import {
   Text,
   TextArea,
 } from './components'
-import { PlayIcon } from '@radix-ui/react-icons'
 
 const App: React.FC = () => {
   return (

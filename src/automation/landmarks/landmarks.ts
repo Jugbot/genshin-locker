@@ -1,5 +1,6 @@
 import { XMLParser } from 'fast-xml-parser'
 import { Region } from 'sharp'
+
 import maps from './maps'
 
 export enum ScreenMap {

@@ -1,6 +1,6 @@
+import child_process from 'child_process'
 import { contextBridge } from 'electron'
 
-import child_process from 'child_process'
 import { readArtifacts } from './automation/routines'
 
 try {

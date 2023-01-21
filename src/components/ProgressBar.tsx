@@ -1,6 +1,7 @@
 import * as Progress from '@radix-ui/react-progress'
-import { styled } from '../stitches.config'
 import { ComponentProps } from 'react'
+
+import { styled } from '../stitches.config'
 
 const Root = styled(Progress.Root, {
   position: 'relative',

@@ -1,4 +1,5 @@
 import { styled } from '../stitches.config'
+
 import { ButtonBase } from './ButtonBase'
 
 export const ButtonIcon = styled(ButtonBase, {

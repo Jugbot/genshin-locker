@@ -1,9 +1,10 @@
+import path from 'path'
+
 import ffi from 'ffi-napi'
 import refarray from 'ref-array-di'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
 import refunion from 'ref-union-di'
-import path from 'path'
 
 import vJoyInterface from './lib/vJoyInterface.dll'
 

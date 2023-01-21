@@ -1,4 +1,5 @@
 import type { RxCollection, RxCollectionCreator } from 'rxdb'
+
 import * as Default from './default'
 import * as TargetScore from './targetscore'
 
