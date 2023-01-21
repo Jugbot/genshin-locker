@@ -14,6 +14,13 @@ import {
 } from './util/scraper'
 import { GenshinWindow } from './window'
 
+const tesseractConfig: tesseract.Config = {
+  'tessdata-dir': path.join(__dirname, path.dirname(traineddata)),
+  lang: path.parse(traineddata).name,
+  psm: 7,
+  oem: 3,
+}
+
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
@@ -78,17 +85,14 @@ export class Navigator {
     image: Sharp,
     id: keyof Landmarks[ScreenMap.ARTIFACTS]
   ): Promise<string[]> {
-    const tessConfig: tesseract.Config = {
-      'tessdata-dir': path.join(__dirname, path.dirname(traineddata)),
-      lang: path.parse(traineddata).name,
-      psm: 7,
-      oem: 3,
-    }
     return Promise.all(
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
           const imageRegion = image.clone().extract(region).withMetadata().png()
-          return tesseract.recognize(await imageRegion.toBuffer(), tessConfig)
+          return tesseract.recognize(
+            await imageRegion.toBuffer(),
+            tesseractConfig
+          )
         }
       )
     )

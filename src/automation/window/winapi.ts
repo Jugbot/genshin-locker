@@ -1,8 +1,11 @@
 import ffi from 'ffi-napi'
+import refarray from 'ref-array-di'
 import ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
 import refunion from 'ref-union-di'
-import refarray from 'ref-array-di'
+import path from 'path'
+
+import vJoyInterface from './lib/vJoyInterface.dll'
 
 const RefStruct = refstruct(ref)
 const RefUnion = refunion(ref)
@@ -173,3 +176,15 @@ export const gdi32 = ffi.Library('gdi32', {
     [W.HDC, W.INT, W.INT, W.INT, W.INT, W.HDC, W.INT, W.INT, W.DWORD],
   ],
 })
+
+let vjoy = null
+try {
+  vjoy = ffi.Library(path.join(__dirname, vJoyInterface), {
+    GetvJoyVersion: [W.SHORT, []],
+    vJoyEnabled: [W.BOOL, []],
+  })
+} catch (e) {
+  console.warn('VJoy is not available.')
+}
+
+export { vjoy }

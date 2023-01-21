@@ -18,6 +18,13 @@ rules.push(
     generator: {
       filename: 'tessdata/[hash][ext][query]',
     },
+  },
+  {
+    test: /\.dll$/,
+    type: 'asset/resource',
+    generator: {
+      filename: 'dll/[hash][ext][query]',
+    },
   }
 )
 

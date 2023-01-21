@@ -7,3 +7,8 @@ declare module '*.traineddata' {
   const content: string
   export default content
 }
+
+declare module '*.dll' {
+  const content: string
+  export default content
+}
