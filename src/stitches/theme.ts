@@ -1,5 +1,9 @@
 import { sandDark, yellowDark, amber, orange, brown } from '@radix-ui/colors'
 
+// Constants for setting window button colors
+export const MENUBAR_BACKCOLOR = sandDark.sand3
+export const MENUBAR_COLOR = sandDark.sand12
+
 const theme = {
   borderStyles: {},
   borderWidths: {
@@ -14,13 +18,17 @@ const theme = {
     ...amber,
     ...orange,
     ...brown,
-    appBackground: '$sand2',
+    bgPrimary: '$sand2',
+    bgSecondary: '$sand3',
+    appBackground: '$bgPrimary',
     bgActionPrimary: '$yellow3',
     bgActionPrimaryHover: '$yellow4',
     bgActionPrimaryPressed: '$yellow5',
     textDefault: '$sand12',
     textPrimary: '$yellow11',
-    textDisabled: '',
+    textDisabled: '$sand11',
+    menubarBackground: MENUBAR_BACKCOLOR,
+    menubarColor: MENUBAR_COLOR,
   },
   fonts: {
     display: 'Arial',
@@ -86,6 +94,7 @@ const theme = {
     size14: '56px',
     size15: '60px',
     size16: '64px',
+    scrollbarSize: '$size2',
   },
   space: {
     space0: '0',
