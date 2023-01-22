@@ -30,6 +30,8 @@ const UINT = 'uint'
 const UINT_PTR = _WIN64 ? 'uint64' : 'uint32'
 const HGDIOBJ = HANDLE
 const SHORT = 'short'
+const CHAR = 'char'
+const UCHAR = 'uchar'
 
 export const W = {
   HANDLE,
@@ -48,6 +50,8 @@ export const W = {
   UINT_PTR,
   HGDIOBJ,
   SHORT,
+  CHAR,
+  UCHAR,
 } as const
 
 export const BITMAP = RefStruct(
@@ -178,14 +182,24 @@ export const gdi32 = ffi.Library('gdi32', {
   ],
 })
 
-let vjoy = null
-try {
-  vjoy = ffi.Library(path.join(__dirname, vJoyInterface), {
-    GetvJoyVersion: [W.SHORT, []],
-    vJoyEnabled: [W.BOOL, []],
-  })
-} catch (e) {
-  console.warn('VJoy is not available.')
+function loadVJoyLib() {
+  try {
+    return ffi.Library(path.join(__dirname, vJoyInterface), {
+      GetvJoyVersion: [W.SHORT, []],
+      vJoyEnabled: [W.BOOL, []],
+      SetAxis: [W.BOOL, [W.LONG, W.UINT, W.UINT]],
+      SetBtn: [W.BOOL, [W.BOOL, W.UINT, W.UCHAR]],
+      SetDiscPov: [W.BOOL, [W.INT, W.UINT, W.UCHAR]],
+      SetContPov: [W.BOOL, [W.DWORD, W.UINT, W.UCHAR]],
+      AcquireVJD: [W.BOOL, [W.UINT]],
+      RelinquishVJD: ['void', [W.UINT]],
+      ResetVJD: [W.BOOL, [W.UINT]],
+    })
+  } catch (e) {
+    console.warn('VJoy is not available.')
+  }
+  return null
 }
+const vjoy = loadVJoyLib()
 
 export { vjoy }

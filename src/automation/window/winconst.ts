@@ -226,3 +226,20 @@ export enum VK {
   PA1 = 0xfd, // PA1 key
   OEM_CLEAR = 0xfe, // Clear key
 }
+
+export enum GAMEPAD_BTN {
+  A = 1,
+  B = 2,
+  X = 3,
+  Y = 4,
+  LB = 5,
+  RB = 6,
+  Back = 7,
+  Start = 8,
+  LS = 9,
+  RS = 10,
+  // DPadUp = 11,
+  // DPadDown = 12,
+  // DPadLeft = 13,
+  // DPadRight = 14,
+}

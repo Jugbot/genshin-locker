@@ -14,6 +14,7 @@ import {
   POINT,
   RECT,
   StringBuffer,
+  vjoy,
 } from './winapi'
 import {
   MOUSEEVENTF,
@@ -23,6 +24,7 @@ import {
   SRCCOPY,
   SW_RESTORE,
   VK,
+  GAMEPAD_BTN,
 } from './winconst'
 
 export class GenshinWindow {
@@ -80,6 +82,12 @@ export class GenshinWindow {
     )
 
     user32.SendInput(inputArray.length, inputArray, INPUT.size)
+  }
+
+  gamepadButton(btn: GAMEPAD_BTN, down: boolean) {
+    // console.log('AcquireVJD', vjoy?.AcquireVJD(1))
+    console.log('SetBtn', vjoy?.SetBtn(down ? 1 : 0, 1, btn))
+    // console.log('RelinquishVJD', vjoy?.RelinquishVJD(1))
   }
 
   mouseDown() {
