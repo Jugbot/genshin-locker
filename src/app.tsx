@@ -1,10 +1,10 @@
 import { ImageIcon, PlayIcon } from '@radix-ui/react-icons'
 import { createRoot } from 'react-dom/client'
 
+import { Artifact } from './automation/types'
 import {
   Box,
   Button,
-  ButtonIcon,
   Heading,
   MenuBar,
   ProgressBar,
@@ -13,6 +13,7 @@ import {
   Text,
   TextArea,
 } from './components'
+import { ArtifactCard } from './composites'
 
 const App: React.FC = () => {
   return (
@@ -37,7 +38,7 @@ const App: React.FC = () => {
       </MenuBar.Root>
       <Box
         css={{
-          padding: '$space2 $space6',
+          padding: '$space2',
           flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
@@ -48,7 +49,7 @@ const App: React.FC = () => {
           css={{
             flex: 1,
             display: 'flex',
-            mb: '$space1',
+            mb: '$space2',
             position: 'relative',
             minHeight: 0,
             maxHeight: '100%',
@@ -66,19 +67,41 @@ const App: React.FC = () => {
             <Heading>Heading</Heading>
             <Text>Text</Text>
           </Box>
-          <StandardScrollArea
-            css={{ flexGrow: 1, height: '100%' }}
-          ></StandardScrollArea>
+          <StandardScrollArea css={{ flexGrow: 1, height: '100%' }}>
+            <Box
+              css={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: '$space3',
+              }}
+            >
+              <ArtifactCard artifact={{ name: 'lol' } as Artifact} />
+            </Box>
+          </StandardScrollArea>
         </Box>
-        <Box css={{ flex: 0, flexBasis: 'min-content' }}>
+        <Box css={{ flex: 0, flexBasis: 'content' }}>
           <Box css={{ mb: '$space2', display: 'flex', alignItems: 'center' }}>
-            <Text css={{ mr: '$space2' }}>Hi</Text>
-            <ButtonIcon size="small" css={{ mr: '$space2' }}>
+            <Button size="small" css={{ mr: '$space2' }}>
               <PlayIcon />
-            </ButtonIcon>
-            <ProgressBar value={65} max={70} css={{ flexGrow: 1 }} />
+            </Button>
+            <ProgressBar
+              value={65}
+              max={70}
+              css={{ flexGrow: 1, height: '$size8' }}
+            />
           </Box>
-          <TextArea value="hello" rows={5} readOnly css={{ width: '100%' }} />
+          <TextArea
+            readOnly
+            css={{ width: '100%', height: '7em' }}
+            value={`Some logs
+logs
+logs
+logs
+logs
+logs
+logs`}
+          />
         </Box>
       </Box>
     </Box>

@@ -1,4 +1,15 @@
-import { sandDark, yellowDark, amber, orange, brown } from '@radix-ui/colors'
+import {
+  sandDark,
+  yellowDark,
+  amber,
+  orange,
+  brown,
+  amberDark,
+  brownDark,
+  orangeDark,
+  sand,
+  yellow,
+} from '@radix-ui/colors'
 
 // Constants for setting window button colors
 export const MENUBAR_BACKCOLOR = sandDark.sand3
@@ -116,6 +127,26 @@ const theme = {
     space16: '64px',
   },
   transitions: {},
+} as const
+
+export const light = {
+  colors: {
+    ...sand,
+    ...yellow,
+    ...amberDark,
+    ...orangeDark,
+    ...brownDark,
+  },
+} as const
+
+export const dark = {
+  colors: {
+    ...sandDark,
+    ...yellowDark,
+    ...amber,
+    ...orange,
+    ...brown,
+  },
 } as const
 
 export default theme

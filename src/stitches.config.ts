@@ -1,6 +1,6 @@
 import { createStitches } from '@stitches/react'
 
-import themeDefault from './stitches/theme'
+import themeDefault, { dark, light } from './stitches/theme'
 import utils from './stitches/utils'
 
 export const {
@@ -16,3 +16,6 @@ export const {
   theme: themeDefault,
   utils,
 })
+
+export const darkTheme = createTheme(dark)
+export const lightTheme = createTheme(light)

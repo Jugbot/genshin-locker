@@ -5,6 +5,8 @@ import { styled } from '../stitches.config'
 
 const ScrollAreaRoot = styled(RadixScrollArea.Root, {
   borderRadius: '$radius1',
+  padding: '$space2',
+  boxSizing: 'border-box',
   overflow: 'hidden',
   backgroundColor: '$bgSecondary',
 })
@@ -60,7 +62,7 @@ export const ScrollArea = {
 export const StandardScrollArea = ({
   children,
   ...props
-}: ComponentProps<typeof ScrollAreaRoot>) => {
+}: ComponentProps<typeof ScrollArea.Root>) => {
   return (
     <ScrollArea.Root {...props}>
       <ScrollArea.Viewport>{children}</ScrollArea.Viewport>
