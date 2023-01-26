@@ -21,15 +21,10 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.ScrollAreaScrollbar, {
   display: 'flex',
   userSelect: 'none',
   touchAction: 'none',
-  padding: '2px',
+  padding: '$space1',
   transition: 'background 160ms ease-out',
-  backgroundColor: '$sand3',
-  opacity: 0.7,
+  backgroundColor: '$sandDarkA3',
 
-  '&:hover': {
-    backgroundColor: '$sand3',
-    opacity: 0.9,
-  },
   "&[data-orientation='vertical']": {
     width: '$scrollbarSize',
   },
@@ -41,9 +36,16 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.ScrollAreaScrollbar, {
 
 const ScrollAreaThumb = styled(RadixScrollArea.ScrollAreaThumb, {
   flex: 1,
-  backgroundColor: '$sand9',
   borderRadius: '$radius1',
   position: 'relative',
+  backgroundColor: '$layoutHandle',
+
+  '&:hover': {
+    backgroundColor: '$layoutHandleHover',
+  },
+  '&:active': {
+    backgroundColor: '$layoutHandlePressed',
+  },
 })
 
 const ScrollAreaCorner = styled(RadixScrollArea.Corner, {

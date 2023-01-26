@@ -9,6 +9,7 @@ import {
   orangeDark,
   sand,
   yellow,
+  sandDarkA,
 } from '@radix-ui/colors'
 
 // Constants for setting window button colors
@@ -25,6 +26,7 @@ const theme = {
   },
   colors: {
     ...sandDark,
+    ...sandDarkA,
     ...yellowDark,
     ...amber,
     ...orange,
@@ -40,6 +42,9 @@ const theme = {
     textDisabled: '$sand11',
     menubarBackground: MENUBAR_BACKCOLOR,
     menubarColor: MENUBAR_COLOR,
+    layoutHandle: '$sand8',
+    layoutHandleHover: '$sand9',
+    layoutHandlePressed: '$sand10',
   },
   fonts: {
     display: 'Arial',

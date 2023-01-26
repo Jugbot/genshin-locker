@@ -9,6 +9,7 @@ import {
   Heading,
   MenuBar,
   ProgressBar,
+  ResizeHandle,
   StandardScrollArea,
   Text,
   TextArea,
@@ -17,6 +18,7 @@ import { ArtifactCard } from './composites'
 
 const App: React.FC = () => {
   const [artifacts, setArtifacts] = useState<Artifact[]>([])
+  const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
     return window.electron.ipcRenderer.on('artifact', (artifact) => {
@@ -62,9 +64,10 @@ const App: React.FC = () => {
             position: 'relative',
             minHeight: 0,
             maxHeight: '100%',
+            overflow: 'hidden',
           }}
         >
-          <Box css={{ flexGrow: 0, mr: '$space2' }}>
+          <Box css={{ flexGrow: 0, mr: '$space2', overflow: 'hidden' }}>
             <Heading>Heading</Heading>
             <Text>Text</Text>
           </Box>
@@ -76,6 +79,7 @@ const App: React.FC = () => {
                 flexWrap: 'wrap',
                 justifyContent: 'space-around',
                 gap: '$space3',
+                minHeight: '999px',
               }}
             >
               {artifacts.map((artifact) => (
@@ -84,8 +88,24 @@ const App: React.FC = () => {
             </Box>
           </StandardScrollArea>
         </Box>
-        <Box css={{ flex: 0, flexBasis: 'content' }}>
-          <Box css={{ mb: '$space2', display: 'flex', alignItems: 'center' }}>
+        <Box
+          css={{
+            flex: 0,
+            flexBasis: bottomPanelHeight,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '$space2',
+          }}
+        >
+          <ResizeHandle
+            onHandleDrag={(delta) =>
+              setBottomPanelHeight((n) =>
+                Math.min(document.body.scrollHeight, Math.max(0, n - delta))
+              )
+            }
+            orientation="horizontal"
+          />
+          <Box css={{ display: 'flex', alignItems: 'center' }}>
             <Button
               onClick={() =>
                 window.electron.ipcRenderer.sendMessage('start', {
@@ -109,17 +129,7 @@ const App: React.FC = () => {
               css={{ flexGrow: 1, height: '$size8' }}
             />
           </Box>
-          <TextArea
-            readOnly
-            css={{ width: '100%', height: '7em' }}
-            value={`Some logs
-logs
-logs
-logs
-logs
-logs
-logs`}
-          />
+          <TextArea readOnly css={{ flexGrow: 1 }} value={`\n\n\n\n\n\n\n\n`} />
         </Box>
       </Box>
     </Box>
