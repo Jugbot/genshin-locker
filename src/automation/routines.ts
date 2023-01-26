@@ -16,10 +16,10 @@ type RoutineOptions = {
   targetAttributes: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 }
 
-export async function readArtifacts({
-  percentile,
-  targetAttributes,
-}: RoutineOptions) {
+export async function readArtifacts(
+  { percentile, targetAttributes }: RoutineOptions,
+  callback: (artifact: Artifact) => void
+) {
   setTargetScores(percentile, targetAttributes)
   const navigator = new Navigator()
   navigator.gwindow.grab()
@@ -58,9 +58,11 @@ export async function readArtifacts({
         )
         totalArtifacts.push(artifactPromise)
         artifactPromise.then(async (artifact) => {
+          console.log('emit artifact')
+          callback(artifact)
           const targetScore = await getTargetScore(artifact, targetAttributes)
           const artifactScore = await artifactPopularity(artifact)
-          console.log({ artifactScore, targetScore })
+          // console.log({ artifactScore, targetScore })
           const shouldBeLocked = artifactScore >= targetScore
           if (shouldBeLocked !== artifact.lock) {
             const lockArtifact = async () => {
@@ -93,7 +95,7 @@ export async function readArtifacts({
       Math.floor(remaining / itemsPerRow),
       rowsPerPage
     )
-    console.log({ remainingRows })
+    // console.log({ remainingRows })
     await navigator.scrollArtifacts(remainingRows)
   }
 

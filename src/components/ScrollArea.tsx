@@ -1,5 +1,5 @@
 import * as RadixScrollArea from '@radix-ui/react-scroll-area'
-import { ComponentProps } from 'react'
+import React, { ComponentProps } from 'react'
 
 import { styled } from '../stitches.config'
 

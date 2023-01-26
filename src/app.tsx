@@ -1,4 +1,5 @@
 import { ImageIcon, PlayIcon } from '@radix-ui/react-icons'
+import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { Artifact } from './automation/types'
@@ -8,7 +9,6 @@ import {
   Heading,
   MenuBar,
   ProgressBar,
-  Separator,
   StandardScrollArea,
   Text,
   TextArea,
@@ -16,6 +16,15 @@ import {
 import { ArtifactCard } from './composites'
 
 const App: React.FC = () => {
+  const [artifacts, setArtifacts] = useState<Artifact[]>([])
+
+  useEffect(() => {
+    return window.electron.ipcRenderer.on('artifact', (artifact) => {
+      console.log('on artifact', artifact)
+      setArtifacts((a) => [...a, artifact as Artifact])
+    })
+  }, [])
+
   return (
     <Box
       css={{
@@ -56,14 +65,6 @@ const App: React.FC = () => {
           }}
         >
           <Box css={{ flexGrow: 0, mr: '$space2' }}>
-            <Button
-              size="large"
-              onClick={window.actions.routine}
-              css={{ mr: '$space1' }}
-            >
-              Routine
-            </Button>
-            <Separator />
             <Heading>Heading</Heading>
             <Text>Text</Text>
           </Box>
@@ -73,16 +74,33 @@ const App: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 flexWrap: 'wrap',
+                justifyContent: 'space-around',
                 gap: '$space3',
               }}
             >
-              <ArtifactCard artifact={{ name: 'lol' } as Artifact} />
+              {artifacts.map((artifact) => (
+                <ArtifactCard key={artifact.id} artifact={artifact} />
+              ))}
             </Box>
           </StandardScrollArea>
         </Box>
         <Box css={{ flex: 0, flexBasis: 'content' }}>
           <Box css={{ mb: '$space2', display: 'flex', alignItems: 'center' }}>
-            <Button size="small" css={{ mr: '$space2' }}>
+            <Button
+              onClick={() =>
+                window.electron.ipcRenderer.sendMessage('start', {
+                  percentile: 0.2,
+                  targetAttributes: {
+                    set: true,
+                    slot: true,
+                    main: false,
+                    sub: false,
+                  },
+                })
+              }
+              size="small"
+              css={{ mr: '$space2' }}
+            >
               <PlayIcon />
             </Button>
             <ProgressBar

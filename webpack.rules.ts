@@ -28,4 +28,26 @@ export const rules: Required<ModuleOptions>['rules'] = [
       },
     },
   },
+  {
+    test: /\.css$/,
+    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+  },
+  {
+    test: /\.svg$/,
+    type: 'asset/source',
+  },
+  {
+    test: /\.traineddata$/,
+    type: 'asset/resource',
+    generator: {
+      filename: 'tessdata/[hash][ext][query]',
+    },
+  },
+  {
+    test: /\.dll$/,
+    type: 'asset/resource',
+    generator: {
+      filename: 'dll/[hash][ext][query]',
+    },
+  },
 ]

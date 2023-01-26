@@ -186,17 +186,17 @@ export class Navigator {
       this.#readText(imageBWInverted, 'card_name'),
       this.#readText(imageBWInverted, 'card_mainstat_value'),
     ])
-    console.log({
-      card_set,
-      card_slot_type,
-      card_rarity,
-      card_mainstat_key,
-      card_level,
-      card_substat,
-      card_lock,
-      card_name,
-      card_mainstat_value,
-    })
+    // console.log({
+    //   card_set,
+    //   card_slot_type,
+    //   card_rarity,
+    //   card_mainstat_key,
+    //   card_level,
+    //   card_substat,
+    //   card_lock,
+    //   card_name,
+    //   card_mainstat_value,
+    // })
     // Cleanup & Validation
     const slotKey = getSlot(card_slot_type)
     const [mainStatKey, mainStatValue] = getMainStat(

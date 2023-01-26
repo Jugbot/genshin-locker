@@ -136,7 +136,7 @@ export const landmarkKeys = {
 
 export interface Landmarks {
   [ScreenMap.ARTIFACTS]: Record<
-    typeof landmarkKeys[ScreenMap.ARTIFACTS] extends Set<infer U> ? U : never,
+    (typeof landmarkKeys)[ScreenMap.ARTIFACTS] extends Set<infer U> ? U : never,
     Landmark
   >
 }

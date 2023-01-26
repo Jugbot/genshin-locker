@@ -1,29 +1,27 @@
-import child_process from 'child_process'
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 
-import { readArtifacts } from './automation/routines'
+export type Channels = 'start' | 'artifact'
 
-try {
-  child_process.execFileSync('net', ['session'], { stdio: 'ignore' })
-  console.log('Successfully gained priviledge')
-} catch (e) {
-  console.error('Requires elevated permssions')
-  throw e
-}
+const electronHandler = {
+  ipcRenderer: {
+    sendMessage(channel: Channels, ...args: unknown[]) {
+      ipcRenderer.send(channel, ...args)
+    },
+    on(channel: Channels, func: (...args: unknown[]) => void) {
+      const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
+        func(...args)
+      ipcRenderer.on(channel, subscription)
 
-const actions = {
-  routine() {
-    readArtifacts({
-      percentile: 0.2,
-      targetAttributes: { set: true, slot: true, main: false, sub: false },
-    }).then(console.log)
+      return () => {
+        ipcRenderer.removeListener(channel, subscription)
+      }
+    },
+    once(channel: Channels, func: (...args: unknown[]) => void) {
+      ipcRenderer.once(channel, (_event, ...args) => func(...args))
+    },
   },
 }
 
-contextBridge.exposeInMainWorld('actions', actions)
+contextBridge.exposeInMainWorld('electron', electronHandler)
 
-declare global {
-  interface Window {
-    actions: typeof actions
-  }
-}
+export type ElectronHandler = typeof electronHandler

@@ -21,13 +21,13 @@ export const TextArea = styled('textarea', {
   },
 
   '&::-webkit-scrollbar-thumb': {
-    boxShadow: 'inset 0 0 0 4px $colors$sand8',
+    boxShadow: 'inset 0 0 0 999px $colors$sand8',
     border: 'solid 2px transparent',
     borderRadius: '$radiusMax',
   },
 
   '&::-webkit-scrollbar-thumb:hover': {
-    boxShadow: 'inset 0 0 0 4px $colors$sand9',
+    boxShadow: 'inset 0 0 0 999px $colors$sand9',
   },
 
   '&::-webkit-scrollbar-button': {

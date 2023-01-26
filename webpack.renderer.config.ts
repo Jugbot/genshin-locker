@@ -3,31 +3,6 @@ import type { Configuration } from 'webpack'
 import { plugins } from './webpack.plugins'
 import { rules } from './webpack.rules'
 
-rules.push(
-  {
-    test: /\.css$/,
-    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
-  },
-  {
-    test: /\.svg$/,
-    type: 'asset/source',
-  },
-  {
-    test: /\.traineddata$/,
-    type: 'asset/resource',
-    generator: {
-      filename: 'tessdata/[hash][ext][query]',
-    },
-  },
-  {
-    test: /\.dll$/,
-    type: 'asset/resource',
-    generator: {
-      filename: 'dll/[hash][ext][query]',
-    },
-  }
-)
-
 export const rendererConfig: Configuration = {
   module: {
     rules,
@@ -36,10 +11,5 @@ export const rendererConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
   },
-  externals: {
-    'win32-api': 'require("win32-api")',
-    'ffi-napi': 'require("ffi-napi")',
-    'ref-napi': 'require("ref-napi")',
-    sharp: 'require("sharp")',
-  },
+  externals: {},
 }

@@ -196,7 +196,7 @@ export async function setTargetScores(
     aggregates[key].push(doc.popularity ?? 0)
   }
 
-  console.log(aggregates)
+  // console.log(aggregates)
 
   await Promise.all(
     Object.entries(aggregates).map(async ([key, val]) => {
