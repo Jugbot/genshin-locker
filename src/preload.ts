@@ -1,27 +1,7 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
+import { contextBridge } from 'electron'
 
-export type Channels = 'start' | 'artifact'
+import { rendererApi } from './api'
 
-const electronHandler = {
-  ipcRenderer: {
-    sendMessage(channel: Channels, ...args: unknown[]) {
-      ipcRenderer.send(channel, ...args)
-    },
-    on(channel: Channels, func: (...args: unknown[]) => void) {
-      const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
-        func(...args)
-      ipcRenderer.on(channel, subscription)
+contextBridge.exposeInMainWorld('electron', rendererApi)
 
-      return () => {
-        ipcRenderer.removeListener(channel, subscription)
-      }
-    },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
-      ipcRenderer.once(channel, (_event, ...args) => func(...args))
-    },
-  },
-}
-
-contextBridge.exposeInMainWorld('electron', electronHandler)
-
-export type ElectronHandler = typeof electronHandler
+export type ElectronHandler = typeof rendererApi

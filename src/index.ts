@@ -1,7 +1,9 @@
 import { execFileSync } from 'child_process'
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { exit } from 'process'
 
+import { mainApi } from './api'
+import { Channel } from './apiTypes'
 import { readArtifacts } from './automation/routines'
 import { Artifact } from './automation/types'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from './stitches/theme'
@@ -36,7 +38,7 @@ const createWindow = (): void => {
     height: 600,
     width: 800,
     webPreferences: {
-      sandbox: false,
+      // sandbox: false,
       // contextIsolation: false,
       // nodeIntegration: true,
       // nodeIntegrationInWorker: true,
@@ -50,10 +52,10 @@ const createWindow = (): void => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  ipcMain.on('start', (e, options) => {
+  mainApi.handle(Channel.START, (options) => {
     try {
       readArtifacts(options, (artifact: Artifact) =>
-        mainWindow.webContents.send('artifact', artifact)
+        mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact)
       )
     } catch (e) {
       console.error(e)

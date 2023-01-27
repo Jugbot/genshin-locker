@@ -1,49 +1,49 @@
-import type * as Stitches from '@stitches/react'
+import type { PropertyValue } from '@stitches/react'
 
-const p = (value: Stitches.PropertyValue<'padding'>) => ({
+const p = (value: PropertyValue<'padding'>) => ({
   padding: value,
 })
-const pt = (value: Stitches.PropertyValue<'paddingTop'>) => ({
+const pt = (value: PropertyValue<'paddingTop'>) => ({
   paddingTop: value,
 })
-const pr = (value: Stitches.PropertyValue<'paddingRight'>) => ({
+const pr = (value: PropertyValue<'paddingRight'>) => ({
   paddingRight: value,
 })
-const pb = (value: Stitches.PropertyValue<'paddingBottom'>) => ({
+const pb = (value: PropertyValue<'paddingBottom'>) => ({
   paddingBottom: value,
 })
-const pl = (value: Stitches.PropertyValue<'paddingLeft'>) => ({
+const pl = (value: PropertyValue<'paddingLeft'>) => ({
   paddingLeft: value,
 })
-const px = (value: Stitches.PropertyValue<'paddingLeft'>) => ({
+const px = (value: PropertyValue<'paddingLeft'>) => ({
   paddingLeft: value,
   paddingRight: value,
 })
-const py = (value: Stitches.PropertyValue<'paddingTop'>) => ({
+const py = (value: PropertyValue<'paddingTop'>) => ({
   paddingTop: value,
   paddingBottom: value,
 })
 
-const m = (value: Stitches.PropertyValue<'margin'>) => ({
+const m = (value: PropertyValue<'margin'>) => ({
   margin: value,
 })
-const mt = (value: Stitches.PropertyValue<'marginTop'>) => ({
+const mt = (value: PropertyValue<'marginTop'>) => ({
   marginTop: value,
 })
-const mr = (value: Stitches.PropertyValue<'marginRight'>) => ({
+const mr = (value: PropertyValue<'marginRight'>) => ({
   marginRight: value,
 })
-const mb = (value: Stitches.PropertyValue<'marginBottom'>) => ({
+const mb = (value: PropertyValue<'marginBottom'>) => ({
   marginBottom: value,
 })
-const ml = (value: Stitches.PropertyValue<'marginLeft'>) => ({
+const ml = (value: PropertyValue<'marginLeft'>) => ({
   marginLeft: value,
 })
-const mx = (value: Stitches.PropertyValue<'marginLeft'>) => ({
+const mx = (value: PropertyValue<'marginLeft'>) => ({
   marginLeft: value,
   marginRight: value,
 })
-const my = (value: Stitches.PropertyValue<'marginTop'>) => ({
+const my = (value: PropertyValue<'marginTop'>) => ({
   marginTop: value,
   marginBottom: value,
 })

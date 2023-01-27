@@ -11,7 +11,7 @@ import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
-type RoutineOptions = {
+export type RoutineOptions = {
   percentile: number
   targetAttributes: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 }

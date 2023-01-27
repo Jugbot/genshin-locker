@@ -39,15 +39,24 @@ const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
   )
 }
 
-export const ArtifactCard = ({ artifact }: { artifact: Artifact }) => {
+interface ArtifactCardProps extends React.ComponentProps<typeof Box> {
+  artifact: Artifact
+}
+
+export const ArtifactCard = ({
+  artifact,
+  css,
+  ...props
+}: ArtifactCardProps) => {
   return (
     <Box
       css={{
         backgroundColor: '$sand5',
         borderRadius: '$radius1',
         overflow: 'hidden',
-        width: '15em',
+        ...css,
       }}
+      {...props}
     >
       <Box
         css={{

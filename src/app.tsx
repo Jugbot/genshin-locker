@@ -2,6 +2,7 @@ import { ImageIcon, PlayIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { Channel } from './apiTypes'
 import { Artifact } from './automation/types'
 import {
   Box,
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
-    return window.electron.ipcRenderer.on('artifact', (artifact) => {
+    return window.electron.on(Channel.ARTIFACT, (artifact) => {
       console.log('on artifact', artifact)
       setArtifacts((a) => [...a, artifact as Artifact])
     })
@@ -67,23 +68,27 @@ const App: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          <Box css={{ flexGrow: 0, mr: '$space2', overflow: 'hidden' }}>
+          <Box css={{ flex: '0 0 content', mr: '$space2', overflow: 'hidden' }}>
             <Heading>Heading</Heading>
             <Text>Text</Text>
           </Box>
           <StandardScrollArea css={{ flexGrow: 1, height: '100%' }}>
             <Box
               css={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'space-around',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
+                gridAutoRows: 'min-content',
                 gap: '$space3',
-                minHeight: '999px',
               }}
             >
               {artifacts.map((artifact) => (
-                <ArtifactCard key={artifact.id} artifact={artifact} />
+                <ArtifactCard
+                  key={artifact.id}
+                  artifact={artifact}
+                  css={{
+                    animation: 'fadeIn 300ms ease-out',
+                  }}
+                />
               ))}
             </Box>
           </StandardScrollArea>
@@ -108,7 +113,7 @@ const App: React.FC = () => {
           <Box css={{ display: 'flex', alignItems: 'center' }}>
             <Button
               onClick={() =>
-                window.electron.ipcRenderer.sendMessage('start', {
+                window.electron.invoke(Channel.START, {
                   percentile: 0.2,
                   targetAttributes: {
                     set: true,

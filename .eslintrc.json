@@ -25,6 +25,23 @@
           "order": "asc"
         }
       }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "paths": [
+          {
+            "name": "@stitches/react",
+            "importNames": ["styled"],
+            "message": "Please import '@stitches/react' from 'stitches.config.js' instead."
+          },
+          {
+            "name": "electron",
+            "importNames": ["ipcMain", "ipcRenderer"],
+            "message": "Please import 'mainApi' or 'rendererApi' from 'api.ts' instead."
+          }
+        ]
+      }
     ]
   }
 }
