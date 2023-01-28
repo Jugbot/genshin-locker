@@ -49,6 +49,11 @@ const App: React.FC = () => {
     })
   }, [])
 
+  const sortedArtifacts = React.useMemo(
+    () => artifacts.slice().sort((a, b) => a.score - b.score),
+    [artifacts]
+  )
+
   return (
     <Box
       css={{
@@ -102,7 +107,7 @@ const App: React.FC = () => {
                 gap: '$space3',
               }}
             >
-              {artifacts.map(({ artifact, score }) => (
+              {sortedArtifacts.map(({ artifact, score }) => (
                 <ArtifactCard
                   key={artifact.id}
                   artifact={artifact}
