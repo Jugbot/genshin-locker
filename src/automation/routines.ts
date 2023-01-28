@@ -1,5 +1,5 @@
 import { mainWindow } from '..'
-import { mainApi } from '../api'
+import { mainApi, rendererApi } from '../api'
 import { Channel } from '../apiTypes'
 
 import { ScreenMap } from './landmarks/landmarks'
@@ -44,7 +44,7 @@ export async function readArtifacts({
   const total = await navigator.getArtifactCount(
     await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
   )
-  console.log(`Reading ${total} artifacts total`)
+  mainApi.send(mainWindow.webContents, Channel.LOG, 'info', `Reading ${total} artifacts total`)
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0
@@ -62,11 +62,9 @@ export async function readArtifacts({
         )
         totalArtifacts.push(artifactPromise)
         artifactPromise.then(async (artifact) => {
-          console.log('emit artifact')
           mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact)
           const targetScore = await getTargetScore(artifact, targetAttributes)
           const artifactScore = await artifactPopularity(artifact)
-          // console.log({ artifactScore, targetScore })
           const shouldBeLocked = artifactScore >= targetScore
           if (shouldBeLocked !== artifact.lock) {
             const lockArtifact = async () => {
@@ -103,7 +101,6 @@ export async function readArtifacts({
       Math.floor(remaining / itemsPerRow),
       rowsPerPage
     )
-    // console.log({ remainingRows })
     await navigator.scrollArtifacts(remainingRows)
   }
 

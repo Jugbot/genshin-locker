@@ -29,7 +29,7 @@ export type RendererAPI = {
   on<T extends MainEmitChannels>(
     channel: T,
     listener: (...args: EventPayload[T][1]) => void
-  ): void
+  ): () => void
 }
 
 export type MainAPI = {
@@ -41,5 +41,5 @@ export type MainAPI = {
   handle<T extends RendererEmitChannels>(
     channel: T,
     listener: (...args: EventPayload[T][1]) => EventPayload[T][0]
-  ): void
+  ): () => void
 }

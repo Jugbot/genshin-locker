@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
   >({})
+  const [logs, setLogs] = useState<string[]>([])
 
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
   useEffect(() => {
     return window.electron.on(Channel.LOG, (mode, text) => {
       console[mode](text)
+      setLogs(arr => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })
   }, [])
 
@@ -152,7 +154,7 @@ const App: React.FC = () => {
               css={{ flexGrow: 1, height: '$size8' }}
             />
           </Box>
-          <TextArea readOnly css={{ flexGrow: 1 }} value={`\n\n\n\n\n\n\n\n`} />
+          <TextArea readOnly css={{ flexGrow: 1 }} value={logs}/>
         </Box>
       </Box>
     </Box>
