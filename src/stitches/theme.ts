@@ -38,6 +38,7 @@ const theme = {
     bgActionPrimaryHover: '$yellow4',
     bgActionPrimaryPressed: '$yellow5',
     textDefault: '$sand12',
+    textInverted: '$sand1',
     textPrimary: '$yellow11',
     textDisabled: '$sand11',
     menubarBackground: MENUBAR_BACKCOLOR,

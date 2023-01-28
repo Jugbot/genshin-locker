@@ -98,7 +98,7 @@ export interface Artifact {
   substats: SubStat[]
   location: number
   lock: boolean
-  id: number
+  id: string
 }
 
 export const ElementalDamageTypes = new Set([

@@ -5,7 +5,6 @@ import { exit } from 'process'
 import { mainApi } from './api'
 import { Channel } from './apiTypes'
 import { readArtifacts } from './automation/routines'
-import { Artifact } from './automation/types'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from './stitches/theme'
 
 try {
@@ -27,9 +26,10 @@ if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
+export let mainWindow: Electron.BrowserWindow
 const createWindow = (): void => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       color: MENUBAR_BACKCOLOR,
@@ -54,9 +54,7 @@ const createWindow = (): void => {
 
   mainApi.handle(Channel.START, (options) => {
     try {
-      readArtifacts(options, (artifact: Artifact) =>
-        mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact)
-      )
+      readArtifacts(options)
     } catch (e) {
       console.error(e)
     }

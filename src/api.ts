@@ -7,44 +7,9 @@ import {
   ipcRenderer,
 } from 'electron'
 
-import { Channel } from './apiTypes'
-import type { RoutineOptions } from './automation/routines'
-import { Artifact } from './automation/types'
+import { MainAPI, RendererAPI } from './apiTypes'
 
-type EventPayload = {
-  [Channel.START]: [void, [options: RoutineOptions]]
-  [Channel.PROGRESS]: [void, [percent: number]]
-  [Channel.ARTIFACT]: [void, [artifact: Artifact]]
-  [Channel.LOG]: [void, [text: string]]
-}
-
-type MainEmitChannels = Channel.ARTIFACT
-type RendererEmitChannels = Channel.START | Channel.PROGRESS | Channel.LOG
-
-type IpcRenderer = {
-  invoke<T extends RendererEmitChannels>(
-    channel: T,
-    ...args: EventPayload[T][1]
-  ): Promise<EventPayload[T][0]>
-  on<T extends MainEmitChannels>(
-    channel: T,
-    listener: (...args: EventPayload[T][1]) => void
-  ): void
-}
-
-type IpcMain = {
-  send<T extends MainEmitChannels>(
-    webContents: Electron.WebContents,
-    channel: T,
-    ...args: EventPayload[T][1]
-  ): void
-  handle<T extends RendererEmitChannels>(
-    channel: T,
-    listener: (...args: EventPayload[T][1]) => EventPayload[T][0]
-  ): void
-}
-
-export const rendererApi: IpcRenderer = {
+export const rendererApi: RendererAPI = {
   invoke(channel, ...args) {
     return ipcRenderer.invoke(channel, ...args)
   },
@@ -61,7 +26,7 @@ export const rendererApi: IpcRenderer = {
   },
 }
 
-export const mainApi: IpcMain = {
+export const mainApi: MainAPI = {
   send(webContents, channel, ...args) {
     return webContents.send(channel, ...args)
   },

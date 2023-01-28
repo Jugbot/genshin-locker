@@ -17,14 +17,32 @@ import {
 } from './components'
 import { ArtifactCard } from './composites'
 
+export type RoutineStatus = { max: number; current: number }
+
 const App: React.FC = () => {
   const [artifacts, setArtifacts] = useState<Artifact[]>([])
+  const [routineStatus, setRoutineStatus] = useState<
+    RoutineStatus | Record<string, never>
+  >({})
+
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
     return window.electron.on(Channel.ARTIFACT, (artifact) => {
-      console.log('on artifact', artifact)
       setArtifacts((a) => [...a, artifact as Artifact])
+    })
+  }, [])
+
+  useEffect(() => {
+    return window.electron.on(Channel.PROGRESS, (progress) => {
+      console.log(progress)
+      setRoutineStatus(progress)
+    })
+  }, [])
+
+  useEffect(() => {
+    return window.electron.on(Channel.LOG, (mode, text) => {
+      console[mode](text)
     })
   }, [])
 
@@ -129,8 +147,8 @@ const App: React.FC = () => {
               <PlayIcon />
             </Button>
             <ProgressBar
-              value={65}
-              max={70}
+              value={routineStatus.current}
+              max={routineStatus.max}
               css={{ flexGrow: 1, height: '$size8' }}
             />
           </Box>

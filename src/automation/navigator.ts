@@ -211,7 +211,14 @@ export class Navigator {
     const name = card_name
 
     return {
-      id: -1,
+      id: [
+        setKey,
+        rarity,
+        slotKey,
+        mainStatKey,
+        mainStatValue,
+        ...substats.flatMap((stat) => [stat.key, stat.value]),
+      ].join('|'),
       level,
       location: 0,
       lock,

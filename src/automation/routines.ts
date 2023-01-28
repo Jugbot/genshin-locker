@@ -1,3 +1,7 @@
+import { mainWindow } from '..'
+import { mainApi } from '../api'
+import { Channel } from '../apiTypes'
+
 import { ScreenMap } from './landmarks/landmarks'
 import { Navigator } from './navigator'
 import { Artifact } from './types'
@@ -16,10 +20,10 @@ export type RoutineOptions = {
   targetAttributes: { set: boolean; slot: boolean; main: boolean; sub: boolean }
 }
 
-export async function readArtifacts(
-  { percentile, targetAttributes }: RoutineOptions,
-  callback: (artifact: Artifact) => void
-) {
+export async function readArtifacts({
+  percentile,
+  targetAttributes,
+}: RoutineOptions) {
   setTargetScores(percentile, targetAttributes)
   const navigator = new Navigator()
   navigator.gwindow.grab()
@@ -59,7 +63,7 @@ export async function readArtifacts(
         totalArtifacts.push(artifactPromise)
         artifactPromise.then(async (artifact) => {
           console.log('emit artifact')
-          callback(artifact)
+          mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact)
           const targetScore = await getTargetScore(artifact, targetAttributes)
           const artifactScore = await artifactPopularity(artifact)
           // console.log({ artifactScore, targetScore })
@@ -77,6 +81,10 @@ export async function readArtifacts(
         })
       })
       count += 1
+      mainApi.send(mainWindow.webContents, Channel.PROGRESS, {
+        current: count,
+        max: total,
+      })
       if (count === total) {
         break
       }
