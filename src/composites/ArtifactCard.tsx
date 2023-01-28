@@ -62,16 +62,6 @@ export const ArtifactCard = ({
     >
       <Box
         css={{
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor: '$',
-          padding: '$space2',
-        }}
-      >
-        {score.toFixed(1)} persentile
-      </Box>
-      <Box
-        css={{
           backgroundColor: rarityColors(artifact.rarity),
           borderBottom: '2px solid $colors$sand11',
           padding: '$space2',
@@ -97,6 +87,17 @@ export const ArtifactCard = ({
         <Heading variant="md" css={{ flexGrow: 0 }}>
           <ArtifactSlotIcon slot={artifact.slotKey} />
         </Heading>
+      </Box>
+      <Box
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: '$sand4',
+          padding: '$space2',
+          justifyContent: 'center',
+        }}
+      >
+        <Heading variant="subheading">{score.toFixed(1)} percentile</Heading>
       </Box>
       <Box
         css={{

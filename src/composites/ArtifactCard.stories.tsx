@@ -13,10 +13,13 @@ import { ArtifactCard } from './ArtifactCard'
 export default {
   title: 'ArtifactCard',
   component: ArtifactCard,
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof ArtifactCard>
 
 const Template: ComponentStory<typeof ArtifactCard> = (args) => (
-  <ArtifactCard {...args} />
+  <ArtifactCard {...args} css={{ minWidth: '15em' }} />
 )
 
 export const FirstStory = Template.bind({})
