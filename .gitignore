@@ -1,5 +1,6 @@
 **/data.json
 .yarn/
+storybook-static/
 
 # Logs
 logs
