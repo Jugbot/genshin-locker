@@ -63,7 +63,7 @@ export const ArtifactCard = ({
       <Box
         css={{
           backgroundColor: rarityColors(artifact.rarity),
-          borderBottom: '2px solid $colors$sand11',
+          borderBottom: '2px solid $colors$textDefault',
           padding: '$space2',
           mb: '$space1',
           display: 'flex',

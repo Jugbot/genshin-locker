@@ -1,4 +1,4 @@
-import { lightTheme, darkTheme, theme } from '../src/stitches.config'
+import { ThemeDecorator } from '../src/decorators'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -8,25 +8,6 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  multipleThemesStitches: {
-    values: [
-      {
-        name: 'Light',
-        theme: lightTheme,
-      },
-      {
-        name: 'Dark',
-        theme: darkTheme,
-      },
-    ],
-  },
-  backgrounds: {
-    default: 'default',
-    values: [
-      {
-        name: 'default',
-        value: theme.colors.appBackground,
-      },
-    ],
-  },
 }
+
+export const decorators = [ThemeDecorator]

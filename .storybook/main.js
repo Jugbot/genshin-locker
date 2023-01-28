@@ -4,7 +4,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'multiple-themes-stitches',
+    'storybook-dark-mode',
   ],
   framework: '@storybook/react',
 }
