@@ -1,5 +1,6 @@
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+
 import { Artifact, MainStatKey, SetKey, SlotKey, SubStatKey } from '../automation/types';
 
 import { ArtifactCard } from './ArtifactCard';
