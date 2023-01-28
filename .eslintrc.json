@@ -4,19 +4,27 @@
     "es6": true,
     "node": true
   },
+  "plugins": ["unused-imports"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
     "plugin:import/electron",
     "plugin:import/typescript",
+    "plugin:storybook/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
+  "settings": {
+    "react": {
+      "version": "detect"
+    }},
   "rules": {
+		"unused-imports/no-unused-imports": "warn",
     "import/order": [
       "warn",
       {

@@ -85,13 +85,6 @@ const theme = {
     radiusMax: '9999px',
   },
   shadows: {
-    focus: '0 0 0 2px $colors$bgDefault, 0 0 0 4px $colors$borderFocus',
-    inputFocus: '0 0 0 1px $colors$borderFocus',
-    drastic: '0 8px 16px 0 rgba(0, 48, 45, 0.25)',
-    shadow1: '0px 4px 12px 0px $colors$grayscale900_08',
-    shadow2: '0 4px 16px 0 $colors$grayscale900_12',
-    shadow3: '6px 6px 20px 4px $colors$grayscale900_16',
-    shadow4: '0 10px 25px 6px $colors$grayscale900_24',
   },
   sizes: {
     size0: '0',
@@ -136,7 +129,9 @@ const theme = {
 } as const
 
 export const light = {
+  ...theme,
   colors: {
+    ...theme.colors,
     ...sand,
     ...yellow,
     ...amberDark,
@@ -146,7 +141,9 @@ export const light = {
 } as const
 
 export const dark = {
+  ...theme,
   colors: {
+    ...theme.colors,
     ...sandDark,
     ...yellowDark,
     ...amber,

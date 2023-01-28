@@ -1,5 +1,5 @@
 import { mainWindow } from '..'
-import { mainApi, rendererApi } from '../api'
+import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
 import { ScreenMap } from './landmarks/landmarks'
@@ -62,7 +62,6 @@ export async function readArtifacts({
         )
         totalArtifacts.push(artifactPromise)
         artifactPromise.then(async (artifact) => {
-          mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact)
           const targetScore = await getTargetScore(artifact, targetAttributes)
           const artifactScore = await artifactPopularity(artifact)
           const shouldBeLocked = artifactScore >= targetScore
@@ -76,6 +75,7 @@ export async function readArtifacts({
             }
             pageActions.push(lockArtifact)
           }
+          mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact, artifactScore)
         })
       })
       count += 1

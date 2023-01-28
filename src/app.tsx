@@ -18,9 +18,10 @@ import {
 import { ArtifactCard } from './composites'
 
 export type RoutineStatus = { max: number; current: number }
+type ArtifactData = {artifact: Artifact, score: number}
 
 const App: React.FC = () => {
-  const [artifacts, setArtifacts] = useState<Artifact[]>([])
+  const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
   >({})
@@ -29,8 +30,8 @@ const App: React.FC = () => {
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
-    return window.electron.on(Channel.ARTIFACT, (artifact) => {
-      setArtifacts((a) => [...a, artifact as Artifact])
+    return window.electron.on(Channel.ARTIFACT, (artifact, score) => {
+      setArtifacts((a) => [...a, {artifact, score}])
     })
   }, [])
 
@@ -101,10 +102,11 @@ const App: React.FC = () => {
                 gap: '$space3',
               }}
             >
-              {artifacts.map((artifact) => (
+              {artifacts.map(({artifact, score}) => (
                 <ArtifactCard
                   key={artifact.id}
                   artifact={artifact}
+                  score={score}
                   css={{
                     animation: 'fadeIn 300ms ease-out',
                   }}

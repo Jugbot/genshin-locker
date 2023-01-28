@@ -1,5 +1,5 @@
 import * as Progress from '@radix-ui/react-progress'
-import React, { ComponentProps } from 'react'
+import { ComponentProps, ReactPropTypes } from 'react'
 
 import { styled } from '../stitches.config'
 

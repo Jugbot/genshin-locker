@@ -17,5 +17,5 @@ export const {
   utils,
 })
 
-export const darkTheme = createTheme(dark)
-export const lightTheme = createTheme(light)
+export const darkTheme = createTheme('dark', dark)
+export const lightTheme = createTheme('light', light)

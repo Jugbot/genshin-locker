@@ -29,5 +29,7 @@ export const Text = styled('p', {
   },
   defaultVariants: {
     variant: 'body',
+    color: 'default',
+    verticalAlignment: 'default'
   },
 })

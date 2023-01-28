@@ -1,7 +1,7 @@
 import type { RxCollection, RxCollectionCreator } from 'rxdb'
 
 import * as Default from './default'
-import * as TargetScore from './targetscore'
+import * as TargetScore from './targetScore'
 
 export type Collections = {
   default: RxCollection<Default.RxDocType>

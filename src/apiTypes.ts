@@ -4,9 +4,12 @@ import type { Artifact } from './automation/types'
 
 export enum Channel {
   START = 'start',
+  PROGRESS = 'progress',
+  PAUSE = 'pause',
+  RESUME = 'resume',
+  STOP = 'stop',
   LOG = 'log',
   ARTIFACT = 'artifact',
-  PROGRESS = 'progress',
 }
 
 export type LogMode = 'info' | 'warn' | 'error'
@@ -14,7 +17,7 @@ export type LogMode = 'info' | 'warn' | 'error'
 export type EventPayload = {
   [Channel.START]: [void, [options: RoutineOptions]]
   [Channel.PROGRESS]: [void, [progress: RoutineStatus]]
-  [Channel.ARTIFACT]: [void, [artifact: Artifact]]
+  [Channel.ARTIFACT]: [void, [artifact: Artifact, score: number]]
   [Channel.LOG]: [void, [mode: LogMode, text: string]]
 }
 
