@@ -51,6 +51,6 @@ export const Heading = styled('h1', {
   },
   defaultVariants: {
     variant: 'page',
-    color: 'default'
+    color: 'default',
   },
 })

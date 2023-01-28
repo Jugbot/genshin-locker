@@ -22,9 +22,10 @@
   "settings": {
     "react": {
       "version": "detect"
-    }},
+    }
+  },
   "rules": {
-		"unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-imports": "warn",
     "import/order": [
       "warn",
       {

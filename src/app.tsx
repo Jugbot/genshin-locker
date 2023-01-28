@@ -18,7 +18,7 @@ import {
 import { ArtifactCard } from './composites'
 
 export type RoutineStatus = { max: number; current: number }
-type ArtifactData = {artifact: Artifact, score: number}
+type ArtifactData = { artifact: Artifact; score: number }
 
 const App: React.FC = () => {
   const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return window.electron.on(Channel.ARTIFACT, (artifact, score) => {
-      setArtifacts((a) => [...a, {artifact, score}])
+      setArtifacts((a) => [...a, { artifact, score }])
     })
   }, [])
 
@@ -45,7 +45,7 @@ const App: React.FC = () => {
   useEffect(() => {
     return window.electron.on(Channel.LOG, (mode, text) => {
       console[mode](text)
-      setLogs(arr => [...arr, `[${mode.toUpperCase()}]: ${text}`])
+      setLogs((arr) => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })
   }, [])
 
@@ -102,7 +102,7 @@ const App: React.FC = () => {
                 gap: '$space3',
               }}
             >
-              {artifacts.map(({artifact, score}) => (
+              {artifacts.map(({ artifact, score }) => (
                 <ArtifactCard
                   key={artifact.id}
                   artifact={artifact}
@@ -156,7 +156,7 @@ const App: React.FC = () => {
               css={{ flexGrow: 1, height: '$size8' }}
             />
           </Box>
-          <TextArea readOnly css={{ flexGrow: 1 }} value={logs}/>
+          <TextArea readOnly css={{ flexGrow: 1 }} value={logs} />
         </Box>
       </Box>
     </Box>

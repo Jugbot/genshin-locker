@@ -1,7 +1,7 @@
 import { lightTheme, darkTheme, theme } from '../src/stitches.config'
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -10,15 +10,15 @@ export const parameters = {
   },
   multipleThemesStitches: {
     values: [
-      { 
-        name: 'Light', 
-        theme: lightTheme
+      {
+        name: 'Light',
+        theme: lightTheme,
       },
-      { 
-        name: 'Dark', 
-        theme: darkTheme
+      {
+        name: 'Dark',
+        theme: darkTheme,
       },
-    ]
+    ],
   },
   backgrounds: {
     default: 'default',

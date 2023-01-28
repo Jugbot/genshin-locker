@@ -84,8 +84,7 @@ const theme = {
     radius3: '16px',
     radiusMax: '9999px',
   },
-  shadows: {
-  },
+  shadows: {},
   sizes: {
     size0: '0',
     size1: '4px',

@@ -44,7 +44,12 @@ export async function readArtifacts({
   const total = await navigator.getArtifactCount(
     await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
   )
-  mainApi.send(mainWindow.webContents, Channel.LOG, 'info', `Reading ${total} artifacts total`)
+  mainApi.send(
+    mainWindow.webContents,
+    Channel.LOG,
+    'info',
+    `Reading ${total} artifacts total`
+  )
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0
@@ -75,7 +80,12 @@ export async function readArtifacts({
             }
             pageActions.push(lockArtifact)
           }
-          mainApi.send(mainWindow.webContents, Channel.ARTIFACT, artifact, artifactScore)
+          mainApi.send(
+            mainWindow.webContents,
+            Channel.ARTIFACT,
+            artifact,
+            artifactScore
+          )
         })
       })
       count += 1

@@ -40,7 +40,7 @@ const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
 }
 
 interface ArtifactCardProps extends React.ComponentProps<typeof Box> {
-  artifact: Artifact,
+  artifact: Artifact
   score: number
 }
 
@@ -60,13 +60,15 @@ export const ArtifactCard = ({
       }}
       {...props}
     >
-      <Box css={{
+      <Box
+        css={{
           display: 'flex',
           alignItems: 'center',
           backgroundColor: '$',
           padding: '$space2',
-          }}>
-        {(score).toFixed(1)} persentile
+        }}
+      >
+        {score.toFixed(1)} persentile
       </Box>
       <Box
         css={{
@@ -104,7 +106,7 @@ export const ArtifactCard = ({
           gap: '$space1',
         }}
       >
-        <Heading variant='sm'>lvl{artifact.level}</Heading>
+        <Heading variant="sm">lvl{artifact.level}</Heading>
         <b>
           <ArtifactStat
             variant="body"
