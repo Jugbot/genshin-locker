@@ -1,5 +1,4 @@
 import * as RadixScrollArea from '@radix-ui/react-scroll-area'
-import React, { ComponentProps } from 'react'
 
 import { styled } from '../stitches.config'
 
@@ -59,22 +58,4 @@ export const ScrollArea = {
   Scrollbar: ScrollAreaScrollbar,
   Thumb: ScrollAreaThumb,
   Corner: ScrollAreaCorner,
-}
-
-export const StandardScrollArea = ({
-  children,
-  ...props
-}: ComponentProps<typeof ScrollArea.Root>) => {
-  return (
-    <ScrollArea.Root {...props}>
-      <ScrollArea.Viewport>{children}</ScrollArea.Viewport>
-      <ScrollArea.Scrollbar orientation="vertical">
-        <ScrollArea.Thumb />
-      </ScrollArea.Scrollbar>
-      <ScrollArea.Scrollbar orientation="horizontal">
-        <ScrollArea.Thumb />
-      </ScrollArea.Scrollbar>
-      <ScrollArea.Corner />
-    </ScrollArea.Root>
-  )
 }

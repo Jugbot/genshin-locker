@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { Channel } from './apiTypes'
+import { RoutineOptions } from './automation/routines'
 import { Artifact } from './automation/types'
 import {
   Box,
@@ -12,24 +13,36 @@ import {
   MenuBar,
   ProgressBar,
   ResizeHandle,
+  ScrollArea,
   Slider,
-  StandardScrollArea,
   Text,
   TextArea,
+  Stack,
 } from './components'
 import { ArtifactCard } from './composites'
+import { loadGlobalStyles } from './globalCss'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; score: number }
 
 const App: React.FC = () => {
+  loadGlobalStyles()
   const themeClass = useThemeClass()
   const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
   >({})
-  const [logs, setLogs] = useState<string[]>([])
+  const [routineOptions, setRoutineOptions] = useState<RoutineOptions>({
+    percentile: 0.2,
+    targetAttributes: {
+      set: true,
+      slot: true,
+      main: false,
+      sub: false,
+    },
+  })
+  const [logs, setLogs] = useState<string[]>(['', '', '', '', '', '', ''])
 
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
@@ -51,6 +64,11 @@ const App: React.FC = () => {
       setLogs((arr) => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })
   }, [])
+
+  const startRoutine = () => {
+    setArtifacts([])
+    window.electron.invoke(Channel.START, routineOptions)
+  }
 
   const sortedArtifacts = React.useMemo(
     () => artifacts.slice().sort((a, b) => a.score - b.score),
@@ -89,7 +107,7 @@ const App: React.FC = () => {
           minHeight: 0,
         }}
       >
-        <Box
+        <Stack.Horizontal
           css={{
             flex: 1,
             display: 'flex',
@@ -100,20 +118,16 @@ const App: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          <Box
+          <Stack.Vertical
             css={{
               flex: '0 0 20%',
-              mr: '$space2',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '$space2',
+              overflowX: 'hidden',
+              overflowY: 'auto',
+              height: '100%',
             }}
           >
             <Text>Label</Text>
-            <Box
-              css={{ display: 'flex', alignItems: 'center', gap: '$space2' }}
-            >
+            <Stack.Horizontal>
               <Slider.Root
                 defaultValue={[50]}
                 max={100}
@@ -126,21 +140,35 @@ const App: React.FC = () => {
                 <Slider.Thumb />
               </Slider.Root>
               <Heading variant="subheading">20</Heading>
-            </Box>
+            </Stack.Horizontal>
             <Text>Label Too</Text>
-            <Box
-              css={{ display: 'flex', alignItems: 'center', gap: '$space2' }}
-            >
-              <Checkbox.Root defaultChecked>
+            <Stack.Horizontal>
+              <Checkbox.Root
+                checked={routineOptions.targetAttributes.set}
+                onCheckedChange={(e) =>
+                  setRoutineOptions((options) => ({
+                    ...options,
+                    targetAttributes: {
+                      ...options.targetAttributes,
+                      set: Boolean(e),
+                    },
+                  }))
+                }
+              >
                 <Checkbox.Indicator>
                   <CheckIcon />
                 </Checkbox.Indicator>
               </Checkbox.Root>
-              <Heading variant="subheading">Label</Heading>
-            </Box>
-          </Box>
-          <StandardScrollArea css={{ flexGrow: 1, height: '100%' }}>
-            <Box
+              <Heading variant="subheading">Artifact Set</Heading>
+            </Stack.Horizontal>
+          </Stack.Vertical>
+          <ScrollArea.Root
+            css={{
+              flexGrow: 1,
+              height: '100%',
+            }}
+          >
+            <ScrollArea.Viewport
               css={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
@@ -158,16 +186,16 @@ const App: React.FC = () => {
                   }}
                 />
               ))}
-            </Box>
-          </StandardScrollArea>
-        </Box>
-        <Box
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar orientation="vertical">
+              <ScrollArea.Thumb />
+            </ScrollArea.Scrollbar>
+          </ScrollArea.Root>
+        </Stack.Horizontal>
+        <Stack.Vertical
           css={{
             flex: 0,
             flexBasis: bottomPanelHeight,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '$space2',
           }}
         >
           <ResizeHandle
@@ -178,23 +206,8 @@ const App: React.FC = () => {
             }
             orientation="horizontal"
           />
-          <Box css={{ display: 'flex', alignItems: 'center' }}>
-            <Button
-              onClick={() => {
-                setArtifacts([])
-                window.electron.invoke(Channel.START, {
-                  percentile: 0.2,
-                  targetAttributes: {
-                    set: true,
-                    slot: true,
-                    main: false,
-                    sub: false,
-                  },
-                })
-              }}
-              size="small"
-              css={{ mr: '$space2' }}
-            >
+          <Stack.Horizontal>
+            <Button onClick={startRoutine} size="small" css={{ mr: '$space2' }}>
               <PlayIcon />
             </Button>
             <ProgressBar
@@ -202,9 +215,9 @@ const App: React.FC = () => {
               max={routineStatus.max}
               css={{ flexGrow: 1, height: '$size8' }}
             />
-          </Box>
+          </Stack.Horizontal>
           <TextArea readOnly css={{ flexGrow: 1 }} value={logString} />
-        </Box>
+        </Stack.Vertical>
       </Box>
     </Box>
   )
