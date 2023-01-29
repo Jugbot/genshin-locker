@@ -1,4 +1,4 @@
-import { createStitches } from '@stitches/react'
+import { createStitches, defaultThemeMap } from '@stitches/react'
 
 import themeDefault, { dark, light } from './stitches/theme'
 import utils from './stitches/utils'
@@ -15,6 +15,10 @@ export const {
 } = createStitches({
   theme: themeDefault,
   utils,
+  themeMap: {
+    ...defaultThemeMap,
+    animation: 'animations',
+  },
 })
 
 export const darkTheme = createTheme('dark', dark)

@@ -9,6 +9,8 @@ import {
   sandA,
 } from '@radix-ui/colors'
 
+import { fadeIn } from './keyframes'
+
 // Constants for setting window button colors
 export const MENUBAR_BACKCOLOR = sandDark.sand3
 export const MENUBAR_COLOR = sandDark.sand12
@@ -132,6 +134,9 @@ const theme = {
     space16: '64px',
   },
   transitions: {},
+  animations: {
+    fadeIn: `${fadeIn} 300ms ease-out`,
+  },
 } as const
 
 export const light = {

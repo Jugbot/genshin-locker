@@ -203,7 +203,7 @@ const App: React.FC = () => {
                   artifact={artifact}
                   score={score}
                   css={{
-                    animation: 'fadeIn 300ms ease-out',
+                    animation: '$fadeIn',
                   }}
                 />
               ))}

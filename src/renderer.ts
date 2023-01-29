@@ -26,5 +26,4 @@
  * ```
  */
 
-import './common.css'
 import './app'
