@@ -126,12 +126,18 @@ const App: React.FC = () => {
               height: '100%',
             }}
           >
-            <Text>Label</Text>
+            <Text>Minimum Percentile</Text>
             <Stack.Horizontal>
               <Slider.Root
-                defaultValue={[50]}
-                max={100}
-                step={1}
+                value={[routineOptions.percentile]}
+                onValueChange={(e) =>
+                  setRoutineOptions((options) => ({
+                    ...options,
+                    percentile: e[0],
+                  }))
+                }
+                max={1}
+                step={0.01}
                 css={{ flexGrow: 1 }}
               >
                 <Slider.Track>
@@ -139,28 +145,43 @@ const App: React.FC = () => {
                 </Slider.Track>
                 <Slider.Thumb />
               </Slider.Root>
-              <Heading variant="subheading">20</Heading>
+              <Heading variant="subheading">
+                {routineOptions.percentile.toFixed(2)}
+              </Heading>
             </Stack.Horizontal>
-            <Text>Label Too</Text>
-            <Stack.Horizontal>
-              <Checkbox.Root
-                checked={routineOptions.targetAttributes.set}
-                onCheckedChange={(e) =>
-                  setRoutineOptions((options) => ({
-                    ...options,
-                    targetAttributes: {
-                      ...options.targetAttributes,
-                      set: Boolean(e),
-                    },
-                  }))
-                }
-              >
-                <Checkbox.Indicator>
-                  <CheckIcon />
-                </Checkbox.Indicator>
-              </Checkbox.Root>
-              <Heading variant="subheading">Artifact Set</Heading>
-            </Stack.Horizontal>
+            <Text>Comparison Buckets</Text>
+            {Object.entries(routineOptions.targetAttributes).map(
+              ([key, value]) => (
+                <Stack.Horizontal key={key}>
+                  <Checkbox.Root
+                    checked={value}
+                    onCheckedChange={(e) =>
+                      setRoutineOptions((options) => ({
+                        ...options,
+                        targetAttributes: {
+                          ...options.targetAttributes,
+                          [key]: Boolean(e),
+                        },
+                      }))
+                    }
+                  >
+                    <Checkbox.Indicator>
+                      <CheckIcon />
+                    </Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <Heading variant="subheading">
+                    {
+                      {
+                        set: 'Artifact Set',
+                        slot: 'Slot Type',
+                        main: 'Main Stat',
+                        sub: 'Substats',
+                      }[key]
+                    }
+                  </Heading>
+                </Stack.Horizontal>
+              )
+            )}
           </Stack.Vertical>
           <ScrollArea.Root
             css={{
