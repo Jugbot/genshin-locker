@@ -18,11 +18,13 @@ import {
   TextArea,
 } from './components'
 import { ArtifactCard } from './composites'
+import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; score: number }
 
 const App: React.FC = () => {
+  const themeClass = useThemeClass()
   const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
@@ -39,7 +41,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return window.electron.on(Channel.PROGRESS, (progress) => {
-      console.log(progress)
       setRoutineStatus(progress)
     })
   }, [])
@@ -60,6 +61,7 @@ const App: React.FC = () => {
 
   return (
     <Box
+      className={themeClass}
       css={{
         backgroundColor: '$bgPrimary',
         position: 'fixed',
