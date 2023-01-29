@@ -28,11 +28,11 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './src/index.html',
-            js: './src/renderer.ts',
+            html: './src/windows/main/index.html',
+            js: './src/windows/main/app.tsx',
             name: 'main_window',
             preload: {
-              js: './src/preload.ts',
+              js: './src/windows/main/preload.ts',
             },
           },
         ],

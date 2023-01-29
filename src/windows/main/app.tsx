@@ -2,9 +2,9 @@ import { CheckIcon, ImageIcon, PlayIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { Channel } from './apiTypes'
-import { RoutineOptions } from './automation/routines'
-import { Artifact } from './automation/types'
+import { Channel } from '../../apiTypes'
+import { RoutineOptions } from '../../automation/routines'
+import { Artifact } from '../../automation/types'
 import {
   Box,
   Button,
@@ -18,9 +18,11 @@ import {
   Text,
   TextArea,
   Stack,
-} from './components'
-import { ArtifactCard } from './composites'
-import { loadGlobalStyles } from './globalCss'
+} from '../../components'
+import { loadGlobalStyles } from '../../globalCss'
+
+import { api } from './api'
+import { ArtifactCard } from './components'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
@@ -47,19 +49,19 @@ const App: React.FC = () => {
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
-    return window.electron.on(Channel.ARTIFACT, (artifact, score) => {
+    return api.on(Channel.ARTIFACT, (artifact, score) => {
       setArtifacts((a) => [...a, { artifact, score }])
     })
   }, [])
 
   useEffect(() => {
-    return window.electron.on(Channel.PROGRESS, (progress) => {
+    return api.on(Channel.PROGRESS, (progress) => {
       setRoutineStatus(progress)
     })
   }, [])
 
   useEffect(() => {
-    return window.electron.on(Channel.LOG, (mode, text) => {
+    return api.on(Channel.LOG, (mode, text) => {
       console[mode](text)
       setLogs((arr) => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })
@@ -67,7 +69,7 @@ const App: React.FC = () => {
 
   const startRoutine = () => {
     setArtifacts([])
-    window.electron.invoke(Channel.START, routineOptions)
+    api.invoke(Channel.START, routineOptions)
   }
 
   const sortedArtifacts = React.useMemo(
@@ -189,24 +191,26 @@ const App: React.FC = () => {
               height: '100%',
             }}
           >
-            <ScrollArea.Viewport
-              css={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
-                gridAutoRows: 'min-content',
-                gap: '$space3',
-              }}
-            >
-              {sortedArtifacts.map(({ artifact, score }) => (
-                <ArtifactCard
-                  key={artifact.id}
-                  artifact={artifact}
-                  score={score}
-                  css={{
-                    animation: '$fadeIn',
-                  }}
-                />
-              ))}
+            <ScrollArea.Viewport>
+              <Box
+                css={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
+                  gridAutoRows: 'min-content',
+                  gap: '$space3',
+                }}
+              >
+                {sortedArtifacts.map(({ artifact, score }) => (
+                  <ArtifactCard
+                    key={artifact.id}
+                    artifact={artifact}
+                    score={score}
+                    css={{
+                      animation: '$fadeIn',
+                    }}
+                  />
+                ))}
+              </Box>
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar orientation="vertical">
               <ScrollArea.Thumb />

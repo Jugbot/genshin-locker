@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { darkTheme, lightTheme } from './stitches.config'
+import { darkTheme, lightTheme } from '../../stitches.config'
 
 type Theme = 'light' | 'dark'
 const themeClassMap = {

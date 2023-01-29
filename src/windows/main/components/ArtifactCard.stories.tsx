@@ -6,7 +6,7 @@ import {
   SetKey,
   SlotKey,
   SubStatKey,
-} from '../automation/types'
+} from '../../../automation/types'
 
 import { ArtifactCard } from './ArtifactCard'
 

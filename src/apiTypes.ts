@@ -1,6 +1,6 @@
-import type { RoutineStatus } from './app'
 import type { RoutineOptions } from './automation/routines'
 import type { Artifact } from './automation/types'
+import type { RoutineStatus } from './windows/main/app'
 
 export enum Channel {
   START = 'start',

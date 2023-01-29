@@ -1,8 +1,8 @@
 import React from 'react'
 import { GiIntricateNecklace } from 'react-icons/gi'
 
-import { Artifact, SlotKey } from '../automation/types'
-import { Box, Heading, Text } from '../components'
+import { Artifact, SlotKey } from '../../../automation/types'
+import { Box, Heading, Text } from '../../../components'
 
 const rarityColors = (rarity: number) => {
   switch (rarity) {
