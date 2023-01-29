@@ -1,4 +1,4 @@
-import { ImageIcon, PlayIcon } from '@radix-ui/react-icons'
+import { CheckIcon, ImageIcon, PlayIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -7,10 +7,12 @@ import { Artifact } from './automation/types'
 import {
   Box,
   Button,
+  Checkbox,
   Heading,
   MenuBar,
   ProgressBar,
   ResizeHandle,
+  Slider,
   StandardScrollArea,
   Text,
   TextArea,
@@ -54,10 +56,12 @@ const App: React.FC = () => {
     [artifacts]
   )
 
+  const logString = React.useMemo(() => logs.join('\n'), [logs])
+
   return (
     <Box
       css={{
-        backgroundColor: '$appBackground',
+        backgroundColor: '$bgPrimary',
         position: 'fixed',
         inset: 0,
         color: '$textDefault',
@@ -94,9 +98,44 @@ const App: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          <Box css={{ flex: '0 0 content', mr: '$space2', overflow: 'hidden' }}>
-            <Heading>Heading</Heading>
-            <Text>Text</Text>
+          <Box
+            css={{
+              flex: '0 0 20%',
+              mr: '$space2',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '$space2',
+            }}
+          >
+            <Text>Label</Text>
+            <Box
+              css={{ display: 'flex', alignItems: 'center', gap: '$space2' }}
+            >
+              <Slider.Root
+                defaultValue={[50]}
+                max={100}
+                step={1}
+                css={{ flexGrow: 1 }}
+              >
+                <Slider.Track>
+                  <Slider.Range />
+                </Slider.Track>
+                <Slider.Thumb />
+              </Slider.Root>
+              <Heading variant="subheading">20</Heading>
+            </Box>
+            <Text>Label Too</Text>
+            <Box
+              css={{ display: 'flex', alignItems: 'center', gap: '$space2' }}
+            >
+              <Checkbox.Root defaultChecked>
+                <Checkbox.Indicator>
+                  <CheckIcon />
+                </Checkbox.Indicator>
+              </Checkbox.Root>
+              <Heading variant="subheading">Label</Heading>
+            </Box>
           </Box>
           <StandardScrollArea css={{ flexGrow: 1, height: '100%' }}>
             <Box
@@ -139,7 +178,8 @@ const App: React.FC = () => {
           />
           <Box css={{ display: 'flex', alignItems: 'center' }}>
             <Button
-              onClick={() =>
+              onClick={() => {
+                setArtifacts([])
                 window.electron.invoke(Channel.START, {
                   percentile: 0.2,
                   targetAttributes: {
@@ -149,7 +189,7 @@ const App: React.FC = () => {
                     sub: false,
                   },
                 })
-              }
+              }}
               size="small"
               css={{ mr: '$space2' }}
             >
@@ -161,7 +201,7 @@ const App: React.FC = () => {
               css={{ flexGrow: 1, height: '$size8' }}
             />
           </Box>
-          <TextArea readOnly css={{ flexGrow: 1 }} value={logs} />
+          <TextArea readOnly css={{ flexGrow: 1 }} value={logString} />
         </Box>
       </Box>
     </Box>

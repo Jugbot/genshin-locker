@@ -26,11 +26,11 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.ScrollAreaScrollbar, {
   backgroundColor: '$sandDarkA3',
 
   "&[data-orientation='vertical']": {
-    width: '$scrollbarSize',
+    width: '$size2',
   },
   "&[data-orientation='horizontal']": {
     flexDirection: 'column',
-    height: '$scrollbarSize',
+    height: '$size2',
   },
 })
 

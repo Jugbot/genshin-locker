@@ -27,7 +27,7 @@ export const ButtonBase = styled('button', {
   variants: {
     variant: {
       primary: {
-        color: '$textPrimary',
+        color: '$textInverted',
         backgroundColor: '$bgActionPrimary',
         borderColor: '$bgActionPrimary',
         '&:hover:not([disabled]):not(:active)': {
@@ -39,25 +39,22 @@ export const ButtonBase = styled('button', {
           borderColor: '$bgActionPrimaryPressed',
         },
       },
-    },
-    disabledVisually: {
-      true: {},
-      false: {},
-    },
-  },
-  compoundVariants: [
-    {
-      variant: 'primary',
-      disabledVisually: true,
-      css: {
-        color: '$textDisabled',
-        backgroundColor: '$bgActionPrimaryDisabled',
-        borderColor: '$bgActionPrimaryDisabled',
+      subdued: {
+        color: '$textDefault',
+        backgroundColor: '$bgSubduedPrimary',
+        borderColor: '$bgSubduedPrimary',
+        '&:hover:not([disabled]):not(:active)': {
+          backgroundColor: '$bgSubduedPrimaryHover',
+          borderColor: '$bgSubduedPrimaryHover',
+        },
+        '&:active:not([disabled])': {
+          backgroundColor: '$bgSubduedPrimaryPressed',
+          borderColor: '$bgSubduedPrimaryPressed',
+        },
       },
     },
-  ],
+  },
   defaultVariants: {
-    disabledVisually: false,
     variant: 'primary',
   },
 })

@@ -1,15 +1,12 @@
 import {
   sandDark,
   yellowDark,
-  amber,
-  orange,
-  brown,
-  amberDark,
-  brownDark,
-  orangeDark,
   sand,
   yellow,
   sandDarkA,
+  blackA,
+  whiteA,
+  sandA,
 } from '@radix-ui/colors'
 
 // Constants for setting window button colors
@@ -28,18 +25,27 @@ const theme = {
     ...sandDark,
     ...sandDarkA,
     ...yellowDark,
-    ...amber,
-    ...orange,
-    ...brown,
+
+    ...blackA,
+    ...whiteA,
+
     bgPrimary: '$sand2',
     bgSecondary: '$sand3',
-    appBackground: '$bgPrimary',
-    bgActionPrimary: '$yellow3',
-    bgActionPrimaryHover: '$yellow4',
-    bgActionPrimaryPressed: '$yellow5',
+    bgSecondaryHover: '$sand4',
+    bgActionPrimary: '$yellow9',
+    bgActionPrimaryHover: '$yellow10',
+    bgActionPrimaryPressed: '$yellow8',
+    textActionPrimary: '$sand2',
+    bgActionSubdued: '$yellow3',
+    bgActionSubduedHover: '$yellow4',
+    bgActionSubduedPressed: '$yellow5',
+    textActionSubdued: '$yellow11',
+    bgActionNeutral: '$sand9',
+    bgActionNeutralHover: '$sand10',
+    bgActionNeutralPressed: '$sand8',
+    textActionNeutral: '$sand2',
     textDefault: '$sand12',
-    textInverted: '$sand1',
-    textPrimary: '$yellow11',
+    textInverted: '$sand8',
     textDisabled: '$sand11',
     menubarBackground: MENUBAR_BACKCOLOR,
     menubarColor: MENUBAR_COLOR,
@@ -84,7 +90,9 @@ const theme = {
     radius3: '16px',
     radiusMax: '9999px',
   },
-  shadows: {},
+  shadows: {
+    shadowFocus: '0 0 0 2px black',
+  },
   sizes: {
     size0: '0',
     size1: '4px',
@@ -103,7 +111,6 @@ const theme = {
     size14: '56px',
     size15: '60px',
     size16: '64px',
-    scrollbarSize: '$size2',
   },
   space: {
     space0: '0',
@@ -132,10 +139,8 @@ export const light = {
   colors: {
     ...theme.colors,
     ...sand,
+    ...sandA,
     ...yellow,
-    ...amberDark,
-    ...orangeDark,
-    ...brownDark,
   },
 } as const
 
@@ -144,10 +149,8 @@ export const dark = {
   colors: {
     ...theme.colors,
     ...sandDark,
+    ...sandDarkA,
     ...yellowDark,
-    ...amber,
-    ...orange,
-    ...brown,
   },
 } as const
 

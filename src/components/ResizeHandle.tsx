@@ -3,8 +3,8 @@ import React from 'react'
 import { styled } from '../stitches.config'
 
 const ResizeBar = styled('div', {
-  minWidth: '$scrollbarSize',
-  minHeight: '$scrollbarSize',
+  minWidth: '$size2',
+  minHeight: '$size2',
   borderRadius: '$radiusMax',
   backgroundColor: '$bgSecondary',
   cursor: 'ns-resize',
@@ -39,7 +39,6 @@ export const ResizeHandle = ({
     }
 
     function onMouseMove(e: MouseEvent) {
-      console.log(e.movementY)
       onHandleDrag(orientation === 'horizontal' ? e.movementY : e.movementX)
     }
     function onMouseUp() {

@@ -9,13 +9,13 @@ import { Heading } from './Heading'
 const Root = styled(Progress.Root, {
   position: 'relative',
   overflow: 'hidden',
-  backgroundColor: '$bgActionPrimary',
+  backgroundColor: '$bgActionSubdued',
   borderRadius: '$radius1',
   height: '$size4',
 })
 
 const Indicator = styled(Progress.Indicator, {
-  backgroundColor: '$textPrimary',
+  backgroundColor: '$bgActionPrimary',
   position: 'absolute',
   inset: 0,
   overflow: 'hidden',
@@ -37,7 +37,7 @@ export const ProgressBar = (args: ComponentProps<typeof Root>) => {
         variant="subheading"
         css={{
           visibility: showLabel ? 'visible' : 'hidden',
-          color: '$textPrimary',
+          color: '$bgActionPrimary',
           position: 'absolute',
           inset: 0,
           display: 'flex',
