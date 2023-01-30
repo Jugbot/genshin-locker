@@ -7,6 +7,16 @@ import {
   blackA,
   whiteA,
   sandA,
+  orangeDark,
+  purpleDark,
+  blueDark,
+  greenDark,
+  slateDark,
+  green,
+  orange,
+  purple,
+  blue,
+  slate,
 } from '@radix-ui/colors'
 
 import { fadeIn } from './keyframes'
@@ -28,6 +38,12 @@ const theme = {
     ...sandDarkA,
     ...yellowDark,
 
+    ...orangeDark,
+    ...purpleDark,
+    ...blueDark,
+    ...greenDark,
+    ...slateDark,
+
     ...blackA,
     ...whiteA,
 
@@ -47,6 +63,7 @@ const theme = {
     bgActionNeutralPressed: '$sand8',
     textActionNeutral: '$sand2',
     textDefault: '$sand12',
+    textDefaultA: '$sandA11',
     textInverted: '$sand8',
     textDisabled: '$sand11',
     menubarBackground: MENUBAR_BACKCOLOR,
@@ -146,6 +163,11 @@ export const light = {
     ...sand,
     ...sandA,
     ...yellow,
+    ...orange,
+    ...purple,
+    ...blue,
+    ...green,
+    ...slate,
   },
 } as const
 
@@ -156,6 +178,11 @@ export const dark = {
     ...sandDark,
     ...sandDarkA,
     ...yellowDark,
+    ...orangeDark,
+    ...purpleDark,
+    ...blueDark,
+    ...greenDark,
+    ...slateDark,
   },
 } as const
 

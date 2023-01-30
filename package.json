@@ -9,6 +9,7 @@
     "format": "prettier . --check --ignore-path=\"./.gitignore\"",
     "lint:write": "eslint --fix --max-warnings=0 --ext .ts,.tsx .",
     "lint": "eslint --max-warnings=0 --ext .ts,.tsx .",
+    "check-types": "tsc -p ./tsconfig.json",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
     "make": "electron-forge make",

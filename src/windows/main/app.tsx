@@ -26,7 +26,7 @@ import { ArtifactCard } from './components'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
-type ArtifactData = { artifact: Artifact; score: number }
+type ArtifactData = { artifact: Artifact; score: number; targetScore: number }
 
 const App: React.FC = () => {
   loadGlobalStyles()
@@ -44,13 +44,13 @@ const App: React.FC = () => {
       sub: false,
     },
   })
-  const [logs, setLogs] = useState<string[]>(['', '', '', '', '', '', ''])
+  const [logs, setLogs] = useState<string[]>([])
 
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
 
   useEffect(() => {
-    return api.on(Channel.ARTIFACT, (artifact, score) => {
-      setArtifacts((a) => [...a, { artifact, score }])
+    return api.on(Channel.ARTIFACT, (artifact, score, targetScore) => {
+      setArtifacts((a) => [...a, { artifact, score, targetScore }])
     })
   }, [])
 
@@ -200,11 +200,12 @@ const App: React.FC = () => {
                   gap: '$space3',
                 }}
               >
-                {sortedArtifacts.map(({ artifact, score }) => (
+                {sortedArtifacts.map(({ artifact, score, targetScore }) => (
                   <ArtifactCard
                     key={artifact.id}
                     artifact={artifact}
                     score={score}
+                    targetScore={targetScore}
                     css={{
                       animation: '$fadeIn',
                     }}

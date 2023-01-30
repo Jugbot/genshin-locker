@@ -1,5 +1,11 @@
 import React from 'react'
-import { GiIntricateNecklace } from 'react-icons/gi'
+import {
+  GiIntricateNecklace,
+  GiTwirlyFlower,
+  GiJeweledChalice,
+  GiFeather,
+  GiHourglass,
+} from 'react-icons/gi'
 
 import { Artifact, SlotKey } from '../../../automation/types'
 import { Box, Heading, Text } from '../../../components'
@@ -7,23 +13,31 @@ import { Box, Heading, Text } from '../../../components'
 const rarityColors = (rarity: number) => {
   switch (rarity) {
     case 5:
-      return '#f22'
+      return '$orange8'
     case 4:
-      return '#f2f'
+      return '$purple8'
     case 3:
-      return '#3ff'
+      return '$blue8'
     case 2:
-      return '#ff4'
+      return '$green8'
+    default:
+      return '$slate8'
   }
-  return '#fff'
 }
 
 const ArtifactSlotIcon = ({ slot }: { slot: SlotKey }) => {
   switch (slot) {
     case SlotKey.CIRCLET:
       return <GiIntricateNecklace />
+    case SlotKey.FLOWER:
+      return <GiTwirlyFlower />
+    case SlotKey.GOBLET:
+      return <GiJeweledChalice />
+    case SlotKey.PLUME:
+      return <GiFeather />
+    case SlotKey.SANDS:
+      return <GiHourglass />
   }
-  return <GiIntricateNecklace />
 }
 
 interface ArtifactStatProps extends React.ComponentProps<typeof Text> {
@@ -42,11 +56,13 @@ const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
 interface ArtifactCardProps extends React.ComponentProps<typeof Box> {
   artifact: Artifact
   score: number
+  targetScore: number
 }
 
 export const ArtifactCard = ({
   artifact,
   score,
+  targetScore,
   css,
   ...props
 }: ArtifactCardProps) => {
@@ -79,12 +95,16 @@ export const ArtifactCard = ({
               textOverflow: 'ellipsis',
               overflow: 'hidden',
               whiteSpace: 'nowrap',
+              color: '$textDefaultA',
             }}
           >
             {artifact.setKey}
           </Heading>
         </Box>
-        <Heading variant="md" css={{ flexGrow: 0 }}>
+        <Heading
+          variant="md"
+          css={{ flexGrow: 0, display: 'contents', color: '$textDefaultA' }}
+        >
           <ArtifactSlotIcon slot={artifact.slotKey} />
         </Heading>
       </Box>
@@ -94,10 +114,11 @@ export const ArtifactCard = ({
           alignItems: 'center',
           backgroundColor: '$sand4',
           padding: '$space2',
-          justifyContent: 'center',
+          justifyContent: 'space-around',
         }}
       >
-        <Heading variant="subheading">{score.toFixed(1)} percentile</Heading>
+        <Heading variant="subheading">score: {score.toFixed(1)}</Heading>
+        <Heading variant="subheading">target: {targetScore.toFixed(1)}</Heading>
       </Box>
       <Box
         css={{

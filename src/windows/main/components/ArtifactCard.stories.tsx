@@ -1,7 +1,6 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
 
 import {
-  Artifact,
   MainStatKey,
   SetKey,
   SlotKey,
@@ -18,7 +17,7 @@ export default {
   },
 } as ComponentMeta<typeof ArtifactCard>
 
-const Template: ComponentStory<typeof ArtifactCard> = (args) => (
+const Template: ComponentStoryFn<typeof ArtifactCard> = (args) => (
   <ArtifactCard {...args} css={{ minWidth: '15em' }} />
 )
 
@@ -37,6 +36,7 @@ FirstStory.args = {
     location: 0,
     lock: false,
     id: '',
-  } satisfies Artifact,
+  },
   score: 100,
+  targetScore: 20,
 }

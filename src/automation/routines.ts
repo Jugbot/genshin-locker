@@ -84,7 +84,8 @@ export async function readArtifacts({
             mainWindow.webContents,
             Channel.ARTIFACT,
             artifact,
-            artifactScore
+            artifactScore,
+            targetScore
           )
         })
       })

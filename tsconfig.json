@@ -13,7 +13,8 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strict": true
   },
   "include": ["src/**/*", "scripts/**/*", ".storybook/**/*"]
 }
