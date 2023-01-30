@@ -5,11 +5,11 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "format:write": "prettier . --write --ignore-path=\"./.gitignore\"",
-    "format": "prettier . --check --ignore-path=\"./.gitignore\"",
-    "lint:write": "eslint --fix --max-warnings=0 --ext .ts,.tsx .",
-    "lint": "eslint --max-warnings=0 --ext .ts,.tsx .",
-    "check-types": "tsc -p ./tsconfig.json",
+    "format:write": "prettier . -u --ignore-path=\"./.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"./.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"./.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"./.gitignore\"",
+    "check-types": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
     "make": "electron-forge make",
@@ -113,9 +113,5 @@
   },
   "engines": {
     "node": "^16.0.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": "yarn lint:write",
-    "*.{ts,tsx,json}": "yarn format:write"
   }
 }

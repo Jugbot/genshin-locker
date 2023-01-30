@@ -14,10 +14,8 @@ export const rendererApi: RendererAPI = {
     return ipcRenderer.invoke(channel, ...args)
   },
   on(channel, listener) {
-    const subscription = (
-      _event: IpcRendererEvent,
-      ...args: Parameters<typeof listener>
-    ) => listener(...args)
+    const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
+      listener(...(args as Parameters<typeof listener>))
     ipcRenderer.on(channel, subscription)
 
     return () => {
@@ -33,8 +31,9 @@ export const mainApi: MainAPI = {
   handle(channel, listener) {
     const subscription = (
       _event: IpcMainInvokeEvent,
-      ...args: Parameters<typeof listener>
-    ): ReturnType<typeof listener> => listener(...args)
+      ...args: unknown[]
+    ): ReturnType<typeof listener> =>
+      listener(...(args as Parameters<typeof listener>))
     ipcMain.handle(channel, subscription)
 
     return () => {

@@ -20,7 +20,6 @@ const inputEvent = (
     mouseData: 0,
     dwFlags: MOUSEEVENTF.ABSOLUTE,
     time: 0,
-    dwExtraInfo: ref.NULL,
     ...event,
   })
   const input = new INPUT({

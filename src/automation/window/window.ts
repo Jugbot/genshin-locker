@@ -28,11 +28,11 @@ import {
 } from './winconst'
 
 export class GenshinWindow {
-  handle: bigint
-  width: bigint
-  height: bigint
-  x: bigint
-  y: bigint
+  handle = 0n
+  width = 0n
+  height = 0n
+  x = 0n
+  y = 0n
 
   grab() {
     this.handle = BigInt(
@@ -41,7 +41,6 @@ export class GenshinWindow {
         StringBuffer(ucsBufferFrom('Genshin Impact'))
       )
     )
-    // this.handle = BigInt(user32.FindWindowW(null, StringBuffer(ucsBufferFrom('Steam'))))
     console.assert(this.handle, 'Handle not found.')
     user32.ShowWindow(String(this.handle), SW_RESTORE)
     user32.SetForegroundWindow(String(this.handle))
