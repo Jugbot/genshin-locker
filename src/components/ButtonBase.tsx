@@ -40,16 +40,16 @@ export const ButtonBase = styled('button', {
         },
       },
       subdued: {
-        color: '$textDefault',
-        backgroundColor: '$bgSubduedPrimary',
-        borderColor: '$bgSubduedPrimary',
+        color: '$textActionSubdued',
+        backgroundColor: '$bgActionSubdued',
+        borderColor: '$bgActionSubdued',
         '&:hover:not([disabled]):not(:active)': {
-          backgroundColor: '$bgSubduedPrimaryHover',
-          borderColor: '$bgSubduedPrimaryHover',
+          backgroundColor: '$bgActionSubduedHover',
+          borderColor: '$bgActionSubduedHover',
         },
         '&:active:not([disabled])': {
-          backgroundColor: '$bgSubduedPrimaryPressed',
-          borderColor: '$bgSubduedPrimaryPressed',
+          backgroundColor: '$bgActionSubduedPressed',
+          borderColor: '$bgActionSubduedPressed',
         },
       },
     },

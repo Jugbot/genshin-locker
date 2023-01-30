@@ -1,6 +1,7 @@
-import { CheckIcon, ImageIcon, PlayIcon } from '@radix-ui/react-icons'
+import { CheckIcon, ImageIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import { GiPlayButton } from 'react-icons/gi'
 
 import { Channel } from '../../apiTypes'
 import { RoutineOptions } from '../../automation/routines'
@@ -233,8 +234,8 @@ const App: React.FC = () => {
             orientation="horizontal"
           />
           <Stack.Horizontal>
-            <Button onClick={startRoutine} size="small" css={{ mr: '$space2' }}>
-              <PlayIcon />
+            <Button variant="subdued" onClick={startRoutine} size="small">
+              <GiPlayButton />
             </Button>
             <ProgressBar
               value={routineStatus.current}
