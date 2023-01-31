@@ -49,6 +49,7 @@ const theme = {
 
     bgPrimary: '$sand2',
     bgSecondary: '$sand3',
+    bgTertiary: '$sand5',
     bgSecondaryHover: '$sand4',
     bgActionPrimary: '$yellow9',
     bgActionPrimaryHover: '$yellow10',
@@ -58,6 +59,10 @@ const theme = {
     bgActionSubduedHover: '$yellow4',
     bgActionSubduedPressed: '$yellow5',
     textActionSubdued: '$yellow11',
+    bgActionTransparent: 'transparent',
+    bgActionTransparentHover: '$sandA4',
+    bgActionTransparentPressed: '$sandA5',
+    textActionTransparent: '$textDefault',
     bgActionNeutral: '$sand9',
     bgActionNeutralHover: '$sand10',
     bgActionNeutralPressed: '$sand8',
@@ -110,6 +115,7 @@ const theme = {
     radiusMax: '9999px',
   },
   shadows: {
+    shadow1: '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
     shadowFocus: '0 0 0 2px black',
   },
   sizes: {
@@ -130,6 +136,8 @@ const theme = {
     size14: '56px',
     size15: '60px',
     size16: '64px',
+    divider1: '1px',
+    divider2: '2px',
   },
   space: {
     space0: '0',

@@ -1,19 +1,20 @@
 import { styled } from '../stitches.config'
 
 export const ButtonBase = styled('button', {
-  fontWeight: '$bold',
-  lineHeight: '$lineHeight7',
-  borderStyle: 'solid',
-  borderWidth: '$borderWidth1',
   position: 'relative',
   display: 'inline-flex',
   alignItems: 'center',
   verticalAlign: 'middle',
   justifyContent: 'center',
   textAlign: 'center',
+  gap: '$space1',
   cursor: 'pointer',
-  outline: 'none',
   userSelect: 'none',
+  fontWeight: '$bold',
+  lineHeight: '$lineHeight7',
+  borderStyle: 'solid',
+  borderWidth: 0,
+  outline: 'none',
   backgroundColor: 'transparent',
   appearance: 'none',
   textDecoration: 'none',
@@ -52,6 +53,19 @@ export const ButtonBase = styled('button', {
           borderColor: '$bgActionSubduedPressed',
         },
       },
+      transparent: {
+        color: '$textActionTransparent',
+        backgroundColor: '$bgActionTransparent',
+        borderColor: '$bgActionTransparent',
+        '&:hover:not([disabled]):not(:active)': {
+          backgroundColor: '$bgActionTransparentHover',
+          borderColor: '$bgActionTransparentHover',
+        },
+        '&:active:not([disabled])': {
+          backgroundColor: '$bgActionTransparentPressed',
+          borderColor: '$bgActionTransparentPressed',
+        },
+      }
     },
   },
   defaultVariants: {

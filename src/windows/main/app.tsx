@@ -1,4 +1,4 @@
-import { CheckIcon, ImageIcon } from '@radix-ui/react-icons'
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -19,6 +19,8 @@ import {
   Text,
   TextArea,
   Stack,
+  ButtonIcon,
+  Select,
 } from '../../components'
 import { loadGlobalStyles } from '../../globalCss'
 
@@ -113,12 +115,11 @@ const App: React.FC = () => {
         <Stack.Horizontal
           css={{
             flex: 1,
-            display: 'flex',
             mb: '$space2',
-            position: 'relative',
             minHeight: 0,
             maxHeight: '100%',
             overflow: 'hidden',
+            alignItems: 'stretch',
           }}
         >
           <Stack.Vertical
@@ -126,7 +127,6 @@ const App: React.FC = () => {
               flex: '0 0 20%',
               overflowX: 'hidden',
               overflowY: 'auto',
-              height: '100%',
             }}
           >
             <Text>Minimum Percentile</Text>
@@ -186,38 +186,81 @@ const App: React.FC = () => {
               )
             )}
           </Stack.Vertical>
-          <ScrollArea.Root
+          <Stack.Vertical
             css={{
               flexGrow: 1,
-              height: '100%',
             }}
           >
-            <ScrollArea.Viewport>
-              <Box
-                css={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
-                  gridAutoRows: 'min-content',
-                  gap: '$space3',
-                }}
-              >
-                {sortedArtifacts.map(({ artifact, score, targetScore }) => (
-                  <ArtifactCard
-                    key={artifact.id}
-                    artifact={artifact}
-                    score={score}
-                    targetScore={targetScore}
-                    css={{
-                      animation: '$fadeIn',
-                    }}
-                  />
-                ))}
-              </Box>
-            </ScrollArea.Viewport>
-            <ScrollArea.Scrollbar orientation="vertical">
-              <ScrollArea.Thumb />
-            </ScrollArea.Scrollbar>
-          </ScrollArea.Root>
+            <Stack.Horizontal
+              css={{
+                backgroundColor: '$bgSecondary',
+                padding: '$space2',
+                borderRadius: '$radius1',
+              }}
+            >
+              <Select.Root>
+                <Select.Trigger variant="transparent" size="small" css={{minWidth: '7em'}}>
+                  <Select.Value />
+                  <Select.Icon >
+                    <ChevronDownIcon/>
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content>
+                    <Select.ScrollUpButton >
+                      <ChevronUpIcon/>
+                    </Select.ScrollUpButton>
+                    <Select.Viewport>
+                      <Select.Item value="test1">
+                        <Select.ItemText >
+                          Test 1111111212323131231321131
+                        </Select.ItemText>
+                        <Select.ItemIndicator />
+                      </Select.Item>
+                    </Select.Viewport>
+                    <Select.ScrollDownButton >
+                      <ChevronDownIcon/>
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
+              <Box css={{ flexGrow: 1 }} />
+              <ButtonIcon variant="transparent" size="small">
+                <ExternalLinkIcon />
+              </ButtonIcon>
+            </Stack.Horizontal>
+            <ScrollArea.Root
+              css={{
+                flexGrow: 1,
+              }}
+            >
+              <ScrollArea.Viewport>
+                <Box
+                  css={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
+                    gridAutoRows: 'min-content',
+                    gap: '$space3',
+                  }}
+                >
+                  {sortedArtifacts.map(({ artifact, score, targetScore }) => (
+                    <ArtifactCard
+                      key={artifact.id}
+                      artifact={artifact}
+                      score={score}
+                      targetScore={targetScore}
+                      css={{
+                        animation: '$fadeIn',
+                      }}
+                    />
+                  ))}
+                </Box>
+              </ScrollArea.Viewport>
+              <ScrollArea.Scrollbar orientation="vertical">
+                <ScrollArea.Thumb />
+              </ScrollArea.Scrollbar>
+            </ScrollArea.Root>
+          </Stack.Vertical>
         </Stack.Horizontal>
         <Stack.Vertical
           css={{
