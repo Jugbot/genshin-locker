@@ -1,4 +1,4 @@
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
+import { ArrowRightIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -201,7 +201,7 @@ const App: React.FC = () => {
               <Select.Root>
                 <Select.Trigger variant="transparent" size="small" css={{minWidth: '7em'}}>
                   <Select.Value />
-                  <Select.Icon >
+                  <Select.Icon asChild>
                     <ChevronDownIcon/>
                   </Select.Icon>
                 </Select.Trigger>
@@ -212,10 +212,14 @@ const App: React.FC = () => {
                     </Select.ScrollUpButton>
                     <Select.Viewport>
                       <Select.Item value="test1">
-                        <Select.ItemText >
-                          Test 1111111212323131231321131
+                        <Select.ItemText asChild>
+                          <Text>Test 1111111212323131231321131</Text>
                         </Select.ItemText>
-                        <Select.ItemIndicator />
+                        <Select.ItemIndicator asChild>
+                          <Text>
+                            <CheckIcon/>
+                          </Text>
+                        </Select.ItemIndicator>
                       </Select.Item>
                     </Select.Viewport>
                     <Select.ScrollDownButton >

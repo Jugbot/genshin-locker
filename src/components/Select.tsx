@@ -21,7 +21,7 @@ const SelectContent = styled(RadixSelect.Content, {
 })
 
 const SelectViewport = styled(RadixSelect.Viewport, {
-  padding: '$size1'
+  padding: '$space1'
 })
 
 const SelectItem = styled(RadixSelect.Item, {
@@ -37,7 +37,7 @@ const SelectItem = styled(RadixSelect.Item, {
   },
   '&[data-highlighted]': {
     outline: 'none',
-    backgroundColor: '$bgActionPrimary'
+    backgroundColor: '$bgActionTransparentHover'
   }
 })
 
