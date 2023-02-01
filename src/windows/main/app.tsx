@@ -1,8 +1,4 @@
-import {
-  CheckIcon,
-  ExternalLinkIcon,
-  ImageIcon,
-} from '@radix-ui/react-icons'
+import { CheckIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -33,9 +29,9 @@ import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; score: number; targetScore: number }
-enum SomeEnum {
-  A = 'Aaaaa',
-  B = 'B',
+enum ScoreMethod {
+  POPULARITY = 'Popularity',
+  RARITY = 'Rarity',
 }
 
 const App: React.FC = () => {
@@ -56,7 +52,9 @@ const App: React.FC = () => {
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
-  const [dropdownValue, setDropdownValue] = useState<SomeEnum>(SomeEnum.A)
+  const [dropdownValue, setDropdownValue] = useState<ScoreMethod>(
+    ScoreMethod.POPULARITY
+  )
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, score, targetScore) => {
@@ -196,7 +194,7 @@ const App: React.FC = () => {
             <Text>Scoring Method</Text>
             <StandardSelect
               value={dropdownValue}
-              options={Object.values(SomeEnum) as SomeEnum[]}
+              options={Object.values(ScoreMethod) as ScoreMethod[]}
               onValueChange={setDropdownValue}
               variant="subdued"
               size="small"

@@ -1,4 +1,8 @@
-import { createStitches, defaultThemeMap, CSS as UntypedCSS } from '@stitches/react'
+import {
+  createStitches,
+  defaultThemeMap,
+  CSS as UntypedCSS,
+} from '@stitches/react'
 
 import themeDefault, { dark, light } from './stitches/theme'
 import utils from './stitches/utils'

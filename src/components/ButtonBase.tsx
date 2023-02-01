@@ -65,7 +65,7 @@ export const ButtonBase = styled('button', {
           backgroundColor: '$bgActionTransparentPressed',
           borderColor: '$bgActionTransparentPressed',
         },
-      }
+      },
     },
   },
   defaultVariants: {
