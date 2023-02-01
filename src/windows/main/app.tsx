@@ -25,7 +25,7 @@ import {
 import { loadGlobalStyles } from '../../globalCss'
 
 import { api } from './api'
-import { ArtifactCard } from './components'
+import { ArtifactCard, StandardSelect } from './components'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
@@ -185,6 +185,8 @@ const App: React.FC = () => {
                 </Stack.Horizontal>
               )
             )}
+            <Text>Scoring Method</Text>
+            <StandardSelect value='option' options={['option']} onValueChange={() => {}} variant='subdued' css={{width: '100%'}}/>
           </Stack.Vertical>
           <Stack.Vertical
             css={{
@@ -198,36 +200,6 @@ const App: React.FC = () => {
                 borderRadius: '$radius1',
               }}
             >
-              <Select.Root>
-                <Select.Trigger variant="transparent" size="small" css={{minWidth: '7em'}}>
-                  <Select.Value />
-                  <Select.Icon asChild>
-                    <ChevronDownIcon/>
-                  </Select.Icon>
-                </Select.Trigger>
-                <Select.Portal>
-                  <Select.Content>
-                    <Select.ScrollUpButton >
-                      <ChevronUpIcon/>
-                    </Select.ScrollUpButton>
-                    <Select.Viewport>
-                      <Select.Item value="test1">
-                        <Select.ItemText asChild>
-                          <Text>Test 1111111212323131231321131</Text>
-                        </Select.ItemText>
-                        <Select.ItemIndicator asChild>
-                          <Text>
-                            <CheckIcon/>
-                          </Text>
-                        </Select.ItemIndicator>
-                      </Select.Item>
-                    </Select.Viewport>
-                    <Select.ScrollDownButton >
-                      <ChevronDownIcon/>
-                    </Select.ScrollDownButton>
-                  </Select.Content>
-                </Select.Portal>
-              </Select.Root>
               <Box css={{ flexGrow: 1 }} />
               <ButtonIcon variant="transparent" size="small">
                 <ExternalLinkIcon />
