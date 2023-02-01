@@ -1,4 +1,8 @@
-import { ArrowRightIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
+import {
+  CheckIcon,
+  ExternalLinkIcon,
+  ImageIcon,
+} from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -20,7 +24,6 @@ import {
   TextArea,
   Stack,
   ButtonIcon,
-  Select,
 } from '../../components'
 import { loadGlobalStyles } from '../../globalCss'
 
@@ -30,6 +33,10 @@ import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; score: number; targetScore: number }
+enum SomeEnum {
+  A = 'Aaaaa',
+  B = 'B',
+}
 
 const App: React.FC = () => {
   loadGlobalStyles()
@@ -48,8 +55,8 @@ const App: React.FC = () => {
     },
   })
   const [logs, setLogs] = useState<string[]>([])
-
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
+  const [dropdownValue, setDropdownValue] = useState<SomeEnum>(SomeEnum.A)
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, score, targetScore) => {
@@ -84,6 +91,7 @@ const App: React.FC = () => {
 
   return (
     <Box
+      id="appStyled"
       className={themeClass}
       css={{
         backgroundColor: '$bgPrimary',
@@ -186,7 +194,14 @@ const App: React.FC = () => {
               )
             )}
             <Text>Scoring Method</Text>
-            <StandardSelect value='option' options={['option']} onValueChange={() => {}} variant='subdued' css={{width: '100%'}}/>
+            <StandardSelect
+              value={dropdownValue}
+              options={Object.values(SomeEnum) as SomeEnum[]}
+              onValueChange={setDropdownValue}
+              variant="subdued"
+              size="small"
+              css={{ width: '100%' }}
+            />
           </Stack.Vertical>
           <Stack.Vertical
             css={{

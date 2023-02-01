@@ -21,6 +21,7 @@ export const Text = styled('p', {
       warning: { color: '$textWarning' },
       critical: { color: '$textCritical' },
       info: { color: '$textInformational' },
+      inherit: { color: 'inherit' },
     },
     verticalAlignment: {
       default: {},

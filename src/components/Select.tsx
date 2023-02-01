@@ -3,13 +3,16 @@ import React from 'react'
 
 import { CSS, styled } from '../stitches.config'
 
-import {Button} from './Button'
-
+import { Button } from './Button'
 
 const SelectTriggerRaw = styled(RadixSelect.Trigger)
 
 // Instead of styling the trigger, use a <Button /> as the trigger
-const SelectTrigger = (props: React.ComponentPropsWithRef<typeof Button>) => <SelectTriggerRaw asChild><Button {...props}/></SelectTriggerRaw>
+const SelectTrigger = (props: React.ComponentPropsWithRef<typeof Button>) => (
+  <SelectTriggerRaw asChild>
+    <Button {...props} />
+  </SelectTriggerRaw>
+)
 
 const SelectIcon = styled(RadixSelect.Icon)
 
@@ -17,28 +20,28 @@ const SelectContent = styled(RadixSelect.Content, {
   overflow: 'hidden',
   backgroundColor: '$bgTertiary',
   borderRadius: '$radius1',
-  boxShadow: '$shadow1'
+  width: 'fit-content',
 })
 
 const SelectViewport = styled(RadixSelect.Viewport, {
-  padding: '$space1'
+  padding: '$space1',
 })
 
 const SelectItem = styled(RadixSelect.Item, {
   borderRadius: '$radius1',
   display: 'flex',
   alignItems: 'center',
-  padding: '0 $space9 0 $space6',
+  padding: '$space1 $space6 $space1 $space6',
   position: 'relative',
   userSelect: 'none',
 
   '&[data-disabled]': {
-    pointerEvents: 'none'
+    pointerEvents: 'none',
   },
   '&[data-highlighted]': {
     outline: 'none',
-    backgroundColor: '$bgActionTransparentHover'
-  }
+    backgroundColor: '$bgActionTransparentHover',
+  },
 })
 
 const SelectLabel = styled(RadixSelect.Label, {
@@ -48,7 +51,7 @@ const SelectLabel = styled(RadixSelect.Label, {
 const SelectSeparator = styled(RadixSelect.Separator, {
   height: '$divider1',
   backgroundColor: '$textDefault',
-  margin: '$size1'
+  margin: '$size1',
 })
 
 const SelectItemIndicator = styled(RadixSelect.ItemIndicator, {
@@ -57,7 +60,7 @@ const SelectItemIndicator = styled(RadixSelect.ItemIndicator, {
   width: '$size6',
   display: 'inline-flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 })
 
 const scrollButtonCss: CSS = {
@@ -69,7 +72,10 @@ const scrollButtonCss: CSS = {
   cursor: 'default',
 }
 
-const SelectScrollDownButton = styled(RadixSelect.ScrollDownButton, scrollButtonCss)
+const SelectScrollDownButton = styled(
+  RadixSelect.ScrollDownButton,
+  scrollButtonCss
+)
 const SelectScrollUpButton = styled(RadixSelect.ScrollUpButton, scrollButtonCss)
 
 const SelectRoot = styled(RadixSelect.Root)
@@ -97,5 +103,5 @@ export const Select = {
   ItemIndicator: SelectItemIndicator,
   ScrollUpButton: SelectScrollUpButton,
   ScrollDownButton: SelectScrollDownButton,
-  Separator: SelectSeparator
+  Separator: SelectSeparator,
 }
