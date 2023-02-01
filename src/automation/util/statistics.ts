@@ -179,6 +179,11 @@ function percentileScore(percentile: number, scores: number[]) {
   )
 }
 
+/**
+ * Creates a set of all possible buckets based on what properties are enabled in options, gathers the total score for that bucket, and then saves the calculated percentile score in a new table, basically acting as a preloaded cache. (see `getTargetScore`)
+ * @param percentile The percent of the total score in that bucket that an artifact must meet in order to be unlocked.
+ * @param options The properties to include in the bucket. For example anabling the set and slot would generate a bucket for each possible combination of artifact set and slot.
+ */
 export async function setTargetScores(
   percentile: number,
   options: { set: boolean; slot: boolean; main: boolean; sub: boolean }
@@ -212,6 +217,12 @@ export async function setTargetScores(
   )
 }
 
+/**
+ * Fetches the target score from the preloaded table made in `setTargetScores`
+ * @param artifact The artifact that contains the keys that specify the bucket.
+ * @param mask The proprties on Artifact that compose the bucket.
+ * @returns Promise of the target score an artifact must reach.
+ */
 export async function getTargetScore(
   artifact: Artifact,
   mask: { set: boolean; slot: boolean; main: boolean; sub: boolean }
