@@ -20,11 +20,11 @@ export const StandardSelect = <T extends string>({
   value,
   ...props
 }: StandardSelectProps<T>) => {
-  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null)
+  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null)
 
   React.useEffect(() => {
     // Parent element is only available after first render
-    setAnchor(document.querySelector<HTMLElement>('#appStyled'))
+    setPortalRoot(document.querySelector<HTMLElement>('#appStyled'))
   }, [])
 
   return (
@@ -39,7 +39,7 @@ export const StandardSelect = <T extends string>({
           </Select.Icon>
         </Text>
       </Select.Trigger>
-      <Select.Portal container={anchor}>
+      <Select.Portal container={portalRoot}>
         <Select.Content>
           <Select.ScrollUpButton>
             <ChevronUpIcon />
