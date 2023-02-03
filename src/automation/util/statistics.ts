@@ -43,7 +43,7 @@ export const mainStatDistribution: Record<
   },
 }
 
-function mainStatRollChance(stat: MainStatKey, slot: SlotKey) {
+export function mainStatRollChance(stat: MainStatKey, slot: SlotKey) {
   return mainStatDistribution[slot][stat] ?? 0
 }
 
@@ -60,7 +60,7 @@ export const substatDistribution: Record<SubStatKey, number> = {
   [SubStatKey.CRIT_DAMAGE]: 6.82,
 }
 
-function subStatRollChance(
+export function subStatRollChance(
   stat: SubStatKey,
   mainStat: MainStatKey,
   exclude: Set<SubStatKey> = new Set()

@@ -20,6 +20,7 @@ Stretch:
 - fix percentile to be an actual percentile instead of just a score threshold
   - a real percentile would provide the same percent of artifacts from the set of all possible artifacts. Right now outliers heavily affect what is above or below a "percentile".
   - technically the percentile could take rarity into account and be based on the set of _average_ artifacts. needs investigation.
+- scrape data from from other languages of lineup simulator
 - bg art
 - scan other pages
 - overlay with keystroke info (e.g. emergency stop)
