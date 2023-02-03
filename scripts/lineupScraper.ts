@@ -1,10 +1,15 @@
-import fs from 'fs'
-import path from 'path'
-
 import { SingleBar } from 'cli-progress'
+import fetch from 'node-fetch'
 
 import { getDatabase } from '../src/automation/database'
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
+
+const timeInSecondsUTC = (date: Date) => {
+  return Math.trunc(date.getTime() / 1000)
+}
+const currentTimeSeconds = () => {
+  return timeInSecondsUTC(new Date())
+}
 
 type Payload = {
   data: {
@@ -93,7 +98,7 @@ async function* fetchLineupSimulatorBuilds(limit = 1000) {
     request.searchParams.set('next_page_token', nextPageToken)
     request.searchParams.set('tag_id', '2')
     request.searchParams.set('roles', '')
-    request.searchParams.set('order', 'Hot')
+    request.searchParams.set('order', 'CreatedTime')
     request.searchParams.set('lang', 'en-us')
     try {
       const data = await fetch(request)
@@ -106,16 +111,46 @@ async function* fetchLineupSimulatorBuilds(limit = 1000) {
   }
 }
 
-async function createStatistics(limit = 100_000) {
-  const db = await getDatabase(false)
-  let count = 0
-  const bar = new SingleBar({})
-  bar.start(limit, 0)
+const LOCAL_DOC_KEY = 'sync-time'
+type LocalDoc = {
+  time: number
+}
+
+async function createStatistics() {
+  const db = await getDatabase()
+  let localDoc = await db.default.getLocal<LocalDoc>(LOCAL_DOC_KEY)
+  if (localDoc === null) {
+    localDoc = await db.default.insertLocal<LocalDoc>(LOCAL_DOC_KEY, {
+      // Set initial time to when the lineup simulator was released
+      time: timeInSecondsUTC(new Date('2022/10/27')),
+    })
+  }
+  const lastSyncTime: number = localDoc.get('time')
+  console.log(`Last sync at ${new Date(lastSyncTime * 1000)}.`)
+  const currentTime = currentTimeSeconds()
+  await db.default.upsertLocal<LocalDoc>(LOCAL_DOC_KEY, { time: currentTime })
+  const bar = new SingleBar({
+    format: '\u2595{bar}\u258F {percentage}% | ETA: {eta}s',
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591',
+  })
+  let finishStatus = 'Reached the end.'
+  let lastCreatedAt = currentTime
+  bar.start(currentTime - lastSyncTime, 0)
   for await (const teams of fetchLineupSimulatorBuilds()) {
+    const createdAt = Number.parseInt(teams.created_at)
+    if (createdAt < lastSyncTime) {
+      finishStatus = 'Caught up with old data'
+      bar.update(bar.getTotal())
+      break
+    } else if (createdAt > lastCreatedAt) {
+      finishStatus = 'Broke order'
+      break
+    }
+    bar.update(currentTime - createdAt)
+    lastCreatedAt = createdAt
     for (const team of teams.avatar_group) {
       for (const character of team.group) {
-        count += 1
-        bar.increment(1)
         const substatKeys = character.secondary_attr_name.map((stat) =>
           getStatKey(stat.name)
         )
@@ -144,7 +179,11 @@ async function createStatistics(limit = 100_000) {
                 })
                 .exec()
               if (!doc) {
-                doc = await db.default.insert(row)
+                doc = await db.default.insert({
+                  ...row,
+                  popularity: 0,
+                  rarity: 0,
+                })
               }
               await doc.update({
                 $inc: {
@@ -156,15 +195,10 @@ async function createStatistics(limit = 100_000) {
         }
       }
     }
-    if (count > limit) break
   }
   bar.stop()
-  return db.exportJSON()
+  console.log(finishStatus)
+  await db.destroy()
 }
 
-createStatistics(10000).then((data) =>
-  fs.writeFileSync(
-    path.join(__dirname, '../src/automation/database/data.json'),
-    JSON.stringify(data, null, 2)
-  )
-)
+createStatistics()

@@ -2,11 +2,12 @@ import {
   RxJsonSchema,
   toTypedRxJsonSchema,
   ExtractDocumentTypeFromTypedRxJsonSchema,
+  MigrationStrategies,
 } from 'rxdb'
 
 const schemaLiteral = {
-  title: 'target score given percentile schema',
-  description: 'target scores by group',
+  title: 'precalculation schema',
+  description: 'precalculated scores',
   version: 0,
   primaryKey: {
     key: 'id',
@@ -31,11 +32,12 @@ const schemaLiteral = {
     sub: {
       type: 'string',
     },
-    score: {
+    popularity: {
       type: 'number',
+      default: 0,
     },
   },
-  required: ['set', 'slot', 'main', 'sub', 'score'],
+  required: ['set', 'slot', 'main', 'sub'],
 } as const
 
 const schemaTyped = toTypedRxJsonSchema(schemaLiteral)
@@ -45,3 +47,5 @@ export type RxDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
 >
 
 export const schema: RxJsonSchema<RxDocType> = schemaTyped
+
+export const migrationStrategies: MigrationStrategies = {}

@@ -11,8 +11,11 @@ export type Collections = {
 export const collections: Record<keyof Collections, RxCollectionCreator> = {
   default: {
     schema: Default.schema,
+    migrationStrategies: Default.migrationStrategies,
+    localDocuments: true
   },
   targetscore: {
     schema: TargetScore.schema,
+    migrationStrategies: TargetScore.migrationStrategies
   },
 }
