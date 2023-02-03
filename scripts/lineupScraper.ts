@@ -130,13 +130,16 @@ async function createStatistics() {
   const currentTime = currentTimeSeconds()
   await db.default.upsertLocal<LocalDoc>(LOCAL_DOC_KEY, { time: currentTime })
   const bar = new SingleBar({
-    format: '\u2595{bar}\u258F {percentage}% | ETA: {eta}s',
+    format: '\u2595{bar}\u258F {percentage}% | ETA: {eta}s | builds: {builds}',
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
   })
   let finishStatus = 'Reached the end.'
   let lastCreatedAt = currentTime
-  bar.start(currentTime - lastSyncTime, 0)
+  let totalBuilds = 0
+  bar.start(currentTime - lastSyncTime, 0, {
+    builds: 0
+  })
   for await (const teams of fetchLineupSimulatorBuilds()) {
     const createdAt = Number.parseInt(teams.created_at)
     if (createdAt < lastSyncTime) {
@@ -147,10 +150,13 @@ async function createStatistics() {
       finishStatus = 'Broke order'
       break
     }
-    bar.update(currentTime - createdAt)
+    bar.update(currentTime - createdAt, {
+      builds: totalBuilds
+    })
     lastCreatedAt = createdAt
     for (const team of teams.avatar_group) {
       for (const character of team.group) {
+        totalBuilds += 1
         const substatKeys = character.secondary_attr_name.map((stat) =>
           getStatKey(stat.name)
         )
@@ -199,6 +205,7 @@ async function createStatistics() {
   bar.stop()
   console.log(finishStatus)
   await db.destroy()
+  process.exit()
 }
 
 createStatistics()
