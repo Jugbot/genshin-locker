@@ -1,6 +1,3 @@
-
-
-
 import { getDatabase } from '../src/automation/database'
 import {
   MainStatKey,
