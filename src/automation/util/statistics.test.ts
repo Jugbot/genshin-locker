@@ -17,6 +17,7 @@ describe('statistics', () => {
           slot: 'plume',
           main: 'atk_',
           sub: 'atk',
+          rarity: 0,
           popularity: 200,
         },
         {
@@ -24,6 +25,7 @@ describe('statistics', () => {
           slot: 'plume',
           main: 'atk_',
           sub: 'def',
+          rarity: 0,
           popularity: 100,
         },
       ])
