@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 
 import { getDatabase } from '../src/automation/database'
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
+import { asCommand } from './types'
 
 const timeInSecondsUTC = (date: Date) => {
   return Math.trunc(date.getTime() / 1000)
@@ -208,4 +209,12 @@ async function createStatistics() {
   process.exit()
 }
 
-createStatistics()
+
+export const command = asCommand({
+  command: 'popularity',
+  describe: 'Scrapes character loadout data from the lineup simulator: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html',
+  builder: {},
+  handler: () => {
+    createStatistics()
+  }
+})

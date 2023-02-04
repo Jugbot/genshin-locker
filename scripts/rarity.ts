@@ -1,3 +1,4 @@
+import { ArgumentsCamelCase, CommandBuilder, CommandModule, InferredOptionTypes, Options } from 'yargs'
 import { getDatabase } from '../src/automation/database'
 import {
   MainStatKey,
@@ -9,6 +10,7 @@ import {
   mainStatRollChance,
   subStatRollChance,
 } from '../src/automation/util/statistics'
+import { asCommand } from './types'
 
 export async function insertRarity() {
   const db = await getDatabase()
@@ -51,4 +53,11 @@ export async function insertRarity() {
   process.exit()
 }
 
-insertRarity()
+export const command = asCommand({
+  command: 'rarity',
+  describe: 'Hydrate the database with rarity information.',
+  builder: {},
+  handler: () => {
+    insertRarity()
+  }
+})
