@@ -17,6 +17,9 @@ interface MyCommandModule<O extends OptionsDict> extends CommandModule<unknown, 
   ) => void | Promise<void>
 }
 
+/**
+ * Due to a limitation with typescript, we need this function to infer the generic portion of MyCommandModule.
+ */
 export const asCommand = <T extends OptionsDict>(
   module: MyCommandModule<T>
 ): CommandModule<
