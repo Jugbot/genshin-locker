@@ -12,10 +12,10 @@ export const collections: Record<keyof Collections, RxCollectionCreator> = {
   default: {
     schema: Default.schema,
     migrationStrategies: Default.migrationStrategies,
-    localDocuments: true
+    localDocuments: true,
   },
   targetscore: {
     schema: TargetScore.schema,
-    migrationStrategies: TargetScore.migrationStrategies
+    migrationStrategies: TargetScore.migrationStrategies,
   },
 }

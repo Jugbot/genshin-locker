@@ -4,9 +4,13 @@ import {
   ExtractDocumentTypeFromTypedRxJsonSchema,
   MigrationStrategies,
 } from 'rxdb'
+
 import { MigrationStrategy } from '../types'
 
-import { RxDocType as LastRxDocType, migrationStrategies as previousMigrationStrategies } from './v0'
+import {
+  RxDocType as LastRxDocType,
+  migrationStrategies as previousMigrationStrategies,
+} from './v0'
 
 const VERSION = 1
 
@@ -38,11 +42,11 @@ const schemaLiteral = {
       type: 'string',
     },
     popularity: {
-      type: 'number'
+      type: 'number',
     },
     rarity: {
-      type: 'number'
-    }
+      type: 'number',
+    },
   },
   required: ['set', 'slot', 'main', 'sub', 'popularity', 'rarity'],
 } as const
@@ -55,15 +59,17 @@ export type RxDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
 
 export const schema: RxJsonSchema<RxDocType> = schemaTyped
 
-const migrationStrategy: MigrationStrategy<LastRxDocType, RxDocType> = (oldDoc)  => {
+const migrationStrategy: MigrationStrategy<LastRxDocType, RxDocType> = (
+  oldDoc
+) => {
   return {
-    ...oldDoc, 
+    ...oldDoc,
     popularity: oldDoc.popularity ?? 0,
-    rarity: 0
+    rarity: 0,
   }
 }
 
 export const migrationStrategies: MigrationStrategies = {
   ...previousMigrationStrategies,
-  [VERSION]: migrationStrategy
+  [VERSION]: migrationStrategy,
 }

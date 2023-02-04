@@ -1,7 +1,12 @@
 import { hideBin } from 'yargs/helpers'
-import yargs from 'yargs/yargs';
+import yargs from 'yargs/yargs'
 
-import * as rarity from './rarity'
 import * as popularity from './popularity'
+import * as rarity from './rarity'
 
-yargs(hideBin(process.argv)).command(rarity.command).command(popularity.command).demandCommand().help().parse()
+yargs(hideBin(process.argv))
+  .command(rarity.command)
+  .command(popularity.command)
+  .demandCommand()
+  .help()
+  .parse()

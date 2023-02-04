@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 
-import {LokiFsAdapter, LokiMemoryAdapter} from 'lokijs'
+import { LokiFsAdapter, LokiMemoryAdapter } from 'lokijs'
 import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb'
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
-import { RxDBLocalDocumentsPlugin } from 'rxdb/plugins/local-documents';
+import { RxDBLocalDocumentsPlugin } from 'rxdb/plugins/local-documents'
 import { getRxStorageLoki } from 'rxdb/plugins/lokijs'
 import { RxDBMigrationPlugin } from 'rxdb/plugins/migration'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
@@ -15,8 +15,8 @@ import { Collections, collections } from './collections'
 
 addRxPlugin(RxDBDevModePlugin)
 addRxPlugin(RxDBJsonDumpPlugin)
-addRxPlugin(RxDBLocalDocumentsPlugin);
-addRxPlugin(RxDBMigrationPlugin);
+addRxPlugin(RxDBLocalDocumentsPlugin)
+addRxPlugin(RxDBMigrationPlugin)
 addRxPlugin(RxDBQueryBuilderPlugin)
 addRxPlugin(RxDBUpdatePlugin)
 

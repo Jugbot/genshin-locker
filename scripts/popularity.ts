@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 
 import { getDatabase } from '../src/automation/database'
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
+
 import { asCommand } from './types'
 
 const timeInSecondsUTC = (date: Date) => {
@@ -139,7 +140,7 @@ async function createStatistics() {
   let lastCreatedAt = currentTime
   let totalBuilds = 0
   bar.start(currentTime - lastSyncTime, 0, {
-    builds: 0
+    builds: 0,
   })
   for await (const teams of fetchLineupSimulatorBuilds()) {
     const createdAt = Number.parseInt(teams.created_at)
@@ -152,7 +153,7 @@ async function createStatistics() {
       break
     }
     bar.update(currentTime - createdAt, {
-      builds: totalBuilds
+      builds: totalBuilds,
     })
     lastCreatedAt = createdAt
     for (const team of teams.avatar_group) {
@@ -209,12 +210,12 @@ async function createStatistics() {
   process.exit()
 }
 
-
 export const command = asCommand({
   command: 'popularity',
-  describe: 'Scrapes character loadout data from the lineup simulator: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html',
+  describe:
+    'Scrapes character loadout data from the lineup simulator: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html',
   builder: {},
   handler: () => {
     createStatistics()
-  }
+  },
 })
