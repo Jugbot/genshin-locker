@@ -1,4 +1,4 @@
-import { getDatabase } from '../database'
+import { getDatabase } from '../scoring/database'
 import { Artifact, MainStatKey, SlotKey, SubStatKey } from '../types'
 
 export const mainStatDistribution: Record<

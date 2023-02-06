@@ -1,7 +1,7 @@
 import { SingleBar } from 'cli-progress'
 import fetch from 'node-fetch'
 
-import { getDatabase } from '../src/automation/database'
+import { getDatabase } from '../src/automation/scoring/database'
 import { getArtifactSet, getStatKey } from '../src/automation/util/scraper'
 
 import { asCommand } from './types'

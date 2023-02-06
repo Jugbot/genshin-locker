@@ -2,37 +2,15 @@ import { mainWindow } from '..'
 import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
-import { RxDocType } from './database/collections/default'
 import { ScreenMap } from './landmarks/landmarks'
 import { Navigator } from './navigator'
+import { calculate } from './scoring/logic'
+import { Logic, Scoring, Bucket } from './scoring/types'
 import { Artifact } from './types'
 import { GBRAtoRGB } from './util/image'
-import { calculate } from './util/targetScore'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
-
-export type ScoringKey = Exclude<
-  keyof RxDocType,
-  'id' | 'set' | 'slot' | 'main' | 'sub'
->
-export type Scoring = {
-  type: ScoringKey
-  percentile: number
-}
-
-export type BinaryOperation = 'AND' | 'OR'
-export type BinaryLogic<V> = [Logic<V>, BinaryOperation, Logic<V>]
-export type UnaryOperation = 'NOT'
-export type UnaryLogic<V> = [UnaryOperation, Logic<V>]
-export type Logic<V> = BinaryLogic<V> | UnaryLogic<V> | [V]
-
-export type Bucket = {
-  set: boolean
-  slot: boolean
-  main: boolean
-  sub: boolean
-}
 
 export type RoutineOptions = {
   logic: Logic<Scoring>

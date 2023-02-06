@@ -1,4 +1,4 @@
-import { getDatabase } from '../src/automation/database'
+import { getDatabase } from '../src/automation/scoring/database'
 import {
   MainStatKey,
   SetKey,

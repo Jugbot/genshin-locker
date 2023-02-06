@@ -1,14 +1,13 @@
-import { getDatabase } from '../database'
-import { Bucket, Logic, Scoring, ScoringKey } from '../routines'
 import { Artifact } from '../types'
-
 import {
   percentileScore,
-  artifactPopularity,
-  artifactRarity,
-} from './statistics'
+} from '../util/statistics'
 
-const cache: Record<string, Record<ScoringKey, number[]>> = {}
+import { getDatabase } from './database'
+import { scores, ScoreType } from './scores'
+import { Bucket, Logic, Scoring } from './types'
+
+const cache: Record<string, Record<ScoreType, number[]>> = {}
 async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
   const db = await getDatabase()
 
@@ -21,28 +20,25 @@ async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
       sub: bucket.sub ? substat.key : undefined,
     }
     const cacheKey = Object.values(selector).join('|')
-    let data: Record<ScoringKey, number[]> | undefined = cache[cacheKey]
+    let data: Record<ScoreType, number[]> | undefined = cache[cacheKey]
     if (!data) {
-      data = {
-        rarity: [],
-        popularity: [],
+      const rows = await db.default.find({ selector }).exec()
+      data = {} as Record<ScoreType, number[]>
+      for (const scoreType of Object.keys(scores) as ScoreType[]) {
+        data[scoreType] = []
+        for (const doc of rows) {
+          data[scoreType].push(doc[scoreType])
+        }
+        data[scoreType].sort()
       }
-      for (const doc of await db.default.find({ selector }).exec()) {
-        data.rarity.push(doc.rarity)
-        data.popularity.push(doc.popularity)
-      }
-      data.rarity.sort()
-      data.popularity.sort()
       cache[cacheKey] = data
     }
     const { type, percentile } = scoring
-    const scoringImpl = {
-      popularity: artifactPopularity,
-      rarity: artifactRarity,
-    }
     return (
-      percentileScore(await scoringImpl[type](artifact), data[type]) >=
-      percentile
+      percentileScore(
+        await scores[type].implementation(artifact),
+        data[type]
+      ) >= percentile
     )
   }
 

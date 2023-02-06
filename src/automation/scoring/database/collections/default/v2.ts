@@ -6,6 +6,7 @@ import {
   RxCollectionCreator,
 } from 'rxdb'
 
+import { dbFields, ScoreType } from '../../../scores'
 import { MigrationStrategy } from '../types'
 
 import {
@@ -42,18 +43,15 @@ const schemaLiteral = {
     sub: {
       type: 'string',
     },
-    popularity: {
-      type: 'number',
-      minimum: 0,
-      multipleOf: 1,
-    },
-    rarity: {
-      type: 'number',
-      minimum: 0,
-      maximum: 1,
-    },
+    ...dbFields,
   },
-  required: ['set', 'slot', 'main', 'sub', 'popularity', 'rarity'],
+  required: [
+    'set',
+    'slot',
+    'main',
+    'sub',
+    ...(Object.keys(dbFields) as ScoreType[]),
+  ],
 } as const
 
 const schemaTyped = toTypedRxJsonSchema(schemaLiteral)
