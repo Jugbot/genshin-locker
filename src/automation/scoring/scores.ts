@@ -3,7 +3,6 @@ import { RxJsonSchema } from 'rxdb'
 import { Artifact } from '../types'
 import { artifactPopularity, artifactRarity } from '../util/statistics'
 
-
 type TopLevelProperty = RxJsonSchema<never>['properties'] extends {
   [k: string]: infer U
 }

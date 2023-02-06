@@ -1,7 +1,5 @@
 import { Artifact } from '../types'
-import {
-  percentileScore,
-} from '../util/statistics'
+import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
 import { scores, ScoreType } from './scores'
