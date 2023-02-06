@@ -166,7 +166,7 @@ export async function artifactPopularity(artifact: Artifact) {
  * @param scores array of arbitrary score values, unsorted is fine.
  * @returns the interpolated score at the target percentile
  */
-function percentileScore(percentile: number, scores: number[]) {
+export function percentileScore(percentile: number, scores: number[]) {
   const sorted = scores.slice().sort((a, b) => a - b)
   const targetIndex = (sorted.length - 1) * percentile
   const targetLow = Math.floor(targetIndex)
@@ -177,71 +177,6 @@ function percentileScore(percentile: number, scores: number[]) {
     sorted[targetHigh] * targetRemainder +
     sorted[targetLow] * (1 - targetRemainder)
   )
-}
-
-/**
- * Creates a set of all possible buckets based on what properties are enabled in options, gathers the total score for that bucket, and then saves the calculated percentile score in a new table, basically acting as a preloaded cache. (see `getTargetScore`)
- * @param percentile The percent of the total score in that bucket that an artifact must meet in order to be unlocked.
- * @param options The properties to include in the bucket. For example anabling the set and slot would generate a bucket for each possible combination of artifact set and slot.
- */
-export async function setTargetScores(
-  percentile: number,
-  options: { set: boolean; slot: boolean; main: boolean; sub: boolean }
-) {
-  const db = await getDatabase()
-  await db.targetscore.find({}).remove()
-  const docs = await db.default.find({}).exec()
-  const aggregates: Record<string, number[]> = {}
-  for (const doc of docs) {
-    const keys = Object.entries(options).map(([key, val]) =>
-      val ? doc[key as keyof typeof options] : ''
-    )
-    const key = keys.join('|')
-    if (!aggregates[key]) aggregates[key] = []
-    aggregates[key].push(doc.popularity ?? 0)
-  }
-
-  // console.log(aggregates)
-
-  await Promise.all(
-    Object.entries(aggregates).map(async ([key, val]) => {
-      const [set, slot, main, sub] = key.split('|')
-      db.targetscore.insert({
-        set,
-        slot,
-        main,
-        sub,
-        score: percentileScore(percentile, val),
-      })
-    })
-  )
-}
-
-/**
- * Fetches the target score from the preloaded table made in `setTargetScores`
- * @param artifact The artifact that contains the keys that specify the bucket.
- * @param mask The proprties on Artifact that compose the bucket.
- * @returns Promise of the target score an artifact must reach.
- */
-export async function getTargetScore(
-  artifact: Artifact,
-  mask: { set: boolean; slot: boolean; main: boolean; sub: boolean }
-) {
-  const db = await getDatabase()
-  const query = {
-    set: mask.set ? artifact.setKey : '',
-    slot: mask.slot ? artifact.slotKey : '',
-    main: mask.main ? artifact.mainStatKey : '',
-    sub: mask.sub
-      ? {
-          $in: artifact.substats.map((stat) => stat.key),
-        }
-      : '',
-  }
-  const scores = await db.targetscore.find({ selector: query }).exec()
-  if (!scores.length) return 0
-  // return an average of target scores in the case of substats being a bucket identifier
-  return scores.reduce((acc, val) => acc + val.score, 0) / scores.length
 }
 
 export function* permutations<T>(arr: T[], size = arr.length) {

@@ -17,10 +17,7 @@ export type LogMode = 'info' | 'warn' | 'error'
 export type EventPayload = {
   [Channel.START]: [void, [options: RoutineOptions]]
   [Channel.PROGRESS]: [void, [progress: RoutineStatus]]
-  [Channel.ARTIFACT]: [
-    void,
-    [artifact: Artifact, score: number, targetScore: number]
-  ]
+  [Channel.ARTIFACT]: [void, [artifact: Artifact, shouldLock: boolean]]
   [Channel.LOG]: [void, [mode: LogMode, text: string]]
 }
 

@@ -2,29 +2,49 @@ import { mainWindow } from '..'
 import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
+import { RxDocType } from './database/collections/default'
 import { ScreenMap } from './landmarks/landmarks'
 import { Navigator } from './navigator'
 import { Artifact } from './types'
 import { GBRAtoRGB } from './util/image'
-import {
-  artifactPopularity,
-  getTargetScore,
-  setTargetScores,
-} from './util/statistics'
+import { calculate } from './util/targetScore'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
-export type RoutineOptions = {
+export type ScoringKey = Exclude<
+  keyof RxDocType,
+  'id' | 'set' | 'slot' | 'main' | 'sub'
+>
+export type Scoring = {
+  type: ScoringKey
   percentile: number
-  targetAttributes: { set: boolean; slot: boolean; main: boolean; sub: boolean }
+}
+
+export type BinaryOperation = 'AND' | 'OR'
+export type BinaryLogic<V> = [Logic<V>, BinaryOperation, Logic<V>]
+export type UnaryOperation = 'NOT'
+export type UnaryLogic<V> = [UnaryOperation, Logic<V>]
+export type Logic<V> = BinaryLogic<V> | UnaryLogic<V> | [V]
+
+export type Bucket = {
+  set: boolean
+  slot: boolean
+  main: boolean
+  sub: boolean
+}
+
+export type RoutineOptions = {
+  logic: Logic<Scoring>
+  targetAttributes: Bucket
+  lockWhileScanning: boolean
 }
 
 export async function readArtifacts({
-  percentile,
+  logic,
   targetAttributes,
+  lockWhileScanning,
 }: RoutineOptions) {
-  setTargetScores(percentile, targetAttributes)
   const navigator = new Navigator()
   navigator.gwindow.grab()
   await sleep(200)
@@ -67,10 +87,12 @@ export async function readArtifacts({
         )
         totalArtifacts.push(artifactPromise)
         artifactPromise.then(async (artifact) => {
-          const targetScore = await getTargetScore(artifact, targetAttributes)
-          const artifactScore = await artifactPopularity(artifact)
-          const shouldBeLocked = artifactScore >= targetScore
-          if (shouldBeLocked !== artifact.lock) {
+          const shouldBeLocked = await calculate(
+            artifact,
+            logic,
+            targetAttributes
+          )
+          if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
             const lockArtifact = async () => {
               // navigate to the artifact we want to lock again
               click()
@@ -84,8 +106,7 @@ export async function readArtifacts({
             mainWindow.webContents,
             Channel.ARTIFACT,
             artifact,
-            artifactScore,
-            targetScore
+            shouldBeLocked
           )
         })
       })

@@ -28,7 +28,7 @@ import { ArtifactCard, StandardSelect } from './components'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
-type ArtifactData = { artifact: Artifact; score: number; targetScore: number }
+type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
 enum ScoreMethod {
   POPULARITY = 'Popularity',
   RARITY = 'Rarity',
@@ -42,13 +42,14 @@ const App: React.FC = () => {
     RoutineStatus | Record<string, never>
   >({})
   const [routineOptions, setRoutineOptions] = useState<RoutineOptions>({
-    percentile: 0.2,
+    logic: [{ type: 'rarity', percentile: 0.1 }],
     targetAttributes: {
       set: true,
       slot: true,
       main: false,
       sub: false,
     },
+    lockWhileScanning: false,
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
@@ -57,8 +58,8 @@ const App: React.FC = () => {
   )
 
   useEffect(() => {
-    return api.on(Channel.ARTIFACT, (artifact, score, targetScore) => {
-      setArtifacts((a) => [...a, { artifact, score, targetScore }])
+    return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
+      setArtifacts((a) => [...a, { artifact, shouldBeLocked }])
     })
   }, [])
 
@@ -81,7 +82,8 @@ const App: React.FC = () => {
   }
 
   const sortedArtifacts = React.useMemo(
-    () => artifacts.slice().sort((a, b) => a.score - b.score),
+    // TODO: Sort controls
+    () => artifacts.slice().sort(),
     [artifacts]
   )
 
@@ -135,29 +137,6 @@ const App: React.FC = () => {
               overflowY: 'auto',
             }}
           >
-            <Text>Minimum Percentile</Text>
-            <Stack.Horizontal>
-              <Slider.Root
-                value={[routineOptions.percentile]}
-                onValueChange={(e) =>
-                  setRoutineOptions((options) => ({
-                    ...options,
-                    percentile: e[0],
-                  }))
-                }
-                max={1}
-                step={0.01}
-                css={{ flexGrow: 1 }}
-              >
-                <Slider.Track>
-                  <Slider.Range />
-                </Slider.Track>
-                <Slider.Thumb />
-              </Slider.Root>
-              <Heading variant="subheading">
-                {routineOptions.percentile.toFixed(2)}
-              </Heading>
-            </Stack.Horizontal>
             <Text>Comparison Buckets</Text>
             {Object.entries(routineOptions.targetAttributes).map(
               ([key, value]) => (
@@ -200,6 +179,27 @@ const App: React.FC = () => {
               size="small"
               css={{ width: '100%' }}
             />
+            <Text>Minimum Percentile</Text>
+            <Stack.Horizontal>
+              <Slider.Root
+                value={[0.02]}
+                onValueChange={(e) =>
+                  setRoutineOptions((options) => ({
+                    ...options,
+                    percentile: e[0],
+                  }))
+                }
+                max={1}
+                step={0.01}
+                css={{ flexGrow: 1 }}
+              >
+                <Slider.Track>
+                  <Slider.Range />
+                </Slider.Track>
+                <Slider.Thumb />
+              </Slider.Root>
+              <Heading variant="subheading">{(0.02).toFixed(2)}</Heading>
+            </Stack.Horizontal>
           </Stack.Vertical>
           <Stack.Vertical
             css={{
@@ -232,12 +232,12 @@ const App: React.FC = () => {
                     gap: '$space3',
                   }}
                 >
-                  {sortedArtifacts.map(({ artifact, score, targetScore }) => (
+                  {sortedArtifacts.map(({ artifact }) => (
                     <ArtifactCard
                       key={artifact.id}
                       artifact={artifact}
-                      score={score}
-                      targetScore={targetScore}
+                      score={0}
+                      targetScore={0}
                       css={{
                         animation: '$fadeIn',
                       }}

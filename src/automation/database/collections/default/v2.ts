@@ -3,6 +3,7 @@ import {
   toTypedRxJsonSchema,
   ExtractDocumentTypeFromTypedRxJsonSchema,
   MigrationStrategies,
+  RxCollectionCreator,
 } from 'rxdb'
 
 import { MigrationStrategy } from '../types'
@@ -74,4 +75,10 @@ const migrationStrategy: MigrationStrategy<LastRxDocType, RxDocType> = (
 export const migrationStrategies: MigrationStrategies = {
   ...previousMigrationStrategies,
   [VERSION]: migrationStrategy,
+}
+
+export const collection: RxCollectionCreator<RxDocType> = {
+  schema,
+  migrationStrategies,
+  localDocuments: true,
 }
