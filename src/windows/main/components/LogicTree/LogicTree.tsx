@@ -8,6 +8,7 @@ import {
   UnaryLogic,
 } from '../../../../automation/scoring/types'
 import { Stack, Text } from '../../../../components'
+import { styled } from '../../../../stitches.config'
 import { ControlledState } from '../../../reactUtils'
 import { StandardSelect } from '../StandardSelect'
 
@@ -81,79 +82,86 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
         size="small"
         css={{ width: '100%' }}
       />
-      {(() => {
-        switch (value.length) {
-          case BranchType.LEAF: {
-            const [score] = value
-            return (
-              <ScoringComponent
-                value={score}
-                onChange={(next) =>
-                  onChange((old) => {
-                    if (old.length === 1) {
-                      const [oldScore] = old
-                      return [next(oldScore)]
+      <BranchWrapper>
+        {(() => {
+          switch (value.length) {
+            case BranchType.LEAF: {
+              const [score] = value
+              return (
+                <ScoringComponent
+                  value={score}
+                  onChange={(next) =>
+                    onChange((old) => {
+                      if (old.length === 1) {
+                        const [oldScore] = old
+                        return [next(oldScore)]
+                      }
+                      return old
+                    })
+                  }
+                />
+              )
+            }
+            case BranchType.UNARY: {
+              const [operation, subtree] = value
+              return (
+                <>
+                  {operation}
+                  <LogicTree
+                    value={subtree}
+                    onChange={(next) =>
+                      onChange((old) => {
+                        if (old.length === 2) {
+                          const [oldOperation, oldSubtree] = old
+                          return [oldOperation, next(oldSubtree)]
+                        }
+                        return old
+                      })
                     }
-                    return old
-                  })
-                }
-              />
-            )
+                  />
+                </>
+              )
+            }
+            case BranchType.BINARY: {
+              const [subtreeA, operation, subtreeB] = value
+              return (
+                <>
+                  <LogicTree
+                    value={subtreeA}
+                    onChange={(next) =>
+                      onChange((old) => {
+                        if (old.length === 3) {
+                          const [oldSubtreeA, oldOperation, oldSubtreeB] = old
+                          return [next(oldSubtreeA), oldOperation, oldSubtreeB]
+                        }
+                        return old
+                      })
+                    }
+                  />
+                  {operation}
+                  <LogicTree
+                    value={subtreeB}
+                    onChange={(next) =>
+                      onChange((old) => {
+                        if (old.length === 3) {
+                          const [oldSubtreeA, oldOperation, oldSubtreeB] = old
+                          return [oldSubtreeA, oldOperation, next(oldSubtreeB)]
+                        }
+                        return old
+                      })
+                    }
+                  />
+                </>
+              )
+            }
           }
-          case BranchType.UNARY: {
-            const [operation, subtree] = value
-            return (
-              <>
-                {operation}
-                <LogicTree
-                  value={subtree}
-                  onChange={(next) =>
-                    onChange((old) => {
-                      if (old.length === 2) {
-                        const [oldOperation, oldSubtree] = old
-                        return [oldOperation, next(oldSubtree)]
-                      }
-                      return old
-                    })
-                  }
-                />
-              </>
-            )
-          }
-          case BranchType.BINARY: {
-            const [subtreeA, operation, subtreeB] = value
-            return (
-              <>
-                <LogicTree
-                  value={subtreeA}
-                  onChange={(next) =>
-                    onChange((old) => {
-                      if (old.length === 3) {
-                        const [oldSubtreeA, oldOperation, oldSubtreeB] = old
-                        return [next(oldSubtreeA), oldOperation, oldSubtreeB]
-                      }
-                      return old
-                    })
-                  }
-                />
-                {operation}
-                <LogicTree
-                  value={subtreeB}
-                  onChange={(next) =>
-                    onChange((old) => {
-                      if (old.length === 3) {
-                        const [oldSubtreeA, oldOperation, oldSubtreeB] = old
-                        return [oldSubtreeA, oldOperation, next(oldSubtreeB)]
-                      }
-                      return old
-                    })
-                  }
-                />
-              </>
-            )
-          }
-        }
-      })()}
+        })()}
+      </BranchWrapper>
     </Stack.Vertical>
   )
 }
+
+const BranchWrapper = styled(Stack.Vertical, {
+  borderLeft: '1px solid $colors$sand8',
+  pl: '$space2',
+})

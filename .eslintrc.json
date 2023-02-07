@@ -67,6 +67,8 @@
       }
     ],
     // Import cycle detection (expensive)
-    "import/no-cycle": ["warn", { "maxDepth": 10 }]
+    "import/no-cycle": ["warn", { "maxDepth": 10 }],
+    // Buggy
+    "react/prop-types": "off"
   }
 }
