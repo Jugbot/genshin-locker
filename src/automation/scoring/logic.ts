@@ -2,10 +2,10 @@ import { Artifact } from '../types'
 import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
-import { scores, ScoreType } from './scores'
+import { scores, Scores } from './scores'
 import { Bucket, Logic, Scoring } from './types'
 
-const cache: Record<string, Record<ScoreType, number[]>> = {}
+const cache: Record<string, Record<Scores, number[]>> = {}
 async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
   const db = await getDatabase()
 
@@ -18,11 +18,11 @@ async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
       sub: bucket.sub ? substat.key : undefined,
     }
     const cacheKey = Object.values(selector).join('|')
-    let data: Record<ScoreType, number[]> | undefined = cache[cacheKey]
+    let data: Record<Scores, number[]> | undefined = cache[cacheKey]
     if (!data) {
       const rows = await db.default.find({ selector }).exec()
-      data = {} as Record<ScoreType, number[]>
-      for (const scoreType of Object.keys(scores) as ScoreType[]) {
+      data = {} as Record<Scores, number[]>
+      for (const scoreType of Object.keys(scores) as Scores[]) {
         data[scoreType] = []
         for (const doc of rows) {
           data[scoreType].push(doc[scoreType])

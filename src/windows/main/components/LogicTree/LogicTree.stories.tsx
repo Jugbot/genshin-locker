@@ -1,6 +1,7 @@
-import { ComponentMeta, ComponentStoryFn } from "@storybook/react"
+import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
+import React from 'react'
 
-import { LogicTree } from "./LogicTree"
+import { LogicTree } from './LogicTree'
 
 export default {
   title: 'LogicTree',
@@ -9,20 +10,21 @@ export default {
     layout: 'centered',
   },
   argTypes: {
-    onChange: {actions: 'onChange'}
-  }
+    onChange: { action: 'onChange' },
+  },
 } as ComponentMeta<typeof LogicTree>
 
-const Template: ComponentStoryFn<typeof LogicTree> = (args) => (
-  <LogicTree {...args} />
+const Template: ComponentStoryFn<typeof LogicTree> = (props) => (
+  <LogicTree {...props} />
 )
 
 export const FirstStory = Template.bind({})
 
 FirstStory.args = {
-  value: [{
-    type: 'popularity',
-    percentile: 0.20
-  }],
-  onChange: console.log
+  value: [
+    {
+      type: 'popularity',
+      percentile: 0.2,
+    },
+  ],
 }

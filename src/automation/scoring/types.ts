@@ -1,14 +1,14 @@
-import { ScoreType } from './scores'
+import { Scores } from './scores'
 
 export type Scoring = {
-  type: ScoreType
+  type: Scores
   percentile: number
 }
 export const binaryOperations = ['AND', 'OR'] as const
-export type BinaryOperation = typeof binaryOperations[number]
+export type BinaryOperation = (typeof binaryOperations)[number]
 export type BinaryLogic<V> = [Logic<V>, BinaryOperation, Logic<V>]
 export const unaryOperations = ['NOT'] as const
-export type UnaryOperation = typeof unaryOperations[number]
+export type UnaryOperation = (typeof unaryOperations)[number]
 export type UnaryLogic<V> = [UnaryOperation, Logic<V>]
 // export const allOperations = [...unaryOperations, ...binaryOperations] as const
 // export type Operation = typeof allOperations[number]

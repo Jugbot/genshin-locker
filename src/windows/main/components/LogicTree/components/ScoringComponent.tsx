@@ -1,23 +1,17 @@
 import React from 'react'
-import { Optional } from 'utility-types'
 
 import { scoreTypes } from '../../../../../automation/scoring/scores'
-import {
-  BinaryLogic,
-  BinaryOperation,
-  LeafLogic,
-  Logic,
-  Scoring,
-  UnaryLogic,
-  UnaryOperation,
-} from '../../../../../automation/scoring/types'
+import { Scoring } from '../../../../../automation/scoring/types'
 import { Stack, Heading, Text, Slider } from '../../../../../components'
-import { StandardSelect } from '../../StandardSelect'
 import { ControlledState } from '../../../../reactUtils'
+import { StandardSelect } from '../../StandardSelect'
 
 type ScoringComponentProps = ControlledState<Scoring>
 
-export const ScoringComponent = ({ value, onChange }: ScoringComponentProps) => {
+export const ScoringComponent = ({
+  value,
+  onChange,
+}: ScoringComponentProps) => {
   return (
     <Stack.Vertical>
       <Text>Scoring Method</Text>

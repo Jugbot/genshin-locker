@@ -30,10 +30,10 @@ export const StandardSelect = <T extends string>({
   }, [])
 
   return (
-    <Select.Root value={value} onValueChange={onValueChange} >
+    <Select.Root value={value} onValueChange={onValueChange}>
       <Select.Trigger {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{value ?? placeholder ?? "(none)"}</Text>
+          <Text color="inherit">{value ?? placeholder ?? '(none)'}</Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>

@@ -6,7 +6,6 @@ import {
   RxCollectionCreator,
 } from 'rxdb'
 
-import { dbFields, ScoreType } from '../../../scores'
 import { MigrationStrategy } from '../types'
 
 import {
@@ -15,6 +14,22 @@ import {
 } from './v1'
 
 const VERSION = 2
+
+const scoreProperties = {
+  rarity: {
+    type: 'number',
+    minimum: 0,
+    maximum: 1,
+  },
+  popularity: {
+    type: 'number',
+    minimum: 0,
+    multipleOf: 1,
+  },
+} as const
+
+export type Scores = keyof typeof scoreProperties
+export const scoreTypes = Object.keys(scoreProperties) as Scores[]
 
 const schemaLiteral = {
   title: 'precalculation schema',
@@ -43,16 +58,16 @@ const schemaLiteral = {
     sub: {
       type: 'string',
     },
-    ...dbFields,
+    ...scoreProperties,
   },
   required: [
     'set',
     'slot',
     'main',
     'sub',
-    ...(Object.keys(dbFields) as ScoreType[]),
+    ...(Object.keys(scoreProperties) as Scores[]),
   ],
-} as const
+} as const // satisfies Parameters<typeof toTypedRxJsonSchema>[0]
 
 const schemaTyped = toTypedRxJsonSchema(schemaLiteral)
 

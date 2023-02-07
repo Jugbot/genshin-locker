@@ -8,11 +8,10 @@ import {
   UnaryLogic,
 } from '../../../../automation/scoring/types'
 import { Stack, Text } from '../../../../components'
+import { ControlledState } from '../../../reactUtils'
 import { StandardSelect } from '../StandardSelect'
 
 import { ScoringComponent } from './components/ScoringComponent'
-import { ControlledState } from '../../../reactUtils'
-
 
 const leafDefault: LeafLogic<Scoring> = [
   {
@@ -131,11 +130,7 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
                     onChange((old) => {
                       if (old.length === 3) {
                         const [oldSubtreeA, oldOperation, oldSubtreeB] = old
-                        return [
-                          next(oldSubtreeA),
-                          oldOperation,
-                          oldSubtreeB,
-                        ]
+                        return [next(oldSubtreeA), oldOperation, oldSubtreeB]
                       }
                       return old
                     })
@@ -148,11 +143,7 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
                     onChange((old) => {
                       if (old.length === 3) {
                         const [oldSubtreeA, oldOperation, oldSubtreeB] = old
-                        return [
-                          oldSubtreeA,
-                          oldOperation,
-                          next(oldSubtreeB),
-                        ]
+                        return [oldSubtreeA, oldOperation, next(oldSubtreeB)]
                       }
                       return old
                     })

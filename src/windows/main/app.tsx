@@ -15,7 +15,6 @@ import {
   ProgressBar,
   ResizeHandle,
   ScrollArea,
-  Slider,
   Text,
   TextArea,
   Stack,
@@ -24,9 +23,9 @@ import {
 import { loadGlobalStyles } from '../../globalCss'
 
 import { api } from './api'
-import { ArtifactCard, StandardSelect } from './components'
-import { useThemeClass } from './hooks'
+import { ArtifactCard } from './components'
 import { LogicTree } from './components/LogicTree'
+import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
