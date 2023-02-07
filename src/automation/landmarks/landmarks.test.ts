@@ -1,4 +1,5 @@
-import { load, ScreenMap } from './landmarks'
+import { load } from './landmarks'
+import { ScreenMap } from './types'
 
 describe('landmarks', () => {
   it('loads maps', () => {

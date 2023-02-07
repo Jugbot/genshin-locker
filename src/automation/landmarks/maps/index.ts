@@ -1,4 +1,4 @@
-import { ScreenMap } from '../landmarks'
+import type { ScreenMap } from '../types'
 
 import a43x18 from './43x18'
 

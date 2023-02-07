@@ -2,10 +2,7 @@ import { XMLParser } from 'fast-xml-parser'
 import { Region } from 'sharp'
 
 import maps from './maps'
-
-export enum ScreenMap {
-  ARTIFACTS = 'artifacts',
-}
+import { ScreenMap } from './types'
 
 function reducedFraction(numerator: number, denominator: number) {
   let a = numerator

@@ -2,7 +2,7 @@ import { mainWindow } from '..'
 import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
-import { ScreenMap } from './landmarks/landmarks'
+import { ScreenMap } from './landmarks/types'
 import { Navigator } from './navigator'
 import { calculate } from './scoring/logic'
 import { Logic, Scoring, Bucket } from './scoring/types'

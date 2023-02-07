@@ -40,6 +40,8 @@ export const scores = {
 export type Scores = typeof scores
 export type ScoreType = keyof Scores
 
+export const scoreTypes = Object.keys(scores) as ScoreType[]
+
 export const dbFields = Object.fromEntries(
   Object.entries(scores).map(([key, val]) => [key, val.dbSchema])
 ) as { [key in keyof Scores]: Scores[key]['dbSchema'] }

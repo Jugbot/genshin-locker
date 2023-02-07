@@ -6,7 +6,7 @@ import { Sharp } from 'sharp'
 
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
 
-import { Landmarks, ScreenMap, load } from './landmarks/landmarks'
+import { Landmarks, ScreenMap, load } from './landmarks'
 import { Artifact } from './types'
 import {
   getArtifactSet,

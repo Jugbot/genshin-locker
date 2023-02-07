@@ -1,4 +1,4 @@
-import { ScreenMap } from '../../landmarks'
+import { ScreenMap } from '../../types'
 
 export default {
   artifacts: require('./artifacts.svg'),

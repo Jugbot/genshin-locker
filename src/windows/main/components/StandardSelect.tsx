@@ -9,8 +9,9 @@ import { Select, Text } from '../../../components'
 
 interface StandardSelectProps<T>
   extends React.ComponentProps<typeof Select.Trigger> {
-  options: T[]
-  value: string
+  options: readonly T[]
+  value?: string
+  placeholder?: string
   onValueChange: (value: T) => void
 }
 
@@ -18,6 +19,7 @@ export const StandardSelect = <T extends string>({
   options,
   onValueChange,
   value,
+  placeholder,
   ...props
 }: StandardSelectProps<T>) => {
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null)
@@ -28,10 +30,10 @@ export const StandardSelect = <T extends string>({
   }, [])
 
   return (
-    <Select.Root value={value} onValueChange={onValueChange}>
+    <Select.Root value={value} onValueChange={onValueChange} >
       <Select.Trigger {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{value}</Text>
+          <Text color="inherit">{value ?? placeholder ?? "(none)"}</Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>

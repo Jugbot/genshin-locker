@@ -1,6 +1,3 @@
-import fs from 'fs'
-import path from 'path'
-
 import { LokiFsAdapter, LokiMemoryAdapter } from 'lokijs'
 import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb'
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
@@ -33,12 +30,4 @@ export async function getDatabase(importData = true) {
   await db.addCollections(collections)
 
   return db
-}
-
-export async function exportDatabase() {
-  const data = await db.exportJSON()
-  fs.writeFileSync(
-    path.join(__dirname, 'data.json'),
-    JSON.stringify(data, null, 2)
-  )
 }

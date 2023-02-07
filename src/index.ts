@@ -26,6 +26,7 @@ if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
+// TODO: proper global access
 export let mainWindow: Electron.BrowserWindow
 const createWindow = (): void => {
   // Create the browser window.

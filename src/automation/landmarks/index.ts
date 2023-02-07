@@ -1,1 +1,2 @@
-export { Landmarks } from './landmarks'
+export { Landmarks, load } from './landmarks'
+export {ScreenMap} from './types'

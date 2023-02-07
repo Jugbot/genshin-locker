@@ -26,13 +26,10 @@ import { loadGlobalStyles } from '../../globalCss'
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
 import { useThemeClass } from './hooks'
+import { LogicTree } from './components/LogicTree'
 
 export type RoutineStatus = { max: number; current: number }
 type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
-enum ScoreMethod {
-  POPULARITY = 'Popularity',
-  RARITY = 'Rarity',
-}
 
 const App: React.FC = () => {
   loadGlobalStyles()
@@ -53,9 +50,6 @@ const App: React.FC = () => {
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
-  const [dropdownValue, setDropdownValue] = useState<ScoreMethod>(
-    ScoreMethod.POPULARITY
-  )
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
@@ -170,36 +164,15 @@ const App: React.FC = () => {
                 </Stack.Horizontal>
               )
             )}
-            <Text>Scoring Method</Text>
-            <StandardSelect
-              value={dropdownValue}
-              options={Object.values(ScoreMethod) as ScoreMethod[]}
-              onValueChange={setDropdownValue}
-              variant="subdued"
-              size="small"
-              css={{ width: '100%' }}
+            <LogicTree
+              value={routineOptions.logic}
+              onChange={(logic) =>
+                setRoutineOptions((prev) => ({
+                  ...prev,
+                  logic: logic(prev.logic),
+                }))
+              }
             />
-            <Text>Minimum Percentile</Text>
-            <Stack.Horizontal>
-              <Slider.Root
-                value={[0.02]}
-                onValueChange={(e) =>
-                  setRoutineOptions((options) => ({
-                    ...options,
-                    percentile: e[0],
-                  }))
-                }
-                max={1}
-                step={0.01}
-                css={{ flexGrow: 1 }}
-              >
-                <Slider.Track>
-                  <Slider.Range />
-                </Slider.Track>
-                <Slider.Thumb />
-              </Slider.Root>
-              <Heading variant="subheading">{(0.02).toFixed(2)}</Heading>
-            </Stack.Horizontal>
           </Stack.Vertical>
           <Stack.Vertical
             css={{
