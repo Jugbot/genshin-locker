@@ -17,6 +17,8 @@ import {
   purple,
   blue,
   slate,
+  redDark,
+  red,
 } from '@radix-ui/colors'
 
 import { fadeIn } from './keyframes'
@@ -36,12 +38,14 @@ const theme = {
   colors: {
     ...sandDark,
     ...sandDarkA,
-    ...yellowDark,
 
+    ...redDark,
     ...orangeDark,
-    ...purpleDark,
-    ...blueDark,
+    ...yellowDark,
     ...greenDark,
+    ...blueDark,
+    ...purpleDark,
+
     ...slateDark,
 
     ...blackA,
@@ -173,6 +177,7 @@ export const light = {
     ...sandA,
     ...yellow,
     ...orange,
+    ...red,
     ...purple,
     ...blue,
     ...green,
@@ -188,6 +193,7 @@ export const dark = {
     ...sandDarkA,
     ...yellowDark,
     ...orangeDark,
+    ...redDark,
     ...purpleDark,
     ...blueDark,
     ...greenDark,

@@ -2,13 +2,14 @@ import React from 'react'
 
 import {
   BinaryLogic,
+  binaryOperations,
   LeafLogic,
   Logic,
   Scoring,
   UnaryLogic,
+  unaryOperations,
 } from '../../../../automation/scoring/types'
-import { Stack, Text } from '../../../../components'
-import { styled } from '../../../../stitches.config'
+import { Stack } from '../../../../components'
 import { ControlledState } from '../../../reactUtils'
 import { StandardSelect } from '../StandardSelect'
 
@@ -45,9 +46,11 @@ const binaryDefault: BinaryLogic<Scoring> = [
   ],
 ]
 
-type LogicTreeProps = ControlledState<Logic<Scoring>>
+interface LogicTreeProps extends ControlledState<Logic<Scoring>> {
+  depth?: number
+}
 
-export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
+export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
   const [valueCache, setValueCache] = React.useState<
     [LeafLogic<Scoring>, UnaryLogic<Scoring>, BinaryLogic<Scoring>]
   >([leafDefault, unaryDefault, binaryDefault])
@@ -58,7 +61,11 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
     BINARY = 3,
   }
 
-  const operationOptions = ['Value', 'Unary Operation', 'Binary Operation']
+  const branchOptions = [
+    'Score Threshold',
+    'Unary Operation',
+    'Binary Operation',
+  ]
 
   React.useEffect(() => {
     setValueCache((val) => [
@@ -69,20 +76,18 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
   }, [value])
 
   return (
-    <Stack.Vertical>
-      <Text>Operation</Text>
-      <StandardSelect
-        value={operationOptions[value.length - 1]}
-        options={operationOptions}
-        onValueChange={(val: string) => {
-          const index = operationOptions.findIndex((other) => other === val)
-          onChange(() => valueCache[index])
-        }}
-        variant="subdued"
-        size="small"
-        css={{ width: '100%' }}
-      />
-      <BranchWrapper>
+    <BranchWrapper depth={depth}>
+      <Stack.Vertical>
+        <StandardSelect
+          value={branchOptions[value.length - 1]}
+          options={branchOptions}
+          onValueChange={(val: string) => {
+            const index = branchOptions.findIndex((other) => other === val)
+            onChange(() => valueCache[index])
+          }}
+          variant="transparent"
+          size="text"
+        />
         {(() => {
           switch (value.length) {
             case BranchType.LEAF: {
@@ -106,7 +111,21 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
               const [operation, subtree] = value
               return (
                 <>
-                  {operation}
+                  <StandardSelect
+                    value={operation}
+                    options={unaryOperations}
+                    onValueChange={(val) =>
+                      onChange((old) => {
+                        if (old.length === 2) {
+                          const [_, oldSubtreeB] = old
+                          return [val, oldSubtreeB]
+                        }
+                        return old
+                      })
+                    }
+                    variant="transparent"
+                    size="text"
+                  />
                   <LogicTree
                     value={subtree}
                     onChange={(next) =>
@@ -118,6 +137,7 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
                         return old
                       })
                     }
+                    depth={depth + 1}
                   />
                 </>
               )
@@ -137,8 +157,23 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
                         return old
                       })
                     }
+                    depth={depth + 1}
                   />
-                  {operation}
+                  <StandardSelect
+                    value={operation}
+                    options={binaryOperations}
+                    onValueChange={(val) =>
+                      onChange((old) => {
+                        if (old.length === 3) {
+                          const [oldSubtreeA, _, oldSubtreeB] = old
+                          return [oldSubtreeA, val, oldSubtreeB]
+                        }
+                        return old
+                      })
+                    }
+                    variant="transparent"
+                    size="text"
+                  />
                   <LogicTree
                     value={subtreeB}
                     onChange={(next) =>
@@ -150,18 +185,58 @@ export const LogicTree = ({ value, onChange }: LogicTreeProps) => {
                         return old
                       })
                     }
+                    depth={depth + 1}
                   />
                 </>
               )
             }
           }
         })()}
-      </BranchWrapper>
-    </Stack.Vertical>
+      </Stack.Vertical>
+    </BranchWrapper>
   )
 }
 
-const BranchWrapper = styled(Stack.Vertical, {
-  borderLeft: '1px solid $colors$sand8',
-  pl: '$space2',
-})
+type BranchWrapperProps = React.ComponentProps<typeof Stack.Vertical> & {
+  depth: number
+}
+
+const BranchWrapper = ({
+  depth,
+  children,
+  css,
+  ...props
+}: BranchWrapperProps) => {
+  const rainbow = [
+    '$red9',
+    '$orange9',
+    '$yellow9',
+    '$green9',
+    '$blue9',
+    '$purple9',
+  ] as const
+
+  const currentColor = rainbow[depth % rainbow.length]
+
+  return (
+    <Stack.Vertical
+      {...props}
+      css={{
+        position: 'relative',
+        paddingLeft: '$space2',
+        '&:after': {
+          content: '',
+          position: 'absolute',
+          right: '100%',
+          backgroundColor: currentColor,
+          width: '$size2',
+          height: '100%',
+          borderRadius: '$radiusMax',
+        },
+        ...css,
+      }}
+    >
+      {children}
+    </Stack.Vertical>
+  )
+}

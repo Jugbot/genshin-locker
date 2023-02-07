@@ -7,6 +7,12 @@ export const Button = styled(ButtonBase, {
 
   variants: {
     size: {
+      text: {
+        py: '$space1',
+        px: '$space2',
+        borderRadius: 0,
+        justifyContent: 'space-between',
+      },
       small: {
         minHeight: '$size8',
         py: '$space1',

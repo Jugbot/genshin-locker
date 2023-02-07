@@ -14,7 +14,6 @@ export const ScoringComponent = ({
 }: ScoringComponentProps) => {
   return (
     <Stack.Vertical>
-      <Text>Scoring Method</Text>
       <StandardSelect
         value={value.type}
         options={scoreTypes}
@@ -24,12 +23,11 @@ export const ScoringComponent = ({
             type: val,
           }))
         }
-        variant="subdued"
-        size="small"
-        css={{ width: '100%' }}
+        variant="transparent"
+        size="text"
       />
-      <Text>Minimum Percentile</Text>
-      <Stack.Horizontal>
+      <Text css={{ px: '$space2' }}>Minimum Percentile</Text>
+      <Stack.Horizontal css={{ px: '$space2' }}>
         <Slider.Root
           value={[value.percentile]}
           onValueChange={([val]) =>

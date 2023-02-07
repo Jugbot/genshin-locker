@@ -18,7 +18,7 @@ export const ButtonBase = styled('button', {
   backgroundColor: 'transparent',
   appearance: 'none',
   textDecoration: 'none',
-
+  textTransform: 'capitalize',
   focusVisible: '$focus',
 
   '&:disabled': {

@@ -9,7 +9,7 @@ import { Select, Text } from '../../../components'
 
 interface StandardSelectProps<T>
   extends React.ComponentProps<typeof Select.Trigger> {
-  options: readonly T[]
+  options: ReadonlyArray<T>
   value?: string
   placeholder?: string
   onValueChange: (value: T) => void
