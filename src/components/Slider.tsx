@@ -11,9 +11,11 @@ const SliderRoot = styled(RadixSlider.Root, {
 
   "&[data-orientation='horizontal']": {
     height: '$size4',
+    py: '$space1',
   },
   "&[data-orientation='vertical']": {
     width: '$size4',
+    px: '$space1',
   },
 })
 

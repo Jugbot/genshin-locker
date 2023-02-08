@@ -75,8 +75,19 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
     ])
   }, [value])
 
+  const rainbow = [
+    '$red8',
+    '$orange8',
+    '$yellow8',
+    '$green8',
+    '$blue8',
+    '$purple8',
+  ] as const
+
+  const currentColor = rainbow[depth % rainbow.length]
+
   return (
-    <BranchWrapper depth={depth}>
+    <BranchWrapper color={currentColor}>
       <Stack.Vertical>
         <StandardSelect
           value={branchOptions[value.length - 1]}
@@ -87,6 +98,19 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
           }}
           variant="transparent"
           size="text"
+          css={{
+            borderTopRightRadius: '$radius1',
+            borderBottomRightRadius: '$radius1',
+            '&::before': {
+              content: '',
+              position: 'absolute',
+              inset: 0,
+              borderTopRightRadius: '$radius1',
+              borderBottomRightRadius: '$radius1',
+              backgroundColor: currentColor,
+              zIndex: -1,
+            },
+          }}
         />
         {(() => {
           switch (value.length) {
@@ -198,26 +222,15 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
 }
 
 type BranchWrapperProps = React.ComponentProps<typeof Stack.Vertical> & {
-  depth: number
+  color: string
 }
 
 const BranchWrapper = ({
-  depth,
+  color,
   children,
   css,
   ...props
 }: BranchWrapperProps) => {
-  const rainbow = [
-    '$red8',
-    '$orange8',
-    '$yellow8',
-    '$green8',
-    '$blue8',
-    '$purple8',
-  ] as const
-
-  const currentColor = rainbow[depth % rainbow.length]
-
   return (
     <Stack.Vertical
       {...props}
@@ -228,10 +241,11 @@ const BranchWrapper = ({
           content: '',
           position: 'absolute',
           right: '100%',
-          backgroundColor: currentColor,
+          backgroundColor: color,
           width: '$size2',
           height: '100%',
           borderRadius: '$radiusMax',
+          borderTopRightRadius: 0,
         },
         ...css,
       }}

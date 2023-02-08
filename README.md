@@ -1,19 +1,19 @@
 ### TODO
 
-- Artifact end of list detection
-- Artifact card string formatting
-- Artifact card lock state
-- Tooltips, hovers
-- Pause on _any_ keyboard press (+resume??/stop)
-- Dropdown
+- [ ] Artifact end of list detection
+- [ ] Artifact card string formatting
+- [ ] Artifact card lock state
+- [ ] Tooltips, hovers
+- [ ] Pause on _any_ keyboard press (+resume??/stop)
+- [x] Dropdown
   - Routine lock options read, read&lock, lock
   - Scoring method popularity/rarity with and/or condition
-- export data
-- 16:9 (1920×1080), 16:10 (1920×1200)
-- Install instructions + images
-- Adding screen resolutions readme
-- GL window icon
-- remove this list and publish :)
+- [ ] export data
+- [ ] 16:9 (1920×1080), 16:10 (1920×1200)
+- [ ] Install instructions + images
+- [ ] Adding screen resolutions readme
+- [ ] GL window icon
+- [ ] remove this list and publish :)
 
 Stretch:
 
