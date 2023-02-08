@@ -28,7 +28,7 @@ export const ButtonBase = styled('button', {
   variants: {
     variant: {
       primary: {
-        color: '$textInverted',
+        color: '$textActionPrimary',
         backgroundColor: '$bgActionPrimary',
         borderColor: '$bgActionPrimary',
         '&:hover:not([disabled]):not(:active)': {
