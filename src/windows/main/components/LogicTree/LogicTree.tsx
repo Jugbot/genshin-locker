@@ -208,12 +208,12 @@ const BranchWrapper = ({
   ...props
 }: BranchWrapperProps) => {
   const rainbow = [
-    '$red9',
-    '$orange9',
-    '$yellow9',
-    '$green9',
-    '$blue9',
-    '$purple9',
+    '$red8',
+    '$orange8',
+    '$yellow8',
+    '$green8',
+    '$blue8',
+    '$purple8',
   ] as const
 
   const currentColor = rainbow[depth % rainbow.length]
@@ -223,7 +223,7 @@ const BranchWrapper = ({
       {...props}
       css={{
         position: 'relative',
-        paddingLeft: '$space2',
+        marginLeft: '$space2',
         '&:after': {
           content: '',
           position: 'absolute',

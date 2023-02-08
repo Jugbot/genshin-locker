@@ -1,4 +1,4 @@
-import { Scores } from './scores'
+import { Scores, scoreTypes } from './database/collections/default'
 
 export type Scoring = {
   type: Scores
@@ -22,3 +22,4 @@ export type Bucket = {
   main: boolean
   sub: boolean
 }
+export { Scores, scoreTypes }

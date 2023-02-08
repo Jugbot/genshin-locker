@@ -3,8 +3,6 @@ import { app, BrowserWindow } from 'electron'
 import { exit } from 'process'
 
 import { mainApi } from './api'
-import { Channel } from './apiTypes'
-import { readArtifacts } from './automation/routines'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from './stitches/theme'
 
 try {
@@ -26,11 +24,9 @@ if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
-// TODO: proper global access
-export let mainWindow: Electron.BrowserWindow
 const createWindow = (): void => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       color: MENUBAR_BACKCOLOR,
@@ -53,13 +49,7 @@ const createWindow = (): void => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  mainApi.handle(Channel.START, (options) => {
-    try {
-      readArtifacts(options)
-    } catch (e) {
-      console.error(e)
-    }
-  })
+  mainApi.webContents = mainWindow.webContents
 }
 
 // This method will be called when Electron has finished

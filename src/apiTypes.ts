@@ -36,8 +36,8 @@ export type RendererAPI = {
 }
 
 export type MainAPI = {
+  webContents?: Electron.WebContents
   send<T extends MainEmitChannels>(
-    webContents: Electron.WebContents,
     channel: T,
     ...args: EventPayload[T][1]
   ): void

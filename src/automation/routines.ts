@@ -1,4 +1,3 @@
-import { mainWindow } from '..'
 import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
@@ -42,12 +41,7 @@ export async function readArtifacts({
   const total = await navigator.getArtifactCount(
     await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
   )
-  mainApi.send(
-    mainWindow.webContents,
-    Channel.LOG,
-    'info',
-    `Reading ${total} artifacts total`
-  )
+  mainApi.send(Channel.LOG, 'info', `Reading ${total} artifacts total`)
   const { repeat_y: rowsPerPage, repeat_x: itemsPerRow } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
   let count = 0
@@ -80,16 +74,11 @@ export async function readArtifacts({
             }
             pageActions.push(lockArtifact)
           }
-          mainApi.send(
-            mainWindow.webContents,
-            Channel.ARTIFACT,
-            artifact,
-            shouldBeLocked
-          )
+          mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
         })
       })
       count += 1
-      mainApi.send(mainWindow.webContents, Channel.PROGRESS, {
+      mainApi.send(Channel.PROGRESS, {
         current: count,
         max: total,
       })
@@ -116,3 +105,11 @@ export async function readArtifacts({
 
   return Promise.all(totalArtifacts)
 }
+
+mainApi.handle(Channel.START, (options) => {
+  try {
+    readArtifacts(options)
+  } catch (e) {
+    console.error(e)
+  }
+})

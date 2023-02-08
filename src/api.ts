@@ -25,8 +25,11 @@ export const rendererApi: RendererAPI = {
 }
 
 export const mainApi: MainAPI = {
-  send(webContents, channel, ...args) {
-    return webContents.send(channel, ...args)
+  send(channel, ...args) {
+    if (!this.webContents) {
+      throw Error(`Message ${channel} was made before webContents was set.`)
+    }
+    return this.webContents.send(channel, ...args)
   },
   handle(channel, listener) {
     const subscription = (

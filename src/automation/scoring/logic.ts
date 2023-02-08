@@ -2,8 +2,8 @@ import { Artifact } from '../types'
 import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
-import { scores, Scores } from './scores'
-import { Bucket, Logic, Scoring } from './types'
+import { scores } from './scores'
+import { Bucket, Logic, Scores, Scoring } from './types'
 
 const cache: Record<string, Record<Scores, number[]>> = {}
 async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {

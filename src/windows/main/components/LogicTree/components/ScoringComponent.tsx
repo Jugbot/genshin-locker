@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { scoreTypes } from '../../../../../automation/scoring/scores'
-import { Scoring } from '../../../../../automation/scoring/types'
+import { Scoring, scoreTypes } from '../../../../../automation/scoring/types'
 import { Stack, Heading, Text, Slider } from '../../../../../components'
 import { ControlledState } from '../../../../reactUtils'
 import { StandardSelect } from '../../StandardSelect'
