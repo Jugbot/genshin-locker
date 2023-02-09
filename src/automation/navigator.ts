@@ -153,7 +153,18 @@ export class Navigator {
     return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
   }
 
+  #isArtifact(image: Sharp) {
+    const edges = image.clone().convolve({
+      // Sobel
+      width: 3,
+      height: 3,
+      kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
+    })
+    this.#debugPrint(edges)
+  }
+
   async getArtifact(image: Sharp): Promise<Artifact> {
+    this.#isArtifact(image)
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 
