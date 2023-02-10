@@ -1,6 +1,8 @@
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
 
+import { mainApi } from '../../api'
+import { Channel } from '../../apiTypes'
 import { GBRAtoRGB } from '../util/image'
 
 import { mouseEvent, ucsBufferFrom } from './util'
@@ -41,7 +43,13 @@ export class GenshinWindow {
         StringBuffer(ucsBufferFrom('Genshin Impact'))
       )
     )
-    console.assert(this.handle, 'Handle not found.')
+    if (!this.handle) {
+      mainApi.send(
+        Channel.LOG,
+        'error',
+        `Could not find the Genshin Impact window.`
+      )
+    }
     user32.ShowWindow(String(this.handle), SW_RESTORE)
     user32.SetForegroundWindow(String(this.handle))
     const rect = new RECT()
@@ -84,9 +92,9 @@ export class GenshinWindow {
   }
 
   gamepadButton(btn: GAMEPAD_BTN, down: boolean) {
-    // console.log('AcquireVJD', vjoy?.AcquireVJD(1))
-    console.log('SetBtn', vjoy?.SetBtn(down ? 1 : 0, 1, btn))
-    // console.log('RelinquishVJD', vjoy?.RelinquishVJD(1))
+    console.info('AcquireVJD', vjoy?.AcquireVJD(1))
+    console.info('SetBtn', vjoy?.SetBtn(down ? 1 : 0, 1, btn))
+    console.info('RelinquishVJD', vjoy?.RelinquishVJD(1))
   }
 
   mouseDown() {
@@ -199,9 +207,9 @@ export class GenshinWindow {
       Number(this.height)
     )
     // Select the bitmap for the print operation
-    console.assert(gdi32.SelectObject(hdc, hdcBlt))
+    gdi32.SelectObject(hdc, hdcBlt)
 
-    const success = gdi32.BitBlt(
+    gdi32.BitBlt(
       hdc,
       0,
       0,
@@ -212,7 +220,6 @@ export class GenshinWindow {
       0,
       SRCCOPY
     )
-    console.assert(success, 'BitBlt operation failed')
 
     const bmp = new BITMAP()
 

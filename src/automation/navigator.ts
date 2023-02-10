@@ -2,7 +2,7 @@ import os from 'os'
 import path from 'path'
 
 import tesseract from 'node-tesseract-ocr'
-import { Sharp } from 'sharp'
+import { Region, Sharp } from 'sharp'
 
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
 
@@ -78,10 +78,10 @@ export class Navigator {
       if (err) {
         console.error(err)
       } else {
-        console.log('The file was saved!')
+        console.info('The file was saved!')
       }
     })
-    console.log(fileName)
+    console.info(fileName)
   }
 
   async #readTexts(
@@ -141,7 +141,6 @@ export class Navigator {
     return Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers())
       .map(([cx, cy]) => getPixel(cx, cy))
       .filter((pixel) => {
-        // console.log({pixel})
         return pixel.every((color, i) => {
           return colorLower[i] <= color && color <= colorUpper[i]
         })
@@ -153,23 +152,28 @@ export class Navigator {
     return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
   }
 
-  #isArtifact(image: Sharp) {
-    const edges = image.clone().convolve({
-      // Sobel
-      width: 3,
-      height: 3,
-      kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
-    })
-    this.#debugPrint(edges)
+  /**
+   * Detects if an image region is empty (i.e. has no edges detected)
+   */
+  async isEmpty(image: Sharp, region: Region) {
+    const edges = image
+      .clone()
+      .convolve({
+        // Sobel
+        width: 3,
+        height: 3,
+        kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
+      })
+      .extract(region)
+      .toColorspace('b-w')
+    const pixels = await edges.raw().toBuffer()
+    const max = pixels.reduce((a, b) => Math.max(a, b), 0)
+    return max < 128
   }
 
   async getArtifact(image: Sharp): Promise<Artifact> {
-    this.#isArtifact(image)
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
-
-    // this.#debugPrint(image)
-    // return {} as Artifact
 
     const [
       card_set,
@@ -197,17 +201,6 @@ export class Navigator {
       this.#readText(imageBWInverted, 'card_name'),
       this.#readText(imageBWInverted, 'card_mainstat_value'),
     ])
-    // console.log({
-    //   card_set,
-    //   card_slot_type,
-    //   card_rarity,
-    //   card_mainstat_key,
-    //   card_level,
-    //   card_substat,
-    //   card_lock,
-    //   card_name,
-    //   card_mainstat_value,
-    // })
     // Cleanup & Validation
     const slotKey = getSlot(card_slot_type)
     const [mainStatKey, mainStatValue] = getMainStat(

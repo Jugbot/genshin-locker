@@ -3,11 +3,12 @@ import { app, BrowserWindow } from 'electron'
 import { exit } from 'process'
 
 import { mainApi } from './api'
+import { Channel } from './apiTypes'
+import { readArtifacts } from './automation/routines'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from './stitches/theme'
 
 try {
   execFileSync('net', ['session'], { stdio: 'ignore' })
-  console.log('Successfully gained priviledge')
 } catch (e) {
   console.error('Requires elevated permssions')
   exit(1)
@@ -50,6 +51,14 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools()
 
   mainApi.webContents = mainWindow.webContents
+
+  mainApi.handle(Channel.START, (options) => {
+    try {
+      readArtifacts(options)
+    } catch (e) {
+      console.error(e)
+    }
+  })
 }
 
 // This method will be called when Electron has finished

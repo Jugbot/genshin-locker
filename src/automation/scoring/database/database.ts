@@ -17,17 +17,19 @@ addRxPlugin(RxDBMigrationPlugin)
 addRxPlugin(RxDBQueryBuilderPlugin)
 addRxPlugin(RxDBUpdatePlugin)
 
-let db: RxDatabase<Collections>
+let db: Promise<RxDatabase<Collections>>
 export async function getDatabase(importData = true) {
-  if (db) return db
-  db = await createRxDatabase({
+  if (db) {
+    return db
+  }
+  db = createRxDatabase<Collections>({
     name: 'default',
     storage: getRxStorageLoki({
       adapter: importData ? new LokiFsAdapter() : new LokiMemoryAdapter(),
     }),
+  }).then(async (newDB) => {
+    await newDB.addCollections(collections)
+    return newDB
   })
-
-  await db.addCollections(collections)
-
   return db
 }

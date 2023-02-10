@@ -45,7 +45,7 @@ const App: React.FC = () => {
       main: false,
       sub: false,
     },
-    lockWhileScanning: false,
+    lockWhileScanning: true,
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
@@ -64,6 +64,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return api.on(Channel.LOG, (mode, text) => {
+      // eslint-disable-next-line no-console
       console[mode](text)
       setLogs((arr) => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })

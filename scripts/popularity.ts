@@ -128,7 +128,7 @@ async function createStatistics() {
     })
   }
   const lastSyncTime: number = localDoc.get('time')
-  console.log(`Last sync at ${new Date(lastSyncTime * 1000)}.`)
+  console.info(`Last sync at ${new Date(lastSyncTime * 1000)}.`)
   const currentTime = currentTimeSeconds()
   await db.default.upsertLocal<LocalDoc>(LOCAL_DOC_KEY, { time: currentTime })
   const bar = new SingleBar({
@@ -205,7 +205,7 @@ async function createStatistics() {
     }
   }
   bar.stop()
-  console.log(finishStatus)
+  console.info(finishStatus)
   await db.destroy()
   process.exit()
 }

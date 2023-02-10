@@ -40,17 +40,16 @@ function stringToEnum<T extends string, TEnumValue extends string>(
 ): TEnumValue {
   const enumValues = Object.values(enumVariable)
   if (!enumValues.includes(value)) {
-    throw Error(`"${value}" does not satisfy enum ${enumVariable}`)
+    throw Error(`"${value}" does not satisfy enum ${enumValues}`)
   }
   return value as TEnumValue
 }
 
 export const removeWhitespace = (txt: string) => txt.replaceAll(/\s+/g, '')
-export const digitsOnly = (txt: string) => txt.replaceAll(/\D+/g, '')
 export const getNumber = (txt: string) => {
-  const num = Number.parseInt(digitsOnly(txt))
+  const num = Number.parseFloat(txt.replaceAll(/[^.0-9]+/g, ''))
   if (isNaN(num)) {
-    throw Error(`Could not parse integer from "${txt}"`)
+    throw Error(`Could not parse float from "${txt}"`)
   }
   return num
 }
