@@ -1,4 +1,3 @@
-import { getDatabase } from '../scoring/database'
 import { Artifact, MainStatKey, SlotKey, SubStatKey } from '../types'
 
 export const mainStatDistribution: Record<
@@ -109,56 +108,6 @@ export function artifactRarity(artifact: Artifact) {
   rarity *= subStatNumberRarity(artifact)
   rarity *= mainStatRollChance(artifact.mainStatKey, artifact.slotKey)
   return rarity
-}
-
-export async function artifactPopularity(artifact: Artifact) {
-  const db = await getDatabase()
-  const maxSubstats = artifact.rarity - 1
-  const substatKeys = artifact.substats.map((s) => s.key)
-  let score = 0
-  if (artifact.substats.length < maxSubstats) {
-    // If the artifact does not have the max number of substats for its rarity,
-    // take the weighted average of each possible upgraded artifact.
-    let weightedSum = 0
-    let divisor = 0
-    for (const possibleSubstat of Object.values(SubStatKey)) {
-      const chance = subStatRollChance(
-        possibleSubstat,
-        artifact.mainStatKey,
-        new Set(substatKeys)
-      )
-      const doc = await db.default
-        .findOne({
-          selector: {
-            set: artifact.setKey,
-            slot: artifact.slotKey,
-            main: artifact.mainStatKey,
-            sub: possibleSubstat,
-          },
-        })
-        .exec()
-      const score = doc?.popularity ?? 0
-      weightedSum += score * chance
-      divisor += chance
-    }
-    score += weightedSum / divisor
-  }
-  // Averages the popularity for each set/slot/main/substat combo of the artifacct (i.e. each substat of the artifact)
-  for (const substat of substatKeys) {
-    const doc = await db.default
-      .findOne({
-        selector: {
-          set: artifact.setKey,
-          slot: artifact.slotKey,
-          main: artifact.mainStatKey,
-          sub: substat,
-        },
-      })
-      .exec()
-
-    score += doc?.popularity ?? 0
-  }
-  return score / maxSubstats
 }
 
 /**

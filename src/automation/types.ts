@@ -101,6 +101,13 @@ export interface Artifact {
   id: string
 }
 
+export interface ArtifactMetrics {
+  set: SetKey
+  slot: SlotKey
+  main: MainStatKey
+  sub: SubStatKey
+}
+
 export const ElementalDamageTypes = new Set([
   MainStatKey.ANEMO_DMG,
   MainStatKey.GEO_DMG,

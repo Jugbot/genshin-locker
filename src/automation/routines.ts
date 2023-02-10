@@ -110,6 +110,7 @@ export async function readArtifacts({
               logic,
               targetAttributes
             )
+            // console.log(shouldBeLocked, artifact.id)
             if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
               const lockArtifact = async () => {
                 // navigate to the artifact we want to lock again
