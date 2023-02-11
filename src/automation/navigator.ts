@@ -208,9 +208,9 @@ export class Navigator {
       card_mainstat_value
     )
     const level = getNumber(card_level)
-    const substats = getSubstats(card_substat)
-    const setKey = getArtifactSet(card_set[substats.length])
     const rarity = card_rarity
+    const substats = getSubstats(card_substat, rarity)
+    const setKey = getArtifactSet(card_set[substats.length])
     const lock = Boolean(card_lock)
     const name = card_name
 

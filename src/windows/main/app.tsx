@@ -23,12 +23,16 @@ import {
 import { loadGlobalStyles } from '../../globalCss'
 
 import { api } from './api'
-import { ArtifactCard } from './components'
+import { ArtifactCard, StandardSelect } from './components'
 import { LogicTree } from './components/LogicTree'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
+enum Routines {
+  SCAN = 'Scan',
+  SCAN_AND_LOCK = 'Scan and lock',
+}
 
 const App: React.FC = () => {
   loadGlobalStyles()
@@ -53,6 +57,9 @@ const App: React.FC = () => {
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
+  const [routineType, setRoutineType] = useState<Routines>(
+    Routines.SCAN_AND_LOCK
+  )
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
@@ -261,6 +268,19 @@ const App: React.FC = () => {
             <Button variant="subdued" onClick={startRoutine} size="small">
               <GiPlayButton />
             </Button>
+            <StandardSelect
+              size="small"
+              options={Object.values(Routines)}
+              onValueChange={(val) => {
+                setRoutineType(val)
+                setRoutineOptions((options) => ({
+                  ...options,
+                  lockWhileScanning:
+                    val === Routines.SCAN_AND_LOCK ? true : false,
+                }))
+              }}
+              value={routineType}
+            />
             <ProgressBar
               value={routineStatus.current}
               max={routineStatus.max}

@@ -118,8 +118,8 @@ export async function readArtifacts({
     navigator.getArtifact(image).then(
       async (artifact) => {
         if (artifact.rarity < 5) {
-          // Data scraper is erroring for low rarity artifacts
-          // There is also not much point to filtering low rarity artifacts
+          // TODO: Add option for rarity
+          // There is not much point to filtering low rarity artifacts
           mainApi.send(Channel.LOG, 'info', `Skipping, not five star.`)
           return
         }

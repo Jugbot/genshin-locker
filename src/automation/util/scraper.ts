@@ -76,14 +76,14 @@ export const getMainStat = (
   return [stringToEnum(mainStatKey, MainStatKey), mainStatValue]
 }
 
-export const getSubstats = (txts: string[]): SubStat[] => {
-  return txts
-    .filter((txt) => txt.includes('+'))
-    .map((txt) => {
-      const split = removeWhitespace(txt).split('+')
-      const [key, value] = cleanedStat(split[0], split[1])
-      return { key: stringToEnum(key, SubStatKey), value }
-    })
+export const getSubstats = (txts: string[], rarity: number): SubStat[] => {
+  const maxSubstats = txts.slice(0, rarity)
+  const lastIndex = maxSubstats.findIndex((txt) => !txt.includes('+'))
+  return maxSubstats.slice(0, lastIndex).map((txt) => {
+    const split = removeWhitespace(txt).split('+')
+    const [key, value] = cleanedStat(split[0], split[1])
+    return { key: stringToEnum(key, SubStatKey), value }
+  })
 }
 export const getArtifactSet = (txt: string): SetKey => {
   const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')
