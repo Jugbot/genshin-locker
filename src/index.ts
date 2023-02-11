@@ -5,7 +5,9 @@ import { exit } from 'process'
 import { mainApi } from './api'
 import { Channel } from './apiTypes'
 import { readArtifacts } from './automation/routines'
+import { calculate } from './automation/scoring/logic'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from './stitches/theme'
+import type { ArtifactData } from './windows/main/app'
 
 try {
   execFileSync('net', ['session'], { stdio: 'ignore' })
@@ -58,6 +60,17 @@ const createWindow = (): void => {
     } catch (e) {
       console.error(e)
     }
+  })
+
+  mainApi.handle(Channel.CALCULATE, async (logic, bucket, artifacts) => {
+    const results: ArtifactData[] = []
+    for (const artifact of artifacts) {
+      results.push({
+        artifact,
+        shouldBeLocked: await calculate(artifact, logic, bucket),
+      })
+    }
+    return results
   })
 }
 

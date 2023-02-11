@@ -28,7 +28,7 @@ import { LogicTree } from './components/LogicTree'
 import { useThemeClass } from './hooks'
 
 export type RoutineStatus = { max: number; current: number }
-type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
+export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
 
 const App: React.FC = () => {
   loadGlobalStyles()
@@ -38,7 +38,11 @@ const App: React.FC = () => {
     RoutineStatus | Record<string, never>
   >({})
   const [routineOptions, setRoutineOptions] = useState<RoutineOptions>({
-    logic: [{ type: 'rarity', percentile: 0.1 }],
+    logic: [
+      [{ type: 'popularity', percentile: 0.5 }],
+      'OR',
+      ['NOT', [{ type: 'rarity', percentile: 0.25 }]],
+    ],
     targetAttributes: {
       set: true,
       slot: true,
@@ -69,6 +73,22 @@ const App: React.FC = () => {
       setLogs((arr) => [...arr, `[${mode.toUpperCase()}]: ${text}`])
     })
   }, [])
+
+  useEffect(() => {
+    api
+      .invoke(
+        Channel.CALCULATE,
+        routineOptions.logic,
+        routineOptions.targetAttributes,
+        artifacts.map(({ artifact }) => artifact)
+      )
+      .then((data) =>
+        // Avoid overwriting new data
+        setArtifacts((last) => (last.length === data.length ? data : last))
+      )
+    // FIXME: Avoid artifacts update loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routineOptions.logic, routineOptions.targetAttributes])
 
   const startRoutine = () => {
     setArtifacts([])
@@ -205,12 +225,11 @@ const App: React.FC = () => {
                     gap: '$space3',
                   }}
                 >
-                  {sortedArtifacts.map(({ artifact }) => (
+                  {sortedArtifacts.map(({ artifact, shouldBeLocked }) => (
                     <ArtifactCard
                       key={artifact.id}
                       artifact={artifact}
-                      score={0}
-                      targetScore={0}
+                      shouldBeLocked={shouldBeLocked}
                       css={{
                         animation: '$fadeIn',
                       }}

@@ -15,6 +15,7 @@ export type UnaryLogic<V> = [UnaryOperation, Logic<V>]
 export const leafOperation = ['LEAF'] as const
 export type LeafLogic<V> = [V]
 export type Logic<V> = BinaryLogic<V> | UnaryLogic<V> | LeafLogic<V>
+export type ScoringLogic = Logic<Scoring>
 
 export type Bucket = {
   set: boolean

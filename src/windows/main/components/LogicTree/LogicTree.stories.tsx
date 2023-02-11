@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions'
 import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
 import React from 'react'
 
-import { Logic, Scoring } from '../../../../automation/scoring/types'
+import { ScoringLogic } from '../../../../automation/scoring/types'
 
 import { LogicTree } from './LogicTree'
 
@@ -33,7 +33,7 @@ Controlled.args = {
 }
 
 export const Uncontrolled: ComponentStoryFn<typeof LogicTree> = () => {
-  const [logic, setLogic] = React.useState<Logic<Scoring>>([
+  const [logic, setLogic] = React.useState<ScoringLogic>([
     {
       type: 'popularity',
       percentile: 0.2,

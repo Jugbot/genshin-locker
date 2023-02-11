@@ -4,7 +4,7 @@ import {
   BinaryLogic,
   binaryOperations,
   LeafLogic,
-  Logic,
+  ScoringLogic,
   Scoring,
   UnaryLogic,
   unaryOperations,
@@ -46,7 +46,7 @@ const binaryDefault: BinaryLogic<Scoring> = [
   ],
 ]
 
-interface LogicTreeProps extends ControlledState<Logic<Scoring>> {
+interface LogicTreeProps extends ControlledState<ScoringLogic> {
   depth?: number
 }
 

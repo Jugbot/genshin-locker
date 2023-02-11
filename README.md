@@ -32,6 +32,10 @@ Stretch:
 - Better Layout component
 - Multiple artifact list layouts
 - Theme large sizes (e.g. artifact card list)
+- Way to filter:
+  - rarity
+  - level
+  - substat roll chance
 
 # Genshin Artifact Locker
 

@@ -37,6 +37,5 @@ FirstStory.args = {
     lock: false,
     id: '',
   },
-  score: 100,
-  targetScore: 20,
+  shouldBeLocked: false,
 }

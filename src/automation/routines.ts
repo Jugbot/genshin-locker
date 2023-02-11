@@ -1,10 +1,12 @@
+import { Sharp } from 'sharp'
+
 import { mainApi } from '../api'
 import { Channel } from '../apiTypes'
 
 import { ScreenMap } from './landmarks/types'
 import { Navigator } from './navigator'
 import { calculate } from './scoring/logic'
-import { Logic, Scoring, Bucket } from './scoring/types'
+import { ScoringLogic, Bucket } from './scoring/types'
 import { GBRAtoRGB } from './util/image'
 import { VK } from './window/winconst'
 
@@ -45,7 +47,7 @@ class TaskManager<S> {
 }
 
 export type RoutineOptions = {
-  logic: Logic<Scoring>
+  logic: ScoringLogic
   targetAttributes: Bucket
   lockWhileScanning: boolean
 }
@@ -81,59 +83,70 @@ export async function readArtifacts({
 
   const visitedArtifacts = new Set<string>()
 
-  for (;;) {
-    let pageIndex = 0
-    for (const click of navigator.clickAll('list_item')) {
-      const thisPageIndex = pageIndex
-      taskManager.add('sync', async () => {
-        click()
-        await sleep(100)
-        const imageBGRA = await navigator.gwindow.captureBGRA()
-        const image = await GBRAtoRGB(imageBGRA)
-        const regions = Array.from(
-          navigator.landmarks[ScreenMap.ARTIFACTS].list_item.regions()
-        )
-        const region = regions[thisPageIndex]
-        if (await navigator.isEmpty(image, region)) {
-          return false
-        }
-        // Do image parsing async since it doesnt interfere with actions
-        taskManager.add('async', () =>
-          navigator.getArtifact(image).then(async (artifact) => {
-            if (visitedArtifacts.has(artifact.id)) {
-              mainApi.send(Channel.LOG, 'info', `Skipping, already visited.`)
-              return
-            }
-            visitedArtifacts.add(artifact.id)
-            const shouldBeLocked = await calculate(
-              artifact,
-              logic,
-              targetAttributes
-            )
-            // console.log(shouldBeLocked, artifact.id)
-            if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
-              const lockArtifact = async () => {
-                // navigate to the artifact we want to lock again
-                click()
-                await sleep(200)
-                navigator.click('card_lock')
-                await sleep(200)
-                return true
-              }
-              taskManager.add('sync', lockArtifact)
-            }
-            mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
-          })
-        )
-        return true
-      })
-      mainApi.send(Channel.PROGRESS, {
-        current: 0,
-        max: total,
-      })
-      pageIndex += 1
+  const clickArray = Array.from(navigator.clickAll('list_item'))
+  const regions = Array.from(
+    navigator.landmarks[ScreenMap.ARTIFACTS].list_item.regions()
+  )
+
+  const lockArtifactTask = (thisPageIndex: number) => async () => {
+    // navigate to the artifact we want to lock again
+    clickArray[thisPageIndex]()
+    await sleep(200)
+    navigator.click('card_lock')
+    await sleep(200)
+    return true
+  }
+
+  const artifactTask = (thisPageIndex: number) => async () => {
+    clickArray[thisPageIndex]()
+    await sleep(100)
+    const imageBGRA = await navigator.gwindow.captureBGRA()
+    const image = await GBRAtoRGB(imageBGRA)
+    const region = regions[thisPageIndex]
+    if (await navigator.isEmpty(image, region)) {
+      return false
     }
+    // Do image parsing async since it doesnt interfere with actions
+    taskManager.add('async', parseArtifactTask(thisPageIndex, image))
+    if (thisPageIndex < clickArray.length - 1) {
+      taskManager.add('sync', artifactTask(thisPageIndex + 1))
+    }
+    return true
+  }
+
+  const parseArtifactTask = (thisPageIndex: number, image: Sharp) => () =>
+    navigator.getArtifact(image).then(
+      async (artifact) => {
+        if (artifact.rarity < 5) {
+          // Data scraper is erroring for low rarity artifacts
+          // There is also not much point to filtering low rarity artifacts
+          mainApi.send(Channel.LOG, 'info', `Skipping, not five star.`)
+          return
+        }
+        if (visitedArtifacts.has(artifact.id)) {
+          mainApi.send(Channel.LOG, 'info', `Skipping, already visited.`)
+          return
+        }
+        visitedArtifacts.add(artifact.id)
+        const shouldBeLocked = await calculate(
+          artifact,
+          logic,
+          targetAttributes
+        )
+        if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
+          taskManager.add('sync', lockArtifactTask(thisPageIndex))
+        }
+        mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
+      },
+      (reason) => {
+        console.error(reason)
+        mainApi.send(Channel.LOG, 'error', `Error parsing artifact, ${reason}`)
+      }
+    )
+
+  for (;;) {
     let shouldExit = false
+    taskManager.add('sync', artifactTask(0))
     // Exhaust sequential and async actions on artifacts
     for await (const task of taskManager.run()) {
       await task()
@@ -144,7 +157,6 @@ export async function readArtifacts({
             shouldExit = true
           } else if (!shouldContinue) {
             mainApi.send(Channel.LOG, 'info', `Reached the end`)
-            taskManager.stop()
             shouldExit = true
           }
         })

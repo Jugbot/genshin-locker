@@ -2,7 +2,7 @@ import { Artifact, ArtifactMetrics } from '../types'
 import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
-import { Bucket, Logic, Scores, Scoring, scoreTypes } from './types'
+import { Bucket, ScoringLogic, Scores, Scoring, scoreTypes } from './types'
 
 const cache: Record<string, Record<Scores, number[]>> = {}
 async function targetScore(
@@ -60,31 +60,6 @@ async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
     }
   }
 
-  // If the artifact does not have the max number of substats for its rarity,
-  // take the weighted average of each possible upgraded artifact.
-  // const maxSubstats = artifact.rarity - 1
-  // if (artifact.substats.length < maxSubstats) {
-  //   let weightedSum = 0
-  //   let divisor = 0
-  //   for (const possibleSubstat of Object.values(SubStatKey)) {
-  //     const chance = subStatRollChance(
-  //       possibleSubstat,
-  //       artifact.mainStatKey,
-  //       new Set(substatKeys)
-  //     )
-  //     const selector = bucketSelector({
-  //       set: artifact.setKey,
-  //       slot: artifact.slotKey,
-  //       main: artifact.mainStatKey,
-  //       sub: possibleSubstat,
-  //     })
-  //     const score = await targetScore(selector, type, percentile)
-  //     weightedSum += score * chance
-  //     divisor += chance
-  //   }
-  //   targetScores.push(weightedSum / divisor)
-  // }
-
   const avgTargetScore =
     targetScores.reduce((a, b) => a + b, 0) / targetScores.length
 
@@ -103,16 +78,15 @@ async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
   const avgArtifactScore =
     artifactScores.reduce((a, b) => a + b, 0) / artifactScores.length
 
-  // console.log(avgArtifactScore, avgTargetScore)
   return avgArtifactScore >= avgTargetScore
 }
 
 export function calculate(
   artifact: Artifact,
-  tree: Logic<Scoring>,
+  tree: ScoringLogic,
   bucket: Bucket
 ): Promise<boolean> {
-  const evaluate = async (tree: Logic<Scoring>): Promise<boolean> => {
+  const evaluate = async (tree: ScoringLogic): Promise<boolean> => {
     if (tree.length === 2) {
       const [op, subtree] = tree
       const A = await evaluate(subtree)

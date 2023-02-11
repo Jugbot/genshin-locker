@@ -1,3 +1,8 @@
+import {
+  ArrowRightIcon,
+  LockClosedIcon,
+  LockOpen1Icon,
+} from '@radix-ui/react-icons'
 import React from 'react'
 import {
   GiIntricateNecklace,
@@ -8,7 +13,7 @@ import {
 } from 'react-icons/gi'
 
 import { Artifact, SlotKey } from '../../../automation/types'
-import { Box, Heading, Text } from '../../../components'
+import { Box, Heading, Stack, Text } from '../../../components'
 
 const rarityColors = (rarity: number) => {
   switch (rarity) {
@@ -40,6 +45,15 @@ const ArtifactSlotIcon = ({ slot }: { slot: SlotKey }) => {
   }
 }
 
+interface LockProps {
+  closed: boolean
+}
+const Lock = ({ closed }: LockProps) => (
+  <Text css={{ color: closed ? '$red11' : '$green11' }}>
+    {closed ? <LockClosedIcon /> : <LockOpen1Icon />}
+  </Text>
+)
+
 interface ArtifactStatProps extends React.ComponentProps<typeof Text> {
   stat: [key: React.ReactNode, value: React.ReactNode]
 }
@@ -55,14 +69,12 @@ const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
 
 interface ArtifactCardProps extends React.ComponentProps<typeof Box> {
   artifact: Artifact
-  score: number
-  targetScore: number
+  shouldBeLocked: boolean
 }
 
 export const ArtifactCard = ({
   artifact,
-  score,
-  targetScore,
+  shouldBeLocked,
   css,
   ...props
 }: ArtifactCardProps) => {
@@ -81,7 +93,6 @@ export const ArtifactCard = ({
           backgroundColor: rarityColors(artifact.rarity),
           borderBottom: '2px solid $colors$textDefault',
           padding: '$space2',
-          mb: '$space1',
           display: 'flex',
           flexWrap: 'nowrap',
           alignItems: 'center',
@@ -95,37 +106,31 @@ export const ArtifactCard = ({
               textOverflow: 'ellipsis',
               overflow: 'hidden',
               whiteSpace: 'nowrap',
-              color: '$textDefaultA',
             }}
           >
             {artifact.setKey}
           </Heading>
         </Box>
-        <Heading
-          variant="md"
-          css={{ flexGrow: 0, display: 'contents', color: '$textDefaultA' }}
-        >
+        <Heading variant="md" css={{ flexGrow: 0, display: 'contents' }}>
           <ArtifactSlotIcon slot={artifact.slotKey} />
         </Heading>
       </Box>
-      <Box
+      <Stack.Horizontal
         css={{
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor: '$sand4',
+          backgroundColor: '$sand7',
           padding: '$space2',
-          justifyContent: 'space-around',
+          justifyContent: 'center',
         }}
       >
-        <Heading variant="subheading">score: {score.toFixed(1)}</Heading>
-        <Heading variant="subheading">target: {targetScore.toFixed(1)}</Heading>
-      </Box>
-      <Box
+        <Lock closed={artifact.lock} />
+        <Text>
+          <ArrowRightIcon />
+        </Text>
+        <Lock closed={shouldBeLocked} />
+      </Stack.Horizontal>
+      <Stack.Vertical
         css={{
           padding: '$space2',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '$space1',
         }}
       >
         <Heading variant="sm">lvl{artifact.level}</Heading>
@@ -138,7 +143,7 @@ export const ArtifactCard = ({
         {artifact.substats.map((stat) => (
           <ArtifactStat key={stat.key} stat={[stat.key, stat.value]} />
         ))}
-      </Box>
+      </Stack.Vertical>
     </Box>
   )
 }

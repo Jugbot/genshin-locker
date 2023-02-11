@@ -72,7 +72,6 @@ const theme = {
     bgActionNeutralPressed: '$sand8',
     textActionNeutral: '$sand2',
     textDefault: '$sand12',
-    textDefaultA: '$sandA11',
     textInverted: '$sand8',
     textDisabled: '$sand11',
     menubarBackground: MENUBAR_BACKCOLOR,
