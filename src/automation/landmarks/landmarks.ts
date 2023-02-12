@@ -48,18 +48,26 @@ class Landmark {
   }
 
   /** A rectangle or grid of rectangles */
-  static from(...boxes: SVGRect[]): Landmark {
+  static from(
+    widthAdjustment: number,
+    heightAdjustment: number,
+    ...boxes: SVGRect[]
+  ): Landmark {
     const aboutEquals = (a: number, b: number) => Math.abs(a - b) < 1
-    const x = Math.round(Math.min(...boxes.map((box) => Number(box['attr:x']))))
-    const y = Math.round(Math.min(...boxes.map((box) => Number(box['attr:y']))))
+    const x = Math.round(
+      Math.min(...boxes.map((box) => Number(box['attr:x']))) * widthAdjustment
+    )
+    const y = Math.round(
+      Math.min(...boxes.map((box) => Number(box['attr:y']))) * heightAdjustment
+    )
     const repeat_x = boxes.filter((box) =>
-      aboutEquals(Number(box['attr:y']), y)
+      aboutEquals(Number(box['attr:y']) * heightAdjustment, y)
     ).length
     const repeat_y = boxes.filter((box) =>
-      aboutEquals(Number(box['attr:x']), x)
+      aboutEquals(Number(box['attr:x']) * widthAdjustment, x)
     ).length
-    const w = Math.round(Number(boxes[0]['attr:width']))
-    const h = Math.round(Number(boxes[0]['attr:height']))
+    const w = Math.round(Number(boxes[0]['attr:width']) * widthAdjustment)
+    const h = Math.round(Number(boxes[0]['attr:height']) * heightAdjustment)
     return new Landmark(x, y, w, h, repeat_x, repeat_y)
   }
 
@@ -147,12 +155,17 @@ function flattenObjects(obj: object): object[] {
   }, [])
 }
 
-function findLandmark(data: object[], name: string) {
+function findLandmark(
+  data: object[],
+  name: string,
+  widthRatio: number,
+  heightRatio: number
+) {
   const boxes = data.filter(
     (box): box is SVGRect =>
       'attr:inkscape:label' in box && box['attr:inkscape:label'] === name
   )
-  return Landmark.from(...boxes)
+  return Landmark.from(widthRatio, heightRatio, ...boxes)
 }
 
 export function load(width: number, height: number): Landmarks | null {
@@ -164,12 +177,16 @@ export function load(width: number, height: number): Landmarks | null {
   })
   const map = `a${w}x${h}`
   if (map in maps) {
-    const data = flattenObjects(parser.parse(maps[map].artifacts))
+    const data = parser.parse(maps[map].artifacts)
+    const { 'attr:width': mapWidth, 'attr:height': mapHeight } = data.svg
+    const widthRatio = width / mapWidth
+    const heightRatio = height / mapHeight
+    const flatData = flattenObjects(data)
     return {
       [ScreenMap.ARTIFACTS]: Object.fromEntries(
         Array.from(landmarkKeys[ScreenMap.ARTIFACTS]).map((id) => [
           id,
-          findLandmark(data, id),
+          findLandmark(flatData, id, widthRatio, heightRatio),
         ])
       ) as Landmarks[ScreenMap.ARTIFACTS],
     }
