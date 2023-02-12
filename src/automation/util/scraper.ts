@@ -77,7 +77,8 @@ export const getMainStat = (
 }
 
 export const getSubstats = (txts: string[]): SubStat[] => {
-  const lastIndex = txts.findIndex((txt) => !txt.includes('+'))
+  let lastIndex = txts.findIndex((txt) => !txt.includes('+'))
+  lastIndex = lastIndex === -1 ? txts.length : lastIndex
   return txts.slice(0, lastIndex).map((txt) => {
     const split = removeWhitespace(txt).split('+')
     const [key, value] = cleanedStat(split[0], split[1])
