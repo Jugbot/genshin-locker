@@ -76,10 +76,9 @@ export const getMainStat = (
   return [stringToEnum(mainStatKey, MainStatKey), mainStatValue]
 }
 
-export const getSubstats = (txts: string[], rarity: number): SubStat[] => {
-  const maxSubstats = txts.slice(0, rarity)
-  const lastIndex = maxSubstats.findIndex((txt) => !txt.includes('+'))
-  return maxSubstats.slice(0, lastIndex).map((txt) => {
+export const getSubstats = (txts: string[]): SubStat[] => {
+  const lastIndex = txts.findIndex((txt) => !txt.includes('+'))
+  return txts.slice(0, lastIndex).map((txt) => {
     const split = removeWhitespace(txt).split('+')
     const [key, value] = cleanedStat(split[0], split[1])
     return { key: stringToEnum(key, SubStatKey), value }
