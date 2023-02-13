@@ -114,37 +114,42 @@ export class Navigator {
     colorLower: number[],
     colorUpper: number[] = []
   ) {
-    // TODO: We can use `extract()` instead of manually searching the bitmap
-    const { data: bytes, info } = await image
-      .clone()
-      .raw()
-      .toBuffer({ resolveWithObject: true })
-    const { channels, width } = info
-    if (!width || !channels) {
-      throw Error('Missing image meta')
-    }
     if (colorUpper.length === 0) {
       colorUpper = colorLower
     }
-    if (
-      colorLower.length !== colorUpper.length ||
-      colorUpper.length !== channels
-    ) {
-      throw Error(
-        `Pixel test color range start or end are not of length ${channels}`
-      )
-    }
-    const getPixel = (x: number, y: number) => {
-      const index = (y * width + x) * channels
-      return Array.from(bytes.subarray(index, index + channels))
-    }
-    return Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers())
-      .map(([cx, cy]) => getPixel(cx, cy))
-      .filter((pixel) => {
-        return pixel.every((color, i) => {
-          return colorLower[i] <= color && color <= colorUpper[i]
+    const getPixel = async (x: number, y: number) => {
+      const bytes = await image
+        .clone()
+        .extract({
+          top: Math.floor(y),
+          left: Math.floor(x),
+          width: 1,
+          height: 1,
         })
-      }).length
+        .raw()
+        .toBuffer()
+      const pixel = Array.from(bytes)
+      if (
+        colorLower.length !== colorUpper.length ||
+        colorUpper.length !== pixel.length
+      ) {
+        throw Error(
+          `Pixel test color range start or end are not of length ${pixel.length}`
+        )
+      }
+      return pixel
+    }
+    const results = await Promise.all(
+      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers()).map(
+        ([cx, cy]) => getPixel(cx, cy)
+      )
+    )
+
+    return results.filter((pixel) => {
+      return pixel.every((color, i) => {
+        return colorLower[i] <= color && color <= colorUpper[i]
+      })
+    }).length
   }
 
   async getArtifactCount(image: Sharp): Promise<number> {
