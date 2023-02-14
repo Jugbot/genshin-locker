@@ -1,5 +1,6 @@
 import { execFileSync } from 'child_process'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog } from 'electron'
+import fs from 'fs'
 import { exit } from 'process'
 
 import { mainApi } from './api'
@@ -71,6 +72,31 @@ const createWindow = (): void => {
       })
     }
     return results
+  })
+
+  mainApi.handle(Channel.SAVE_ARTIFACTS, (artifacts) => {
+    return dialog
+      .showSaveDialog(mainWindow, {
+        filters: [{ extensions: ['json'], name: 'GOOD format' }],
+      })
+      .then(({ filePath, canceled }) => {
+        if (filePath) {
+          fs.writeFileSync(
+            filePath,
+            JSON.stringify(
+              {
+                format: 'GOOD',
+                version: 1,
+                source: 'Genshin Locker',
+                artifacts,
+              },
+              null,
+              2
+            )
+          )
+        }
+        return !canceled
+      })
   })
 }
 

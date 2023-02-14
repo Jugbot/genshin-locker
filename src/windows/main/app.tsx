@@ -1,4 +1,9 @@
-import { CheckIcon, ExternalLinkIcon, ImageIcon } from '@radix-ui/react-icons'
+import {
+  CheckIcon,
+  ExternalLinkIcon,
+  ImageIcon,
+  UpdateIcon,
+} from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -21,6 +26,7 @@ import {
   ButtonIcon,
 } from '../../components'
 import { loadGlobalStyles } from '../../globalCss'
+import { rotate } from '../../stitches/keyframes'
 
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
@@ -100,6 +106,17 @@ const App: React.FC = () => {
   const startRoutine = () => {
     setArtifacts([])
     api.invoke(Channel.START, routineOptions)
+  }
+
+  const [isSaving, setIsSaving] = React.useState(false)
+  const exportFile = () => {
+    setIsSaving(true)
+    api
+      .invoke(
+        Channel.SAVE_ARTIFACTS,
+        artifacts.map(({ artifact }) => artifact)
+      )
+      .then(() => setIsSaving(false))
   }
 
   const sortedArtifacts = React.useMemo(
@@ -214,8 +231,20 @@ const App: React.FC = () => {
               }}
             >
               <Box css={{ flexGrow: 1 }} />
-              <ButtonIcon variant="transparent" size="small">
-                <ExternalLinkIcon />
+              <ButtonIcon
+                onClick={exportFile}
+                variant="transparent"
+                size="small"
+              >
+                {isSaving ? (
+                  <UpdateIcon
+                    style={{
+                      animation: `${rotate} 1s linear infinite`,
+                    }}
+                  />
+                ) : (
+                  <ExternalLinkIcon />
+                )}
               </ButtonIcon>
             </Stack.Horizontal>
             <ScrollArea.Root

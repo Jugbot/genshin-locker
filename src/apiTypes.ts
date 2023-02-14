@@ -12,6 +12,7 @@ export enum Channel {
   LOG = 'log',
   ARTIFACT = 'artifact',
   CALCULATE = 'calculate',
+  SAVE_ARTIFACTS = 'save-artifacts',
 }
 
 export type LogMode = 'info' | 'warn' | 'error'
@@ -25,10 +26,14 @@ export type EventPayload = {
     Array<ArtifactData>,
     [logic: ScoringLogic, bucket: Bucket, artifacts: Artifact[]]
   ]
+  [Channel.SAVE_ARTIFACTS]: [success: boolean, args: [artifacts: Artifact[]]]
 }
 
 export type MainEmitChannels = Channel.ARTIFACT | Channel.PROGRESS | Channel.LOG
-export type RendererEmitChannels = Channel.START | Channel.CALCULATE
+export type RendererEmitChannels =
+  | Channel.START
+  | Channel.CALCULATE
+  | Channel.SAVE_ARTIFACTS
 
 type MaybePromise<T> = T | Promise<T>
 
