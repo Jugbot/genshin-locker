@@ -38,6 +38,7 @@ const createWindow = (): void => {
     },
     height: 600,
     width: 800,
+    icon: 'src/icon.ico',
     webPreferences: {
       // sandbox: false,
       // contextIsolation: false,

@@ -50,4 +50,8 @@ export const rules: Required<ModuleOptions>['rules'] = [
       filename: 'dll/[hash][ext][query]',
     },
   },
+  {
+    test: /\.ico$/,
+    type: 'asset/resource',
+  },
 ]

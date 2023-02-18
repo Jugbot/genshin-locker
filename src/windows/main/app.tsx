@@ -1,7 +1,6 @@
 import {
   CheckIcon,
   ExternalLinkIcon,
-  ImageIcon,
   UpdateIcon,
 } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
@@ -142,15 +141,28 @@ const App: React.FC = () => {
     >
       <MenuBar.Root
         css={{
+          position: 'fixed',
+          left: 'env(titlebar-area-x, 0)',
+          top: 'env(titlebar-area-y, 0)',
           width: 'env(titlebar-area-width)',
           height: 'env(titlebar-area-height)',
           boxSizing: 'border-box',
         }}
       >
-        <ImageIcon />
+        <Heading
+          variant="subheading"
+          css={{
+            lineHeight: 'env(titlebar-area-height)',
+            mt: '-$space2',
+            fontWeight: 'bold',
+          }}
+        >
+          Genshin Locker
+        </Heading>
       </MenuBar.Root>
       <Box
         css={{
+          mt: 'env(titlebar-area-height)',
           padding: '$space2',
           flexGrow: 1,
           display: 'flex',

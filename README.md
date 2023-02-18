@@ -8,12 +8,13 @@
 - [x] Dropdown
   - Routine lock options read, read&lock, lock
   - Scoring method popularity/rarity with and/or condition
-- [ ] export data
+- [x] export data
 - [ ] 16:9 (1920×1080), 16:10 (1920×1200)
 - [ ] Install instructions + images
 - [ ] Adding screen resolutions readme
-- [ ] GL window icon
+- [x] GL window icon
 - [ ] remove this list and publish :)
+- [ ] Update read artifacts when locking to reflect new lock status
 
 Stretch:
 
@@ -45,7 +46,7 @@ A tool for intelligently choosing what artifacts to recycle.
 - [x] Automatically read artifact data from the game.
 - [x] Choose artifacts based on various criteria. Artifacts will be locked or unlocked to make for easy disposal in-game.
   - [x] Popularity in crowdsourced builds from [Lineup Simulator](https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html).
-  - [ ] Roll rarity.
+  - [x] Mainstat / substat rarity.
 - [x] Supports any screen resolution(\*).
-- [ ] Export artifacts to other popular tools such as [Genshin Optimizer](https://frzyc.github.io/genshin-optimizer)
+- [x] Export artifacts to other popular tools such as [Genshin Optimizer](https://frzyc.github.io/genshin-optimizer)
 - [x] Light mode for freaks.
