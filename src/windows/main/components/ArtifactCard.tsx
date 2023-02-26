@@ -4,6 +4,7 @@ import {
   LockOpen1Icon,
 } from '@radix-ui/react-icons'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   GiIntricateNecklace,
   GiTwirlyFlower,
@@ -12,7 +13,12 @@ import {
   GiHourglass,
 } from 'react-icons/gi'
 
-import { Artifact, SlotKey } from '../../../automation/types'
+import {
+  Artifact,
+  MainStatKey,
+  SlotKey,
+  SubStatKey,
+} from '../../../automation/types'
 import { Box, Heading, Stack, Text } from '../../../components'
 
 const rarityColors = (rarity: number) => {
@@ -55,14 +61,21 @@ const Lock = ({ closed }: LockProps) => (
 )
 
 interface ArtifactStatProps extends React.ComponentProps<typeof Text> {
-  stat: [key: React.ReactNode, value: React.ReactNode]
+  stat: [key: SubStatKey | MainStatKey, value: number]
 }
 
 const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
+  const { t } = useTranslation('artifact')
+
+  let formattedValue = `${value}`
+  if (key.at(-1) === '_') {
+    formattedValue = `${value}%`
+  }
+
   return (
     <Box css={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Text {...props}>{key}</Text>
-      <Text {...props}>{value}</Text>
+      <Text {...props}>{t(key)}</Text>
+      <Text {...props}>{formattedValue}</Text>
     </Box>
   )
 }

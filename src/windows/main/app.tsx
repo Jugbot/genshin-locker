@@ -1,8 +1,4 @@
-import {
-  CheckIcon,
-  ExternalLinkIcon,
-  UpdateIcon,
-} from '@radix-ui/react-icons'
+import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GiPlayButton } from 'react-icons/gi'
@@ -31,6 +27,9 @@ import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
 import { LogicTree } from './components/LogicTree'
 import { useThemeClass } from './hooks'
+import { initTranslations } from './i18n'
+
+initTranslations()
 
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
