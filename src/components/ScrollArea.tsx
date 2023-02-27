@@ -48,7 +48,7 @@ const ScrollAreaThumb = styled(RadixScrollArea.ScrollAreaThumb, {
 })
 
 const ScrollAreaCorner = styled(RadixScrollArea.Corner, {
-  backgroundColor: '$sand3',
+  backgroundColor: '$slate3',
   opacity: 0.7,
 })
 

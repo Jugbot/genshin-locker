@@ -1,4 +1,20 @@
 {
   "language": "English",
-  "code": "🇺🇸"
+  "code": "🇺🇸",
+  "comparison-buckets": "Comparison Buckets",
+  "score-threshold": "Score Threshold",
+  "unary-operation": "Unary Operation",
+  "binary-operation": "Binary Operation",
+  "minimum-percentile": "Minimum Percentile",
+  "rarity": "Rarity",
+  "popularity": "Popularity",
+  "not": "NOT",
+  "and": "AND",
+  "or": "OR",
+  "artifact-set": "Artifact Set",
+  "slot-type": "Slot Type",
+  "main-stat": "Main Stat",
+  "substats": "Substats",
+  "scan": "Scan",
+  "scan-and-lock": "Scan And Lock"
 }

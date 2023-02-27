@@ -1,6 +1,7 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Scoring, scoreTypes } from '../../../../../automation/scoring/types'
+import { Scores, Scoring } from '../../../../../automation/scoring/types'
 import { Stack, Heading, Text, Slider } from '../../../../../components'
 import { ControlledState } from '../../../../reactUtils'
 import { StandardSelect } from '../../StandardSelect'
@@ -11,11 +12,18 @@ export const ScoringComponent = ({
   value,
   onChange,
 }: ScoringComponentProps) => {
+  const { t } = useTranslation()
+
+  const scoreSelect: Record<Scores, string> = {
+    rarity: t('rarity'),
+    popularity: t('popularity'),
+  }
+
   return (
     <Stack.Vertical>
       <StandardSelect
         value={value.type}
-        options={scoreTypes}
+        options={scoreSelect}
         onValueChange={(val) =>
           onChange((old) => ({
             ...old,
@@ -25,7 +33,7 @@ export const ScoringComponent = ({
         variant="transparent"
         size="text"
       />
-      <Text css={{ px: '$space2' }}>Minimum Percentile</Text>
+      <Text css={{ px: '$space2' }}>{t('minimum-percentile')}</Text>
       <Stack.Horizontal css={{ px: '$space2' }}>
         <Slider.Root
           value={[value.percentile]}

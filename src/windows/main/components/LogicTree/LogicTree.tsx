@@ -1,15 +1,16 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   BinaryLogic,
-  binaryOperations,
   LeafLogic,
   ScoringLogic,
   Scoring,
   UnaryLogic,
-  unaryOperations,
+  UnaryOperation,
+  BinaryOperation,
 } from '../../../../automation/scoring/types'
-import { Stack } from '../../../../components'
+import { Box, Stack } from '../../../../components'
 import { ControlledState } from '../../../reactUtils'
 import { StandardSelect } from '../StandardSelect'
 
@@ -51,6 +52,7 @@ interface LogicTreeProps extends ControlledState<ScoringLogic> {
 }
 
 export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
+  const { t } = useTranslation()
   const [valueCache, setValueCache] = React.useState<
     [LeafLogic<Scoring>, UnaryLogic<Scoring>, BinaryLogic<Scoring>]
   >([leafDefault, unaryDefault, binaryDefault])
@@ -62,10 +64,19 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
   }
 
   const branchOptions = [
-    'Score Threshold',
-    'Unary Operation',
-    'Binary Operation',
+    t('score-threshold'),
+    t('unary-operation'),
+    t('binary-operation'),
   ]
+
+  const unaryOptions: Record<UnaryOperation, string> = {
+    NOT: t('not'),
+  }
+
+  const binaryOptions: Record<BinaryOperation, string> = {
+    AND: t('and'),
+    OR: t('or'),
+  }
 
   React.useEffect(() => {
     setValueCache((val) => [
@@ -89,29 +100,30 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
   return (
     <BranchWrapper color={currentColor}>
       <Stack.Vertical>
-        <StandardSelect
-          value={branchOptions[value.length - 1]}
-          options={branchOptions}
-          onValueChange={(val: string) => {
-            const index = branchOptions.findIndex((other) => other === val)
-            onChange(() => valueCache[index])
-          }}
-          variant="transparent"
-          size="text"
+        <Box
           css={{
+            display: 'flex',
+            flexDirection: 'column',
             borderTopRightRadius: '$radius1',
             borderBottomRightRadius: '$radius1',
-            '&::before': {
-              content: '',
-              position: 'absolute',
-              inset: 0,
+            backgroundColor: currentColor,
+          }}
+        >
+          <StandardSelect
+            value={branchOptions[value.length - 1]}
+            options={branchOptions}
+            onValueChange={(val: string) => {
+              const index = branchOptions.findIndex((other) => other === val)
+              onChange(() => valueCache[index])
+            }}
+            variant="transparent"
+            size="text"
+            css={{
               borderTopRightRadius: '$radius1',
               borderBottomRightRadius: '$radius1',
-              backgroundColor: currentColor,
-              zIndex: -1,
-            },
-          }}
-        />
+            }}
+          />
+        </Box>
         {(() => {
           switch (value.length) {
             case BranchType.LEAF: {
@@ -137,7 +149,7 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
                 <>
                   <StandardSelect
                     value={operation}
-                    options={unaryOperations}
+                    options={unaryOptions}
                     onValueChange={(val) =>
                       onChange((old) => {
                         if (old.length === 2) {
@@ -185,7 +197,7 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
                   />
                   <StandardSelect
                     value={operation}
-                    options={binaryOperations}
+                    options={binaryOptions}
                     onValueChange={(val) =>
                       onChange((old) => {
                         if (old.length === 3) {

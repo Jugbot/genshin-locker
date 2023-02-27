@@ -74,7 +74,7 @@ const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
 
   return (
     <Box css={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Text {...props}>{t(key)}</Text>
+      <Text {...props}>{t(`stat.${key}`)}</Text>
       <Text {...props}>{formattedValue}</Text>
     </Box>
   )
@@ -91,10 +91,12 @@ export const ArtifactCard = ({
   css,
   ...props
 }: ArtifactCardProps) => {
+  const { t } = useTranslation('artifact')
+
   return (
     <Box
       css={{
-        backgroundColor: '$sand5',
+        backgroundColor: '$slate5',
         borderRadius: '$radius1',
         overflow: 'hidden',
         ...css,
@@ -121,7 +123,7 @@ export const ArtifactCard = ({
               whiteSpace: 'nowrap',
             }}
           >
-            {artifact.setKey}
+            {t(`set.${artifact.setKey}`)}
           </Heading>
         </Box>
         <Heading variant="md" css={{ flexGrow: 0, display: 'contents' }}>
@@ -130,7 +132,7 @@ export const ArtifactCard = ({
       </Box>
       <Stack.Horizontal
         css={{
-          backgroundColor: '$sand7',
+          backgroundColor: '$slate7',
           padding: '$space2',
           justifyContent: 'center',
         }}
@@ -146,7 +148,7 @@ export const ArtifactCard = ({
           padding: '$space2',
         }}
       >
-        <Heading variant="sm">lvl{artifact.level}</Heading>
+        <Heading variant="sm">lvl {artifact.level}</Heading>
         <b>
           <ArtifactStat
             variant="body"

@@ -1,31 +1,28 @@
 import {
-  sandDark,
-  yellowDark,
-  sand,
-  yellow,
-  sandDarkA,
   blackA,
-  whiteA,
-  sandA,
-  orangeDark,
-  purpleDark,
-  blueDark,
-  greenDark,
-  slateDark,
-  green,
-  orange,
-  purple,
   blue,
-  slate,
-  redDark,
+  blueDark,
+  green,
+  greenDark,
+  orange,
+  orangeDark,
+  purple,
+  purpleDark,
   red,
+  redDark,
+  slate,
+  slateDark,
+  slateDarkA,
+  whiteA,
+  yellow,
+  yellowDark,
 } from '@radix-ui/colors'
 
 import { fadeIn } from './keyframes'
 
 // Constants for setting window button colors
-export const MENUBAR_BACKCOLOR = sandDark.sand3
-export const MENUBAR_COLOR = sandDark.sand12
+export const MENUBAR_BACKCOLOR = slateDark.slate3
+export const MENUBAR_COLOR = slateDark.slate12
 
 const theme = {
   borderStyles: {},
@@ -36,9 +33,6 @@ const theme = {
     borderWidth3: '4px',
   },
   colors: {
-    ...sandDark,
-    ...sandDarkA,
-
     ...redDark,
     ...orangeDark,
     ...yellowDark,
@@ -47,14 +41,15 @@ const theme = {
     ...purpleDark,
 
     ...slateDark,
+    ...slateDarkA,
 
     ...blackA,
     ...whiteA,
 
-    bgPrimary: '$sand2',
-    bgSecondary: '$sand4',
-    bgSecondaryHover: '$sand5',
-    bgTertiary: '$sand6',
+    bgPrimary: '$slate2',
+    bgSecondary: '$slate4',
+    bgSecondaryHover: '$slate5',
+    bgTertiary: '$slate6',
     bgActionPrimary: '$slate9',
     bgActionPrimaryHover: '$slate10',
     bgActionPrimaryPressed: '$slate8',
@@ -64,21 +59,21 @@ const theme = {
     bgActionSubduedPressed: '$slate8',
     textActionSubdued: '$white11',
     bgActionTransparent: 'transparent',
-    bgActionTransparentHover: '$sandA4',
-    bgActionTransparentPressed: '$sandA5',
+    bgActionTransparentHover: '$slateA4',
+    bgActionTransparentPressed: '$slateA5',
     textActionTransparent: '$textDefault',
-    bgActionNeutral: '$sand9',
-    bgActionNeutralHover: '$sand10',
-    bgActionNeutralPressed: '$sand8',
-    textActionNeutral: '$sand2',
-    textDefault: '$sand12',
-    textInverted: '$sand8',
-    textDisabled: '$sand11',
+    bgActionNeutral: '$slate9',
+    bgActionNeutralHover: '$slate10',
+    bgActionNeutralPressed: '$slate8',
+    textActionNeutral: '$slate2',
+    textDefault: '$slate12',
+    textInverted: '$slate8',
+    textDisabled: '$slate11',
     menubarBackground: MENUBAR_BACKCOLOR,
     menubarColor: MENUBAR_COLOR,
-    layoutHandle: '$sand8',
-    layoutHandleHover: '$sand9',
-    layoutHandlePressed: '$sand10',
+    layoutHandle: '$slate8',
+    layoutHandleHover: '$slate9',
+    layoutHandlePressed: '$slate10',
   },
   fonts: {
     display: 'Arial',
@@ -172,8 +167,6 @@ export const light = {
   ...theme,
   colors: {
     ...theme.colors,
-    ...sand,
-    ...sandA,
     ...yellow,
     ...orange,
     ...red,
@@ -188,8 +181,6 @@ export const dark = {
   ...theme,
   colors: {
     ...theme.colors,
-    ...sandDark,
-    ...sandDarkA,
     ...yellowDark,
     ...orangeDark,
     ...redDark,

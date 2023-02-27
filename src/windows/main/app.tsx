@@ -1,6 +1,7 @@
 import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import { useTranslation } from 'react-i18next'
 import { GiPlayButton } from 'react-icons/gi'
 
 import { Channel } from '../../apiTypes'
@@ -33,14 +34,11 @@ initTranslations()
 
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
-enum Routines {
-  SCAN = 'Scan',
-  SCAN_AND_LOCK = 'Scan and lock',
-}
 
 const App: React.FC = () => {
   loadGlobalStyles()
   const themeClass = useThemeClass()
+  const { t } = useTranslation()
   const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
@@ -61,9 +59,12 @@ const App: React.FC = () => {
   })
   const [logs, setLogs] = useState<string[]>([])
   const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
-  const [routineType, setRoutineType] = useState<Routines>(
-    Routines.SCAN_AND_LOCK
-  )
+  const routineSelectOptions = {
+    SCAN: t('scan'),
+    SCAN_AND_LOCK: t('scan-and-lock'),
+  }
+  const [routineType, setRoutineType] =
+    useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
@@ -179,56 +180,61 @@ const App: React.FC = () => {
             alignItems: 'stretch',
           }}
         >
-          <Stack.Vertical
+          <ScrollArea.Root
             css={{
               flex: '0 0 20%',
-              overflowX: 'hidden',
-              overflowY: 'auto',
             }}
           >
-            <Text>Comparison Buckets</Text>
-            {Object.entries(routineOptions.targetAttributes).map(
-              ([key, value]) => (
-                <Stack.Horizontal key={key}>
-                  <Checkbox.Root
-                    checked={value}
-                    onCheckedChange={(e) =>
-                      setRoutineOptions((options) => ({
-                        ...options,
-                        targetAttributes: {
-                          ...options.targetAttributes,
-                          [key]: Boolean(e),
-                        },
-                      }))
-                    }
-                  >
-                    <Checkbox.Indicator>
-                      <CheckIcon />
-                    </Checkbox.Indicator>
-                  </Checkbox.Root>
-                  <Heading variant="subheading">
-                    {
-                      {
-                        set: 'Artifact Set',
-                        slot: 'Slot Type',
-                        main: 'Main Stat',
-                        sub: 'Substats',
-                      }[key]
-                    }
-                  </Heading>
-                </Stack.Horizontal>
-              )
-            )}
-            <LogicTree
-              value={routineOptions.logic}
-              onChange={(logic) =>
-                setRoutineOptions((prev) => ({
-                  ...prev,
-                  logic: logic(prev.logic),
-                }))
-              }
-            />
-          </Stack.Vertical>
+            <ScrollArea.Viewport>
+              <Stack.Vertical>
+                <Text>{t('comparison-buckets')}</Text>
+                {Object.entries(routineOptions.targetAttributes).map(
+                  ([key, value]) => (
+                    <Stack.Horizontal key={key}>
+                      <Checkbox.Root
+                        checked={value}
+                        onCheckedChange={(e) =>
+                          setRoutineOptions((options) => ({
+                            ...options,
+                            targetAttributes: {
+                              ...options.targetAttributes,
+                              [key]: Boolean(e),
+                            },
+                          }))
+                        }
+                      >
+                        <Checkbox.Indicator>
+                          <CheckIcon />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                      <Heading variant="subheading">
+                        {
+                          {
+                            set: t('artifact-set'),
+                            slot: t('slot-type'),
+                            main: t('main-stat'),
+                            sub: t('substats'),
+                          }[key]
+                        }
+                      </Heading>
+                    </Stack.Horizontal>
+                  )
+                )}
+                <LogicTree
+                  value={routineOptions.logic}
+                  onChange={(logic) =>
+                    setRoutineOptions((prev) => ({
+                      ...prev,
+                      logic: logic(prev.logic),
+                    }))
+                  }
+                />
+              </Stack.Vertical>
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar orientation="vertical">
+              <ScrollArea.Thumb />
+            </ScrollArea.Scrollbar>
+          </ScrollArea.Root>
           <Stack.Vertical
             css={{
               flexGrow: 1,
@@ -310,13 +316,12 @@ const App: React.FC = () => {
             </Button>
             <StandardSelect
               size="small"
-              options={Object.values(Routines)}
+              options={routineSelectOptions}
               onValueChange={(val) => {
                 setRoutineType(val)
                 setRoutineOptions((options) => ({
                   ...options,
-                  lockWhileScanning:
-                    val === Routines.SCAN_AND_LOCK ? true : false,
+                  lockWhileScanning: val === 'SCAN_AND_LOCK' ? true : false,
                 }))
               }}
               value={routineType}

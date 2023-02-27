@@ -7,10 +7,10 @@ import React from 'react'
 
 import { Select, Text } from '../../../components'
 
-interface StandardSelectProps<T>
+interface StandardSelectProps<T extends string>
   extends React.ComponentProps<typeof Select.Trigger> {
-  options: ReadonlyArray<T>
-  value?: string
+  options: ReadonlyArray<T> | Record<T, string>
+  value?: T
   placeholder?: string
   onValueChange: (value: T) => void
 }
@@ -29,11 +29,23 @@ export const StandardSelect = <T extends string>({
     setPortalRoot(document.querySelector<HTMLElement>('#appStyled'))
   }, [])
 
+  let selectOptions: Array<[key: string, label: string]> = []
+  if (Array.isArray(options)) {
+    selectOptions = options.map((key) => [key, key])
+  } else {
+    selectOptions = Object.entries(options)
+  }
+
+  let displayValue: string | undefined = value
+  if (!(options instanceof Array) && value !== undefined) {
+    displayValue = options[value]
+  }
+
   return (
     <Select.Root value={value} onValueChange={onValueChange}>
       <Select.Trigger {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{value ?? placeholder ?? '(none)'}</Text>
+          <Text color="inherit">{displayValue ?? placeholder ?? '(none)'}</Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>
@@ -47,10 +59,10 @@ export const StandardSelect = <T extends string>({
             <ChevronUpIcon />
           </Select.ScrollUpButton>
           <Select.Viewport>
-            {options.map((option) => (
-              <Select.Item key={option} value={option}>
+            {selectOptions.map(([key, label]) => (
+              <Select.Item key={key} value={key}>
                 <Select.ItemText asChild>
-                  <Text>{option}</Text>
+                  <Text>{label}</Text>
                 </Select.ItemText>
                 <Select.ItemIndicator asChild>
                   <Text>
