@@ -14,6 +14,8 @@ TODO
 - [x] 16:9 (1920×1080), 16:10 (1920×1200)
   - [ ] Adding screen resolutions readme
 - [ ] Install instructions + images
+- [ ] Bundle sharp, tesseract
+- [ ] Save settings in local storage
 - [x] GL window icon
 - [ ] remove this list and publish :)
 
@@ -71,7 +73,17 @@ A tool for automatically managing your artifacts.
 
 ### Installing
 
-1.
+1. Download the latest [release](https://github.com/Jugbot/genshin-locker/releases).
+2. Install tesseract.
+3. Install sharp.
+
+### Usage
+
+1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard. 
+2. Open the artifact tab. From here you can apply any in-game filters to specify what artifacts to parse.
+3. You can edit the logic determining which components to lock in the left pane. Usually you would run the scanner first in "Scan" mode and then preview changes in logic in the right pane.
+4. Run the scanner. Press [SPACE] to stop the scanning early.
+5. If need be, you can export the scanned artifacts in GOOD format.
 
 ### Dev Setup
 
