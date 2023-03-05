@@ -88,14 +88,16 @@ export async function readArtifacts({
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item.regions()
   )
 
-  const lockArtifactTask = (thisPageIndex: number) => async () => {
-    // navigate to the artifact we want to lock again
-    clickArray[thisPageIndex]()
-    await sleep(200)
-    navigator.click('card_lock')
-    await sleep(200)
-    return true
-  }
+  const lockArtifactTask =
+    (thisPageIndex: number, lockCallback: () => void) => async () => {
+      // navigate to the artifact we want to lock again
+      clickArray[thisPageIndex]()
+      await sleep(200)
+      navigator.click('card_lock')
+      lockCallback()
+      await sleep(200)
+      return true
+    }
 
   const artifactTask = (thisPageIndex: number) => async () => {
     clickArray[thisPageIndex]()
@@ -134,7 +136,19 @@ export async function readArtifacts({
           targetAttributes
         )
         if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
-          taskManager.add('sync', lockArtifactTask(thisPageIndex))
+          taskManager.add(
+            'sync',
+            lockArtifactTask(thisPageIndex, () =>
+              mainApi.send(
+                Channel.ARTIFACT,
+                {
+                  ...artifact,
+                  lock: shouldBeLocked,
+                },
+                shouldBeLocked
+              )
+            )
+          )
         }
         mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
       },

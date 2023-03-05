@@ -39,7 +39,10 @@ const App: React.FC = () => {
   loadGlobalStyles()
   const themeClass = useThemeClass()
   const { t } = useTranslation()
-  const [artifacts, setArtifacts] = useState<ArtifactData[]>([])
+  const [artifactSet, setArtifactSet] = useState<Record<string, ArtifactData>>(
+    {}
+  )
+  const artifacts = Object.values(artifactSet)
   const [routineStatus, setRoutineStatus] = useState<
     RoutineStatus | Record<string, never>
   >({})
@@ -68,7 +71,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
-      setArtifacts((a) => [...a, { artifact, shouldBeLocked }])
+      setArtifactSet((old) => ({
+        ...old,
+        [artifact.id]: { artifact, shouldBeLocked },
+      }))
     })
   }, [])
 
@@ -96,14 +102,19 @@ const App: React.FC = () => {
       )
       .then((data) =>
         // Avoid overwriting new data
-        setArtifacts((last) => (last.length === data.length ? data : last))
+        setArtifactSet((last) => ({
+          ...last,
+          ...Object.fromEntries(
+            data.map((artifactData) => [artifactData.artifact.id, artifactData])
+          ),
+        }))
       )
     // FIXME: Avoid artifacts update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routineOptions.logic, routineOptions.targetAttributes])
 
   const startRoutine = () => {
-    setArtifacts([])
+    setArtifactSet({})
     api.invoke(Channel.START, routineOptions)
   }
 

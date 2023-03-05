@@ -1,20 +1,21 @@
-### TODO
+<!--
+TODO
 
 - [x] Artifact end of list detection
-- [ ] Artifact card string formatting
+- [x] Artifact card string formatting
 - [x] Artifact card lock state
+- [ ] Update read artifacts when locking to reflect new lock status
 - [ ] Tooltips, hovers
 - [ ] Pause on _any_ keyboard press (+resume??/stop)
 - [x] Dropdown
   - Routine lock options read, read&lock, lock
   - Scoring method popularity/rarity with and/or condition
 - [x] export data
-- [ ] 16:9 (1920×1080), 16:10 (1920×1200)
+- [x] 16:9 (1920×1080), 16:10 (1920×1200)
+  - [ ] Adding screen resolutions readme
 - [ ] Install instructions + images
-- [ ] Adding screen resolutions readme
 - [x] GL window icon
 - [ ] remove this list and publish :)
-- [ ] Update read artifacts when locking to reflect new lock status
 
 Stretch:
 
@@ -34,19 +35,43 @@ Stretch:
   - rarity
   - level
   - substat roll chance
+- lerna/package separation for main process, windows
+- Language dropdown select
+- Check for offset ui (when changing screen resolutions)
+
+Minor:
+- Change window chrome color when changing theme/dark mode
+
+Fun:
+- Change primary color based on favorite character
+
+-->
 
 # Genshin Artifact Locker
 
----
+A tool for automatically managing your artifacts.
 
-A tool for intelligently choosing what artifacts to recycle.
-
-## 🚧 Features 🚧
+### Features
 
 - [x] Automatically read artifact data from the game.
 - [x] Choose artifacts based on various criteria. Artifacts will be locked or unlocked to make for easy disposal in-game.
-  - [x] Popularity in crowdsourced builds from [Lineup Simulator](https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html).
+  - [x] Popularity in crowdsourced builds from [Lineup Simulator].
   - [x] Mainstat / substat rarity.
-- [x] Supports any screen resolution(\*).
-- [x] Export artifacts to other popular tools such as [Genshin Optimizer](https://frzyc.github.io/genshin-optimizer)
+- [x] Supports any screen resolution.
+- [x] Export artifacts to other popular tools such as [Genshin Optimizer]
 - [x] Light mode for freaks.
+
+### Upcoming
+
+- [ ] Character & weapon scanning.
+- [ ] Gamepad support.
+- [ ] More filter methods.
+
+### Installing
+
+1.
+
+### Dev Setup
+
+[Lineup Simulator]: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html
+[Genshin Optimizer]: https://frzyc.github.io/genshin-optimizer

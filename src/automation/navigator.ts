@@ -4,6 +4,8 @@ import path from 'path'
 import tesseract from 'node-tesseract-ocr'
 import { Region, Sharp } from 'sharp'
 
+import { mainApi } from '../api'
+import { Channel } from '../apiTypes'
 import traineddata from '../tessdata/genshin_best_eng.traineddata'
 
 import { Landmarks, ScreenMap, load } from './landmarks'
@@ -35,7 +37,8 @@ export class Navigator {
       Number(this.gwindow.height)
     )
     if (!landmarks) {
-      throw Error('Resolution not supported.')
+      mainApi.send(Channel.LOG, 'error', 'Resolution not supported.')
+      throw new Error('Resolution not supported.')
     }
     this.landmarks = landmarks
   }
