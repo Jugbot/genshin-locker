@@ -16,7 +16,6 @@ export const mainConfig: Configuration = {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
   externals: {
-    'win32-api': 'commonjs win32-api',
     'ffi-napi': 'commonjs ffi-napi',
     'ref-napi': 'commonjs ref-napi',
     sharp: 'commonjs sharp',

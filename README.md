@@ -46,7 +46,8 @@ Fun:
 - Change primary color based on favorite character
 
 -->
-![Screenshot 2023-03-04 202700](https://user-images.githubusercontent.com/5402388/222936865-58104da3-f1c2-4cc1-b658-0f302610e6cd.png)
+
+![App Screenshot](https://user-images.githubusercontent.com/5402388/222936865-58104da3-f1c2-4cc1-b658-0f302610e6cd.png)
 
 # Genshin Artifact Locker
 
