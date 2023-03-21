@@ -91,7 +91,7 @@ A tool for automatically managing your artifacts.
 
 1. Do the usual git clone
 2. This is a yarn project, so run `yarn` to set up. I have pinned the node environment to `v16.x.x` so you might need to install node too. Of course if you have a node version manager this is easy.
-3. You will need to install [tesseract](https://github.com/tesseract-ocr/tessdoc/blob/master/Installation.md).
+3. You will need to install [tesseract 5](https://github.com/tesseract-ocr/tessdoc/blob/main/Installation.md#windows).
 4. Start the application with `yarn start`.
 
 [Lineup Simulator]: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html
