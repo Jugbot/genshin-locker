@@ -71,11 +71,13 @@ A tool for automatically managing your artifacts.
 - [ ] Gamepad support.
 - [ ] More filter methods.
 
+<!-- Fix sharp dependency not being bundled
 ### Installing
 
 1. Download the latest [release](https://github.com/Jugbot/genshin-locker/releases).
 2. Install tesseract.
 3. Install sharp.
+-->
 
 ### Usage
 
@@ -86,6 +88,11 @@ A tool for automatically managing your artifacts.
 5. If need be, you can export the scanned artifacts in GOOD format.
 
 ### Dev Setup
+
+1. Do the usual git clone
+2. This is a yarn project, so run `yarn` to set up. I have pinned the node environment to `v16.x.x` so you might need to install node too. Of course if you have a node version manager this is easy.
+3. You will need to install [tesseract](https://github.com/tesseract-ocr/tessdoc/blob/master/Installation.md).
+4. Start the application with `yarn start`.
 
 [Lineup Simulator]: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html
 [Genshin Optimizer]: https://frzyc.github.io/genshin-optimizer
