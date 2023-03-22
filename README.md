@@ -62,7 +62,7 @@ A tool for automatically managing your artifacts.
   - [x] Popularity in crowdsourced builds from [Lineup Simulator].
   - [x] Mainstat / substat rarity.
 - [x] Supports any screen resolution.
-- [x] Export artifacts to other popular tools such as [Genshin Optimizer]
+- [x] Export artifacts to other popular tools such as [Genshin Optimizer].
 - [x] Light mode for freaks.
 
 ### Upcoming
@@ -81,7 +81,7 @@ A tool for automatically managing your artifacts.
 
 ### Usage
 
-1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard. 
+1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard.
 2. Open the artifact tab. From here you can apply any in-game filters to specify what artifacts to parse.
 3. You can edit the logic determining which components to lock in the left pane. Usually you would run the scanner first in "Scan" mode and then preview changes in logic in the right pane.
 4. Run the scanner. Press [SPACE] to stop the scanning early.
@@ -89,10 +89,10 @@ A tool for automatically managing your artifacts.
 
 ### Dev Setup
 
-1. Do the usual git clone
+1. Do the usual git clone.
 2. This is a yarn project, so run `yarn` to set up. I have pinned the node environment to `v16.x.x` so you might need to install node too. Of course if you have a node version manager this is easy.
 3. You will need to install [tesseract 5](https://github.com/tesseract-ocr/tessdoc/blob/main/Installation.md#windows). You only need the engine, not the language trained data.
-4. Start the application with `yarn start`.
+4. Start the application with `yarn start` IN ADMINISTRATOR MODE.
 
 [Lineup Simulator]: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html
 [Genshin Optimizer]: https://frzyc.github.io/genshin-optimizer
