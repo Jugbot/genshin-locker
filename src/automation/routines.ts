@@ -7,7 +7,6 @@ import { ScreenMap } from './landmarks/types'
 import { Navigator } from './navigator'
 import { calculate } from './scoring/logic'
 import { ScoringLogic, Bucket } from './scoring/types'
-import { GBRAtoRGB } from './util/image'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -75,7 +74,7 @@ export async function readArtifacts({
   await sleep(200)
 
   const total = await navigator.getArtifactCount(
-    await navigator.gwindow.captureBGRA().then(GBRAtoRGB)
+    await navigator.gwindow.capture()
   )
   mainApi.send(Channel.LOG, 'info', `Reading ${total} artifacts total`)
   const { repeat_y: rowsPerPage } =
@@ -102,8 +101,7 @@ export async function readArtifacts({
   const artifactTask = (thisPageIndex: number) => async () => {
     clickArray[thisPageIndex]()
     await sleep(100)
-    const imageBGRA = await navigator.gwindow.captureBGRA()
-    const image = await GBRAtoRGB(imageBGRA)
+    const image = await navigator.gwindow.capture()
     const region = regions[thisPageIndex]
     if (await navigator.isEmpty(image, region)) {
       return false

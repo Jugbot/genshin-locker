@@ -196,18 +196,18 @@ export class GenshinWindow {
     if (!this.handle) {
       throw Error('No window handle!')
     }
-    // Gets the DC of the client rect of the window
-    const hwndDC = user32.GetDC(String(this.handle))
+    // Gets the DC of the whole screen (getting the dc of the client area does not work sometimes)
+    const hwndDC = user32.GetDC(0)
     // Gets a copy of the window DC for use
     const hdc = gdi32.CreateCompatibleDC(hwndDC)
-    //
+    // Create bitmap that is compatible with the screen graphics
     const hdcBlt = gdi32.CreateCompatibleBitmap(
       hwndDC,
       Number(this.width),
       Number(this.height)
     )
     // Select the bitmap for the print operation
-    gdi32.SelectObject(hdc, hdcBlt)
+    const unknownLastObj = gdi32.SelectObject(hdc, hdcBlt)
 
     gdi32.BitBlt(
       hdc,
@@ -216,10 +216,13 @@ export class GenshinWindow {
       Number(this.width),
       Number(this.height),
       hwndDC,
-      0,
-      0,
+      Number(this.x),
+      Number(this.y),
       SRCCOPY
     )
+
+    // Select whatever was there before (might not be necessary)
+    gdi32.SelectObject(hdc, unknownLastObj)
 
     const bmp = new BITMAP()
 
@@ -245,7 +248,7 @@ export class GenshinWindow {
         Number(bmp.bmHeight)
     )
 
-    // FIXME: HDR causes previous images to get written..?
+    // Get graphics in bitmap as bit buffer
     const result = gdi32.GetDIBits(
       hwndDC,
       hdcBlt,
@@ -259,9 +262,9 @@ export class GenshinWindow {
       throw Error('Failed getting DIBits')
     }
 
-    user32.ReleaseDC(String(this.handle), hwndDC)
     gdi32.DeleteObject(hdcBlt)
-    gdi32.DeleteDC(hdc)
+    gdi32.DeleteObject(hdc)
+    user32.ReleaseDC(0, hwndDC)
 
     return sharp(imageBuf, {
       raw: {
