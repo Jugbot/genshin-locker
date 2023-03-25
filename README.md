@@ -49,7 +49,7 @@ Fun:
 
 -->
 
-![App Screenshot](https://user-images.githubusercontent.com/5402388/222936865-58104da3-f1c2-4cc1-b658-0f302610e6cd.png)
+![App Screenshot](https://user-images.githubusercontent.com/5402388/227738305-8b05f3e3-0909-48dc-a7b6-545003c64c58.png)
 
 # Genshin Artifact Locker
 
