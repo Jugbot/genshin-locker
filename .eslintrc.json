@@ -18,7 +18,11 @@
     "plugin:storybook/recommended",
     "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
   "settings": {
     "react": {
       "version": "detect"

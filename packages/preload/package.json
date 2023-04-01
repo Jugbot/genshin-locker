@@ -1,0 +1,32 @@
+{
+  "name": "@gl/preload",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Lucas Pollice <lp1935@nyu.edu>",
+  "homepage": "https://github.com/Jugbot/genshin-locker#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jugbot/genshin-locker.git"
+  },
+  "scripts": {
+    "build": "vite build",
+    "check-types": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/Jugbot/genshin-locker/issues"
+  },
+  "devDependencies": {
+    "@gl/shared": "*",
+    "typescript": "^4.9.0",
+    "unplugin-auto-expose": "^0.0.4",
+    "vite": "4.2.1"
+  }
+}

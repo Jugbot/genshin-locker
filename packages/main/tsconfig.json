@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": false,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "types": ["node"],
+    "baseUrl": "."
+  },
+  "include": ["src/**/*.ts", "../automation/src/assets.d.ts", "../component-library/src/globalCss.ts", "../component-library/src/globalCss.ts"],
+  "exclude": ["**/*.test.ts"]
+}
