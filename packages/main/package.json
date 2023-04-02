@@ -17,6 +17,11 @@
     "url": "git+https://github.com/Jugbot/genshin-locker.git"
   },
   "scripts": {
+    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "build": "vite build",
     "check-types": "tsc --noEmit"
   },
   "bugs": {

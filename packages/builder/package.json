@@ -1,5 +1,5 @@
 {
-  "name": "@gl/automation",
+  "name": "@gl/builder",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Lucas Pollice <lp1935@nyu.edu>",
@@ -17,13 +17,12 @@
     "url": "git+https://github.com/Jugbot/genshin-locker.git"
   },
   "scripts": {
-    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
-    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
-    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
-    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
-    "check-types": "tsc --noEmit"
+    "compile": "electron-builder build --config .electron-builder.config.js --dir --config.asar=false"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
+  },
+  "devDependencies": {
+    "electron-builder": "23.6.0"
   }
 }

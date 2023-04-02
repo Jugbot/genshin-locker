@@ -6,21 +6,13 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "format:write": "prettier . -u --ignore-path=\"./.gitignore\" --write",
-    "format": "prettier . -u --ignore-path=\"./.gitignore\" --check",
-    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"./.gitignore\" --fix",
-    "lint": "eslint . --max-warnings=0 --ignore-path=\"./.gitignore\"",
+    "format:write": "npx lerna run format:write",
+    "format": "npx lerna run format",
+    "lint:write": "npx lerna run lint:write",
+    "lint": "npx lerna run lint",
     "check-types": "npx lerna run check-types",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
-    "make": "electron-forge make",
-    "package": "electron-forge package",
-    "publish": "electron-forge publish",
-    "rebuild": "electron-rebuild -f -w genshin-locker",
-    "start": "electron-forge start",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "scripts": "ts-node scripts"
+    "build": "npx lerna run build",
+    "compile": "cross-env MODE=production npx lerna run compile" 
   },
   "keywords": [],
   "author": {
@@ -29,10 +21,10 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "7.0.3",
     "lerna": "^6.6.1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "engines": {
     "node": "^16.0.0"
   },
