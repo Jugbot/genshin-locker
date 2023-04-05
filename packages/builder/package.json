@@ -5,7 +5,7 @@
   "author": "Lucas Pollice <lp1935@nyu.edu>",
   "homepage": "https://github.com/Jugbot/genshin-locker#readme",
   "license": "ISC",
-  "main": "src/index.ts",
+  "main": "src/index.mjs",
   "directories": {
     "src": "src"
   },

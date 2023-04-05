@@ -12,7 +12,7 @@
     "lint": "npx lerna run lint",
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
-    "compile": "cross-env MODE=production npx lerna run compile" 
+    "compile": "cross-env MODE=production npx lerna run compile"
   },
   "keywords": [],
   "author": {
