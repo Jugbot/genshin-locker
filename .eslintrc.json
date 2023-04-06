@@ -4,6 +4,7 @@
     "es6": true,
     "node": true
   },
+  // "ignorePatterns": ["packages/**/*"],
   "plugins": ["unused-imports"],
   "extends": [
     "eslint:recommended",

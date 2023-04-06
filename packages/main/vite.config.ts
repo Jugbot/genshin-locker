@@ -1,15 +1,15 @@
-import {node} from '../../.electron-vendors.cache.json';
 import {join} from 'node:path';
-// import {injectAppVersion} from '../../version/inject-app-version-plugin.mjs';
+
+import {defineConfig} from 'vite'
+
+import {node} from '../../.electron-vendors.cache.json';
+import {injectAppVersion} from '../../inject-app-version-plugin'
+
 
 const PACKAGE_ROOT = __dirname;
 const PROJECT_ROOT = join(PACKAGE_ROOT, '../..');
 
-/**
- * @type {import('vite').UserConfig}
- * @see https://vitejs.dev/config/
- */
-const config = {
+const config = defineConfig({
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   envDir: PROJECT_ROOT,
@@ -34,8 +34,8 @@ const config = {
     reportCompressedSize: false,
   },
   plugins: [
-    // injectAppVersion()
+    injectAppVersion()
   ],
-};
+});
 
 export default config;

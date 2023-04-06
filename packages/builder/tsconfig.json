@@ -13,6 +13,5 @@
     "types": ["node"],
     "baseUrl": "."
   },
-  "include": ["src/**/*.ts", "vite.config.ts"],
-  "exclude": ["**/*.test.ts"]
+  "include": ["src/**/*.ts"]
 }

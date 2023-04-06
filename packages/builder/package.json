@@ -5,10 +5,7 @@
   "author": "Lucas Pollice <lp1935@nyu.edu>",
   "homepage": "https://github.com/Jugbot/genshin-locker#readme",
   "license": "ISC",
-  "main": "src/index.mjs",
-  "directories": {
-    "src": "src"
-  },
+  "main": "src/index.ts",
   "files": [
     "src"
   ],
@@ -17,12 +14,40 @@
     "url": "git+https://github.com/Jugbot/genshin-locker.git"
   },
   "scripts": {
-    "compile": "electron-builder build --config .electron-builder.config.js --dir --config.asar=false"
+    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "check-types": "tsc --noEmit",
+    "compile": "electron-builder build --dir --config.asar=false"
+  },
+  "build": {
+    "directories": {
+      "output": "dist",
+      "buildResources": "buildResources"
+    },
+    "files": ["../**/dist/**"],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "${productName}_${version}.${ext}"
+    },
+    "extraMetadata": {
+      "main": "../../../../../main/dist/index.cjs"
+    },
+    "beforePack": "./beforePack.js"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
   "devDependencies": {
-    "electron-builder": "23.6.0"
+    "typescript": "^4.9.0",
+    "electron-builder": "23.6.0",
+    "electron": "20.0.0",
+    "eslint": "^8.0.1"
   }
 }
