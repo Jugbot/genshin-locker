@@ -1,4 +1,4 @@
-import { styled } from '../stitches.config'
+import { styled } from '@gl/theme'
 
 export const Heading = styled('h1', {
   margin: '$space0',

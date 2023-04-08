@@ -1,9 +1,4 @@
-import {
-  MainStatKey,
-  SetKey,
-  SlotKey,
-  SubStatKey,
-} from '@gl/types'
+import { MainStatKey, SetKey, SlotKey, SubStatKey } from '@gl/types'
 import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
 
 import { ArtifactCard } from './ArtifactCard'

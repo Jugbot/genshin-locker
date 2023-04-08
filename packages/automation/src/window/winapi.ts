@@ -4,7 +4,6 @@ import * as ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
 import refunion from 'ref-union-di'
 
-
 const RefStruct = refstruct(ref)
 const RefUnion = refunion(ref)
 const RefArray = refarray(ref)

@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/Jugbot/genshin-locker.git"
   },
-  "scripts": {    
+  "scripts": {
     "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
@@ -27,8 +27,8 @@
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
   "dependencies": {
-
     "@gl/preload": "*",
+    "@gl/theme": "*",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-checkbox": "^1.0.1",

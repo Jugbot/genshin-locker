@@ -1,5 +1,1 @@
-export * from './stitches.config'
 export * from './components'
-export * from './globalCss'
-export * from './stitches'
-export {MENUBAR_BACKCOLOR, MENUBAR_COLOR} from './stitches/theme'

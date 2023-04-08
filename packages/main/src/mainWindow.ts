@@ -4,8 +4,8 @@ import { join } from 'node:path'
 import { URL } from 'node:url'
 
 import { readArtifacts, calculate } from '@gl/automation'
-import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/component-library'
 import { mainApi } from '@gl/ipc-api'
+import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/theme'
 import { Channel, ArtifactData } from '@gl/types'
 
 async function createWindow() {

@@ -4,7 +4,7 @@ import { platform } from 'node:process'
 import { exit } from 'process'
 
 import { restoreOrCreateWindow } from './mainWindow'
-import {setSecurityRestrictions} from './security-restrictions'
+import { setSecurityRestrictions } from './security-restrictions'
 
 try {
   execFileSync('net', ['session'], { stdio: 'ignore' })

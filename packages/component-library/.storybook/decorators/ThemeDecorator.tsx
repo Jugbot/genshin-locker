@@ -2,7 +2,7 @@ import { DecoratorFn } from '@storybook/react'
 import { useDarkMode } from 'storybook-dark-mode'
 
 import { Box } from '../../src/components'
-import { darkTheme, lightTheme } from '../../src/stitches.config'
+import { darkTheme, lightTheme } from '@gl/theme'
 
 export const ThemeDecorator: DecoratorFn = (renderStory) => {
   return (

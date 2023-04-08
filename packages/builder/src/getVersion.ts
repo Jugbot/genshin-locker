@@ -4,5 +4,5 @@
  * Runs several times for each vite configs and electron-builder config.
  */
 export function getVersion(): string {
-  return process.env.npm_package_version ?? '';
+  return process.env.npm_package_version ?? ''
 }

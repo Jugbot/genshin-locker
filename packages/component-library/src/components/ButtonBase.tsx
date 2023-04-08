@@ -1,4 +1,4 @@
-import { styled } from '../stitches.config'
+import { styled } from '@gl/theme'
 
 export const ButtonBase = styled('button', {
   position: 'relative',

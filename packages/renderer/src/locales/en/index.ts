@@ -1,9 +1,4 @@
-import type {
-  MainStatKey,
-  SetKey,
-  SlotKey,
-  SubStatKey,
-} from '@gl/types'
+import type { MainStatKey, SetKey, SlotKey, SubStatKey } from '@gl/types'
 
 import artifact from './artifact.json'
 import translation from './translation.json'

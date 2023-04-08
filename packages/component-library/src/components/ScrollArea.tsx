@@ -1,6 +1,5 @@
+import { styled } from '@gl/theme'
 import * as RadixScrollArea from '@radix-ui/react-scroll-area'
-
-import { styled } from '../stitches.config'
 
 const ScrollAreaRoot = styled(RadixScrollArea.Root, {
   borderRadius: '$radius1',

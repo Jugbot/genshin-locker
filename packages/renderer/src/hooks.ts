@@ -1,6 +1,5 @@
-import { darkTheme, lightTheme } from '@gl/component-library'
+import { darkTheme, lightTheme } from '@gl/theme'
 import * as React from 'react'
-
 
 type Theme = 'light' | 'dark'
 const themeClassMap = {

@@ -1,14 +1,9 @@
 import {
   mainStatRollChance,
   subStatRollChance,
-  getDatabase
+  getDatabase,
 } from '@gl/automation'
-import {
-  MainStatKey,
-  SetKey,
-  SlotKey,
-  SubStatKey,
-} from '@gl/types'
+import { MainStatKey, SetKey, SlotKey, SubStatKey } from '@gl/types'
 
 import { asCommand } from './types'
 

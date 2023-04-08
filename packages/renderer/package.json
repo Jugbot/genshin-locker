@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@gl/preload": "*",
+    "@gl/theme": "*",
     "@gl/types": "*",
     "@gl/ipc-api": "*",
     "@gl/automation": "*",

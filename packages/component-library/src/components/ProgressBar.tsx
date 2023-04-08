@@ -1,7 +1,6 @@
+import { styled } from '@gl/theme'
 import * as Progress from '@radix-ui/react-progress'
 import { ComponentProps } from 'react'
-
-import { styled } from '../stitches.config'
 
 import { Box } from './Box'
 import { Heading } from './Heading'

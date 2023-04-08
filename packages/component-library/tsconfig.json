@@ -13,8 +13,6 @@
     "baseUrl": ".",
     "lib": ["ESNext", "dom", "dom.iterable"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx", ".storybook/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", ".storybook/**/*"],
   "exclude": ["**/*.test.ts"]
 }

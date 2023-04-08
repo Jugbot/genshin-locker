@@ -6,7 +6,6 @@ import {
 } from '@radix-ui/react-icons'
 import * as React from 'react'
 
-
 interface StandardSelectProps<T extends string>
   extends React.ComponentProps<typeof Select.Trigger> {
   options: ReadonlyArray<T> | Record<T, string>

@@ -11,7 +11,6 @@ import { Box, Stack } from '@gl/component-library'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
-
 import { ControlledState } from '../../reactUtils'
 import { StandardSelect } from '../StandardSelect'
 

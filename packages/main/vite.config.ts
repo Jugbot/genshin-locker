@@ -16,7 +16,6 @@ const config = defineConfig(({ mode }) => ({
     sourcemap: 'inline',
     target: `node${node}`,
     outDir: 'dist',
-    assetsDir: '.',
     minify: mode !== 'development',
     lib: {
       entry: 'src/index.ts',
@@ -26,6 +25,7 @@ const config = defineConfig(({ mode }) => ({
       external: ['sharp', 'ffi-napi', 'ref-napi'],
       output: {
         entryFileNames: '[name].cjs',
+        // preserveModules: true
       },
     },
     emptyOutDir: true,

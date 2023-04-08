@@ -1,7 +1,8 @@
 import { DecoratorFn } from '@storybook/react'
 import { useDarkMode } from 'storybook-dark-mode'
 
-import { Box, darkTheme, lightTheme } from '@gl/component-library'
+import { Box } from '@gl/component-library'
+import { darkTheme, lightTheme } from '@gl/theme'
 
 export const ThemeDecorator: DecoratorFn = (renderStory) => {
   return (

@@ -1,4 +1,4 @@
-import { LocalizationDecorator,ThemeDecorator } from './decorators'
+import { LocalizationDecorator, ThemeDecorator } from './decorators'
 import resources from '../src/locales'
 
 export const parameters = {

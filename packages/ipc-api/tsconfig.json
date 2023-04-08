@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "strict": true,
     "isolatedModules": true,
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.test.ts"]

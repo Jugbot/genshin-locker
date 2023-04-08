@@ -3,7 +3,6 @@ import path from 'path'
 
 import { mainApi } from '@gl/ipc-api'
 import { Artifact, Channel } from '@gl/types'
-import * as tesseract from 'node-tesseract-ocr'
 import { Region, Sharp } from 'sharp'
 
 import { Landmarks, ScreenMap, load } from './landmarks'
@@ -15,17 +14,13 @@ import {
   getSubstats,
 } from './util/scraper'
 import { GenshinWindow } from './window'
+import { OCR } from './ocr'
 
-const tesseractConfig: tesseract.Config = {
-  'tessdata-dir': '/',
-  lang: 'genshin_best_eng',
-  psm: 7,
-  oem: 3,
-}
 
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
+  ocr = new OCR()
   constructor() {
     this.gwindow = new GenshinWindow()
     if (!this.gwindow.grab()) {
@@ -99,10 +94,7 @@ export class Navigator {
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
           const imageRegion = image.clone().extract(region).withMetadata().png()
-          return tesseract.recognize(
-            await imageRegion.toBuffer(),
-            tesseractConfig
-          )
+          return this.ocr.recognize(await imageRegion.toBuffer())
         }
       )
     )

@@ -1,6 +1,5 @@
+import { styled } from '@gl/theme'
 import * as React from 'react'
-
-import { styled } from '../stitches.config'
 
 const ResizeBar = styled('div', {
   minWidth: '$size2',

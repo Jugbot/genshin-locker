@@ -1,6 +1,5 @@
+import { styled } from '@gl/theme'
 import * as RadixMenuBar from '@radix-ui/react-menubar'
-
-import { styled } from '../stitches.config'
 
 const MenuBarRoot = styled(RadixMenuBar.Root, {
   '-webkit-app-region': 'drag',

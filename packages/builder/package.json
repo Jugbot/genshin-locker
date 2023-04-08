@@ -26,12 +26,16 @@
       "output": "dist",
       "buildResources": "buildResources"
     },
-    "files": ["../**/dist/**"],
+    "files": [
+      "../**/dist/**"
+    ],
     "win": {
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "artifactName": "${productName}_${version}.${ext}"

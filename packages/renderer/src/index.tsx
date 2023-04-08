@@ -1,6 +1,6 @@
-import { createRoot } from "react-dom/client"
+import { createRoot } from 'react-dom/client'
 
-import { App } from "./app"
+import { App } from './app'
 
 const container = document.getElementById('app') as HTMLElement
 const root = createRoot(container)

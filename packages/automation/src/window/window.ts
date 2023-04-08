@@ -1,7 +1,6 @@
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
 
-
 import { GBRAtoRGB } from '../util/image'
 
 import { mouseEvent, ucsBufferFrom } from './util'

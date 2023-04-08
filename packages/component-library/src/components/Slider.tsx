@@ -1,6 +1,5 @@
+import { styled } from '@gl/theme'
 import * as RadixSlider from '@radix-ui/react-slider'
-
-import { styled } from '../stitches.config'
 
 const SliderRoot = styled(RadixSlider.Root, {
   position: 'relative',

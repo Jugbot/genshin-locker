@@ -4,7 +4,6 @@ import fetch from 'node-fetch'
 
 import { asCommand } from './types'
 
-
 const timeInSecondsUTC = (date: Date) => {
   return Math.trunc(date.getTime() / 1000)
 }

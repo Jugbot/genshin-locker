@@ -1,6 +1,5 @@
+import { styled } from '@gl/theme'
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
-
-import { styled } from '../stitches.config'
 
 const CheckboxRoot = styled(RadixCheckbox.Root, {
   all: 'unset', // reset button styles

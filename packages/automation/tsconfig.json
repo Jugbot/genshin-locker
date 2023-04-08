@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "target": "esnext",
     "sourceMap": false,
     "moduleResolution": "Node",
@@ -10,7 +10,8 @@
     "skipLibCheck": true,
     "strict": true,
     "isolatedModules": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["vite/client", "node", "electron"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.test.ts"]

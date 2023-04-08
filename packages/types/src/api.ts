@@ -1,6 +1,6 @@
 import type { RoutineOptions, Bucket, ScoringLogic } from '@gl/automation'
 
-import type { Artifact } from './artifact';
+import type { Artifact } from './artifact'
 
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }

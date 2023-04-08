@@ -1,10 +1,5 @@
 import { Box, Heading, Stack, Text } from '@gl/component-library'
-import {
-  Artifact,
-  MainStatKey,
-  SlotKey,
-  SubStatKey,
-} from '@gl/types'
+import { Artifact, MainStatKey, SlotKey, SubStatKey } from '@gl/types'
 import {
   ArrowRightIcon,
   LockClosedIcon,
@@ -19,7 +14,6 @@ import {
   GiFeather,
   GiHourglass,
 } from 'react-icons/gi'
-
 
 const rarityColors = (rarity: number) => {
   switch (rarity) {

@@ -13,7 +13,8 @@
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
     "compile": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
-    "watch": "node watch.mjs"
+    "watch": "node watch.mjs",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": {
@@ -23,14 +24,15 @@
   "license": "MIT",
   "devDependencies": {
     "cross-env": "7.0.3",
-    "lerna": "^6.6.1",
+    "electron": "20.0.0",
     "electron-builder": "23.6.0",
-    "electron": "20.0.0"
+    "husky": "^8.0.3",
+    "lerna": "^6.6.1"
   },
   "dependencies": {
-    "sharp": "^0.31.2",
     "ffi-napi": "4.0.3",
-    "ref-napi": "3.0.3"
+    "ref-napi": "3.0.3",
+    "sharp": "^0.31.2"
   },
   "engines": {
     "node": "^16.0.0"

@@ -12,9 +12,8 @@ import {
   TextArea,
   Stack,
   ButtonIcon,
-  loadGlobalStyles,
-  rotate
 } from '@gl/component-library'
+import { loadGlobalStyles, rotate } from '@gl/theme'
 import { ArtifactData, RoutineStatus, Channel } from '@gl/types'
 import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
@@ -27,17 +26,15 @@ import { LogicTree } from './components/LogicTree'
 import { useThemeClass } from './hooks'
 import { initTranslations } from './i18n'
 
-
 initTranslations()
-
 
 export const App: React.FC = () => {
   loadGlobalStyles()
   const themeClass = useThemeClass()
   const { t } = useTranslation()
-  const [artifactSet, setArtifactSet] = React.useState<Record<string, ArtifactData>>(
-    {}
-  )
+  const [artifactSet, setArtifactSet] = React.useState<
+    Record<string, ArtifactData>
+  >({})
   const artifacts = Object.values(artifactSet)
   const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>

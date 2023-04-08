@@ -1,7 +1,6 @@
+import { CSS, styled } from '@gl/theme'
 import * as RadixSelect from '@radix-ui/react-select'
 import * as React from 'react'
-
-import { CSS, styled } from '../stitches.config'
 
 import { Button } from './Button'
 
