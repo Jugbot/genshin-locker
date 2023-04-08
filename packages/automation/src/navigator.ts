@@ -28,7 +28,14 @@ export class Navigator {
   landmarks: Landmarks
   constructor() {
     this.gwindow = new GenshinWindow()
-    this.gwindow.grab()
+    if (!this.gwindow.grab()) {
+      mainApi.send(
+        Channel.LOG,
+        'error',
+        `Could not find the Genshin Impact window.`
+      )
+      throw new Error('Could not find the Genshin Impact window.')
+    }
     const landmarks = load(
       Number(this.gwindow.width),
       Number(this.gwindow.height)

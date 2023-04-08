@@ -1,5 +1,3 @@
-import { mainApi } from '@gl/ipc-api'
-import { Channel } from '@gl/types'
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
 
@@ -45,11 +43,7 @@ export class GenshinWindow {
       )
     )
     if (!this.handle) {
-      mainApi.send(
-        Channel.LOG,
-        'error',
-        `Could not find the Genshin Impact window.`
-      )
+      return false
     }
     user32.ShowWindow(String(this.handle), SW_RESTORE)
     user32.SetForegroundWindow(String(this.handle))
@@ -61,6 +55,7 @@ export class GenshinWindow {
     this.y = BigInt(point.y)
     this.width = BigInt(rect.right)
     this.height = BigInt(rect.bottom)
+    return true
   }
 
   show() {
