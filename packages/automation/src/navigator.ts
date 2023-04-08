@@ -1,7 +1,7 @@
 import os from 'os'
 import path from 'path'
 
-import { mainApi, Channel } from '@gl/shared'
+import { mainApi, Channel } from '@gl/ipc-api'
 import { Artifact } from '@gl/types'
 import tesseract from 'node-tesseract-ocr'
 import { Region, Sharp } from 'sharp'

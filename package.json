@@ -4,7 +4,7 @@
   "productName": "genshin-locker",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": ".webpack/main",
+  "main": "packages/main/dist/index.cjs",
   "scripts": {
     "format:write": "npx lerna run format:write",
     "format": "npx lerna run format",
@@ -12,7 +12,8 @@
     "lint": "npx lerna run lint",
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
-    "compile": "cross-env MODE=production npx lerna run compile"
+    "compile": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+    "watch": "node watch.mjs"
   },
   "keywords": [],
   "author": {
@@ -22,9 +23,15 @@
   "license": "MIT",
   "devDependencies": {
     "cross-env": "7.0.3",
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "electron-builder": "23.6.0",
+    "electron": "20.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "sharp": "^0.31.2",
+    "ffi-napi": "4.0.3",
+    "ref-napi": "3.0.3"
+  },
   "engines": {
     "node": "^16.0.0"
   },

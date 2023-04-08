@@ -1,5 +1,7 @@
-import { rendererApi } from '@gl/shared'
+import { contextBridge } from 'electron'
 
-export const electron = rendererApi
+import { rendererApi } from '@gl/ipc-api'
+
+contextBridge.exposeInMainWorld('electron', rendererApi)
 
 export type ElectronHandler = typeof rendererApi

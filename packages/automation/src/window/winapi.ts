@@ -144,6 +144,7 @@ export const InputArray = RefArray(INPUT)
 
 export const StringBuffer = RefArray(ref.types.uint16)
 
+console.log('loading user32')
 export const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [StringBuffer, StringBuffer]],
   SetForegroundWindow: [W.BOOL, [W.HWND]],
@@ -181,9 +182,12 @@ export const gdi32 = ffi.Library('gdi32', {
   ],
 })
 
+import vJoyPath from './lib/vJoyInterface.dll?url'
+
 function loadVJoyLib() {
   try {
-    return ffi.Library(path.join(__dirname, './lib/vJoyInterface.dll'), {
+    console.log('loading vJoyInterface')
+    return ffi.Library(vJoyPath, {
       GetvJoyVersion: [W.SHORT, []],
       vJoyEnabled: [W.BOOL, []],
       SetAxis: [W.BOOL, [W.LONG, W.UINT, W.UINT]],

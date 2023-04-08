@@ -1,4 +1,4 @@
-import { mainApi, Channel } from '@gl/shared'
+import { mainApi, Channel } from '@gl/ipc-api'
 import { Sharp } from 'sharp'
 
 import { ScreenMap } from './landmarks/types'

@@ -1,11 +1,11 @@
-# `shared`
+# `ipc-api`
 
 > TODO: description
 
 ## Usage
 
 ```
-const shared = require('shared');
+const ipc-api = require('ipc-api');
 
 // TODO: DEMONSTRATE API
 ```

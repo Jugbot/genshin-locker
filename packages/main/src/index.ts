@@ -1,38 +1,48 @@
-import {app} from 'electron';
-import {platform} from 'node:process';
+import { execFileSync } from 'child_process'
+import { app } from 'electron'
+import { platform } from 'node:process'
+import { exit } from 'process'
 
-import {restoreOrCreateWindow} from './mainWindow';
+import { restoreOrCreateWindow } from './mainWindow'
+import {setSecurityRestrictions} from './security-restrictions'
 
-import './security-restrictions';
+try {
+  execFileSync('net', ['session'], { stdio: 'ignore' })
+} catch (e) {
+  console.error('Requires elevated permssions')
+  exit(1)
+}
+
+setSecurityRestrictions()
 
 /**
  * Prevent electron from running multiple instances.
  */
-const isSingleInstance = app.requestSingleInstanceLock();
+const isSingleInstance = app.requestSingleInstanceLock()
 if (!isSingleInstance) {
-  app.quit();
-  process.exit(0);
+  app.quit()
+  process.exit(0)
 }
-app.on('second-instance', restoreOrCreateWindow);
+app.on('second-instance', restoreOrCreateWindow)
 
 /**
  * Disable Hardware Acceleration to save more system resources.
  */
-app.disableHardwareAcceleration();
+app.disableHardwareAcceleration()
 
 /**
  * Shout down background process if all windows was closed
  */
 app.on('window-all-closed', () => {
   if (platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 /**
  * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
  */
-app.on('activate', restoreOrCreateWindow);
+app.on('activate', restoreOrCreateWindow)
 
 /**
  * Create the application window when the background process is ready.
@@ -40,7 +50,7 @@ app.on('activate', restoreOrCreateWindow);
 app
   .whenReady()
   .then(restoreOrCreateWindow)
-  .catch(e => console.error('Failed create window:', e));
+  .catch((e) => console.error('Failed create window:', e))
 
 /**
  * Check for app updates, install it in background and notify user that new version was installed.
@@ -55,11 +65,11 @@ if (import.meta.env.PROD) {
   app
     .whenReady()
     .then(() => import('electron-updater'))
-    .then(module => {
+    .then((module) => {
       const autoUpdater =
         module.autoUpdater ||
-        (module.default.autoUpdater as (typeof module)['autoUpdater']);
-      return autoUpdater.checkForUpdatesAndNotify();
+        (module.default.autoUpdater as (typeof module)['autoUpdater'])
+      return autoUpdater.checkForUpdatesAndNotify()
     })
-    .catch(e => console.error('Failed check and install updates:', e));
+    .catch((e) => console.error('Failed check and install updates:', e))
 }

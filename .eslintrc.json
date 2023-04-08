@@ -27,6 +27,9 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
   "rules": {
@@ -61,12 +64,12 @@
           {
             "name": "@stitches/react",
             "importNames": ["styled"],
-            "message": "Please import '@stitches/react' from 'stitches.config.js' instead."
+            "message": "Please import 'styled' from 'stitches.config.js' instead."
           },
           {
             "name": "electron",
             "importNames": ["ipcMain", "ipcRenderer"],
-            "message": "Please import 'mainApi' or 'rendererApi' from 'api.ts' instead."
+            "message": "Please import 'mainApi' or 'rendererApi' from '@gl/ipc-api' instead."
           }
         ]
       }
@@ -76,6 +79,15 @@
     // Buggy
     "react/prop-types": "off",
     // Avoid accidentally leaving logs
-    "no-console": ["warn", { "allow": ["info", "warn", "error"] }]
+    "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+    // Avoid using monorepo deps unless they are defined as a dependency
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": [
+        "**/vite.config.ts",
+        "**/.storybook/**/*",
+        "**/*.stories.*",
+        "**/*.test.*"
+      ]
+    }]
   }
 }

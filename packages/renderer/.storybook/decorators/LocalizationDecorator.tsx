@@ -2,7 +2,7 @@ import { DecoratorFn } from '@storybook/react'
 import i18n, { changeLanguage, dir } from 'i18next'
 import React from 'react'
 
-import { initTranslations } from '../i18n'
+import { initTranslations } from '../../src/i18n'
 
 initTranslations()
 

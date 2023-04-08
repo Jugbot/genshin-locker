@@ -1,5 +1,5 @@
 {
-  "name": "@gl/shared",
+  "name": "@gl/ipc-api",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Lucas Pollice <lp1935@nyu.edu>",

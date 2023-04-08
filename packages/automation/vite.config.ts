@@ -5,10 +5,11 @@ import { defineConfig } from 'vite'
 import { node } from '../../.electron-vendors.cache.json'
 import { injectAppVersion } from '../../inject-app-version-plugin'
 
+
 const PACKAGE_ROOT = __dirname
 const PROJECT_ROOT = join(PACKAGE_ROOT, '../..')
 
-const config = defineConfig(({ mode }) => ({
+const config = defineConfig(({mode}) => ({
   root: PACKAGE_ROOT,
   envDir: PROJECT_ROOT,
   build: {
@@ -23,7 +24,6 @@ const config = defineConfig(({ mode }) => ({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['sharp', 'ffi-napi', 'ref-napi'],
       output: {
         entryFileNames: '[name].cjs',
       },

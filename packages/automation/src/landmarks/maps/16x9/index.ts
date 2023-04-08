@@ -1,5 +1,6 @@
 import { ScreenMap } from '../../types'
+import artifacts from './artifacts.svg?raw'
 
 export default {
-  artifacts: require('./artifacts.svg'),
+  artifacts,
 } satisfies Record<ScreenMap, string>
