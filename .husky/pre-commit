@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lerna run format:write,lint:write,check-types,test
+yarn lint-staged

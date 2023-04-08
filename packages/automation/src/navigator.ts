@@ -6,6 +6,7 @@ import { Artifact, Channel } from '@gl/types'
 import { Region, Sharp } from 'sharp'
 
 import { Landmarks, ScreenMap, load } from './landmarks'
+import { OCR } from './ocr'
 import {
   getArtifactSet,
   getMainStat,
@@ -14,8 +15,6 @@ import {
   getSubstats,
 } from './util/scraper'
 import { GenshinWindow } from './window'
-import { OCR } from './ocr'
-
 
 export class Navigator {
   gwindow: GenshinWindow

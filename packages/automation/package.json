@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@gl/automation": "*",
-    "@gl/builder": "*",
     "@gl/component-library": "*",
     "@gl/ipc-api": "*",
     "@gl/types": "*",

@@ -27,7 +27,8 @@
     "electron": "20.0.0",
     "electron-builder": "23.6.0",
     "husky": "^8.0.3",
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "lint-staged": "^13.2.1"
   },
   "dependencies": {
     "ffi-napi": "4.0.3",

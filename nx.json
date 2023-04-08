@@ -1,5 +1,4 @@
 {
-  "$schema": "node_modules/nx/schemas/nx-schema.json",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -18,10 +17,18 @@
   },
   "targetDefaults": {
     "compile": {
+      "dependsOn": [
+        "^compile",
+        "build"
+      ],
       "outputs": [
         "{projectRoot}/dist"
-      ],
-      "dependsOn": ["^build"]
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
     }
   }
 }
