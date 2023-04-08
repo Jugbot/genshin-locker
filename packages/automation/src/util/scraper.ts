@@ -1,5 +1,6 @@
-import { datamine } from '../datamine'
 import { MainStatKey, SetKey, SlotKey, SubStat, SubStatKey } from '@gl/types'
+
+import { datamine } from '../datamine'
 
 export const statMap: Record<string, string> = {
   hp: 'hp',

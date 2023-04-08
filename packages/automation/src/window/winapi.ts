@@ -1,8 +1,6 @@
-import path from 'path'
-
-import ffi from 'ffi-napi'
+import * as ffi from 'ffi-napi'
 import refarray from 'ref-array-di'
-import ref from 'ref-napi'
+import * as ref from 'ref-napi'
 import refstruct from 'ref-struct-di'
 import refunion from 'ref-union-di'
 
@@ -144,7 +142,6 @@ export const InputArray = RefArray(INPUT)
 
 export const StringBuffer = RefArray(ref.types.uint16)
 
-console.log('loading user32')
 export const user32 = ffi.Library('user32', {
   FindWindowW: [W.HWND, [StringBuffer, StringBuffer]],
   SetForegroundWindow: [W.BOOL, [W.HWND]],
@@ -186,7 +183,6 @@ import vJoyPath from './lib/vJoyInterface.dll?url'
 
 function loadVJoyLib() {
   try {
-    console.log('loading vJoyInterface')
     return ffi.Library(vJoyPath, {
       GetvJoyVersion: [W.SHORT, []],
       vJoyEnabled: [W.BOOL, []],

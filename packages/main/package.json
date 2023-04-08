@@ -28,9 +28,6 @@
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
   "devDependencies": {
-    "@gl/automation": "*",
-    "@gl/builder": "*",
-    "@gl/component-library": "*",
     "@types/ffi-napi": "^4.0.7",
     "@types/node": "^18.11.11",
     "@types/ref-array-di": "^1.2.5",
@@ -38,26 +35,32 @@
     "@types/sharp": "^0.31.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "electron": "20.0.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "fast-xml-parser": "^4.0.12",
-    "node-tesseract-ocr": "^2.2.1",
     "prettier": "^2.8.0",
+    "typescript": "^4.9.0",
+    "utility-types": "^3.10.0",
+    "vite": "4.2.1",
+    "electron": "20.0.0"
+  },
+  "dependencies": {
+    "@gl/ipc-api": "*",
+    "@gl/types": "*",
+    "@gl/automation": "*",
+    "@gl/builder": "*",
+    "@gl/component-library": "*",
+    "electron-updater": "^5.3.0",
+    "sharp": "^0.31.2",
+    "ffi-napi": "4.0.3",
+    "ref-napi": "3.0.3",
     "ref-array-di": "^1.2.2",
     "ref-struct-di": "1.1.1",
     "ref-union-di": "1.0.1",
     "rxdb": "^13.17.1",
     "rxjs": "^7.8.0",
-    "typescript": "^4.9.0",
-    "utility-types": "^3.10.0"
-  },
-  "dependencies": {
-    "electron-updater": "^5.3.0",
-    "sharp": "^0.31.2",
-    "ffi-napi": "4.0.3",
-    "ref-napi": "3.0.3"
+    "fast-xml-parser": "^4.0.12",
+    "node-tesseract-ocr": "^2.2.1"
   }
 }

@@ -1,4 +1,4 @@
-import ref from 'ref-napi'
+import * as ref from 'ref-napi'
 
 import { MOUSEINPUT, INPUT, INPUT_UNION } from './winapi'
 import { MOUSEEVENTF } from './winconst'

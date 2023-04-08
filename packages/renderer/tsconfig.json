@@ -9,7 +9,6 @@
     "strict": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["node"],
     "baseUrl": ".",
     "lib": ["ESNext", "dom", "dom.iterable"]
   },

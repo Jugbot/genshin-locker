@@ -1,1 +1,0 @@
-export { ThemeDecorator } from './ThemeDecorator'

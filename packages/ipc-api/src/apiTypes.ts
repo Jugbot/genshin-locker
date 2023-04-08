@@ -4,7 +4,7 @@ import type { Artifact } from '@gl/types'
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
 
-export enum Channel {
+export const enum Channel {
   START = 'start',
   PROGRESS = 'progress',
   PAUSE = 'pause',

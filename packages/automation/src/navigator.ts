@@ -3,7 +3,7 @@ import path from 'path'
 
 import { mainApi, Channel } from '@gl/ipc-api'
 import { Artifact } from '@gl/types'
-import tesseract from 'node-tesseract-ocr'
+import * as tesseract from 'node-tesseract-ocr'
 import { Region, Sharp } from 'sharp'
 
 import { Landmarks, ScreenMap, load } from './landmarks'

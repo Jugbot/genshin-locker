@@ -1,6 +1,6 @@
 import { DecoratorFn } from '@storybook/react'
 import i18n, { changeLanguage, dir } from 'i18next'
-import React from 'react'
+import * as React from 'react'
 
 import { initTranslations } from '../../src/i18n'
 

@@ -1,5 +1,4 @@
 export * from './stitches.config'
-export * from './decorators'
 export * from './components'
 export * from './globalCss'
 export * from './stitches'

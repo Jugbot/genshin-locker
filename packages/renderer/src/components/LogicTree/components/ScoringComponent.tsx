@@ -1,6 +1,6 @@
 import { Scores, Scoring } from '@gl/automation'
 import { Stack, Heading, Text, Slider } from '@gl/component-library'
-import React from 'react'
+import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ControlledState } from '../../../reactUtils'

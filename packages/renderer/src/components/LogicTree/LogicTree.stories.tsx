@@ -1,7 +1,7 @@
 import { ScoringLogic } from '@gl/automation'
 import { action } from '@storybook/addon-actions'
 import { ComponentMeta, ComponentStoryFn } from '@storybook/react'
-import React from 'react'
+import * as React from 'react'
 
 import { LogicTree } from './LogicTree'
 

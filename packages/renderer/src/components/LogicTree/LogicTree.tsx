@@ -8,7 +8,7 @@ import {
   BinaryOperation,
 } from '@gl/automation'
 import { Box, Stack } from '@gl/component-library'
-import React from 'react'
+import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
 

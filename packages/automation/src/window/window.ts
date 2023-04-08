@@ -1,8 +1,8 @@
+import { mainApi, Channel } from '@gl/ipc-api'
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
 
-import { mainApi } from '@gl/ipc-api'
-import { Channel } from '@gl/types'
+
 import { GBRAtoRGB } from '../util/image'
 
 import { mouseEvent, ucsBufferFrom } from './util'

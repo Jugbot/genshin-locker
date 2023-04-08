@@ -15,9 +15,9 @@ import {
   loadGlobalStyles,
   rotate
 } from '@gl/component-library'
-import type { ArtifactData, RoutineStatus, Channel } from '@gl/ipc-api'
+import { ArtifactData, RoutineStatus, Channel } from '@gl/ipc-api'
 import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
-import React, { useEffect, useState } from 'react'
+import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiPlayButton } from 'react-icons/gi'
 
@@ -35,14 +35,14 @@ export const App: React.FC = () => {
   loadGlobalStyles()
   const themeClass = useThemeClass()
   const { t } = useTranslation()
-  const [artifactSet, setArtifactSet] = useState<Record<string, ArtifactData>>(
+  const [artifactSet, setArtifactSet] = React.useState<Record<string, ArtifactData>>(
     {}
   )
   const artifacts = Object.values(artifactSet)
-  const [routineStatus, setRoutineStatus] = useState<
+  const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>
   >({})
-  const [routineOptions, setRoutineOptions] = useState<RoutineOptions>({
+  const [routineOptions, setRoutineOptions] = React.useState<RoutineOptions>({
     logic: [
       [{ type: 'popularity', percentile: 0.5 }],
       'OR',
@@ -56,16 +56,16 @@ export const App: React.FC = () => {
     },
     lockWhileScanning: true,
   })
-  const [logs, setLogs] = useState<string[]>([])
-  const [bottomPanelHeight, setBottomPanelHeight] = useState(0)
+  const [logs, setLogs] = React.useState<string[]>([])
+  const [bottomPanelHeight, setBottomPanelHeight] = React.useState(0)
   const routineSelectOptions = {
     SCAN: t('scan'),
     SCAN_AND_LOCK: t('scan-and-lock'),
   }
   const [routineType, setRoutineType] =
-    useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
+    React.useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
 
-  useEffect(() => {
+  React.useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
       setArtifactSet((old) => ({
         ...old,
@@ -74,13 +74,13 @@ export const App: React.FC = () => {
     })
   }, [])
 
-  useEffect(() => {
+  React.useEffect(() => {
     return api.on(Channel.PROGRESS, (progress) => {
       setRoutineStatus(progress)
     })
   }, [])
 
-  useEffect(() => {
+  React.useEffect(() => {
     return api.on(Channel.LOG, (mode, text) => {
       // eslint-disable-next-line no-console
       console[mode](text)
@@ -88,7 +88,7 @@ export const App: React.FC = () => {
     })
   }, [])
 
-  useEffect(() => {
+  React.useEffect(() => {
     api
       .invoke(
         Channel.CALCULATE,

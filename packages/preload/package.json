@@ -27,8 +27,10 @@
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
+  "dependencies": {
+    "@gl/ipc-api": "*"
+  },
   "devDependencies": {
-    "@gl/ipc-api": "*",
     "typescript": "^4.9.0",
     "vite": "4.2.1"
   }

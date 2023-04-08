@@ -1,6 +1,5 @@
-import { LocalizationDecorator } from './decorators'
+import { LocalizationDecorator,ThemeDecorator } from './decorators'
 import resources from '../src/locales'
-import { ThemeDecorator } from '@gl/component-library'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

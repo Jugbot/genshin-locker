@@ -4,8 +4,7 @@ import { join } from 'node:path'
 import { URL } from 'node:url'
 
 import { readArtifacts, calculate } from '@gl/automation'
-import { mainApi, ArtifactData } from '@gl/ipc-api'
-import { Channel } from '@gl/types'
+import { mainApi, ArtifactData, Channel } from '@gl/ipc-api'
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
