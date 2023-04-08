@@ -1,10 +1,11 @@
 import type { RoutineOptions, Bucket, ScoringLogic } from '@gl/automation'
-import type { Artifact } from '@gl/types'
+
+import type { Artifact } from './artifact';
 
 export type RoutineStatus = { max: number; current: number }
 export type ArtifactData = { artifact: Artifact; shouldBeLocked: boolean }
 
-export const enum Channel {
+export enum Channel {
   START = 'start',
   PROGRESS = 'progress',
   PAUSE = 'pause',

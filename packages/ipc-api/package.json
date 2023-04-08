@@ -26,9 +26,11 @@
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
+  "dependencies": {
+    "@gl/types": "*"
+  },
   "devDependencies": {
     "@gl/automation": "*",
-    "@gl/types": "*",
     "typescript": "^4.9.0"
   }
 }

@@ -1,4 +1,5 @@
-import { mainApi, Channel } from '@gl/ipc-api'
+import { mainApi } from '@gl/ipc-api'
+import { Channel } from '@gl/types'
 import { Pointer } from 'ref-napi'
 import sharp from 'sharp'
 

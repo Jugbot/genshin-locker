@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "strict": true,
     "isolatedModules": true,
-    "types": ["node", "vite/client"],
     "baseUrl": "."
   },
   "include": ["src/**/*.ts"],

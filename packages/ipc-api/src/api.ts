@@ -7,7 +7,7 @@ import {
   ipcRenderer,
 } from 'electron'
 
-import { MainAPI, RendererAPI } from './apiTypes'
+import { MainAPI, RendererAPI } from '@gl/types'
 
 export const rendererApi: RendererAPI = {
   invoke(channel, ...args) {

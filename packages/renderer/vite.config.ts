@@ -25,7 +25,6 @@ const config = defineConfig(({mode}) => ({
     sourcemap: true,
     target: `chrome${chrome}`,
     outDir: 'dist',
-    // assetsDir: '.',
     rollupOptions: {
       input: join(PACKAGE_ROOT, 'index.html'),
     },

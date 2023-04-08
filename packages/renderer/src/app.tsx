@@ -15,7 +15,7 @@ import {
   loadGlobalStyles,
   rotate
 } from '@gl/component-library'
-import { ArtifactData, RoutineStatus, Channel } from '@gl/ipc-api'
+import { ArtifactData, RoutineStatus, Channel } from '@gl/types'
 import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
