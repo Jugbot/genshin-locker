@@ -4,14 +4,19 @@ import { join } from 'node:path'
 import { URL } from 'node:url'
 
 import { readArtifacts, calculate } from '@gl/automation'
+import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/component-library'
 import { mainApi } from '@gl/ipc-api'
 import { Channel, ArtifactData } from '@gl/types'
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: MENUBAR_BACKCOLOR,
+      symbolColor: MENUBAR_COLOR,
+    },
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
     webPreferences: {
-      // nodeIntegration: true, 
       sandbox: false, // Sandbox disabled because the demo of preload script depend on the Node.js api
       preload: join(app.getAppPath(), 'packages/preload/dist/index.cjs'),
     },
