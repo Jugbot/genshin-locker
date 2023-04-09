@@ -127,6 +127,12 @@ export const App: React.FC = () => {
     () => artifacts.slice().sort(),
     [artifacts]
   )
+  const lockedAmount = React.useMemo(
+    // TODO: Sort controls
+    () => artifacts.filter((a) => a.shouldBeLocked).length,
+    [artifacts]
+  )
+  const unlockedAmount = artifacts.length - lockedAmount
 
   const logString = React.useMemo(() => logs.join('\n'), [logs])
 
@@ -251,6 +257,8 @@ export const App: React.FC = () => {
                 borderRadius: '$radius1',
               }}
             >
+              <Text>Locked: {lockedAmount}</Text>
+              <Text>Unlocked: {unlockedAmount}</Text>
               <Box css={{ flexGrow: 1 }} />
               <ButtonIcon
                 onClick={exportFile}

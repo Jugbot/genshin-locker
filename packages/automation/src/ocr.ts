@@ -1,3 +1,4 @@
+import os from 'os'
 import path from 'path'
 
 import {
@@ -15,7 +16,7 @@ const tessPath = path.resolve(__dirname, 'tessdata')
 export class OCR {
   scheduler = createScheduler()
 
-  constructor(num_workers = 1) {
+  constructor(num_workers = os.cpus().length) {
     for (let i = 0; i < num_workers; i++) {
       this.#addWorker()
     }
@@ -24,6 +25,8 @@ export class OCR {
   async #addWorker() {
     const worker = await createWorker({
       langPath: tessPath,
+      gzip: false,
+      cacheMethod: 'none',
       logger: (m) => console.info(m),
     })
 
