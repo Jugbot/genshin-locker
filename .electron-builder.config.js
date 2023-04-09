@@ -18,12 +18,8 @@ module.exports = function () {
     files: ['packages/**/dist/**'],
     extraMetadata: {
     },
-
-    // Specify linux target just for disabling snap compilation
-    // linux: {
-    //   target: 'deb',
-    // },
     win: {
+      requestedExecutionLevel: 'requireAdministrator',
       target: [
         {
           target: 'nsis',
@@ -31,12 +27,6 @@ module.exports = function () {
         },
       ],
       artifactName: '${productName}_${version}.${ext}',
-    },
-    // nsis: {
-    //   oneClick: false,
-    //   perMachine: false,
-    //   allowToChangeInstallationDirectory: true,
-    //   deleteAppDataOnUninstall: false,
-    // },
+    }
   };
 };

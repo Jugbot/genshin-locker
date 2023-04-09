@@ -1,0 +1,61 @@
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**.js'
+      - '**.mjs'
+      - '**.cjs'
+      - '**.jsx'
+      - '**.ts'
+      - '**.mts'
+      - '**.cts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.json'
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.mjs'
+      - '**.cjs'
+      - '**.jsx'
+      - '**.ts'
+      - '**.mts'
+      - '**.cts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.json'
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: 'bash'
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - run: yarn i --frozen-lockfile
+      - run: yarn lint --if-present
+
+  code-style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - run: yarn i --frozen-lockfile
+      - run: yarn format

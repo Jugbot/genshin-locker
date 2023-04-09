@@ -12,7 +12,8 @@
     "lint": "npx lerna run lint",
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
-    "compile": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+    "compile": "yarn build && electron-builder build --config .electron-builder.config.js",
+    "compile:unpacked": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "watch": "node watch.mjs",
     "prepare": "husky install"
   },
