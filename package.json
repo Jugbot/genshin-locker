@@ -32,6 +32,9 @@
     "lint-staged": "^13.2.1"
   },
   "dependencies": {
+    "@gl/main": "*",
+    "@gl/renderer": "*",
+    "@gl/preload": "*",
     "ffi-napi": "4.0.3",
     "ref-napi": "3.0.3",
     "sharp": "^0.31.2"

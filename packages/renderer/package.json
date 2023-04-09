@@ -21,7 +21,7 @@
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
-    "build": "vite build --mode=development",
+    "build": "vite build",
     "check-types": "tsc --noEmit"
   },
   "bugs": {
