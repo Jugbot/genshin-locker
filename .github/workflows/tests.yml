@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
+        # Add compile targets here (only useful for e2e tests)
+        os: [ windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +23,8 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-      - run: yarn i --frozen-lockfile
-      - run: yarn test --if-present
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn test
 

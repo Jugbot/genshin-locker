@@ -20,5 +20,6 @@ jobs:
           node-version: 16 # Need for npm >=7.7
           cache: 'yarn'
 
-      - run: yarn i --frozen-lockfile
-      - run: yarn check-types --if-present
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn check-types
