@@ -22,7 +22,7 @@
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
     "check-types": "tsc --noEmit",
-    "gettarget": "cross-env ELECTRON_RUN_AS_NODE=1 electron src/update-electron-vendors.mjs"
+    "get-env-target": "cross-env ELECTRON_RUN_AS_NODE=1 electron src/update-electron-vendors.mjs"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
