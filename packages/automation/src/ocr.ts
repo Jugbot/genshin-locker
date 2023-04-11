@@ -27,7 +27,7 @@ export class OCR {
       langPath: tessPath,
       gzip: false,
       cacheMethod: 'none',
-      logger: (m) => console.info(m),
+      // logger: console.debug,
     })
 
     await worker.loadLanguage('genshin_best_eng')

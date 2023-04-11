@@ -1,21 +1,10 @@
-import { Pointer } from 'ref-napi'
+import koffi from 'koffi'
 import sharp from 'sharp'
 
 import { GBRAtoRGB } from '../util/image'
 
-import { mouseEvent, ucsBufferFrom } from './util'
-import {
-  user32,
-  gdi32,
-  BITMAP,
-  BITMAPINFOHEADER,
-  INPUT,
-  InputArray,
-  POINT,
-  RECT,
-  StringBuffer,
-  vjoy,
-} from './winapi'
+import { mouseEvent } from './util'
+import { user32, gdi32, BITMAP, BITMAPINFOHEADER, INPUT, vjoy } from './winapi'
 import {
   MOUSEEVENTF,
   WHEEL_DELTA,
@@ -35,21 +24,16 @@ export class GenshinWindow {
   y = 0n
 
   grab() {
-    this.handle = BigInt(
-      user32.FindWindowW(
-        StringBuffer(ucsBufferFrom('UnityWndClass')),
-        StringBuffer(ucsBufferFrom('Genshin Impact'))
-      )
-    )
+    this.handle = BigInt(user32.FindWindowW('UnityWndClass', 'Genshin Impact'))
     if (!this.handle) {
       return false
     }
-    user32.ShowWindow(String(this.handle), SW_RESTORE)
-    user32.SetForegroundWindow(String(this.handle))
-    const rect = new RECT()
-    user32.GetClientRect(String(this.handle), rect.ref())
-    const point = new POINT()
-    user32.ClientToScreen(String(this.handle), point.ref())
+    user32.ShowWindow(this.handle, SW_RESTORE)
+    user32.SetForegroundWindow(this.handle)
+    const rect = {} as Record<string, number>
+    user32.GetClientRect(this.handle, rect)
+    const point = {} as Record<string, number>
+    user32.ClientToScreen(this.handle, point)
     this.x = BigInt(point.x)
     this.y = BigInt(point.y)
     this.width = BigInt(rect.right)
@@ -58,8 +42,8 @@ export class GenshinWindow {
   }
 
   show() {
-    user32.ShowWindow(String(this.handle), SW_RESTORE)
-    user32.SetForegroundWindow(String(this.handle))
+    user32.ShowWindow(this.handle, SW_RESTORE)
+    user32.SetForegroundWindow(this.handle)
   }
 
   keydown(char: VK): boolean {
@@ -74,16 +58,11 @@ export class GenshinWindow {
 
   click() {
     const inputEvents = [
-      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTDOWN }).ref(),
-      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTUP }).ref(),
+      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTDOWN }),
+      mouseEvent({ dwFlags: MOUSEEVENTF.LEFTUP }),
     ]
 
-    const inputArray = InputArray(
-      Buffer.concat(inputEvents).reinterpret(INPUT.size * inputEvents.length),
-      inputEvents.length
-    )
-
-    user32.SendInput(inputArray.length, inputArray, INPUT.size)
+    user32.SendInput(inputEvents.length, inputEvents, koffi.sizeof(INPUT))
   }
 
   gamepadButton(btn: GAMEPAD_BTN, down: boolean) {
@@ -95,24 +74,24 @@ export class GenshinWindow {
   mouseDown() {
     user32.SendInput(
       1,
-      InputArray(
+      [
         mouseEvent({
           dwFlags: MOUSEEVENTF.LEFTDOWN,
-        }).ref()
-      ),
-      INPUT.size
+        }),
+      ],
+      koffi.sizeof(INPUT)
     )
   }
 
   mouseUp() {
     user32.SendInput(
       1,
-      InputArray(
+      [
         mouseEvent({
           dwFlags: MOUSEEVENTF.LEFTUP,
-        }).ref()
-      ),
-      INPUT.size
+        }),
+      ],
+      koffi.sizeof(INPUT)
     )
   }
 
@@ -130,11 +109,11 @@ export class GenshinWindow {
       dwFlags: MOUSEEVENTF.WHEEL,
       // Convert negatives to the 32-bit-two's-complement version
       mouseData: (clicks * WHEEL_DELTA) >>> 0,
-    }).ref()
+    })
 
-    const inputArray = InputArray(inputEvent)
+    const inputArray = [inputEvent]
 
-    user32.SendInput(inputArray.length, inputArray, INPUT.size)
+    user32.SendInput(inputArray.length, inputArray, koffi.sizeof(INPUT))
 
     return remainder
   }
@@ -157,14 +136,14 @@ export class GenshinWindow {
       }
       user32.SendInput(
         1,
-        InputArray(
+        [
           mouseEvent({
             dx,
             dy,
             dwFlags: MOUSEEVENTF.MOVE,
-          }).ref()
-        ),
-        INPUT.size
+          }),
+        ],
+        koffi.sizeof(INPUT)
       )
     }
 
@@ -219,12 +198,13 @@ export class GenshinWindow {
     // Select whatever was there before (might not be necessary)
     gdi32.SelectObject(hdc, unknownLastObj)
 
-    const bmp = new BITMAP()
+    // TODO: Proper type definition
+    const bmp = {} as Record<string, unknown>
 
-    gdi32.GetObjectW(hdcBlt, BITMAP.size, bmp.ref())
+    gdi32.GetObjectW(hdcBlt, koffi.sizeof(BITMAP), bmp)
 
-    const bmpInfo = new BITMAPINFOHEADER({
-      biSize: BITMAPINFOHEADER.size,
+    const bmpInfo = {
+      biSize: koffi.sizeof(BITMAPINFOHEADER),
       biWidth: bmp.bmWidth,
       biHeight: bmp.bmHeight,
       biPlanes: 1,
@@ -235,7 +215,7 @@ export class GenshinWindow {
       biYPelsPerMeter: 0,
       biClrUsed: 0,
       biClrImportant: 0,
-    })
+    }
 
     const imageBuf = Buffer.alloc(
       Math.ceil((Number(bmp.bmWidth) * bmpInfo.biBitCount) / 32) *
@@ -249,8 +229,8 @@ export class GenshinWindow {
       hdcBlt,
       0,
       Number(bmp.bmHeight),
-      imageBuf as Pointer<number>,
-      bmpInfo.ref(),
+      imageBuf,
+      bmpInfo,
       DIB_RGB_COLORS
     )
     if (!result) {

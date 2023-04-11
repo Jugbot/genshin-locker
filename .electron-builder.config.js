@@ -9,7 +9,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 module.exports = function () {
-
+  return null;
   return {
     directories: {
       output: 'dist',

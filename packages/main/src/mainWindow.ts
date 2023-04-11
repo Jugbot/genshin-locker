@@ -75,7 +75,12 @@ async function createWindow() {
    * @see https://github.com/electron/electron/issues/25012 for the afford mentioned issue.
    */
   browserWindow.on('ready-to-show', () => {
-    browserWindow?.show()
+    if (import.meta.env.DEV) {
+      // TODO: remeber last window position so that dev reloading is less annoying
+      browserWindow.showInactive()
+    } else {
+      browserWindow.show()
+    }
 
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools()

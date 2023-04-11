@@ -1,12 +1,4 @@
-import * as ffi from 'ffi-napi'
-import refarray from 'ref-array-di'
-import * as ref from 'ref-napi'
-import refstruct from 'ref-struct-di'
-import refunion from 'ref-union-di'
-
-const RefStruct = refstruct(ref)
-const RefUnion = refunion(ref)
-const RefArray = refarray(ref)
+import koffi from 'koffi'
 
 const _WIN64 = process.arch === 'x64'
 
@@ -50,149 +42,194 @@ export const W = {
   UCHAR,
 } as const
 
-export const BITMAP = RefStruct(
-  {
-    bmType: ref.types.long,
-    bmWidth: ref.types.long,
-    bmHeight: ref.types.long,
-    bmWidthBytes: ref.types.long,
-    bmPlanes: ref.types.int16,
-    bmBitsPixel: ref.types.int16,
-    bmBits: ref.refType(ref.types.void),
-  },
-  { packed: false }
-)
-
-export const BITMAPINFOHEADER = RefStruct(
-  {
-    biSize: ref.types.uint32,
-    biWidth: ref.types.long,
-    biHeight: ref.types.long,
-    biPlanes: ref.types.int16,
-    biBitCount: ref.types.int16,
-    biCompression: ref.types.uint32,
-    biSizeImage: ref.types.uint32,
-    biXPelsPerMeter: ref.types.long,
-    biYPelsPerMeter: ref.types.long,
-    biClrUsed: ref.types.uint32,
-    biClrImportant: ref.types.uint32,
-  },
-  { packed: true }
-)
-
-export const BITMAPFILEHEADER = RefStruct(
-  {
-    bfType: ref.types.int16,
-    bfSize: ref.types.uint32,
-    bfReserved1: ref.types.int16,
-    bfReserved2: ref.types.int16,
-    bfOffBits: ref.types.uint32,
-  },
-  { packed: true }
-)
-
-export const RECT = RefStruct({
-  left: ref.types.long,
-  top: ref.types.long,
-  right: ref.types.long,
-  bottom: ref.types.long,
+export const BITMAP = koffi.pack('BITMAP', {
+  bmType: 'long',
+  bmWidth: 'long',
+  bmHeight: 'long',
+  bmWidthBytes: 'long',
+  bmPlanes: 'int16',
+  bmBitsPixel: 'int16',
+  bmBits: 'void*',
 })
 
-export const MOUSEINPUT = RefStruct({
-  dx: ref.types.long,
-  dy: ref.types.long,
-  mouseData: ref.types.uint32,
-  dwFlags: ref.types.uint32,
-  time: ref.types.uint32,
-  dwExtraInfo: ref.refType(ref.types.ulong),
+export const BITMAPINFOHEADER = koffi.pack('BITMAPINFOHEADER', {
+  biSize: 'uint32',
+  biWidth: 'long',
+  biHeight: 'long',
+  biPlanes: 'int16',
+  biBitCount: 'int16',
+  biCompression: 'uint32',
+  biSizeImage: 'uint32',
+  biXPelsPerMeter: 'long',
+  biYPelsPerMeter: 'long',
+  biClrUsed: 'uint32',
+  biClrImportant: 'uint32',
 })
 
-export const KEYBDINPUT = RefStruct({
-  wVk: ref.types.int16,
-  wScan: ref.types.int16,
-  dwFlags: ref.types.uint32,
-  time: ref.types.uint32,
-  dwExtraInfo: ref.refType(ref.types.ulong),
+export const BITMAPFILEHEADER = koffi.pack('BITMAPFILEHEADER', {
+  bfType: 'int16',
+  bfSize: 'uint32',
+  bfReserved1: 'int16',
+  bfReserved2: 'int16',
+  bfOffBits: 'uint32',
 })
 
-export const HARDWAREINPUT = RefStruct({
-  uMsg: ref.types.uint32,
-  wParamL: ref.types.int16,
-  wParamH: ref.types.int16,
+export const RECT = koffi.struct('RECT', {
+  left: 'long',
+  top: 'long',
+  right: 'long',
+  bottom: 'long',
 })
 
-export const INPUT_UNION = new RefUnion({
+export const MOUSEINPUT = koffi.struct('MOUSEINPUT', {
+  dx: 'long',
+  dy: 'long',
+  mouseData: 'uint32',
+  dwFlags: 'uint32',
+  time: 'uint32',
+  dwExtraInfo: koffi.pointer('ulong'),
+})
+
+export const KEYBDINPUT = koffi.struct('KEYBDINPUT', {
+  wVk: 'int16',
+  wScan: 'int16',
+  dwFlags: 'uint32',
+  time: 'uint32',
+  dwExtraInfo: koffi.pointer('ulong'),
+})
+
+export const HARDWAREINPUT = koffi.struct('HARDWAREINPUT', {
+  uMsg: 'uint32',
+  wParamL: 'int16',
+  wParamH: 'int16',
+})
+
+export const INPUT_UNION = koffi.struct('INPUT_UNION', {
   mi: MOUSEINPUT,
-  ki: KEYBDINPUT,
-  hi: HARDWAREINPUT,
+  // ki: KEYBDINPUT,
+  // hi: HARDWAREINPUT,
 })
 
-export const INPUT = RefStruct({
-  type: ref.types.uint32,
+export const INPUT = koffi.struct('INPUT', {
+  type: 'uint32',
   dummyUnionName: INPUT_UNION,
 })
 
-export const POINT = RefStruct({
-  x: ref.types.long,
-  y: ref.types.long,
+export const POINT = koffi.struct('POINT', {
+  x: 'long',
+  y: 'long',
 })
 
-export const InputArray = RefArray(INPUT)
+export const InputArray = koffi.pointer(INPUT)
 
-export const StringBuffer = RefArray(ref.types.uint16)
+export const StringBuffer = koffi.pointer('char16_t')
 
-export const user32 = ffi.Library('user32', {
-  FindWindowW: [W.HWND, [StringBuffer, StringBuffer]],
-  SetForegroundWindow: [W.BOOL, [W.HWND]],
-  BringWindowToTop: [W.BOOL, [W.HWND]],
-  GetDC: [W.HDC, [W.HWND]],
-  ReleaseDC: [W.INT, [W.HWND, W.HDC]],
-  PrintWindow: [W.BOOL, [W.HWND, W.HBITMAP, W.UINT]],
-  GetClientRect: [W.BOOL, [W.HWND, ref.refType(RECT)]],
-  SendMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
-  PostMessageW: [W.LONG_PTR, [W.HWND, W.UINT, W.UINT_PTR, W.LONG_PTR]],
-  SendInput: [W.UINT, [W.UINT, InputArray, W.UINT]],
-  ShowWindow: [W.BOOL, [W.HWND, W.INT]],
-  ClientToScreen: [W.BOOL, [W.HWND, ref.refType(POINT)]],
-  SetCursorPos: [W.BOOL, [W.INT, W.INT]],
-  GetAsyncKeyState: [W.SHORT, [W.INT]],
-})
+// C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\WinUser.h
+const user32lib = koffi.load('user32')
+export const user32 = {
+  FindWindowW: user32lib.stdcall('FindWindowW', W.HWND, [
+    StringBuffer,
+    StringBuffer,
+  ]),
+  SetForegroundWindow: user32lib.stdcall('SetForegroundWindow', W.BOOL, [
+    W.HWND,
+  ]),
+  BringWindowToTop: user32lib.stdcall('BringWindowToTop', W.BOOL, [W.HWND]),
+  GetDC: user32lib.stdcall('GetDC', W.HDC, [W.HWND]),
+  ReleaseDC: user32lib.stdcall('ReleaseDC', W.INT, [W.HWND, W.HDC]),
+  PrintWindow: user32lib.stdcall('PrintWindow', W.BOOL, [
+    W.HWND,
+    W.HBITMAP,
+    W.UINT,
+  ]),
+  GetClientRect: user32lib.stdcall('GetClientRect', W.BOOL, [
+    W.HWND,
+    koffi.out(koffi.pointer(RECT)),
+  ]),
+  SendMessageW: user32lib.stdcall('SendMessageW', W.LONG_PTR, [
+    W.HWND,
+    W.UINT,
+    W.UINT_PTR,
+    W.LONG_PTR,
+  ]),
+  PostMessageW: user32lib.stdcall('PostMessageW', W.LONG_PTR, [
+    W.HWND,
+    W.UINT,
+    W.UINT_PTR,
+    W.LONG_PTR,
+  ]),
+  SendInput: user32lib.stdcall('SendInput', W.UINT, [
+    W.UINT,
+    InputArray,
+    W.UINT,
+  ]),
+  ShowWindow: user32lib.stdcall('ShowWindow', W.BOOL, [W.HWND, W.INT]),
+  ClientToScreen: user32lib.stdcall('ClientToScreen', W.BOOL, [
+    W.HWND,
+    koffi.out(koffi.pointer(POINT)),
+  ]),
+  SetCursorPos: user32lib.stdcall('SetCursorPos', W.BOOL, [W.INT, W.INT]),
+  GetAsyncKeyState: user32lib.stdcall('GetAsyncKeyState', W.SHORT, [W.INT]),
+}
 
-export const ImageBuffer = RefArray(ref.types.byte)
+export const ImageBuffer = koffi.pointer(koffi.pointer('uint8'))
 
-export const gdi32 = ffi.Library('gdi32', {
-  CreateCompatibleBitmap: [W.HBITMAP, [W.HDC, W.INT, W.INT]],
-  CreateCompatibleDC: [W.HDC, [W.HDC]],
-  DeleteDC: [W.BOOL, [W.HDC]],
-  DeleteObject: [W.BOOL, [W.HGDIOBJ]],
-  SelectObject: [W.HBITMAP, [W.HDC, W.HBITMAP]],
-  GetDeviceCaps: [W.INT, [W.HDC, W.INT]],
-  GetObjectW: [W.INT, [W.HBITMAP, W.INT, ref.refType(BITMAP)]],
-  GetDIBits: [
+// C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\wingdi.h
+const gdi32lib = koffi.load('gdi32')
+export const gdi32 = {
+  CreateCompatibleBitmap: gdi32lib.stdcall(
+    'CreateCompatibleBitmap',
+    W.HBITMAP,
+    [W.HDC, W.INT, W.INT]
+  ),
+  CreateCompatibleDC: gdi32lib.stdcall('CreateCompatibleDC', W.HDC, [W.HDC]),
+  DeleteDC: gdi32lib.stdcall('DeleteDC', W.BOOL, [W.HDC]),
+  DeleteObject: gdi32lib.stdcall('DeleteObject', W.BOOL, [W.HGDIOBJ]),
+  SelectObject: gdi32lib.stdcall('SelectObject', W.HBITMAP, [W.HDC, W.HBITMAP]),
+  GetDeviceCaps: gdi32lib.stdcall('GetDeviceCaps', W.INT, [W.HDC, W.INT]),
+  GetObjectW: gdi32lib.stdcall('GetObjectW', W.INT, [
+    W.HBITMAP,
     W.INT,
-    [W.HDC, W.HBITMAP, W.UINT, W.UINT, W.LPVOID, W.LPVOID, W.UINT],
-  ],
-  BitBlt: [
-    W.BOOL,
-    [W.HDC, W.INT, W.INT, W.INT, W.INT, W.HDC, W.INT, W.INT, W.DWORD],
-  ],
-})
+    koffi.out(koffi.pointer(BITMAP)),
+  ]),
+  GetDIBits: gdi32lib.stdcall('GetDIBits', W.INT, [
+    W.HDC,
+    W.HBITMAP,
+    W.UINT,
+    W.UINT,
+    koffi.out(W.LPVOID),
+    koffi.inout(koffi.pointer(BITMAPINFOHEADER)),
+    W.UINT,
+  ]),
+  BitBlt: gdi32lib.stdcall('BitBlt', W.BOOL, [
+    W.HDC,
+    W.INT,
+    W.INT,
+    W.INT,
+    W.INT,
+    W.HDC,
+    W.INT,
+    W.INT,
+    W.DWORD,
+  ]),
+}
 
 import vJoyPath from './lib/vJoyInterface.dll?url'
 
 function loadVJoyLib() {
   try {
-    return ffi.Library(vJoyPath, {
-      GetvJoyVersion: [W.SHORT, []],
-      vJoyEnabled: [W.BOOL, []],
-      SetAxis: [W.BOOL, [W.LONG, W.UINT, W.UINT]],
-      SetBtn: [W.BOOL, [W.BOOL, W.UINT, W.UCHAR]],
-      SetDiscPov: [W.BOOL, [W.INT, W.UINT, W.UCHAR]],
-      SetContPov: [W.BOOL, [W.DWORD, W.UINT, W.UCHAR]],
-      AcquireVJD: [W.BOOL, [W.UINT]],
-      RelinquishVJD: ['void', [W.UINT]],
-      ResetVJD: [W.BOOL, [W.UINT]],
-    })
+    const lib = koffi.load(vJoyPath)
+    return {
+      GetvJoyVersion: lib.stdcall('GetvJoyVersion', W.SHORT, []),
+      vJoyEnabled: lib.stdcall('vJoyEnabled', W.BOOL, []),
+      SetAxis: lib.stdcall('SetAxis', W.BOOL, [W.LONG, W.UINT, W.UINT]),
+      SetBtn: lib.stdcall('SetBtn', W.BOOL, [W.BOOL, W.UINT, W.UCHAR]),
+      SetDiscPov: lib.stdcall('SetDiscPov', W.BOOL, [W.INT, W.UINT, W.UCHAR]),
+      SetContPov: lib.stdcall('SetContPov', W.BOOL, [W.DWORD, W.UINT, W.UCHAR]),
+      AcquireVJD: lib.stdcall('AcquireVJD', W.BOOL, [W.UINT]),
+      RelinquishVJD: lib.stdcall('RelinquishVJD', 'void', [W.UINT]),
+      ResetVJD: lib.stdcall('ResetVJD', W.BOOL, [W.UINT]),
+    }
   } catch (e) {
     console.warn('VJoy is not available.')
   }

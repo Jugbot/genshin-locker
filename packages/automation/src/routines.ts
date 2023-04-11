@@ -65,7 +65,7 @@ export async function readArtifacts({
   await sleep(200)
   navigator.click('sort_dir')
   await sleep(200)
-
+  return
   navigator.gwindow.goto(
     ...navigator.landmarks[ScreenMap.ARTIFACTS].card_name.center()
   )

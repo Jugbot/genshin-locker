@@ -1,31 +1,31 @@
-import * as ref from 'ref-napi'
-
-import { MOUSEINPUT, INPUT, INPUT_UNION } from './winapi'
 import { MOUSEEVENTF } from './winconst'
 
 export function ucsBufferFrom(str: string | undefined | null) {
   if (typeof str === 'string' && str.length) {
     return Buffer.from(str + '\0', 'ucs2')
   }
-  return ref.NULL
+  return [null]
 }
 
 const inputEvent = (
   type: 0 | 1 | 2,
-  event: Parameters<typeof MOUSEINPUT>[0]
+  // TODO: Proper type definition
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  event: any
 ) => {
-  const mi = MOUSEINPUT({
+  const mi = {
     dx: 0,
     dy: 0,
     mouseData: 0,
     dwFlags: MOUSEEVENTF.ABSOLUTE,
     time: 0,
+    dwExtraInfo: null,
     ...event,
-  })
-  const input = new INPUT({
+  }
+  const input = {
     type,
-    dummyUnionName: new INPUT_UNION({ mi }),
-  })
+    dummyUnionName: { mi },
+  }
   return input
 }
 
