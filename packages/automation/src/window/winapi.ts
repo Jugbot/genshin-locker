@@ -42,7 +42,7 @@ export const W = {
   UCHAR,
 } as const
 
-export const BITMAP = koffi.pack('BITMAP', {
+export const BITMAP = koffi.struct('BITMAP', {
   bmType: 'long',
   bmWidth: 'long',
   bmHeight: 'long',
