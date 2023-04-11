@@ -29,6 +29,9 @@ on:
       - '.idea/**'
       - '.vscode/**'
 
+permissions:
+  contents: read # for checkout
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -36,11 +39,13 @@ concurrency:
 jobs:
   typechecking:
     uses: ./.github/workflows/typechecking.yml
+  linting:
+    uses: ./.github/workflows/lint.yml
   tests:
     uses: ./.github/workflows/tests.yml
   draft_release:
     with:
       dry-run: ${{ github.event_name != 'push' || github.ref_name != 'main' }}
-    needs: [ typechecking, tests ]
+    needs: [ typechecking, linting, tests ]
     uses: ./.github/workflows/release.yml
 
