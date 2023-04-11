@@ -11,12 +11,8 @@ defaults:
 
 jobs:
   tests:
-    strategy:
-      fail-fast: false
-      matrix:
-        # Add compile targets here (only useful for e2e tests)
-        os: [ windows-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

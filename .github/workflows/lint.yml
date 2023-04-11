@@ -1,29 +1,5 @@
-on:
-  workflow_dispatch:
-  push:
-    paths:
-      - '**.js'
-      - '**.mjs'
-      - '**.cjs'
-      - '**.jsx'
-      - '**.ts'
-      - '**.mts'
-      - '**.cts'
-      - '**.tsx'
-      - '**.vue'
-      - '**.json'
-  pull_request:
-    paths:
-      - '**.js'
-      - '**.mjs'
-      - '**.cjs'
-      - '**.jsx'
-      - '**.ts'
-      - '**.mts'
-      - '**.cts'
-      - '**.tsx'
-      - '**.vue'
-      - '**.json'
+name: Lint
+on: [ workflow_call ]
 
 concurrency:
   group: lint-${{ github.ref }}
