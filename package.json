@@ -17,7 +17,7 @@
     "compile:unpacked": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "watch": "node watch.mjs",
     "prepare": "husky install",
-    "postinstall": "lerna run get-env-target --scope=@gl/scripts"
+    "postinstall": "lerna run set-env-targets --scope=@gl/scripts"
   },
   "keywords": [],
   "author": {
