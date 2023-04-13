@@ -3,6 +3,9 @@
 storybook-static/
 dist/
 
+.browserslistrc
+.electron-vendors.cache.json
+
 # Logs
 logs
 *.log

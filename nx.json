@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "format:write",
+          "format",
+          "lint:write",
+          "lint",
+          "check-types",
+          "build"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "format:write": {
+      "inputs": ["all"],
+      "outputs": ["all"]
+    },
+    "lint:write": {
+      "inputs": ["all"],
+      "outputs": ["all"]
+    },
+    "check-types": {
+      "inputs": ["all"]
+    }
+  },
+  "namedInputs": {
+    "all": ["{projectRoot}/**/*"]
+  }
+}

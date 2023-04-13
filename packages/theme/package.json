@@ -1,0 +1,46 @@
+{
+  "name": "@gl/theme",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Lucas Pollice <lp1935@nyu.edu>",
+  "homepage": "https://github.com/Jugbot/genshin-locker#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jugbot/genshin-locker.git"
+  },
+  "scripts": {
+    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "check-types": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/Jugbot/genshin-locker/issues"
+  },
+  "dependencies": {
+    "@radix-ui/colors": "^0.1.8",
+    "@stitches/react": "^1.2.8"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint": "^8.0.1",
+    "prettier": "^2.8.0",
+    "storybook": "^6.5.16",
+    "typescript": "^4.9.0",
+    "utility-types": "^3.10.0"
+  }
+}

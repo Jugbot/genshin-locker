@@ -1,6 +1,22 @@
 {
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",
-  "i18n-ally.localesPaths": ["src/**/locales"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.localesPaths": ["packages/**/locales"],
+  "i18n-ally.keystyle": "nested",
+  "files.associations": {
+    "*.r2py": "python",
+    "compare": "cpp",
+    "format": "cpp",
+    "functional": "cpp",
+    "future": "cpp",
+    "memory": "cpp",
+    "ratio": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "xmemory": "cpp",
+    "xstring": "cpp",
+    "xtr1common": "cpp",
+    "xutility": "cpp"
+  }
 }

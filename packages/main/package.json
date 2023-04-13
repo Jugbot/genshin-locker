@@ -1,0 +1,58 @@
+{
+  "name": "@gl/main",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Lucas Pollice <lp1935@nyu.edu>",
+  "homepage": "https://github.com/Jugbot/genshin-locker#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jugbot/genshin-locker.git"
+  },
+  "scripts": {
+    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "build": "vite build",
+    "check-types": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/Jugbot/genshin-locker/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.11",
+    "@types/sharp": "^0.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "electron": "^24.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^2.8.0",
+    "typescript": "^4.9.0",
+    "utility-types": "^3.10.0",
+    "vite": "4.2.1"
+  },
+  "dependencies": {
+    "@gl/automation": "*",
+    "@gl/component-library": "*",
+    "@gl/ipc-api": "*",
+    "@gl/theme": "*",
+    "@gl/types": "*",
+    "electron-updater": "^5.3.0",
+    "fast-xml-parser": "^4.0.12",
+    "node-tesseract-ocr": "^2.2.1",
+    "rxdb": "^13.17.1",
+    "rxjs": "^7.8.0",
+    "sharp": "^0.31.2"
+  }
+}

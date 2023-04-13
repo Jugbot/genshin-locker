@@ -1,0 +1,45 @@
+{
+  "name": "@gl/scripts",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Lucas Pollice <lp1935@nyu.edu>",
+  "homepage": "https://github.com/Jugbot/genshin-locker#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jugbot/genshin-locker.git"
+  },
+  "scripts": {
+    "format:write": "prettier . -u --ignore-path=\"../../.gitignore\" --write",
+    "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
+    "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
+    "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "check-types": "tsc --noEmit",
+    "set-env-targets": "cross-env ELECTRON_RUN_AS_NODE=1 electron src/update-electron-vendors.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/Jugbot/genshin-locker/issues"
+  },
+  "dependencies": {
+    "@gl/automation": "*",
+    "@gl/types": "*",
+    "cli-progress": "^3.11.2",
+    "node-fetch": "^3.3.1",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@types/cli-progress": "^3.11.0",
+    "@types/node": "^18.15.11",
+    "@types/yargs": "^17.0.24",
+    "electron": "^24.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.0"
+  }
+}

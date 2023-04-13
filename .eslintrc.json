@@ -4,6 +4,7 @@
     "es6": true,
     "node": true
   },
+  // "ignorePatterns": ["packages/**/*"],
   "plugins": ["unused-imports"],
   "extends": [
     "eslint:recommended",
@@ -18,10 +19,17 @@
     "plugin:storybook/recommended",
     "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
   "rules": {
@@ -56,12 +64,12 @@
           {
             "name": "@stitches/react",
             "importNames": ["styled"],
-            "message": "Please import '@stitches/react' from 'stitches.config.js' instead."
+            "message": "Please import 'styled' from 'stitches.config.js' instead."
           },
           {
             "name": "electron",
             "importNames": ["ipcMain", "ipcRenderer"],
-            "message": "Please import 'mainApi' or 'rendererApi' from 'api.ts' instead."
+            "message": "Please import 'mainApi' or 'rendererApi' from '@gl/ipc-api' instead."
           }
         ]
       }
@@ -71,6 +79,15 @@
     // Buggy
     "react/prop-types": "off",
     // Avoid accidentally leaving logs
-    "no-console": ["warn", { "allow": ["info", "warn", "error"] }]
+    "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+    // Avoid using monorepo deps unless they are defined as a dependency
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": [
+        "**/vite.config.ts",
+        "**/.storybook/**/*",
+        "**/*.stories.*",
+        "**/*.test.*"
+      ]
+    }]
   }
 }
