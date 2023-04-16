@@ -55,6 +55,8 @@ Fun:
 
 A tool for automatically managing your artifacts.
 
+Download the latest [release](https://github.com/Jugbot/genshin-locker/releases).
+
 ### Features
 
 - [x] Automatically read artifact data from the game.
@@ -71,14 +73,6 @@ A tool for automatically managing your artifacts.
 - [ ] Gamepad support.
 - [ ] More filter methods.
 
-<!-- Fix sharp dependency not being bundled
-### Installing
-
-1. Download the latest [release](https://github.com/Jugbot/genshin-locker/releases).
-2. Install tesseract.
-3. Install sharp.
--->
-
 ### Usage
 
 1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard.
@@ -90,10 +84,9 @@ A tool for automatically managing your artifacts.
 ### Dev Setup
 
 1. Do the usual git clone.
-2. You will need to get Visual Studio to install some dependencies.
+2. This project uses native node modules, so you will need to have a compiler installed if you don't already.
 3. This is a yarn project, so run `yarn` to set up. I have pinned the node environment to `v16.x.x` so you might need to install node too. Of course if you have a node version manager this is easy.
-4. You will need to install [tesseract 5](https://github.com/tesseract-ocr/tessdoc/blob/main/Installation.md#windows). You only need the engine, not the language trained data.
-5. Start the application with `yarn start` IN ADMINISTRATOR MODE.
+4. Start the application with `yarn start` IN ADMINISTRATOR MODE or run through elevated vscode.
 
 [Lineup Simulator]: https://act.hoyolab.com/ys/event/bbs-lineup-ys-sea/index.html
 [Genshin Optimizer]: https://frzyc.github.io/genshin-optimizer
