@@ -8,8 +8,19 @@ import { mainApi } from '@gl/ipc-api'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/theme'
 import { Channel, ArtifactData } from '@gl/types'
 
+import { store } from './store'
+
 async function createWindow() {
+  const { width, height, x, y } = store.store as Record<
+    string,
+    number | undefined
+  >
+
   const browserWindow = new BrowserWindow({
+    width,
+    height,
+    x,
+    y,
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       color: MENUBAR_BACKCOLOR,
@@ -66,6 +77,18 @@ async function createWindow() {
       })
   })
 
+  browserWindow.on('resized', () => {
+    const [width, height] = browserWindow.getSize()
+    store.set('width', width)
+    store.set('height', height)
+  })
+
+  browserWindow.on('moved', () => {
+    const [x, y] = browserWindow.getPosition()
+    store.set('x', x)
+    store.set('y', y)
+  })
+
   /**
    * If the 'show' property of the BrowserWindow's constructor is omitted from the initialization options,
    * it then defaults to 'true'. This can cause flickering as the window loads the html content,
@@ -76,14 +99,13 @@ async function createWindow() {
    */
   browserWindow.on('ready-to-show', () => {
     if (import.meta.env.DEV) {
-      // TODO: remeber last window position so that dev reloading is less annoying
       browserWindow.showInactive()
+      browserWindow.webContents.openDevTools({
+        activate: false,
+        mode: 'undocked',
+      })
     } else {
       browserWindow.show()
-    }
-
-    if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools()
     }
   })
 
@@ -115,6 +137,4 @@ export async function restoreOrCreateWindow() {
   if (window.isMinimized()) {
     window.restore()
   }
-
-  window.focus()
 }
