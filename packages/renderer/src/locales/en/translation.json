@@ -16,5 +16,6 @@
   "main-stat": "Main Stat",
   "substats": "Substats",
   "scan": "Scan",
-  "scan-and-lock": "Scan And Lock"
+  "scan-and-lock": "Scan And Lock",
+  "handcrafted": "Handcrafted"
 }

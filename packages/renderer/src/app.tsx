@@ -2,7 +2,6 @@ import type { RoutineOptions } from '@gl/automation'
 import {
   Box,
   Button,
-  Checkbox,
   Heading,
   MenuBar,
   ProgressBar,
@@ -15,7 +14,7 @@ import {
 } from '@gl/component-library'
 import { loadGlobalStyles, rotate } from '@gl/theme'
 import { ArtifactData, RoutineStatus, Channel } from '@gl/types'
-import { CheckIcon, ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiPlayButton } from 'react-icons/gi'
@@ -41,16 +40,35 @@ export const App: React.FC = () => {
   >({})
   const [routineOptions, setRoutineOptions] = React.useState<RoutineOptions>({
     logic: [
-      [{ type: 'popularity', percentile: 0.5 }],
+      [
+        {
+          type: 'popularity',
+          percentile: 0.5,
+          bucket: {
+            set: true,
+            slot: true,
+            main: false,
+            sub: false,
+          },
+        },
+      ],
       'OR',
-      ['NOT', [{ type: 'rarity', percentile: 0.25 }]],
+      [
+        'NOT',
+        [
+          {
+            type: 'rarity',
+            percentile: 0.25,
+            bucket: {
+              set: true,
+              slot: true,
+              main: false,
+              sub: false,
+            },
+          },
+        ],
+      ],
     ],
-    targetAttributes: {
-      set: true,
-      slot: true,
-      main: false,
-      sub: false,
-    },
     lockWhileScanning: true,
   })
   const [logs, setLogs] = React.useState<string[]>([])
@@ -90,7 +108,6 @@ export const App: React.FC = () => {
       .invoke(
         Channel.CALCULATE,
         routineOptions.logic,
-        routineOptions.targetAttributes,
         artifacts.map(({ artifact }) => artifact)
       )
       .then((data) =>
@@ -104,7 +121,7 @@ export const App: React.FC = () => {
       )
     // FIXME: Avoid artifacts update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routineOptions.logic, routineOptions.targetAttributes])
+  }, [routineOptions.logic])
 
   const startRoutine = () => {
     setArtifactSet({})
@@ -197,39 +214,6 @@ export const App: React.FC = () => {
           >
             <ScrollArea.Viewport>
               <Stack.Vertical>
-                <Text>{t('comparison-buckets')}</Text>
-                {Object.entries(routineOptions.targetAttributes).map(
-                  ([key, value]) => (
-                    <Stack.Horizontal key={key}>
-                      <Checkbox.Root
-                        checked={value}
-                        onCheckedChange={(e) =>
-                          setRoutineOptions((options) => ({
-                            ...options,
-                            targetAttributes: {
-                              ...options.targetAttributes,
-                              [key]: Boolean(e),
-                            },
-                          }))
-                        }
-                      >
-                        <Checkbox.Indicator>
-                          <CheckIcon />
-                        </Checkbox.Indicator>
-                      </Checkbox.Root>
-                      <Heading variant="subheading">
-                        {
-                          {
-                            set: t('artifact-set'),
-                            slot: t('slot-type'),
-                            main: t('main-stat'),
-                            sub: t('substats'),
-                          }[key]
-                        }
-                      </Heading>
-                    </Stack.Horizontal>
-                  )
-                )}
                 <LogicTree
                   value={routineOptions.logic}
                   onChange={(logic) =>

@@ -1,4 +1,4 @@
-import type { RoutineOptions, Bucket, ScoringLogic } from '@gl/automation'
+import type { RoutineOptions, ScoringLogic } from '@gl/automation'
 
 import type { Artifact } from './artifact'
 
@@ -26,7 +26,7 @@ export type EventPayload = {
   [Channel.LOG]: [void, [mode: LogMode, text: string]]
   [Channel.CALCULATE]: [
     Array<ArtifactData>,
-    [logic: ScoringLogic, bucket: Bucket, artifacts: Artifact[]]
+    [logic: ScoringLogic, artifacts: Artifact[]]
   ]
   [Channel.SAVE_ARTIFACTS]: [success: boolean, args: [artifacts: Artifact[]]]
 }
