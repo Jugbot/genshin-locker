@@ -5,12 +5,12 @@ import {
   Heading,
   MenuBar,
   ProgressBar,
-  ResizeHandle,
   ScrollArea,
   Text,
   TextArea,
   Stack,
   ButtonIcon,
+  Panel,
 } from '@gl/component-library'
 import { loadGlobalStyles, rotate } from '@gl/theme'
 import { ArtifactData, RoutineStatus, Channel } from '@gl/types'
@@ -72,7 +72,6 @@ export const App: React.FC = () => {
     lockWhileScanning: true,
   })
   const [logs, setLogs] = React.useState<string[]>([])
-  const [bottomPanelHeight, setBottomPanelHeight] = React.useState(0)
   const routineSelectOptions = {
     SCAN: t('scan'),
     SCAN_AND_LOCK: t('scan-and-lock'),
@@ -192,144 +191,135 @@ export const App: React.FC = () => {
           mt: 'env(titlebar-area-height)',
           padding: '$space2',
           flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
           minHeight: 0,
         }}
       >
-        <Stack.Horizontal
-          css={{
-            flex: 1,
-            mb: '$space2',
-            minHeight: 0,
-            maxHeight: '100%',
-            overflow: 'hidden',
-            alignItems: 'stretch',
-          }}
-        >
-          <ScrollArea.Root
+        <Panel.Root autoSaveId="mainPanel" direction="vertical">
+          <Panel.Pane
             css={{
-              flex: '0 0 20%',
+              alignItems: 'stretch',
+              overflow: 'hidden',
             }}
           >
-            <ScrollArea.Viewport>
-              <Stack.Vertical>
-                <LogicTree
-                  value={routineOptions.logic}
-                  onChange={(logic) =>
-                    setRoutineOptions((prev) => ({
-                      ...prev,
-                      logic: logic(prev.logic),
-                    }))
-                  }
-                />
-              </Stack.Vertical>
-            </ScrollArea.Viewport>
-            <ScrollArea.Scrollbar orientation="vertical">
-              <ScrollArea.Thumb />
-            </ScrollArea.Scrollbar>
-          </ScrollArea.Root>
-          <Stack.Vertical
-            css={{
-              flexGrow: 1,
-            }}
-          >
-            <Stack.Horizontal
-              css={{
-                backgroundColor: '$bgSecondary',
-                padding: '$space2',
-                borderRadius: '$radius1',
-              }}
-            >
-              <Text>Locked: {lockedAmount}</Text>
-              <Text>Unlocked: {unlockedAmount}</Text>
-              <Box css={{ flexGrow: 1 }} />
-              <ButtonIcon
-                onClick={exportFile}
-                variant="transparent"
-                size="small"
-              >
-                {isSaving ? (
-                  <UpdateIcon
-                    style={{
-                      animation: `${rotate} 1s linear infinite`,
-                    }}
-                  />
-                ) : (
-                  <ExternalLinkIcon />
-                )}
-              </ButtonIcon>
-            </Stack.Horizontal>
-            <ScrollArea.Root
-              css={{
-                flexGrow: 1,
-              }}
-            >
-              <ScrollArea.Viewport>
-                <Box
+            <Panel.Root autoSaveId="subPanel" direction="horizontal">
+              <Panel.Pane defaultSize={30}>
+                <ScrollArea.Root
                   css={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
-                    gridAutoRows: 'min-content',
-                    gap: '$space3',
+                    flexGrow: 1,
                   }}
                 >
-                  {sortedArtifacts.map(({ artifact, shouldBeLocked }) => (
-                    <ArtifactCard
-                      key={artifact.id}
-                      artifact={artifact}
-                      shouldBeLocked={shouldBeLocked}
+                  <ScrollArea.Viewport>
+                    <Stack.Vertical>
+                      <LogicTree
+                        value={routineOptions.logic}
+                        onChange={(logic) =>
+                          setRoutineOptions((prev) => ({
+                            ...prev,
+                            logic: logic(prev.logic),
+                          }))
+                        }
+                      />
+                    </Stack.Vertical>
+                  </ScrollArea.Viewport>
+                  <ScrollArea.Scrollbar orientation="vertical">
+                    <ScrollArea.Thumb />
+                  </ScrollArea.Scrollbar>
+                </ScrollArea.Root>
+              </Panel.Pane>
+              <Panel.Handle />
+              <Panel.Pane
+                css={{
+                  flexGrow: 1,
+                  flexDirection: 'column',
+                }}
+              >
+                <Stack.Horizontal
+                  css={{
+                    backgroundColor: '$bgSecondary',
+                    padding: '$space2',
+                    borderRadius: '$radius1',
+                  }}
+                >
+                  <Text>Locked: {lockedAmount}</Text>
+                  <Text>Unlocked: {unlockedAmount}</Text>
+                  <Box css={{ flexGrow: 1 }} />
+                  <ButtonIcon
+                    onClick={exportFile}
+                    variant="transparent"
+                    size="small"
+                  >
+                    {isSaving ? (
+                      <UpdateIcon
+                        style={{
+                          animation: `${rotate} 1s linear infinite`,
+                        }}
+                      />
+                    ) : (
+                      <ExternalLinkIcon />
+                    )}
+                  </ButtonIcon>
+                </Stack.Horizontal>
+                <ScrollArea.Root
+                  css={{
+                    flexGrow: 1,
+                  }}
+                >
+                  <ScrollArea.Viewport>
+                    <Box
                       css={{
-                        animation: '$fadeIn',
+                        display: 'grid',
+                        gridTemplateColumns:
+                          'repeat(auto-fill, minmax(15em, 1fr))',
+                        gridAutoRows: 'min-content',
+                        gap: '$space3',
                       }}
-                    />
-                  ))}
-                </Box>
-              </ScrollArea.Viewport>
-              <ScrollArea.Scrollbar orientation="vertical">
-                <ScrollArea.Thumb />
-              </ScrollArea.Scrollbar>
-            </ScrollArea.Root>
-          </Stack.Vertical>
-        </Stack.Horizontal>
-        <Stack.Vertical
-          css={{
-            flex: 0,
-            flexBasis: bottomPanelHeight,
-          }}
-        >
-          <ResizeHandle
-            onHandleDrag={(delta) =>
-              setBottomPanelHeight((n) =>
-                Math.min(document.body.scrollHeight, Math.max(0, n - delta))
-              )
-            }
-            orientation="horizontal"
-          />
-          <Stack.Horizontal>
-            <Button variant="subdued" onClick={startRoutine} size="small">
-              <GiPlayButton />
-            </Button>
-            <StandardSelect
-              size="small"
-              options={routineSelectOptions}
-              onValueChange={(val) => {
-                setRoutineType(val)
-                setRoutineOptions((options) => ({
-                  ...options,
-                  lockWhileScanning: val === 'SCAN_AND_LOCK' ? true : false,
-                }))
-              }}
-              value={routineType}
-            />
-            <ProgressBar
-              value={routineStatus.current}
-              max={routineStatus.max}
-              css={{ flexGrow: 1, height: '$size8' }}
-            />
-          </Stack.Horizontal>
-          <TextArea readOnly css={{ flexGrow: 1 }} value={logString} />
-        </Stack.Vertical>
+                    >
+                      {sortedArtifacts.map(({ artifact, shouldBeLocked }) => (
+                        <ArtifactCard
+                          key={artifact.id}
+                          artifact={artifact}
+                          shouldBeLocked={shouldBeLocked}
+                          css={{
+                            animation: '$fadeIn',
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  </ScrollArea.Viewport>
+                  <ScrollArea.Scrollbar orientation="vertical">
+                    <ScrollArea.Thumb />
+                  </ScrollArea.Scrollbar>
+                </ScrollArea.Root>
+              </Panel.Pane>
+            </Panel.Root>
+          </Panel.Pane>
+          <Panel.Handle />
+          <Panel.Pane css={{ flexDirection: 'column' }}>
+            <Stack.Horizontal>
+              <Button variant="subdued" onClick={startRoutine} size="small">
+                <GiPlayButton />
+              </Button>
+              <StandardSelect
+                size="small"
+                options={routineSelectOptions}
+                onValueChange={(val) => {
+                  setRoutineType(val)
+                  setRoutineOptions((options) => ({
+                    ...options,
+                    lockWhileScanning: val === 'SCAN_AND_LOCK' ? true : false,
+                  }))
+                }}
+                value={routineType}
+              />
+              <ProgressBar
+                value={routineStatus.current}
+                max={routineStatus.max}
+                css={{ flexGrow: 1, height: '$size8' }}
+              />
+            </Stack.Horizontal>
+            <TextArea readOnly css={{ flexGrow: 1 }} value={logString} />
+          </Panel.Pane>
+        </Panel.Root>
       </Box>
     </Box>
   )
