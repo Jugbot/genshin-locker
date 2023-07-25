@@ -26,18 +26,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "vite": "4.2.1",
     "cross-env": "7.0.3",
     "electron": "24.0.0",
     "electron-builder": "23.6.0",
     "husky": "^8.0.3",
     "lerna": "^6.6.1",
-    "lint-staged": "^13.2.1"
+    "lint-staged": "^13.2.1",
+    "vite": "4.2.1"
   },
   "dependencies": {
     "@gl/main": "*",
-    "@gl/renderer": "*",
-    "@gl/preload": "*"
+    "@gl/preload": "*",
+    "@gl/renderer": "*"
   },
   "engines": {
     "node": "^16.0.0"
