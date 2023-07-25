@@ -47,7 +47,7 @@ export const ScoringComponent = ({
   })
 
   React.useEffect(() => {
-    setCachedBranches({ ...leafDefault, [value.type]: value })
+    setCachedBranches((oldCache) => ({ ...oldCache, [value.type]: value }))
   }, [value])
 
   const scoreSelect: Record<Scores, string> = {
