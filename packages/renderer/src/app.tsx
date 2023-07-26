@@ -19,6 +19,8 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { GiPlayButton } from 'react-icons/gi'
 
+import { version as appVersion } from '../../../package.json'
+
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
 import { LogicTree } from './components/LogicTree'
@@ -180,10 +182,13 @@ export const App: React.FC = () => {
           css={{
             lineHeight: 'env(titlebar-area-height)',
             mt: '-$space2',
-            fontWeight: 'bold',
+            fontWeight: 'bolder',
           }}
         >
-          Genshin Locker
+          Genshin Locker{' '}
+          <Box css={{ display: 'inline-block', fontWeight: 'normal' }}>
+            {appVersion}
+          </Box>
         </Heading>
       </MenuBar.Root>
       <Box

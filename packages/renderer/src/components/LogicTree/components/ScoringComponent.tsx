@@ -53,8 +53,8 @@ export const ScoringComponent = ({
   const scoreSelect: Record<Scores, string> = {
     rarity: t('rarity'),
     popularity: t('popularity'),
-    handcrafted: t('handcrafted'),
-  }
+    // handcrafted: t('handcrafted'),
+  } as Record<Scores, string>
 
   return (
     <Stack.Vertical>

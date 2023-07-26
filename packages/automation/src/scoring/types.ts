@@ -18,6 +18,12 @@ export type Scoring =
       type: 'handcrafted'
     }
 
+export type ScoringOfType<T extends Scoring['type'], S = Scoring> = S extends {
+  type: T
+}
+  ? S
+  : never
+
 export type ScoringLogic = Logic<Scoring>
 
 export type Bucket = {

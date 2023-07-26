@@ -2,8 +2,8 @@
   "name": "genshin-locker",
   "private": true,
   "productName": "genshin-locker",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.1.0",
+  "description": "Genshin artifact scraper and manager",
   "main": "packages/main/dist/index.cjs",
   "scripts": {
     "format:write": "npx lerna run format:write",

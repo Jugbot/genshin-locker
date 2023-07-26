@@ -3,7 +3,7 @@ import { Artifact, ArtifactMetrics } from '@gl/types'
 import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
-import { ScoringLogic, Scores, Scoring } from './types'
+import { ScoringLogic, Scores, Scoring, ScoringOfType } from './types'
 
 const cache: Record<string, Record<Scores, number[]>> = {}
 async function targetScore(
@@ -29,10 +29,18 @@ async function targetScore(
   return percentileScore(targetPercentile, data[type])
 }
 
+async function scoreHandcrafted(
+  artifact: Artifact,
+  scoring: ScoringOfType<'handcrafted'>
+) {
+  console.info(artifact, scoring)
+  return false
+}
+
 async function scoreVal(artifact: Artifact, scoring: Scoring) {
   const substatKeys = artifact.substats.map((s) => s.key)
 
-  if (scoring.type === 'handcrafted') return false // TODO
+  if (scoring.type === 'handcrafted') return scoreHandcrafted(artifact, scoring)
 
   const { type, percentile, bucket } = scoring
 
