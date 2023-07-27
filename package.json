@@ -2,7 +2,7 @@
   "name": "genshin-locker",
   "private": true,
   "productName": "genshin-locker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Genshin artifact scraper and manager",
   "main": "packages/main/dist/index.cjs",
   "scripts": {
