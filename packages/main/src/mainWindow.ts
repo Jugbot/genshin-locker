@@ -42,12 +42,12 @@ async function createWindow() {
       console.error(e)
     }
   })
-  mainApi.handle(Channel.CALCULATE, async (logic, bucket, artifacts) => {
+  mainApi.handle(Channel.CALCULATE, async (logic, artifacts) => {
     const results: ArtifactData[] = []
     for (const artifact of artifacts) {
       results.push({
         artifact,
-        shouldBeLocked: await calculate(artifact, logic, bucket),
+        shouldBeLocked: await calculate(artifact, logic),
       })
     }
     return results

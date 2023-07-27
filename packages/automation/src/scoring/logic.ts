@@ -3,7 +3,7 @@ import { Artifact, ArtifactMetrics } from '@gl/types'
 import { percentileScore } from '../util/statistics'
 
 import { getDatabase } from './database'
-import { Bucket, ScoringLogic, Scores, Scoring, scoreTypes } from './types'
+import { ScoringLogic, Scores, Scoring, ScoringOfType } from './types'
 
 const cache: Record<string, Record<Scores, number[]>> = {}
 async function targetScore(
@@ -17,7 +17,7 @@ async function targetScore(
   if (!data) {
     const rows = await db.default.find({ selector }).exec()
     data = {} as Record<Scores, number[]>
-    for (const scoreType of scoreTypes) {
+    for (const scoreType of ['rarity', 'popularity'] as const) {
       data[scoreType] = []
       for (const doc of rows) {
         data[scoreType].push(doc[scoreType])
@@ -29,9 +29,20 @@ async function targetScore(
   return percentileScore(targetPercentile, data[type])
 }
 
-async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
+async function scoreHandcrafted(
+  artifact: Artifact,
+  scoring: ScoringOfType<'handcrafted'>
+) {
+  console.info(artifact, scoring)
+  return false
+}
+
+async function scoreVal(artifact: Artifact, scoring: Scoring) {
   const substatKeys = artifact.substats.map((s) => s.key)
-  const { type, percentile } = scoring
+
+  if (scoring.type === 'handcrafted') return scoreHandcrafted(artifact, scoring)
+
+  const { type, percentile, bucket } = scoring
 
   const bucketSelector = (
     metrics: ArtifactMetrics
@@ -84,8 +95,7 @@ async function scoreVal(artifact: Artifact, scoring: Scoring, bucket: Bucket) {
 
 export function calculate(
   artifact: Artifact,
-  tree: ScoringLogic,
-  bucket: Bucket
+  tree: ScoringLogic
 ): Promise<boolean> {
   const evaluate = async (tree: ScoringLogic): Promise<boolean> => {
     if (tree.length === 2) {
@@ -107,7 +117,7 @@ export function calculate(
       }
     }
     const [scoring] = tree
-    return scoreVal(artifact, scoring, bucket)
+    return scoreVal(artifact, scoring)
   }
   return evaluate(tree)
 }

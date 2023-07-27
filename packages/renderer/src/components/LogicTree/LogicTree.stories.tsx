@@ -27,6 +27,12 @@ Controlled.args = {
     {
       type: 'popularity',
       percentile: 0.2,
+      bucket: {
+        set: false,
+        slot: false,
+        main: false,
+        sub: false,
+      },
     },
   ],
 }
@@ -36,6 +42,12 @@ export const Uncontrolled: ComponentStoryFn<typeof LogicTree> = () => {
     {
       type: 'popularity',
       percentile: 0.2,
+      bucket: {
+        set: false,
+        slot: false,
+        main: false,
+        sub: false,
+      },
     },
   ])
 

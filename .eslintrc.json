@@ -83,6 +83,7 @@
     // Avoid using monorepo deps unless they are defined as a dependency
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": [
+        "**/vitest.config.ts",
         "**/vite.config.ts",
         "**/.storybook/**/*",
         "**/*.stories.*",

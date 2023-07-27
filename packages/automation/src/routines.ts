@@ -5,7 +5,7 @@ import { Sharp } from 'sharp'
 import { ScreenMap } from './landmarks/types'
 import { Navigator } from './navigator'
 import { calculate } from './scoring/logic'
-import { ScoringLogic, Bucket } from './scoring/types'
+import { ScoringLogic } from './scoring/types'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -46,13 +46,11 @@ class TaskManager<S> {
 
 export type RoutineOptions = {
   logic: ScoringLogic
-  targetAttributes: Bucket
   lockWhileScanning: boolean
 }
 
 export async function readArtifacts({
   logic,
-  targetAttributes,
   lockWhileScanning,
 }: RoutineOptions) {
   const taskManager = new TaskManager<boolean>()
@@ -127,11 +125,7 @@ export async function readArtifacts({
           return
         }
         visitedArtifacts.add(artifact.id)
-        const shouldBeLocked = await calculate(
-          artifact,
-          logic,
-          targetAttributes
-        )
+        const shouldBeLocked = await calculate(artifact, logic)
         if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
           taskManager.add(
             'sync',

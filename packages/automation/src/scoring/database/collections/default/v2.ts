@@ -28,8 +28,8 @@ const scoreProperties = {
   },
 } as const
 
-export type Scores = keyof typeof scoreProperties
-export const scoreTypes = Object.keys(scoreProperties) as Scores[]
+export type CachedScores = keyof typeof scoreProperties
+export const cachedScoreTypes = Object.keys(scoreProperties) as CachedScores[]
 
 const schemaLiteral = {
   title: 'precalculation schema',
@@ -65,7 +65,7 @@ const schemaLiteral = {
     'slot',
     'main',
     'sub',
-    ...(Object.keys(scoreProperties) as Scores[]),
+    ...(Object.keys(scoreProperties) as CachedScores[]),
   ],
 } as const // satisfies Parameters<typeof toTypedRxJsonSchema>[0]
 

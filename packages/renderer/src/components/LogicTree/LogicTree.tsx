@@ -1,13 +1,12 @@
+import { ScoringLogic, Scoring } from '@gl/automation'
+import { Box, Stack } from '@gl/component-library'
 import {
-  BinaryLogic,
   LeafLogic,
-  ScoringLogic,
-  Scoring,
   UnaryLogic,
+  BinaryLogic,
   UnaryOperation,
   BinaryOperation,
-} from '@gl/automation'
-import { Box, Stack } from '@gl/component-library'
+} from '@gl/types'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,6 +19,12 @@ const leafDefault: LeafLogic<Scoring> = [
   {
     type: 'rarity',
     percentile: 0.5,
+    bucket: {
+      set: true,
+      slot: true,
+      main: false,
+      sub: false,
+    },
   },
 ]
 const unaryDefault: UnaryLogic<Scoring> = [
@@ -28,6 +33,12 @@ const unaryDefault: UnaryLogic<Scoring> = [
     {
       type: 'rarity',
       percentile: 0.5,
+      bucket: {
+        set: true,
+        slot: true,
+        main: false,
+        sub: false,
+      },
     },
   ],
 ]
@@ -36,6 +47,12 @@ const binaryDefault: BinaryLogic<Scoring> = [
     {
       type: 'popularity',
       percentile: 0.5,
+      bucket: {
+        set: true,
+        slot: true,
+        main: false,
+        sub: false,
+      },
     },
   ],
   'AND',
@@ -43,6 +60,12 @@ const binaryDefault: BinaryLogic<Scoring> = [
     {
       type: 'rarity',
       percentile: 0.5,
+      bucket: {
+        set: true,
+        slot: true,
+        main: false,
+        sub: false,
+      },
     },
   ],
 ]
@@ -87,12 +110,12 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
   }, [value])
 
   const rainbow = [
-    '$red8',
-    '$orange8',
-    '$yellow8',
-    '$green8',
-    '$blue8',
-    '$purple8',
+    '$red11',
+    '$orange11',
+    '$yellow11',
+    '$green11',
+    '$blue11',
+    '$purple11',
   ] as const
 
   const currentColor = rainbow[depth % rainbow.length]
@@ -106,7 +129,6 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
             flexDirection: 'column',
             borderTopRightRadius: '$radius1',
             borderBottomRightRadius: '$radius1',
-            backgroundColor: currentColor,
           }}
         >
           <StandardSelect
@@ -121,6 +143,7 @@ export const LogicTree = ({ value, onChange, depth = 0 }: LogicTreeProps) => {
             css={{
               borderTopRightRadius: '$radius1',
               borderBottomRightRadius: '$radius1',
+              color: currentColor,
             }}
           />
         </Box>

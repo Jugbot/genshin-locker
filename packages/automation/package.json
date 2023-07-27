@@ -21,6 +21,7 @@
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
+    "test": "vitest",
     "check-types": "tsc --noEmit"
   },
   "bugs": {
@@ -53,6 +54,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "prettier": "^2.8.0",
     "typescript": "^4.9.0",
-    "utility-types": "^3.10.0"
+    "utility-types": "^3.10.0",
+    "vitest": "^0.33.0"
   }
 }
