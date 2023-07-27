@@ -29,6 +29,9 @@ export const mainApi: MainAPI = {
     if (!this.webContents) {
       throw Error(`Message ${channel} was made before webContents was set.`)
     }
+    if (this.webContents.isDestroyed()) {
+      throw Error(`Message ${channel} was made on destroyed webContents.`)
+    }
     return this.webContents.send(channel, ...args)
   },
   handle(channel, listener) {

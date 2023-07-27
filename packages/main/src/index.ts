@@ -3,6 +3,8 @@ import { app } from 'electron'
 import { platform } from 'node:process'
 import { exit } from 'process'
 
+import { autoUpdater } from 'electron-updater'
+
 import { restoreOrCreateWindow } from './mainWindow'
 import { setSecurityRestrictions } from './security-restrictions'
 
@@ -62,14 +64,5 @@ app
  * Like `npm run compile` does. It's ok 😅
  */
 if (import.meta.env.PROD) {
-  app
-    .whenReady()
-    .then(() => import('electron-updater'))
-    .then((module) => {
-      const autoUpdater =
-        module.autoUpdater ||
-        (module.default.autoUpdater as (typeof module)['autoUpdater'])
-      return autoUpdater.checkForUpdatesAndNotify()
-    })
-    .catch((e) => console.error('Failed check and install updates:', e))
+  app.whenReady().then(() => autoUpdater.checkForUpdatesAndNotify())
 }
