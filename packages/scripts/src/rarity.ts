@@ -1,3 +1,5 @@
+import path from 'path'
+
 import {
   mainStatRollChance,
   subStatRollChance,
@@ -8,6 +10,10 @@ import { MainStatKey, SetKey, SlotKey, SubStatKey } from '@gl/types'
 import { asCommand } from './types'
 
 export async function insertRarity() {
+  // Ideally the database would be accessed in a way thats consistent independent of cwd
+  // Tried moving the db to the public dir, but it couldn't be accessed at all that way
+  process.chdir(path.resolve(__dirname, '../../..'))
+
   const db = await getDatabase()
 
   for (const set of Object.values(SetKey)) {
