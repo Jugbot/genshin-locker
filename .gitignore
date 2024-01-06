@@ -95,3 +95,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# NX
+.nx/
