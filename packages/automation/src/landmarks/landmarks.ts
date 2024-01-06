@@ -136,6 +136,7 @@ export const landmarkKeys = {
     'menu_artifacts',
     'sort_dir',
     'artifact_count',
+    'scrollbar_top',
   ] as const),
 }
 

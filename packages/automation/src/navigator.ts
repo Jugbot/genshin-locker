@@ -58,6 +58,18 @@ export class Navigator {
     }
   }
 
+  async resetScroll() {
+    const landmark = this.landmarks[ScreenMap.ARTIFACTS]['scrollbar_top']
+
+    const from = landmark.center()
+    this.gwindow.goto(...from)
+    this.gwindow.mouseDown()
+    // In order to scroll to the top you can click the top of the scroll bar.
+    // But to have the page scroll instantly you need to mousedown then drag off the scrollbar
+    await this.gwindow.move(landmark.w, -landmark.h, 100)
+    this.gwindow.mouseUp()
+  }
+
   async scrollArtifacts(rows: number) {
     const landmark = this.landmarks[ScreenMap.ARTIFACTS]['list_item']
     const from = landmark.at(0, landmark.repeat_y - 1).center()

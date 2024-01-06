@@ -1,4 +1,4 @@
-import type { RoutineOptions, ScoringLogic } from '@gl/automation'
+import type { WebContents } from 'electron'
 
 import type { Artifact } from './artifact'
 
@@ -15,27 +15,36 @@ export enum Channel {
   ARTIFACT = 'artifact',
   CALCULATE = 'calculate',
   SAVE_ARTIFACTS = 'save-artifacts',
+  USER_SCRIPT_CHANGE = 'user-script-change',
+  OPEN_USER_SCRIPT_FOLDER = 'open-user-script-folder',
 }
 
 export type LogMode = 'info' | 'warn' | 'error'
 
 export type EventPayload = {
-  [Channel.START]: [void, [options: RoutineOptions]]
+  [Channel.START]: [void, [lockWhileScanning: boolean, scriptName?: string]]
   [Channel.PROGRESS]: [void, [progress: RoutineStatus]]
   [Channel.ARTIFACT]: [void, [artifact: Artifact, shouldLock: boolean]]
   [Channel.LOG]: [void, [mode: LogMode, text: string]]
   [Channel.CALCULATE]: [
     Array<ArtifactData>,
-    [logic: ScoringLogic, artifacts: Artifact[]]
+    [scriptName: string | undefined, artifacts: Artifact[]]
   ]
   [Channel.SAVE_ARTIFACTS]: [success: boolean, args: [artifacts: Artifact[]]]
+  [Channel.USER_SCRIPT_CHANGE]: [void, [fileNames: string[]]]
+  [Channel.OPEN_USER_SCRIPT_FOLDER]: [void, []]
 }
 
-export type MainEmitChannels = Channel.ARTIFACT | Channel.PROGRESS | Channel.LOG
+export type MainEmitChannels =
+  | Channel.ARTIFACT
+  | Channel.PROGRESS
+  | Channel.LOG
+  | Channel.USER_SCRIPT_CHANGE
 export type RendererEmitChannels =
   | Channel.START
   | Channel.CALCULATE
   | Channel.SAVE_ARTIFACTS
+  | Channel.OPEN_USER_SCRIPT_FOLDER
 
 type MaybePromise<T> = T | Promise<T>
 
@@ -51,7 +60,7 @@ export type RendererAPI = {
 }
 
 export type MainAPI = {
-  webContents?: Electron.WebContents
+  webContents?: WebContents
   send<T extends MainEmitChannels>(
     channel: T,
     ...args: EventPayload[T][1]

@@ -1,29 +1,27 @@
-import type { RoutineOptions } from '@gl/automation'
 import {
   Box,
   Button,
+  ButtonIcon,
   Heading,
   MenuBar,
+  Panel,
   ProgressBar,
   ScrollArea,
+  Stack,
   Text,
   TextArea,
-  Stack,
-  ButtonIcon,
-  Panel,
 } from '@gl/component-library'
 import { loadGlobalStyles, rotate } from '@gl/theme'
-import { ArtifactData, RoutineStatus, Channel } from '@gl/types'
+import { ArtifactData, Channel, RoutineStatus } from '@gl/types'
 import { ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { GiPlayButton } from 'react-icons/gi'
+import { GiOpenFolder, GiPlayButton } from 'react-icons/gi'
 
 import { version as appVersion } from '../../../package.json'
 
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
-import { LogicTree } from './components/LogicTree'
 import { useThemeClass } from './hooks'
 import { initTranslations } from './i18n'
 
@@ -40,46 +38,46 @@ export const App: React.FC = () => {
   const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>
   >({})
-  const [routineOptions, setRoutineOptions] = React.useState<RoutineOptions>({
-    logic: [
-      [
-        {
-          type: 'popularity',
-          percentile: 0.5,
-          bucket: {
-            set: true,
-            slot: true,
-            main: false,
-            sub: false,
-          },
-        },
-      ],
-      'OR',
-      [
-        'NOT',
-        [
-          {
-            type: 'rarity',
-            percentile: 0.25,
-            bucket: {
-              set: true,
-              slot: true,
-              main: false,
-              sub: false,
-            },
-          },
-        ],
-      ],
-    ],
-    lockWhileScanning: true,
-  })
+  const [lockWhileScanning, setLockWhileScanning] = React.useState(true)
   const [logs, setLogs] = React.useState<string[]>([])
   const routineSelectOptions = {
     SCAN: t('scan'),
     SCAN_AND_LOCK: t('scan-and-lock'),
   }
+  const [customScriptNames, setCustomScriptNames] = React.useState<string[]>([])
+  const [selectedScript, setSelectedScript] = React.useState<string>()
   const [routineType, setRoutineType] =
     React.useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
+
+  React.useEffect(() => {
+    const recalculate = (scriptName?: string) =>
+      api
+        .invoke(
+          Channel.CALCULATE,
+          scriptName,
+          artifacts.map(({ artifact }) => artifact)
+        )
+        .then((data) =>
+          // Avoid overwriting new data
+          setArtifactSet((last) => ({
+            ...last,
+            ...Object.fromEntries(
+              data.map((artifactData) => [
+                artifactData.artifact.id,
+                artifactData,
+              ])
+            ),
+          }))
+        )
+    // If a file no longer exists switch to the default
+    if (selectedScript && !customScriptNames.includes(selectedScript)) {
+      setSelectedScript(undefined)
+    } else {
+      recalculate(selectedScript)
+    }
+    // FIXME: Avoid artifacts update loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customScriptNames, selectedScript])
 
   React.useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
@@ -105,28 +103,18 @@ export const App: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    api
-      .invoke(
-        Channel.CALCULATE,
-        routineOptions.logic,
-        artifacts.map(({ artifact }) => artifact)
-      )
-      .then((data) =>
-        // Avoid overwriting new data
-        setArtifactSet((last) => ({
-          ...last,
-          ...Object.fromEntries(
-            data.map((artifactData) => [artifactData.artifact.id, artifactData])
-          ),
-        }))
-      )
-    // FIXME: Avoid artifacts update loop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routineOptions.logic])
+    return api.on(Channel.USER_SCRIPT_CHANGE, (fileNames) => {
+      setCustomScriptNames(fileNames)
+    })
+  }, [])
+
+  const handleOpenUserScripts = () => {
+    api.invoke(Channel.OPEN_USER_SCRIPT_FOLDER)
+  }
 
   const startRoutine = () => {
     setArtifactSet({})
-    api.invoke(Channel.START, routineOptions)
+    api.invoke(Channel.START, lockWhileScanning, selectedScript)
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
@@ -207,31 +195,6 @@ export const App: React.FC = () => {
             }}
           >
             <Panel.Root autoSaveId="subPanel" direction="horizontal">
-              <Panel.Pane defaultSize={30}>
-                <ScrollArea.Root
-                  css={{
-                    flexGrow: 1,
-                  }}
-                >
-                  <ScrollArea.Viewport>
-                    <Stack.Vertical>
-                      <LogicTree
-                        value={routineOptions.logic}
-                        onChange={(logic) =>
-                          setRoutineOptions((prev) => ({
-                            ...prev,
-                            logic: logic(prev.logic),
-                          }))
-                        }
-                      />
-                    </Stack.Vertical>
-                  </ScrollArea.Viewport>
-                  <ScrollArea.Scrollbar orientation="vertical">
-                    <ScrollArea.Thumb />
-                  </ScrollArea.Scrollbar>
-                </ScrollArea.Root>
-              </Panel.Pane>
-              <Panel.Handle />
               <Panel.Pane
                 css={{
                   flexGrow: 1,
@@ -306,16 +269,35 @@ export const App: React.FC = () => {
               </Button>
               <StandardSelect
                 size="small"
+                required
                 options={routineSelectOptions}
                 onValueChange={(val) => {
                   setRoutineType(val)
-                  setRoutineOptions((options) => ({
-                    ...options,
-                    lockWhileScanning: val === 'SCAN_AND_LOCK' ? true : false,
-                  }))
+                  setLockWhileScanning(val === 'SCAN_AND_LOCK' ? true : false)
                 }}
                 value={routineType}
               />
+              {routineType === 'SCAN_AND_LOCK' && (
+                <>
+                  <StandardSelect
+                    size="small"
+                    options={customScriptNames}
+                    onValueChange={setSelectedScript}
+                    value={selectedScript}
+                    placeholder={'(default)'}
+                    css={{
+                      textTransform: 'none',
+                    }}
+                  />
+                  <Button
+                    variant="subdued"
+                    size="small"
+                    onClick={handleOpenUserScripts}
+                  >
+                    <GiOpenFolder />
+                  </Button>
+                </>
+              )}
               <ProgressBar
                 value={routineStatus.current}
                 max={routineStatus.max}

@@ -82,9 +82,12 @@ export enum SetKey {
   VermillionHereafter = 'VermillionHereafter',
   ViridescentVenerer = 'ViridescentVenerer',
   WanderersTroupe = 'WanderersTroupe',
-  Initiate = 'Initiate',
   NymphsDream = 'NymphsDream',
   VourukashasGlow = 'VourukashasGlow',
+  GoldenTroupe = 'GoldenTroupe',
+  MarechausseeHunter = 'MarechausseeHunter',
+  NighttimeWhispersInTheEchoingWoods = 'NighttimeWhispersInTheEchoingWoods',
+  SongOfDaysPast = 'SongOfDaysPast',
 }
 
 export interface SubStat {

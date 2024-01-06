@@ -17,6 +17,7 @@ module.exports = function () {
     files: ['packages/**/dist/**'],
     extraMetadata: {
     },
+    extraResources: 'resources',
     win: {
       requestedExecutionLevel: 'requireAdministrator',
       target: [

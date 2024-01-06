@@ -1,14 +1,26 @@
-import { app, BrowserWindow, dialog } from 'electron'
+import { app, BrowserWindow, dialog, shell } from 'electron'
 import fs from 'fs'
 import { join } from 'node:path'
 import { URL } from 'node:url'
 
-import { readArtifacts, calculate } from '@gl/automation'
+import {
+  calculate,
+  getLockerScript,
+  readArtifacts,
+  RESOURCES_SCRIPT_DIR,
+  SCRIPT_DIR,
+} from '@gl/automation'
 import { mainApi } from '@gl/ipc-api'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/theme'
-import { Channel, ArtifactData } from '@gl/types'
+import { ArtifactData, Channel } from '@gl/types'
 
 import { store } from './store'
+
+fs.cpSync(RESOURCES_SCRIPT_DIR, SCRIPT_DIR, {
+  recursive: true,
+  force: false,
+})
+const fileWatcher = fs.watch(SCRIPT_DIR, 'utf-8')
 
 async function createWindow() {
   const { width, height, x, y } = store.store as Record<
@@ -35,19 +47,25 @@ async function createWindow() {
 
   // IPC methods
   mainApi.webContents = browserWindow.webContents
-  mainApi.handle(Channel.START, (options) => {
+  mainApi.handle(Channel.START, (lockWhileScanning, scriptName) => {
     try {
-      readArtifacts(options)
+      readArtifacts(lockWhileScanning, scriptName)
     } catch (e) {
       console.error(e)
     }
   })
-  mainApi.handle(Channel.CALCULATE, async (logic, artifacts) => {
+  mainApi.handle(Channel.CALCULATE, async (scriptName, artifacts) => {
     const results: ArtifactData[] = []
+    const scriptFunc = await getLockerScript(scriptName)
     for (const artifact of artifacts) {
+      const shouldBeLocked = await calculate(scriptFunc, artifact)
+      if (shouldBeLocked === null) {
+        // null === error
+        continue
+      }
       results.push({
         artifact,
-        shouldBeLocked: await calculate(artifact, logic),
+        shouldBeLocked,
       })
     }
     return results
@@ -77,6 +95,25 @@ async function createWindow() {
       })
   })
 
+  mainApi.handle(Channel.OPEN_USER_SCRIPT_FOLDER, () => {
+    shell.openPath(SCRIPT_DIR)
+  })
+
+  const updateScriptList = () => {
+    fs.readdir(SCRIPT_DIR, (err, files) => {
+      if (err) {
+        mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
+        console.error(err)
+        return
+      }
+      // Here you can send the files array wherever you need to
+      mainApi.send(Channel.USER_SCRIPT_CHANGE, files)
+    })
+  }
+
+  fileWatcher.removeAllListeners()
+  fileWatcher.addListener('change', updateScriptList)
+
   browserWindow.on('resized', () => {
     const [width, height] = browserWindow.getSize()
     store.set('width', width)
@@ -104,6 +141,7 @@ async function createWindow() {
         activate: false,
         mode: 'undocked',
       })
+      updateScriptList()
     } else {
       browserWindow.show()
     }

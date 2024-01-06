@@ -1,123 +1,107 @@
-import { Artifact, ArtifactMetrics } from '@gl/types'
+import fs from 'fs'
+import path from 'path'
+import { Script } from 'vm'
 
-import { percentileScore } from '../util/statistics'
+import { mainApi } from '@gl/ipc-api'
+import { Artifact, Channel, MainStatKey, SlotKey, SubStatKey } from '@gl/types'
 
-import { getDatabase } from './database'
-import { ScoringLogic, Scores, Scoring, ScoringOfType } from './types'
+import { mainStatDistribution } from '../util/statistics'
 
-const cache: Record<string, Record<Scores, number[]>> = {}
-async function targetScore(
-  selector: Partial<ArtifactMetrics>,
-  type: Scores,
-  targetPercentile: number
-) {
-  const db = await getDatabase()
-  const cacheKey = Object.values(selector).join('|')
-  let data: Record<Scores, number[]> | undefined = cache[cacheKey]
-  if (!data) {
-    const rows = await db.default.find({ selector }).exec()
-    data = {} as Record<Scores, number[]>
-    for (const scoreType of ['rarity', 'popularity'] as const) {
-      data[scoreType] = []
-      for (const doc of rows) {
-        data[scoreType].push(doc[scoreType])
-      }
-      data[scoreType].sort()
-    }
-    cache[cacheKey] = data
+import { SCRIPT_DIR } from './const'
+
+function defaultShouldLock(artifact: Artifact) {
+  // Lock anything that already has invested XP
+  if (artifact.level > 0) {
+    return true
   }
-  return percentileScore(targetPercentile, data[type])
-}
+  // Lock all artifacts with full substats
+  if (artifact.substats.length === 4) {
+    return true
+  }
+  // Lock rare main stats
+  if (
+    (mainStatDistribution[artifact.slotKey][artifact.mainStatKey] ?? 0) < 15
+  ) {
+    return true
+  }
+  // Desireable substats have synergy
+  const countAllOf = (keys: SubStatKey[]) =>
+    artifact.substats.filter(({ key }) => keys.includes(key)).length
+  const countOneOf = (keys: SubStatKey[]) => (countAllOf(keys) === 0 ? 0 : 1)
+  const critScalers = [
+    SubStatKey.CRIT_DAMAGE,
+    SubStatKey.CRIT_RATE,
+    SubStatKey.ENERGY_RECHARGE,
+  ]
+  const emScalars = [SubStatKey.ELEM_MASTERY, SubStatKey.ENERGY_RECHARGE]
+  const basicStatScalers = [
+    SubStatKey.HP_PERCENT,
+    SubStatKey.ATK_PERCENT,
+    SubStatKey.DEF_PERCENT,
+  ]
+  const critScalerScore =
+    countAllOf(critScalers) +
+    (countOneOf(basicStatScalers) + countOneOf([SubStatKey.ELEM_MASTERY])) / 2
+  if (critScalerScore >= 2) {
+    return true
+  }
+  const emScalerScore = countAllOf(emScalars) + countOneOf(basicStatScalers) / 2
+  if (
+    (artifact.slotKey === SlotKey.FLOWER ||
+      artifact.slotKey === SlotKey.PLUME) &&
+    emScalerScore >= 2
+  ) {
+    return true
+  }
+  if (artifact.mainStatKey === MainStatKey.ELEM_MASTERY && emScalerScore > 1) {
+    return true
+  }
 
-async function scoreHandcrafted(
-  artifact: Artifact,
-  scoring: ScoringOfType<'handcrafted'>
-) {
-  console.info(artifact, scoring)
   return false
 }
 
-async function scoreVal(artifact: Artifact, scoring: Scoring) {
-  const substatKeys = artifact.substats.map((s) => s.key)
+type LockResult = boolean | null
+type LockFunction = (
+  artifact: Artifact,
+  utilities: {
+    mainStatDistribution: typeof mainStatDistribution
+  }
+) => LockResult | Promise<LockResult>
 
-  if (scoring.type === 'handcrafted') return scoreHandcrafted(artifact, scoring)
-
-  const { type, percentile, bucket } = scoring
-
-  const bucketSelector = (
-    metrics: ArtifactMetrics
-  ): Partial<ArtifactMetrics> => {
-    const { set, slot, main, sub } = metrics
-    return {
-      ...(bucket.set ? { set } : {}),
-      ...(bucket.slot ? { slot } : {}),
-      ...(bucket.main ? { main } : {}),
-      ...(bucket.sub ? { sub } : {}),
+export async function getLockerScript(
+  scriptName: string | undefined
+): Promise<LockFunction> {
+  if (scriptName) {
+    try {
+      const filePath = path.join(SCRIPT_DIR, scriptName)
+      const scriptContent = fs.readFileSync(filePath, 'utf8')
+      const script = new Script(scriptContent)
+      const sandbox = { module: { exports: {} as unknown } }
+      script.runInNewContext(sandbox)
+      const scriptFunction = sandbox.module.exports
+      if (typeof scriptFunction !== 'function') {
+        throw new Error('Script does not export function.')
+      }
+      return scriptFunction as LockFunction
+    } catch (e) {
+      mainApi.send(Channel.LOG, 'error', String(e))
+      return () => null
     }
   }
 
-  const targetScores: number[] = []
-  for (const substatKey of substatKeys) {
-    const selector = bucketSelector({
-      set: artifact.setKey,
-      slot: artifact.slotKey,
-      main: artifact.mainStatKey,
-      sub: substatKey,
-    })
-    const score = await targetScore(selector, type, percentile)
-    targetScores.push(score)
-    // Quit early if substats are not part of the bucket
-    if (!selector.sub) {
-      break
-    }
-  }
-
-  const avgTargetScore =
-    targetScores.reduce((a, b) => a + b, 0) / targetScores.length
-
-  const artifactScores: number[] = []
-  for (const substatKey of substatKeys) {
-    const selector = {
-      set: artifact.setKey,
-      slot: artifact.slotKey,
-      main: artifact.mainStatKey,
-      sub: substatKey,
-    }
-    const score = await targetScore(selector, type, percentile)
-    artifactScores.push(score)
-  }
-
-  const avgArtifactScore =
-    artifactScores.reduce((a, b) => a + b, 0) / artifactScores.length
-
-  return avgArtifactScore >= avgTargetScore
+  return defaultShouldLock
 }
 
-export function calculate(
-  artifact: Artifact,
-  tree: ScoringLogic
-): Promise<boolean> {
-  const evaluate = async (tree: ScoringLogic): Promise<boolean> => {
-    if (tree.length === 2) {
-      const [op, subtree] = tree
-      const A = await evaluate(subtree)
-      switch (op) {
-        case 'NOT':
-          return !A
-      }
-    } else if (tree.length === 3) {
-      const [subtreeL, op, subtreeR] = tree
-      const A = await evaluate(subtreeL)
-      const B = await evaluate(subtreeR)
-      switch (op) {
-        case 'AND':
-          return A && B
-        case 'OR':
-          return A || B
-      }
-    }
-    const [scoring] = tree
-    return scoreVal(artifact, scoring)
+export async function calculate(
+  lockFunc: LockFunction,
+  artifact: Artifact
+): Promise<boolean | null> {
+  try {
+    return await lockFunc(artifact, {
+      mainStatDistribution,
+    })
+  } catch (e) {
+    mainApi.send(Channel.LOG, 'error', String(e))
   }
-  return evaluate(tree)
+  return null
 }
