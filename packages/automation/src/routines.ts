@@ -54,7 +54,7 @@ export async function readArtifacts(
   await sleep(200)
   navigator.click('menu_artifacts')
   await sleep(200)
-  navigator.click('scrollbar_top')
+  navigator.resetScroll()
   await sleep(200)
 
   navigator.gwindow.goto(
