@@ -15,7 +15,7 @@
   "slot-type": "Slot Type",
   "main-stat": "Main Stat",
   "substats": "Substats",
-  "scan": "Scan",
+  "scan": "Scan Only",
   "scan-and-lock": "Scan And Lock",
   "handcrafted": "Handcrafted"
 }

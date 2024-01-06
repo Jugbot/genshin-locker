@@ -4,8 +4,7 @@ import { Sharp } from 'sharp'
 
 import { ScreenMap } from './landmarks/types'
 import { Navigator } from './navigator'
-import { calculate } from './scoring/logic'
-import { ScoringLogic } from './scoring/types'
+import { calculate, getLockerScript } from './scoring/logic'
 import { VK } from './window/winconst'
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -44,24 +43,18 @@ class TaskManager<S> {
   }
 }
 
-export type RoutineOptions = {
-  logic: ScoringLogic
-  lockWhileScanning: boolean
-}
-
-export async function readArtifacts({
-  logic,
-  lockWhileScanning,
-}: RoutineOptions) {
+export async function readArtifacts(
+  lockWhileScanning: boolean,
+  scriptName?: string
+) {
+  const scriptFunc = await getLockerScript(scriptName)
   const taskManager = new TaskManager<boolean>()
   const navigator = new Navigator()
   navigator.gwindow.grab()
   await sleep(200)
   navigator.click('menu_artifacts')
   await sleep(200)
-  navigator.click('sort_dir')
-  await sleep(200)
-  navigator.click('sort_dir')
+  navigator.click('scrollbar_top')
   await sleep(200)
 
   navigator.gwindow.goto(
@@ -125,7 +118,8 @@ export async function readArtifacts({
           return
         }
         visitedArtifacts.add(artifact.id)
-        const shouldBeLocked = await calculate(artifact, logic)
+        const shouldBeLocked =
+          (await calculate(scriptFunc, artifact)) ?? artifact.lock
         if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
           taskManager.add(
             'sync',

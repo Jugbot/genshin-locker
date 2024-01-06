@@ -10,15 +10,17 @@ interface StandardSelectProps<T extends string>
   extends React.ComponentProps<typeof Select.Trigger> {
   options: ReadonlyArray<T> | Record<T, string>
   value?: T
-  placeholder?: string
   onValueChange: (value: T) => void
+  placeholder?: string
+  required?: boolean
 }
 
 export const StandardSelect = <T extends string>({
   options,
   onValueChange,
   value,
-  placeholder,
+  placeholder = '(none)',
+  required = false,
   ...props
 }: StandardSelectProps<T>) => {
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null)
@@ -28,11 +30,15 @@ export const StandardSelect = <T extends string>({
     setPortalRoot(document.querySelector<HTMLElement>('#appStyled'))
   }, [])
 
-  let selectOptions: Array<[key: string, label: string]> = []
+  let selectOptions: Array<[key: string | undefined, label: string]> = []
   if (Array.isArray(options)) {
     selectOptions = options.map((key) => [key, key])
   } else {
     selectOptions = Object.entries(options)
+  }
+
+  if (!required) {
+    selectOptions.unshift([undefined, placeholder])
   }
 
   let displayValue: string | undefined = value
@@ -41,10 +47,15 @@ export const StandardSelect = <T extends string>({
   }
 
   return (
-    <Select.Root value={value} onValueChange={onValueChange}>
+    <Select.Root
+      value={value}
+      onValueChange={onValueChange}
+      disabled={props.disabled}
+      required={required}
+    >
       <Select.Trigger {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{displayValue ?? placeholder ?? '(none)'}</Text>
+          <Text color="inherit">{displayValue ?? placeholder}</Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>
@@ -59,7 +70,7 @@ export const StandardSelect = <T extends string>({
           </Select.ScrollUpButton>
           <Select.Viewport>
             {selectOptions.map(([key, label]) => (
-              <Select.Item key={key} value={key}>
+              <Select.Item key={label} value={key as string}>
                 <Select.ItemText asChild>
                   <Text>{label}</Text>
                 </Select.ItemText>
