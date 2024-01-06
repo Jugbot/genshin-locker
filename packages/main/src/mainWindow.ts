@@ -141,10 +141,10 @@ async function createWindow() {
         activate: false,
         mode: 'undocked',
       })
-      updateScriptList()
     } else {
       browserWindow.show()
     }
+    updateScriptList()
   })
 
   /**
