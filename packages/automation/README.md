@@ -1,11 +1,3 @@
 # `automation`
 
-> TODO: description
-
-## Usage
-
-```
-const automation = require('automation');
-
-// TODO: DEMONSTRATE API
-```
+For adding custom screen resolution support see the [landmarks README](../src/landmarks/README.md).
