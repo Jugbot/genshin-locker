@@ -74,7 +74,7 @@ Download the latest [release](https://github.com/Jugbot/genshin-locker/releases)
 
 1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard.
 2. Open the artifact tab. From here you can apply any in-game filters to specify what artifacts to parse.
-3. You can change the logic determining which components to lock by editing the script `example.js`. Usually you would run the scanner first in "Scan" mode and then preview changes in logic in the right pane.
+3. You can change the logic determining which components to lock by editing the script [`example.js`](https://github.com/Jugbot/genshin-locker/blob/main/resources/ArtifactScripts/example.js). Usually you would run the scanner first in "Scan" mode and then preview changes in logic in the right pane.
 4. Run the scanner. Press [SPACE] to stop the scanning early.
 5. If need be, you can export the scanned artifacts in GOOD format via the button in the upper right.
 
