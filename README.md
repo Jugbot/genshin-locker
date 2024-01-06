@@ -56,6 +56,10 @@ A tool for automatically managing your artifacts.
 
 Download the latest [release](https://github.com/Jugbot/genshin-locker/releases).
 
+> [!CAUTION]
+> **Before you use this!**
+> Note interacting with the game and more importantly, modifying game state with external tools is a gray area as far as the TOS is concerned, so don't use this if you aren't willing to risk your account being banned.
+
 ### Features
 
 - [x] Automatically read artifact data from the game.
