@@ -89,12 +89,13 @@ export const getSubstats = (txts: string[]): SubStat[] => {
 export const getArtifactSet = (txt: string): SetKey => {
   const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')
   const artifactData = datamine.artifacts
-  if (!(normalizedTxt in artifactData)) {
+  const artifactEntry = Object.entries(artifactData)
+    // Some artifact set names span multiple lines and get cut off by the scan
+    .find(([key]) => key.startsWith(normalizedTxt))
+  if (!artifactEntry) {
     throw Error(`"${normalizedTxt}" not a valid artifact set`)
   }
-  return artifactData[normalizedTxt as keyof typeof artifactData][
-    'GOOD'
-  ] as SetKey
+  return stringToEnum(artifactEntry[1]['GOOD'], SetKey)
 }
 export const getStatKey = (txt: string): string => {
   let normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')
