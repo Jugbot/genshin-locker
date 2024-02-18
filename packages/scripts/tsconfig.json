@@ -3,5 +3,5 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "include": ["bin/**/*.mjs"]
+  "include": ["src/**/*.ts"]
 }
