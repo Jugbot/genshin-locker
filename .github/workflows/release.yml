@@ -12,12 +12,6 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
 
-
-defaults:
-  run:
-    shell: 'bash'
-
-
 jobs:
   draft_release:
 
