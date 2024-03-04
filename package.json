@@ -17,7 +17,7 @@
     "compile:unpacked": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "watch": "node watch.mjs",
     "prepare": "husky install",
-    "postinstall": "cross-env ELECTRON_RUN_AS_NODE=1 electron packages/scripts/bin/index.mjs update-electron-vendors"
+    "postinstall": "npx @gl/scripts update-electron-vendors"
   },
   "keywords": [],
   "author": {
@@ -40,7 +40,7 @@
     "@gl/renderer": "*"
   },
   "engines": {
-    "node": "^16.0.0"
+    "node": "^18.17.0"
   },
   "workspaces": [
     "packages/*"
