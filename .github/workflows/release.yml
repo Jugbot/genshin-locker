@@ -38,6 +38,10 @@ jobs:
           cache: 'yarn'
 
       - run: yarn install --frozen-lockfile
+        env:
+          # Issues with CI cache access
+          force_no_cache: true
+
       - run: yarn build
 
       - name: Compile artifacts ${{ inputs.dry-run && '' || 'and upload them to github release' }}
