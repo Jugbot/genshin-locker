@@ -4,7 +4,6 @@ import path from 'path'
 import {
   createWorker,
   createScheduler,
-  OEM,
   PSM,
   ImageLike,
   RecognizeOptions,
@@ -33,7 +32,6 @@ export class OCR {
     await worker.loadLanguage('genshin_best_eng')
     await worker.initialize('genshin_best_eng')
     await worker.setParameters({
-      tessedit_ocr_engine_mode: OEM.DEFAULT,
       tessedit_pageseg_mode: PSM.SINGLE_LINE,
     })
 
