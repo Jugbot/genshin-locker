@@ -383,6 +383,38 @@
       }
     }
   },
+  "finaleofthedeepgalleries": {
+    "setName": "Finale of the Deep Galleries",
+    "GOOD": "FinaleOfTheDeepGalleries",
+    "normalizedName": "finaleofthedeepgalleries",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Deep Gallery's Bestowed Banquet",
+        "GOOD": "DeepGallerysBestowedBanquet",
+        "normalizedName": "deepgallerysbestowedbanquet"
+      },
+      "plume": {
+        "artifactName": "Deep Gallery's Distant Pact",
+        "GOOD": "DeepGallerysDistantPact",
+        "normalizedName": "deepgallerysdistantpact"
+      },
+      "circlet": {
+        "artifactName": "Deep Gallery's Lost Crown",
+        "GOOD": "DeepGallerysLostCrown",
+        "normalizedName": "deepgalleryslostcrown"
+      },
+      "flower": {
+        "artifactName": "Deep Gallery's Echoing Song",
+        "GOOD": "DeepGallerysEchoingSong",
+        "normalizedName": "deepgallerysechoingsong"
+      },
+      "sands": {
+        "artifactName": "Deep Gallery's Moment of Oblivion",
+        "GOOD": "DeepGallerysMomentOfOblivion",
+        "normalizedName": "deepgallerysmomentofoblivion"
+      }
+    }
+  },
   "flowerofparadiselost": {
     "setName": "Flower of Paradise Lost",
     "GOOD": "FlowerOfParadiseLost",
@@ -412,6 +444,38 @@
         "artifactName": "A Moment Congealed",
         "GOOD": "AMomentCongealed",
         "normalizedName": "amomentcongealed"
+      }
+    }
+  },
+  "fragmentofharmonicwhimsy": {
+    "setName": "Fragment of Harmonic Whimsy",
+    "GOOD": "FragmentOfHarmonicWhimsy",
+    "normalizedName": "fragmentofharmonicwhimsy",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Ichor Shower Rhapsody",
+        "GOOD": "IchorShowerRhapsody",
+        "normalizedName": "ichorshowerrhapsody"
+      },
+      "plume": {
+        "artifactName": "Ancient Sea's Nocturnal Musing",
+        "GOOD": "AncientSeasNocturnalMusing",
+        "normalizedName": "ancientseasnocturnalmusing"
+      },
+      "circlet": {
+        "artifactName": "Whimsical Dance of the Withered",
+        "GOOD": "WhimsicalDanceOfTheWithered",
+        "normalizedName": "whimsicaldanceofthewithered"
+      },
+      "flower": {
+        "artifactName": "Harmonious Symphony Prelude",
+        "GOOD": "HarmoniousSymphonyPrelude",
+        "normalizedName": "harmonioussymphonyprelude"
+      },
+      "sands": {
+        "artifactName": "The Grand Jape of the Turning of Fate",
+        "GOOD": "TheGrandJapeOfTheTurningOfFate",
+        "normalizedName": "thegrandjapeoftheturningoffate"
       }
     }
   },
@@ -671,6 +735,38 @@
       }
     }
   },
+  "longnightsoath": {
+    "setName": "Long Night's Oath",
+    "GOOD": "LongNightsOath",
+    "normalizedName": "longnightsoath",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "A Horn Unwinded",
+        "GOOD": "AHornUnwinded",
+        "normalizedName": "ahornunwinded"
+      },
+      "plume": {
+        "artifactName": "Nightingale's Tail Feather",
+        "GOOD": "NightingalesTailFeather",
+        "normalizedName": "nightingalestailfeather"
+      },
+      "circlet": {
+        "artifactName": "Dyed Tassel",
+        "GOOD": "DyedTassel",
+        "normalizedName": "dyedtassel"
+      },
+      "flower": {
+        "artifactName": "Lightkeeper's Pledge",
+        "GOOD": "LightkeepersPledge",
+        "normalizedName": "lightkeeperspledge"
+      },
+      "sands": {
+        "artifactName": "Undying One's Mourning Bell",
+        "GOOD": "UndyingOnesMourningBell",
+        "normalizedName": "undyingonesmourningbell"
+      }
+    }
+  },
   "luckydog": {
     "setName": "Lucky Dog",
     "GOOD": "LuckyDog",
@@ -895,6 +991,38 @@
       }
     }
   },
+  "obsidiancodex": {
+    "setName": "Obsidian Codex",
+    "GOOD": "ObsidianCodex",
+    "normalizedName": "obsidiancodex",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Pre-Banquet of the Contenders",
+        "GOOD": "PreBanquetOfTheContenders",
+        "normalizedName": "prebanquetofthecontenders"
+      },
+      "plume": {
+        "artifactName": "Root of the Spirit-Marrow",
+        "GOOD": "RootOfTheSpiritMarrow",
+        "normalizedName": "rootofthespiritmarrow"
+      },
+      "circlet": {
+        "artifactName": "Crown of the Saints",
+        "GOOD": "CrownOfTheSaints",
+        "normalizedName": "crownofthesaints"
+      },
+      "flower": {
+        "artifactName": "Reckoning of the Xenogenic",
+        "GOOD": "ReckoningOfTheXenogenic",
+        "normalizedName": "reckoningofthexenogenic"
+      },
+      "sands": {
+        "artifactName": "Myths of the Night Realm",
+        "GOOD": "MythsOfTheNightRealm",
+        "normalizedName": "mythsofthenightrealm"
+      }
+    }
+  },
   "oceanhuedclam": {
     "setName": "Ocean-Hued Clam",
     "GOOD": "OceanHuedClam",
@@ -1100,6 +1228,38 @@
         "artifactName": "Scholar's Clock",
         "GOOD": "ScholarsClock",
         "normalizedName": "scholarsclock"
+      }
+    }
+  },
+  "scrolloftheheroofcindercity": {
+    "setName": "Scroll of the Hero of Cinder City",
+    "GOOD": "ScrollOfTheHeroOfCinderCity",
+    "normalizedName": "scrolloftheheroofcindercity",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Wandering Scholar's Claw Cup",
+        "GOOD": "WanderingScholarsClawCup",
+        "normalizedName": "wanderingscholarsclawcup"
+      },
+      "plume": {
+        "artifactName": "Mountain Ranger's Marker",
+        "GOOD": "MountainRangersMarker",
+        "normalizedName": "mountainrangersmarker"
+      },
+      "circlet": {
+        "artifactName": "Demon-Warrior's Feather Mask",
+        "GOOD": "DemonWarriorsFeatherMask",
+        "normalizedName": "demonwarriorsfeathermask"
+      },
+      "flower": {
+        "artifactName": "Beast Tamer's Talisman",
+        "GOOD": "BeastTamersTalisman",
+        "normalizedName": "beasttamerstalisman"
+      },
+      "sands": {
+        "artifactName": "Mystic's Gold Dial",
+        "GOOD": "MysticsGoldDial",
+        "normalizedName": "mysticsgolddial"
       }
     }
   },
@@ -1356,6 +1516,38 @@
         "artifactName": "Traveling Doctor's Pocket Watch",
         "GOOD": "TravelingDoctorsPocketWatch",
         "normalizedName": "travelingdoctorspocketwatch"
+      }
+    }
+  },
+  "unfinishedreverie": {
+    "setName": "Unfinished Reverie",
+    "GOOD": "UnfinishedReverie",
+    "normalizedName": "unfinishedreverie",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "The Wine-Flask Over Which the Plan Was Hatched",
+        "GOOD": "TheWineFlaskOverWhichThePlanWasHatched",
+        "normalizedName": "thewineflaskoverwhichtheplanwashatched"
+      },
+      "plume": {
+        "artifactName": "Faded Emerald Tail",
+        "GOOD": "FadedEmeraldTail",
+        "normalizedName": "fadedemeraldtail"
+      },
+      "circlet": {
+        "artifactName": "Crownless Crown",
+        "GOOD": "CrownlessCrown",
+        "normalizedName": "crownlesscrown"
+      },
+      "flower": {
+        "artifactName": "Dark Fruit of Bright Flowers",
+        "GOOD": "DarkFruitOfBrightFlowers",
+        "normalizedName": "darkfruitofbrightflowers"
+      },
+      "sands": {
+        "artifactName": "Moment of Attainment",
+        "GOOD": "MomentOfAttainment",
+        "normalizedName": "momentofattainment"
       }
     }
   },
