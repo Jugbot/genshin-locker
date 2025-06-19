@@ -22,6 +22,7 @@
 
 /**
  * @typedef {string} SetKey - Enum for artifact set keys.
+ * Specific values can be found here: https://github.com/Jugbot/genshin-locker/blob/main/packages/types/src/artifact.ts
  */
 
 /**

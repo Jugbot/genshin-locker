@@ -88,6 +88,12 @@ export enum SetKey {
   MarechausseeHunter = 'MarechausseeHunter',
   NighttimeWhispersInTheEchoingWoods = 'NighttimeWhispersInTheEchoingWoods',
   SongOfDaysPast = 'SongOfDaysPast',
+  FinaleOfTheDeepGalleries = 'FinaleOfTheDeepGalleries',
+  FragmentOfHarmonicWhimsy = 'FragmentOfHarmonicWhimsy',
+  LongNightsOath = 'LongNightsOath',
+  ObsidianCodex = 'ObsidianCodex',
+  ScrollOfTheHeroOfCinderCity = 'ScrollOfTheHeroOfCinderCity',
+  UnfinishedReverie = 'UnfinishedReverie',
 }
 
 export interface SubStat {

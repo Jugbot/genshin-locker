@@ -16,6 +16,8 @@ import {
 } from './util/scraper'
 import { GenshinWindow } from './window'
 
+type Offset = [x: number, y: number]
+
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
@@ -41,9 +43,10 @@ export class Navigator {
     this.landmarks = landmarks
   }
 
-  click(id: keyof Landmarks[ScreenMap.ARTIFACTS]) {
+  click(id: keyof Landmarks[ScreenMap.ARTIFACTS], offset: Offset = [0, 0]) {
+    const [offsetX, offsetY] = offset
     const [x, y] = this.landmarks[ScreenMap.ARTIFACTS][id].center()
-    this.gwindow.goto(x, y)
+    this.gwindow.goto(x + offsetX, y + offsetY)
     this.gwindow.click()
   }
 
@@ -85,7 +88,7 @@ export class Navigator {
     this.gwindow.click()
   }
 
-  #debugPrint(image: Sharp) {
+  debugPrint(image: Sharp) {
     const fileName = path.join(os.tmpdir(), `temp-${new Date().getTime()}.png`)
     image.toFile(fileName, (err) => {
       if (err) {
@@ -99,12 +102,22 @@ export class Navigator {
 
   async #readTexts(
     image: Sharp,
-    id: keyof Landmarks[ScreenMap.ARTIFACTS]
+    id: keyof Landmarks[ScreenMap.ARTIFACTS],
+    offset: Offset = [0, 0]
   ): Promise<string[]> {
+    const [offsetX, offsetY] = offset
     return Promise.all(
       Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
         async (region) => {
-          const imageRegion = image.clone().extract(region).withMetadata().png()
+          const imageRegion = image
+            .clone()
+            .extract({
+              ...region,
+              left: region.left + offsetX,
+              top: region.top + offsetY,
+            })
+            .withMetadata()
+            .png()
           return this.ocr.recognize(await imageRegion.toBuffer())
         }
       )
@@ -113,17 +126,20 @@ export class Navigator {
 
   async #readText(
     image: Sharp,
-    id: keyof Landmarks[ScreenMap.ARTIFACTS]
+    id: keyof Landmarks[ScreenMap.ARTIFACTS],
+    offset: Offset = [0, 0]
   ): Promise<string> {
-    return this.#readTexts(image, id).then(([txt]) => txt)
+    return this.#readTexts(image, id, offset).then(([txt]) => txt)
   }
 
   async #pixelTest(
     image: Sharp,
     id: keyof Landmarks[ScreenMap.ARTIFACTS],
     colorLower: number[],
-    colorUpper: number[] = []
+    colorUpper: number[] = [],
+    offset: Offset = [0, 0]
   ) {
+    const [offsetX, offsetY] = offset
     if (colorUpper.length === 0) {
       colorUpper = colorLower
     }
@@ -131,8 +147,8 @@ export class Navigator {
       const bytes = await image
         .clone()
         .extract({
-          top: Math.floor(y),
-          left: Math.floor(x),
+          top: Math.floor(y) + offsetY,
+          left: Math.floor(x) + offsetX,
           width: 1,
           height: 1,
         })
@@ -190,6 +206,17 @@ export class Navigator {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 
+    const isElixired = await this.#pixelTest(
+      image.clone().extractChannel('blue'),
+      'elixir',
+      [250],
+      [255]
+    )
+    const offsetY = isElixired
+      ? this.landmarks[ScreenMap.ARTIFACTS]['elixir'].region().height
+      : 0
+    const elixirOffset: Offset = [0, offsetY]
+
     const [
       card_set,
       card_slot_type,
@@ -201,17 +228,22 @@ export class Navigator {
       card_name,
       card_mainstat_value,
     ] = await Promise.all([
-      this.#readTexts(image, 'card_set'),
+      this.#readTexts(image, 'card_set', elixirOffset),
       this.#readText(imageBWInverted, 'card_slot_type'),
       this.#pixelTest(image, 'card_rarity', [255, 204, 50]),
       this.#readText(imageBWInverted, 'card_mainstat_key'),
-      this.#readText(imageBW.clone().threshold(230), 'card_level'),
-      this.#readTexts(image, 'card_substat'),
+      this.#readText(
+        imageBW.clone().threshold(230),
+        'card_level',
+        elixirOffset
+      ),
+      this.#readTexts(image, 'card_substat', elixirOffset),
       this.#pixelTest(
         image.clone().extractChannel('green'),
         'card_lock',
         [0],
-        [150]
+        [150],
+        elixirOffset
       ),
       this.#readText(imageBWInverted, 'card_name'),
       this.#readText(imageBWInverted, 'card_mainstat_value'),
