@@ -1,7 +1,7 @@
 import path from 'path'
 
 import sharp from 'sharp'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import { Navigator } from './navigator'
 import { GenshinWindow } from './window'
@@ -15,6 +15,9 @@ class TestGenshinWindow extends GenshinWindow {
 }
 
 const testGenshinWindow = new TestGenshinWindow()
+
+// Avoid loading windows binaries in CI
+vi.mock('./window/winapi.ts')
 
 describe('Navigator', () => {
   describe('readArtifacts', () => {
