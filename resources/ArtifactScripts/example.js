@@ -52,10 +52,6 @@ module.exports = (artifact, {mainStatDistribution}) => {
   if (artifact.level > 0) {
     return true
   }
-  // Lock all artifacts with full substats
-  if (artifact.substats.length === 4) {
-    return true
-  }
   // Lock rare main stats
   if (
     (mainStatDistribution[artifact.slotKey][artifact.mainStatKey] ?? 0) < 15
