@@ -28,6 +28,7 @@ export async function createOCR(maxWorkers = os.cpus().length) {
 
     await worker.setParameters({
       tessedit_pageseg_mode: PSM.SINGLE_LINE,
+      user_defined_dpi: '70',
     })
 
     scheduler.addWorker(worker)

@@ -1,7 +1,7 @@
 {
   "name": "@gl/automation",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "Core automation logic.",
   "author": "Lucas Pollice <lp1935@nyu.edu>",
   "homepage": "https://github.com/Jugbot/genshin-locker#readme",
   "license": "ISC",

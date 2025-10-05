@@ -172,13 +172,14 @@ function findLandmark(
 
 export function load(width: number, height: number): Landmarks | null {
   const [w, h] = reducedFraction(width, height)
-  // const [w, h] = [43, 18]
+
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: 'attr:',
   })
   const map = `a${w}x${h}`
   if (map in maps) {
+    console.info(`Using map ${map} for ${width}x${height}`)
     const data = parser.parse(maps[map].artifacts)
     const { 'attr:width': mapWidth, 'attr:height': mapHeight } = data.svg
     const widthRatio = width / mapWidth

@@ -139,8 +139,16 @@ export async function readArtifacts(
       },
       (reason) => {
         console.error(reason)
-        navigator.debugPrint(image)
         mainApi.send(Channel.LOG, 'error', `Error parsing artifact, ${reason}`)
+        return navigator
+          .debugPrint(image)
+          .then((fileName) =>
+            mainApi.send(
+              Channel.LOG,
+              'error',
+              `Saved failing artifact snapshot to ${fileName}`
+            )
+          )
       }
     )
 

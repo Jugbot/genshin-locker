@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="1267.1354"
-     inkscape:cy="400.92955"
+     inkscape:zoom="0.99999999"
+     inkscape:cx="1071"
+     inkscape:cy="435"
      inkscape:window-width="3440"
      inkscape:window-height="1369"
      inkscape:window-x="5528"
@@ -194,14 +194,6 @@
        y="591.32214"
        inkscape:label="card_substat" />
     <rect
-       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.887232;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect1569-5-9"
-       width="459.71655"
-       height="39.203514"
-       x="1323.9446"
-       y="473.62961"
-       inkscape:label="card_set" />
-    <rect
        style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.944369;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1569-5-9-64"
        width="486.21188"
@@ -210,36 +202,12 @@
        y="403.51007"
        inkscape:label="elixir" />
     <rect
-       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.887232;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect1569-5-9-0"
-       width="459.71655"
-       height="39.203514"
-       x="1323.9446"
-       y="512.83319"
-       inkscape:label="card_set" />
-    <rect
-       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.887232;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect1569-5-9-9"
-       width="459.71655"
-       height="39.203514"
-       x="1323.9446"
-       y="552.03668"
-       inkscape:label="card_set" />
-    <rect
-       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.887232;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect1569-5-9-03"
-       width="459.71655"
-       height="39.203514"
-       x="1323.9446"
-       y="591.24011"
-       inkscape:label="card_set" />
-    <rect
-       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.887232;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:1.21174;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1569-5-9-6"
-       width="459.71655"
-       height="39.203514"
-       x="1323.9446"
-       y="630.44373"
+       width="459.39203"
+       height="73.177826"
+       x="1324.1068"
+       y="630.60596"
        inkscape:label="card_set" />
     <rect
        style="fill:#a50000;fill-opacity:0.184149;stroke:#ff0000;stroke-width:0.74467;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
