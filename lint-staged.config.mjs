@@ -1,3 +1,4 @@
+/** @type {import('lint-staged').Config} */
 export default {
   // Pass as function to process entire repo instead of only staged.
   '*': () => [

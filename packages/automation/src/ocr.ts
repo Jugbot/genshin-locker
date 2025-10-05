@@ -2,45 +2,47 @@ import os from 'os'
 import path from 'path'
 
 import {
-  createWorker,
   createScheduler,
-  PSM,
+  createWorker,
   ImageLike,
+  OEM,
+  PSM,
   RecognizeOptions,
 } from 'tesseract.js'
 
 // TODO: Fix brute-force pathing to this static asset
 const tessPath = path.resolve(__dirname, 'tessdata')
 
-export class OCR {
-  scheduler = createScheduler()
+export async function createOCR(maxWorkers = os.cpus().length) {
+  const scheduler = createScheduler()
 
-  constructor(num_workers = os.cpus().length) {
-    for (let i = 0; i < num_workers; i++) {
-      this.#addWorker()
-    }
-  }
+  await Promise.all(Array.from({ length: maxWorkers }, addWorker))
 
-  async #addWorker() {
-    const worker = await createWorker({
+  async function addWorker() {
+    const worker = await createWorker('genshin_best_eng', OEM.DEFAULT, {
       langPath: tessPath,
       gzip: false,
       cacheMethod: 'none',
       // logger: console.debug,
     })
 
-    await worker.loadLanguage('genshin_best_eng')
-    await worker.initialize('genshin_best_eng')
     await worker.setParameters({
       tessedit_pageseg_mode: PSM.SINGLE_LINE,
     })
 
-    this.scheduler.addWorker(worker)
+    scheduler.addWorker(worker)
   }
 
-  async recognize(image: ImageLike, options?: Partial<RecognizeOptions>) {
-    return this.scheduler
+  async function recognize(
+    image: ImageLike,
+    options?: Partial<RecognizeOptions>
+  ) {
+    return scheduler
       .addJob('recognize', image, options)
       .then(({ data }) => data.text)
+  }
+
+  return {
+    recognize,
   }
 }

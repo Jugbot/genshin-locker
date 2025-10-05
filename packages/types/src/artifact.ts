@@ -94,6 +94,8 @@ export enum SetKey {
   ObsidianCodex = 'ObsidianCodex',
   ScrollOfTheHeroOfCinderCity = 'ScrollOfTheHeroOfCinderCity',
   UnfinishedReverie = 'UnfinishedReverie',
+  NightOfTheSkysUnveiling = 'NightOfTheSkysUnveiling',
+  SilkenMoonsSerenade = 'SilkenMoonsSerenade',
 }
 
 export interface SubStat {

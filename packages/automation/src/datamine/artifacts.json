@@ -895,6 +895,38 @@
       }
     }
   },
+  "nightoftheskysunveiling": {
+    "setName": "Night of the Sky's Unveiling",
+    "GOOD": "NightOfTheSkysUnveiling",
+    "normalizedName": "nightoftheskysunveiling",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Vessel of Plenty",
+        "GOOD": "VesselOfPlenty",
+        "normalizedName": "vesselofplenty"
+      },
+      "plume": {
+        "artifactName": "Feather of Indelible Sin",
+        "GOOD": "FeatherOfIndelibleSin",
+        "normalizedName": "featherofindeliblesin"
+      },
+      "circlet": {
+        "artifactName": "Crown of the Befallen",
+        "GOOD": "CrownOfTheBefallen",
+        "normalizedName": "crownofthebefallen"
+      },
+      "flower": {
+        "artifactName": "Bloom of the Mind's Desire",
+        "GOOD": "BloomOfTheMindsDesire",
+        "normalizedName": "bloomofthemindsdesire"
+      },
+      "sands": {
+        "artifactName": "Revelation's Toll",
+        "GOOD": "RevelationsToll",
+        "normalizedName": "revelationstoll"
+      }
+    }
+  },
   "nighttimewhispersintheechoingwoods": {
     "setName": "Nighttime Whispers in the Echoing Woods",
     "GOOD": "NighttimeWhispersInTheEchoingWoods",
@@ -1292,6 +1324,38 @@
         "artifactName": "Morning Dew's Moment",
         "GOOD": "MorningDewsMoment",
         "normalizedName": "morningdewsmoment"
+      }
+    }
+  },
+  "silkenmoonsserenade": {
+    "setName": "Silken Moon's Serenade",
+    "GOOD": "SilkenMoonsSerenade",
+    "normalizedName": "silkenmoonsserenade",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Joyous Glory of the Pure",
+        "GOOD": "JoyousGloryOfThePure",
+        "normalizedName": "joyousgloryofthepure"
+      },
+      "plume": {
+        "artifactName": "Pristine Plume of the Blessed",
+        "GOOD": "PristinePlumeOfTheBlessed",
+        "normalizedName": "pristineplumeoftheblessed"
+      },
+      "circlet": {
+        "artifactName": "Holy Crown of the Believer",
+        "GOOD": "HolyCrownOfTheBeliever",
+        "normalizedName": "holycrownofthebeliever"
+      },
+      "flower": {
+        "artifactName": "Crystal Tear of the Wanderer",
+        "GOOD": "CrystalTearOfTheWanderer",
+        "normalizedName": "crystaltearofthewanderer"
+      },
+      "sands": {
+        "artifactName": "Frost Devotee's Delirium",
+        "GOOD": "FrostDevoteesDelirium",
+        "normalizedName": "frostdevoteesdelirium"
       }
     }
   },

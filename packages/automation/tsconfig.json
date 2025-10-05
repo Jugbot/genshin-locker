@@ -13,6 +13,5 @@
     "baseUrl": ".",
     "types": ["vite/client", "node", "electron"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["**/*.test.ts"]
+  "include": ["src/**/*.ts"]
 }

@@ -6,7 +6,7 @@ import { Artifact, Channel } from '@gl/types'
 import { Region, Sharp } from 'sharp'
 
 import { Landmarks, ScreenMap, load } from './landmarks'
-import { OCR } from './ocr'
+import { createOCR } from './ocr'
 import {
   getArtifactSet,
   getMainStat,
@@ -21,9 +21,10 @@ type Offset = [x: number, y: number]
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
-  ocr = new OCR()
-  constructor() {
-    this.gwindow = new GenshinWindow()
+  ocr: ReturnType<typeof createOCR>
+  constructor(gwindow = new GenshinWindow(), ocr = createOCR()) {
+    this.gwindow = gwindow
+    this.ocr = ocr
     if (!this.gwindow.grab()) {
       mainApi.send(
         Channel.LOG,
@@ -118,7 +119,9 @@ export class Navigator {
             })
             .withMetadata()
             .png()
-          return this.ocr.recognize(await imageRegion.toBuffer())
+          return this.ocr.then(async (ocr) =>
+            ocr.recognize(await imageRegion.toBuffer())
+          )
         }
       )
     )
@@ -155,12 +158,14 @@ export class Navigator {
         .raw()
         .toBuffer()
       const pixel = Array.from(bytes)
-      if (
-        colorLower.length !== colorUpper.length ||
-        colorUpper.length !== pixel.length
-      ) {
+      if (colorLower.length !== pixel.length) {
         throw Error(
-          `Pixel test color range start or end are not of length ${pixel.length}`
+          `Pixel test colorLower is not of length ${pixel.length}, was ${colorLower.length}`
+        )
+      }
+      if (colorUpper.length !== pixel.length) {
+        throw Error(
+          `Pixel test colorUpper is not of length ${pixel.length}, was ${colorUpper.length}`
         )
       }
       return pixel

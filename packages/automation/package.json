@@ -21,7 +21,7 @@
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
-    "test": "vitest",
+    "test": "vitest --no-threads",
     "check-types": "tsc --noEmit"
   },
   "bugs": {
@@ -36,7 +36,7 @@
     "fast-xml-parser": "^4.0.12",
     "koffi": "^2.3.14",
     "sharp": "^0.32.0",
-    "tesseract.js": "^4.0.3"
+    "tesseract.js": "^6.0.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.11",
