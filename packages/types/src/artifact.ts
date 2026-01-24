@@ -96,6 +96,8 @@ export enum SetKey {
   UnfinishedReverie = 'UnfinishedReverie',
   NightOfTheSkysUnveiling = 'NightOfTheSkysUnveiling',
   SilkenMoonsSerenade = 'SilkenMoonsSerenade',
+  AubadeOfMorningstarAndMoon = 'AubadeOfMorningstarAndMoon',
+  ADayCarvedFromRisingWinds = 'ADayCarvedFromRisingWinds',
 }
 
 export interface SubStat {

@@ -1,4 +1,36 @@
 {
+  "adaycarvedfromrisingwinds": {
+    "setName": "A Day Carved From Rising Winds",
+    "GOOD": "ADayCarvedFromRisingWinds",
+    "normalizedName": "adaycarvedfromrisingwinds",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Heldenepos's Unspoken Tale",
+        "GOOD": "HeldenepossUnspokenTale",
+        "normalizedName": "heldenepossunspokentale"
+      },
+      "plume": {
+        "artifactName": "Dawn's Brilliant Oath",
+        "GOOD": "DawnsBrilliantOath",
+        "normalizedName": "dawnsbrilliantoath"
+      },
+      "circlet": {
+        "artifactName": "Minnesang of Love and Lament",
+        "GOOD": "MinnesangOfLoveAndLament",
+        "normalizedName": "minnesangofloveandlament"
+      },
+      "flower": {
+        "artifactName": "Windborne Flower's Spruchdichtung",
+        "GOOD": "WindborneFlowersSpruchdichtung",
+        "normalizedName": "windborneflowersspruchdichtung"
+      },
+      "sands": {
+        "artifactName": "A Note in Spring's Leich",
+        "GOOD": "ANoteInSpringsLeich",
+        "normalizedName": "anoteinspringsleich"
+      }
+    }
+  },
   "adventurer": {
     "setName": "Adventurer",
     "GOOD": "Adventurer",
@@ -60,6 +92,38 @@
         "artifactName": "Sundial of Enduring Jade",
         "GOOD": "SundialOfEnduringJade",
         "normalizedName": "sundialofenduringjade"
+      }
+    }
+  },
+  "aubadeofmorningstarandmoon": {
+    "setName": "Aubade of Morningstar and Moon",
+    "GOOD": "AubadeOfMorningstarAndMoon",
+    "normalizedName": "aubadeofmorningstarandmoon",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Moonlit Offering's Libation",
+        "GOOD": "MoonlitOfferingsLibation",
+        "normalizedName": "moonlitofferingslibation"
+      },
+      "plume": {
+        "artifactName": "Moonlit Offering's Parting Light",
+        "GOOD": "MoonlitOfferingsPartingLight",
+        "normalizedName": "moonlitofferingspartinglight"
+      },
+      "circlet": {
+        "artifactName": "Moonlit Offering's Silver Crown",
+        "GOOD": "MoonlitOfferingsSilverCrown",
+        "normalizedName": "moonlitofferingssilvercrown"
+      },
+      "flower": {
+        "artifactName": "Moonlit Offering's Opulent Dream",
+        "GOOD": "MoonlitOfferingsOpulentDream",
+        "normalizedName": "moonlitofferingsopulentdream"
+      },
+      "sands": {
+        "artifactName": "Moonlit Offering's Final Hour",
+        "GOOD": "MoonlitOfferingsFinalHour",
+        "normalizedName": "moonlitofferingsfinalhour"
       }
     }
   },
