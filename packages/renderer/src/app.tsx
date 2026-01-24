@@ -113,6 +113,7 @@ export const App: React.FC = () => {
   }
 
   const startRoutine = () => {
+    setLogs([])
     setArtifactSet({})
     api.invoke(Channel.START, lockWhileScanning, selectedScript)
   }
