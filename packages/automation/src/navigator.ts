@@ -233,7 +233,6 @@ export class Navigator {
       card_level,
       card_substat,
       card_lock,
-      card_name,
       card_mainstat_value,
     ] = await Promise.all([
       this.#readText(
@@ -260,7 +259,6 @@ export class Navigator {
         [150],
         elixirOffset
       ),
-      this.#readText(imageBWInverted, 'card_name'),
       this.#readText(imageBWInverted, 'card_mainstat_value'),
     ])
     // Cleanup & Validation
@@ -274,7 +272,6 @@ export class Navigator {
     const substats = getSubstats(card_substat)
     const setKey = getArtifactSet(card_set)
     const lock = Boolean(card_lock)
-    const name = card_name
 
     return {
       id: [
@@ -290,7 +287,6 @@ export class Navigator {
       lock,
       mainStatKey,
       mainStatValue,
-      name,
       rarity,
       setKey,
       slotKey,

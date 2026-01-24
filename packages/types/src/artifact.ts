@@ -106,7 +106,6 @@ export interface SubStat {
 }
 
 export interface Artifact {
-  name: string
   mainStatValue: number
   setKey: SetKey
   slotKey: SlotKey

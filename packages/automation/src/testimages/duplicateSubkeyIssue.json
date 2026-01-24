@@ -1,0 +1,29 @@
+{
+  "id": "NightOfTheSkysUnveiling|5|sands|def_|8.7|atk|19|enerRech_|5.2|critDMG_|7|atk_|5.8",
+  "level": 0,
+  "location": 0,
+  "lock": true,
+  "mainStatKey": "def_",
+  "mainStatValue": 8.7,
+  "rarity": 5,
+  "setKey": "NightOfTheSkysUnveiling",
+  "slotKey": "sands",
+  "substats": [
+    {
+      "key": "atk",
+      "value": 19
+    },
+    {
+      "key": "enerRech_",
+      "value": 5.2
+    },
+    {
+      "key": "critDMG_",
+      "value": 7
+    },
+    {
+      "key": "atk_",
+      "value": 5.8
+    }
+  ]
+}

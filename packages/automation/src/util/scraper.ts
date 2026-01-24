@@ -58,9 +58,8 @@ export const cleanedStat = (
   key: string,
   val: string
 ): [key: string, val: number] => {
-  if (val.endsWith('%')) {
+  if (val.includes('%')) {
     key = `${key}%`
-    val = val.replaceAll('%', '')
   }
   key = key.toLowerCase()
   key = key in statMap ? statMap[key] : ''
@@ -80,11 +79,21 @@ export const getMainStat = (
 export const getSubstats = (txts: string[]): SubStat[] => {
   let lastIndex = txts.findIndex((txt) => !txt.includes('+'))
   lastIndex = lastIndex === -1 ? txts.length : lastIndex
-  return txts.slice(0, lastIndex).map((txt) => {
+  const visitedKeys = new Map<string, number>()
+  const substats: SubStat[] = txts.slice(0, lastIndex).map((txt, index) => {
     const split = removeWhitespace(txt).split('+')
     const [key, value] = cleanedStat(split[0], split[1])
+    if (visitedKeys.has(key)) {
+      throw Error(
+        `Parsed duplicate key: "${key}" at indices ${visitedKeys.get(
+          key
+        )} and ${index}`
+      )
+    }
+    visitedKeys.set(key, index)
     return { key: stringToEnum(key, SubStatKey), value }
   })
+  return substats
 }
 export const getArtifactSet = (txt: string): SetKey => {
   const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')

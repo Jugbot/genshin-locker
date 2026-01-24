@@ -1,0 +1,29 @@
+{
+  "id": "DeepwoodMemories|5|goblet|hydro_dmg_|7|def|19|critDMG_|7|enerRech_|4.5|atk_|4.7",
+  "level": 0,
+  "location": 0,
+  "lock": false,
+  "mainStatKey": "hydro_dmg_",
+  "mainStatValue": 7,
+  "rarity": 5,
+  "setKey": "DeepwoodMemories",
+  "slotKey": "goblet",
+  "substats": [
+    {
+      "key": "def",
+      "value": 19
+    },
+    {
+      "key": "critDMG_",
+      "value": 7
+    },
+    {
+      "key": "enerRech_",
+      "value": 4.5
+    },
+    {
+      "key": "atk_",
+      "value": 4.7
+    }
+  ]
+}
