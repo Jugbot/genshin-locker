@@ -19,7 +19,6 @@ export const FirstStory = Template.bind({})
 
 FirstStory.args = {
   artifact: {
-    name: 'Name',
     mainStatValue: 70,
     setKey: SetKey.Adventurer,
     slotKey: SlotKey.FLOWER,
