@@ -255,6 +255,38 @@
       }
     }
   },
+  "celestialgift": {
+    "setName": "Celestial Gift",
+    "GOOD": "CelestialGift",
+    "normalizedName": "celestialgift",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Heavensent Reward",
+        "GOOD": "HeavensentReward",
+        "normalizedName": "heavensentreward"
+      },
+      "plume": {
+        "artifactName": "Heavensent Demise",
+        "GOOD": "HeavensentDemise",
+        "normalizedName": "heavensentdemise"
+      },
+      "circlet": {
+        "artifactName": "Heavensent Crown",
+        "GOOD": "HeavensentCrown",
+        "normalizedName": "heavensentcrown"
+      },
+      "flower": {
+        "artifactName": "Heavensent Fragrance",
+        "GOOD": "HeavensentFragrance",
+        "normalizedName": "heavensentfragrance"
+      },
+      "sands": {
+        "artifactName": "Heavensent Decree",
+        "GOOD": "HeavensentDecree",
+        "normalizedName": "heavensentdecree"
+      }
+    }
+  },
   "crimsonwitchofflames": {
     "setName": "Crimson Witch of Flames",
     "GOOD": "CrimsonWitchOfFlames",
@@ -380,6 +412,38 @@
         "artifactName": "Timepiece of the Lost Path",
         "GOOD": "TimepieceOfTheLostPath",
         "normalizedName": "timepieceofthelostpath"
+      }
+    }
+  },
+  "disenchantmentindeepshadow": {
+    "setName": "Disenchantment in Deep Shadow",
+    "GOOD": "DisenchantmentInDeepShadow",
+    "normalizedName": "disenchantmentindeepshadow",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Ovations That Ceased Upon Festivity",
+        "GOOD": "OvationsThatCeasedUponFestivity",
+        "normalizedName": "ovationsthatceaseduponfestivity"
+      },
+      "plume": {
+        "artifactName": "Sharpness That Ceased Upon Wondrous Creation",
+        "GOOD": "SharpnessThatCeasedUponWondrousCreation",
+        "normalizedName": "sharpnessthatceaseduponwondrouscreation"
+      },
+      "circlet": {
+        "artifactName": "Pendulum That Ceased Amidst a Great Fall",
+        "GOOD": "PendulumThatCeasedAmidstAGreatFall",
+        "normalizedName": "pendulumthatceasedamidstagreatfall"
+      },
+      "flower": {
+        "artifactName": "Iridescence That Ceased Amidst Glory",
+        "GOOD": "IridescenceThatCeasedAmidstGlory",
+        "normalizedName": "iridescencethatceasedamidstglory"
+      },
+      "sands": {
+        "artifactName": "Moment That Ceased Upon Waking From Grand Dreams",
+        "GOOD": "MomentThatCeasedUponWakingFromGrandDreams",
+        "normalizedName": "momentthatceaseduponwakingfromgranddreams"
       }
     }
   },

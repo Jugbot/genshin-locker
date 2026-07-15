@@ -98,6 +98,8 @@ export enum SetKey {
   SilkenMoonsSerenade = 'SilkenMoonsSerenade',
   AubadeOfMorningstarAndMoon = 'AubadeOfMorningstarAndMoon',
   ADayCarvedFromRisingWinds = 'ADayCarvedFromRisingWinds',
+  CelestialGift = 'CelestialGift',
+  DisenchantmentInDeepShadow = 'DisenchantmentInDeepShadow',
 }
 
 export interface SubStat {
