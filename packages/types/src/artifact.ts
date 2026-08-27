@@ -100,6 +100,8 @@ export enum SetKey {
   ADayCarvedFromRisingWinds = 'ADayCarvedFromRisingWinds',
   CelestialGift = 'CelestialGift',
   DisenchantmentInDeepShadow = 'DisenchantmentInDeepShadow',
+  ScarletProof = 'ScarletProof',
+  HeartOfTheFurnace = 'HeartOfTheFurnace',
 }
 
 export interface SubStat {

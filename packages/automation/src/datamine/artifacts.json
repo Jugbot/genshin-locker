@@ -1870,5 +1870,69 @@
         "normalizedName": "concertsfinalhour"
       }
     }
+  },
+  "heartofthefurnace": {
+    "setName": "Heart of the Furnace",
+    "GOOD": "HeartOfTheFurnace",
+    "normalizedName": "heartofthefurnace",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Foundryman's Magnanimity",
+        "GOOD": "FoundrymansMagnanimity",
+        "normalizedName": "foundrymansmagnanimity"
+      },
+      "plume": {
+        "artifactName": "Foundryman's Observation",
+        "GOOD": "FoundrymansObservation",
+        "normalizedName": "foundrymansobservation"
+      },
+      "circlet": {
+        "artifactName": "Foundryman's Legacy",
+        "GOOD": "FoundrymansLegacy",
+        "normalizedName": "foundrymanslegacy"
+      },
+      "flower": {
+        "artifactName": "Foundryman's Conjecture",
+        "GOOD": "FoundrymansConjecture",
+        "normalizedName": "foundrymansconjecture"
+      },
+      "sands": {
+        "artifactName": "Foundryman's Calculus",
+        "GOOD": "FoundrymansCalculus",
+        "normalizedName": "foundrymanscalculus"
+      }
+    }
+  },
+  "scarletproof": {
+    "setName": "Scarlet Proof",
+    "GOOD": "ScarletProof",
+    "normalizedName": "scarletproof",
+    "artifacts": {
+      "goblet": {
+        "artifactName": "Chalice of Your Blood and Sorrow",
+        "GOOD": "ChaliceOfYourBloodAndSorrow",
+        "normalizedName": "chaliceofyourbloodandsorrow"
+      },
+      "plume": {
+        "artifactName": "Glory to Your Legacy",
+        "GOOD": "GloryToYourLegacy",
+        "normalizedName": "glorytoyourlegacy"
+      },
+      "circlet": {
+        "artifactName": "Testament to Your Faith",
+        "GOOD": "TestamentToYourFaith",
+        "normalizedName": "testamenttoyourfaith"
+      },
+      "flower": {
+        "artifactName": "Honor to Your Devotion",
+        "GOOD": "HonorToYourDevotion",
+        "normalizedName": "honortoyourdevotion"
+      },
+      "sands": {
+        "artifactName": "Time Gifted Unto You",
+        "GOOD": "TimeGiftedUntoYou",
+        "normalizedName": "timegifteduntoyou"
+      }
+    }
   }
 }
