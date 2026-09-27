@@ -27,6 +27,10 @@ module.exports = function () {
         },
       ],
       artifactName: '${productName}_${version}.${ext}',
-    }
+    },
+    nsis: {
+      // Offers to install the ViGEmBus gamepad driver
+      include: 'buildResources/installer.nsh',
+    },
   };
 };

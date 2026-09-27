@@ -227,19 +227,23 @@ export enum VK {
   OEM_CLEAR = 0xfe, // Clear key
 }
 
-export enum GAMEPAD_BTN {
-  A = 1,
-  B = 2,
-  X = 3,
-  Y = 4,
-  LB = 5,
-  RB = 6,
-  Back = 7,
-  Start = 8,
-  LS = 9,
-  RS = 10,
-  // DPadUp = 11,
-  // DPadDown = 12,
-  // DPadLeft = 13,
-  // DPadRight = 14,
+// https://github.com/nefarius/ViGEmClient/blob/master/include/ViGEm/Common.h
+export const VIGEM_ERROR_NONE = 0x20000000
+
+export enum XUSB_BUTTON {
+  DPAD_UP = 0x0001,
+  DPAD_DOWN = 0x0002,
+  DPAD_LEFT = 0x0004,
+  DPAD_RIGHT = 0x0008,
+  START = 0x0010,
+  BACK = 0x0020,
+  LEFT_THUMB = 0x0040,
+  RIGHT_THUMB = 0x0080,
+  LEFT_SHOULDER = 0x0100,
+  RIGHT_SHOULDER = 0x0200,
+  GUIDE = 0x0400,
+  A = 0x1000,
+  B = 0x2000,
+  X = 0x4000,
+  Y = 0x8000,
 }

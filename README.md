@@ -28,7 +28,7 @@ Stretch:
 - Pause on bad data, option to skip artifact or skip all, maybe fix on the spot
 - Test score percentile creation
 - General repo qol: git merge hooks for testing etc.
-- VJoy?? and gamepad method
+- Gamepad routines via ViGEmBus
 - Better Layout component
 - Multiple artifact list layouts
 - Theme large sizes (e.g. artifact card list)
