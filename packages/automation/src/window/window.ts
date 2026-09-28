@@ -164,6 +164,17 @@ export class GenshinWindow {
     this.gamepadUpdate()
   }
 
+  /**
+   * Briefly tilts the left stick then recenters it, moving UI selection one step.
+   */
+  async leftStickFlick(x: number, y: number, duration = 80) {
+    this.leftStick(x, y)
+    await new Promise((r) => setTimeout(r, duration))
+    this.leftStick(0, 0)
+    // Let the UI settle before the next input
+    await new Promise((r) => setTimeout(r, 150))
+  }
+
   mouseDown() {
     user32.SendInput(
       1,

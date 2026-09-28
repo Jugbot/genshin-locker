@@ -18,6 +18,9 @@ import { GenshinWindow } from './window'
 
 type Offset = [x: number, y: number]
 
+// Mean absolute pixel difference (0-255) below which two card regions are considered identical
+const SAME_ARTIFACT_THRESHOLD = 2
+
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
@@ -206,6 +209,37 @@ export class Navigator {
     const pixels = await edges.raw().toBuffer()
     const max = pixels.reduce((a, b) => Math.max(a, b), 0)
     return max < 128
+  }
+
+  /**
+   * Compares the artifact cards of two screenshots, ignoring the lock icon.
+   * Used to detect that navigating to another artifact had no effect.
+   */
+  async isSameArtifact(a: Sharp, b: Sharp): Promise<boolean> {
+    const cardIds = [
+      'card_name',
+      'card_slot_type',
+      'card_mainstat_key',
+      'card_mainstat_value',
+      'card_level',
+      'card_substat',
+    ] as const
+    const regions = cardIds.flatMap((id) =>
+      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions())
+    )
+    const differences = await Promise.all(
+      regions.map(async (region) => {
+        const [pixelsA, pixelsB] = await Promise.all(
+          [a, b].map((image) => image.clone().extract(region).raw().toBuffer())
+        )
+        let sum = 0
+        for (let i = 0; i < pixelsA.length; i++) {
+          sum += Math.abs(pixelsA[i] - pixelsB[i])
+        }
+        return sum / pixelsA.length
+      })
+    )
+    return differences.every((mean) => mean < SAME_ARTIFACT_THRESHOLD)
   }
 
   async getArtifact(image: Sharp): Promise<Artifact> {
