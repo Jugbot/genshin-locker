@@ -4,7 +4,7 @@ import sharp from 'sharp'
 import { GBRAtoRGB } from '../util/image'
 
 import { mouseEvent } from './util'
-import { user32, gdi32, BITMAP, BITMAPINFOHEADER, INPUT, vjoy } from './winapi'
+import { user32, gdi32, BITMAP, BITMAPINFOHEADER, INPUT, vigem } from './winapi'
 import {
   MOUSEEVENTF,
   WHEEL_DELTA,
@@ -13,8 +13,19 @@ import {
   SRCCOPY,
   SW_RESTORE,
   VK,
-  GAMEPAD_BTN,
+  VIGEM_ERROR_NONE,
+  XUSB_BUTTON,
 } from './winconst'
+
+const emptyGamepadReport = () => ({
+  wButtons: 0,
+  bLeftTrigger: 0,
+  bRightTrigger: 0,
+  sThumbLX: 0,
+  sThumbLY: 0,
+  sThumbRX: 0,
+  sThumbRY: 0,
+})
 
 export class GenshinWindow {
   handle = 0n
@@ -22,6 +33,10 @@ export class GenshinWindow {
   height = 0n
   x = 0n
   y = 0n
+
+  private vigemClient: unknown = null
+  private vigemTarget: unknown = null
+  private gamepadReport = emptyGamepadReport()
 
   grab() {
     this.handle = BigInt(user32.FindWindowW('UnityWndClass', 'Genshin Impact'))
@@ -65,10 +80,99 @@ export class GenshinWindow {
     user32.SendInput(inputEvents.length, inputEvents, koffi.sizeof(INPUT))
   }
 
-  gamepadButton(btn: GAMEPAD_BTN, down: boolean) {
-    console.info('AcquireVJD', vjoy?.AcquireVJD(1))
-    console.info('SetBtn', vjoy?.SetBtn(down ? 1 : 0, 1, btn))
-    console.info('RelinquishVJD', vjoy?.RelinquishVJD(1))
+  /**
+   * Plugs in a virtual Xbox 360 controller. Called implicitly by the other
+   * gamepad methods.
+   */
+  gamepadConnect() {
+    if (this.vigemTarget) {
+      return
+    }
+    if (!vigem) {
+      throw Error('ViGEmBus driver not installed')
+    }
+    const client = vigem.vigem_alloc()
+    if (vigem.vigem_connect(client) !== VIGEM_ERROR_NONE) {
+      vigem.vigem_free(client)
+      throw Error('ViGEmBus driver not installed')
+    }
+    const target = vigem.vigem_target_x360_alloc()
+    const error = vigem.vigem_target_add(client, target)
+    if (error !== VIGEM_ERROR_NONE) {
+      vigem.vigem_target_free(target)
+      vigem.vigem_disconnect(client)
+      vigem.vigem_free(client)
+      throw Error(`Failed to add virtual gamepad (0x${error.toString(16)})`)
+    }
+    this.vigemClient = client
+    this.vigemTarget = target
+    this.gamepadReport = emptyGamepadReport()
+  }
+
+  /**
+   * Releases all inputs and unplugs the virtual controller.
+   */
+  gamepadDisconnect() {
+    if (!vigem || !this.vigemTarget) {
+      return
+    }
+    this.gamepadReport = emptyGamepadReport()
+    this.gamepadUpdate()
+    vigem.vigem_target_remove(this.vigemClient, this.vigemTarget)
+    vigem.vigem_target_free(this.vigemTarget)
+    vigem.vigem_disconnect(this.vigemClient)
+    vigem.vigem_free(this.vigemClient)
+    this.vigemClient = null
+    this.vigemTarget = null
+  }
+
+  private gamepadUpdate() {
+    vigem?.vigem_target_x360_update(
+      this.vigemClient,
+      this.vigemTarget,
+      this.gamepadReport
+    )
+  }
+
+  gamepadButton(btn: XUSB_BUTTON, down: boolean) {
+    this.gamepadConnect()
+    if (down) {
+      this.gamepadReport.wButtons |= btn
+    } else {
+      this.gamepadReport.wButtons &= ~btn
+    }
+    this.gamepadUpdate()
+  }
+
+  async gamepadPress(btn: XUSB_BUTTON, duration = 100) {
+    this.gamepadButton(btn, true)
+    await new Promise((r) => setTimeout(r, duration))
+    this.gamepadButton(btn, false)
+  }
+
+  /**
+   * Sets the left stick position.
+   * @param x -1 (left) to 1 (right)
+   * @param y -1 (down) to 1 (up)
+   */
+  leftStick(x: number, y: number) {
+    this.gamepadConnect()
+    const toAxis = (v: number) =>
+      Math.round(Math.max(-1, Math.min(1, v)) * 32767)
+    this.gamepadReport.sThumbLX = toAxis(x)
+    this.gamepadReport.sThumbLY = toAxis(y)
+    this.gamepadUpdate()
+  }
+
+  /**
+   * Briefly tilts the left stick then recenters it, moving UI selection one step.
+   */
+  async leftStickFlick(x: number, y: number, duration = 80) {
+    this.leftStick(x, y)
+    await new Promise((r) => setTimeout(r, duration))
+    this.leftStick(0, 0)
+    // Let the UI settle before the next input
+    await new Promise((r) => setTimeout(r, 150))
   }
 
   mouseDown() {

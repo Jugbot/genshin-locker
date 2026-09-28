@@ -17,5 +17,7 @@
   "substats": "Substats",
   "scan": "Scan Only",
   "scan-and-lock": "Scan And Lock",
+  "input-mouse": "Mouse & Keyboard",
+  "input-gamepad": "Gamepad",
   "handcrafted": "Handcrafted"
 }

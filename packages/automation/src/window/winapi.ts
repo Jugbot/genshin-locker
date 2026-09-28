@@ -1,4 +1,8 @@
+import path from 'path'
+
 import koffi from 'koffi'
+
+import { RESOURCES_DIR } from '../scoring/const'
 
 const _WIN64 = process.arch === 'x64'
 
@@ -214,27 +218,55 @@ export const gdi32 = {
   ]),
 }
 
-import vJoyPath from './lib/vJoyInterface.dll?url'
+// https://github.com/nefarius/ViGEmClient/blob/master/include/ViGEm/Common.h
+export const XUSB_REPORT = koffi.struct('XUSB_REPORT', {
+  wButtons: 'uint16',
+  bLeftTrigger: 'uint8',
+  bRightTrigger: 'uint8',
+  sThumbLX: 'int16',
+  sThumbLY: 'int16',
+  sThumbRX: 'int16',
+  sThumbRY: 'int16',
+})
 
-function loadVJoyLib() {
+const PVIGEM_CLIENT = koffi.pointer('VIGEM_CLIENT', koffi.opaque())
+const PVIGEM_TARGET = koffi.pointer('VIGEM_TARGET', koffi.opaque())
+const VIGEM_ERROR = 'uint32'
+
+// https://github.com/nefarius/ViGEmClient/blob/master/include/ViGEm/Client.h
+function loadViGEmLib() {
   try {
-    const lib = koffi.load(vJoyPath)
+    const lib = koffi.load(path.join(RESOURCES_DIR, 'lib', 'ViGEmClient.dll'))
     return {
-      GetvJoyVersion: lib.stdcall('GetvJoyVersion', W.SHORT, []),
-      vJoyEnabled: lib.stdcall('vJoyEnabled', W.BOOL, []),
-      SetAxis: lib.stdcall('SetAxis', W.BOOL, [W.LONG, W.UINT, W.UINT]),
-      SetBtn: lib.stdcall('SetBtn', W.BOOL, [W.BOOL, W.UINT, W.UCHAR]),
-      SetDiscPov: lib.stdcall('SetDiscPov', W.BOOL, [W.INT, W.UINT, W.UCHAR]),
-      SetContPov: lib.stdcall('SetContPov', W.BOOL, [W.DWORD, W.UINT, W.UCHAR]),
-      AcquireVJD: lib.stdcall('AcquireVJD', W.BOOL, [W.UINT]),
-      RelinquishVJD: lib.stdcall('RelinquishVJD', 'void', [W.UINT]),
-      ResetVJD: lib.stdcall('ResetVJD', W.BOOL, [W.UINT]),
+      vigem_alloc: lib.func('vigem_alloc', PVIGEM_CLIENT, []),
+      vigem_free: lib.func('vigem_free', 'void', [PVIGEM_CLIENT]),
+      vigem_connect: lib.func('vigem_connect', VIGEM_ERROR, [PVIGEM_CLIENT]),
+      vigem_disconnect: lib.func('vigem_disconnect', 'void', [PVIGEM_CLIENT]),
+      vigem_target_x360_alloc: lib.func(
+        'vigem_target_x360_alloc',
+        PVIGEM_TARGET,
+        []
+      ),
+      vigem_target_free: lib.func('vigem_target_free', 'void', [PVIGEM_TARGET]),
+      vigem_target_add: lib.func('vigem_target_add', VIGEM_ERROR, [
+        PVIGEM_CLIENT,
+        PVIGEM_TARGET,
+      ]),
+      vigem_target_remove: lib.func('vigem_target_remove', VIGEM_ERROR, [
+        PVIGEM_CLIENT,
+        PVIGEM_TARGET,
+      ]),
+      vigem_target_x360_update: lib.func(
+        'vigem_target_x360_update',
+        VIGEM_ERROR,
+        [PVIGEM_CLIENT, PVIGEM_TARGET, XUSB_REPORT]
+      ),
     }
   } catch (e) {
-    console.warn('VJoy is not available.')
+    console.warn('ViGEmClient is not available.')
   }
   return null
 }
-const vjoy = loadVJoyLib()
+const vigem = loadViGEmLib()
 
-export { vjoy }
+export { vigem }

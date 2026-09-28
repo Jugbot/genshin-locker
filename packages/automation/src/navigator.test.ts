@@ -4,6 +4,7 @@ import path from 'path'
 import sharp, { Sharp } from 'sharp'
 import { describe, expect, test, vi } from 'vitest'
 
+import { ScreenMap } from './landmarks'
 import { Navigator } from './navigator'
 import { GenshinWindow } from './window'
 
@@ -177,5 +178,88 @@ describe('Navigator', () => {
         expect(artifacts).toEqual(expected)
       }
     )
+  })
+
+  describe('isSameArtifact', () => {
+    const screenshotA = path.join(
+      __dirname,
+      'landmarks/maps/16x9/screenshot.png'
+    )
+    const screenshotB = path.join(
+      __dirname,
+      'testimages/duplicateSubkeyIssue.png'
+    )
+
+    /** Rebuilds a screenshot after editing its raw RGB pixels */
+    async function editPixels(
+      imagePath: string,
+      edit: (pixels: Buffer, width: number) => void
+    ) {
+      const { data, info } = await sharp(imagePath)
+        .removeAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true })
+      edit(data, info.width)
+      return sharp(data, {
+        raw: { width: info.width, height: info.height, channels: 3 },
+      })
+    }
+
+    async function createNavigator(imagePath: string) {
+      return new Navigator(
+        await createTestWindow(sharp(imagePath).removeAlpha())
+      )
+    }
+
+    test('matches the same screenshot', async () => {
+      const navigator = await createNavigator(screenshotA)
+      const image = sharp(screenshotA).removeAlpha()
+      expect(await navigator.isSameArtifact(image, image.clone())).toBe(true)
+    })
+
+    test('tolerates slight capture noise', async () => {
+      const navigator = await createNavigator(screenshotA)
+      const noisy = await editPixels(screenshotA, (pixels) => {
+        for (let i = 0; i < pixels.length; i++) {
+          pixels[i] = Math.min(255, pixels[i] + (i % 2))
+        }
+      })
+      expect(
+        await navigator.isSameArtifact(sharp(screenshotA).removeAlpha(), noisy)
+      ).toBe(true)
+    })
+
+    test('distinguishes different artifacts', async () => {
+      const navigator = await createNavigator(screenshotA)
+      expect(
+        await navigator.isSameArtifact(
+          sharp(screenshotA).removeAlpha(),
+          sharp(screenshotB).removeAlpha()
+        )
+      ).toBe(false)
+    })
+
+    test('ignores the lock icon', async () => {
+      const navigator = await createNavigator(screenshotA)
+      const { left, top, width, height } =
+        navigator.landmarks[ScreenMap.ARTIFACTS].card_lock.region()
+      // Invert the lock icon, as if it had been toggled
+      const toggled = await editPixels(screenshotA, (pixels, imageWidth) => {
+        for (let y = top; y < top + height; y++) {
+          for (let x = left; x < left + width; x++) {
+            for (let channel = 0; channel < 3; channel++) {
+              const i = (y * imageWidth + x) * 3 + channel
+              pixels[i] = 255 - pixels[i]
+            }
+          }
+        }
+      })
+      expect(
+        await navigator.isSameArtifact(
+          sharp(screenshotA).removeAlpha(),
+          toggled
+        )
+      ).toBe(true)
+    })
   })
 })

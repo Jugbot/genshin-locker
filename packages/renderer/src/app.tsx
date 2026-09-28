@@ -48,6 +48,12 @@ export const App: React.FC = () => {
   const [selectedScript, setSelectedScript] = React.useState<string>()
   const [routineType, setRoutineType] =
     React.useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
+  const inputMethodOptions = {
+    MOUSE: t('input-mouse'),
+    GAMEPAD: t('input-gamepad'),
+  }
+  const [inputMethod, setInputMethod] =
+    React.useState<keyof typeof inputMethodOptions>('MOUSE')
 
   React.useEffect(() => {
     const recalculate = (scriptName?: string) =>
@@ -115,7 +121,12 @@ export const App: React.FC = () => {
   const startRoutine = () => {
     setLogs([])
     setArtifactSet({})
-    api.invoke(Channel.START, lockWhileScanning, selectedScript)
+    api.invoke(
+      Channel.START,
+      lockWhileScanning,
+      inputMethod === 'GAMEPAD',
+      selectedScript
+    )
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
@@ -277,6 +288,13 @@ export const App: React.FC = () => {
                   setLockWhileScanning(val === 'SCAN_AND_LOCK' ? true : false)
                 }}
                 value={routineType}
+              />
+              <StandardSelect
+                size="small"
+                required
+                options={inputMethodOptions}
+                onValueChange={setInputMethod}
+                value={inputMethod}
               />
               {routineType === 'SCAN_AND_LOCK' && (
                 <>
