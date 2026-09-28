@@ -213,17 +213,16 @@ export class Navigator {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 
+    const elixirLandmark = this.landmarks[ScreenMap.ARTIFACTS]['elixir']
     const isElixired = await this.#pixelTest(
       image.clone().extractChannel('blue'),
       'elixir',
       [250],
       [255],
-      [40, 0]
+      [-Math.floor(elixirLandmark.w * 0.48), 0]
     )
 
-    const elixirOffsetY = isElixired
-      ? this.landmarks[ScreenMap.ARTIFACTS]['elixir'].region().height
-      : 0
+    const elixirOffsetY = isElixired ? elixirLandmark.h : 0
     const elixirOffset: Offset = [0, elixirOffsetY]
 
     const [

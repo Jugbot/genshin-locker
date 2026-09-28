@@ -161,7 +161,7 @@ describe('Navigator', () => {
       })
     })
 
-    test.each(['duplicateSubkeyIssue', 'unactivatedSubkey'])(
+    test.each(['duplicateSubkeyIssue', 'unactivatedSubkey', 'elixir'])(
       '%s',
       async (baseName) => {
         const pngFile = `${baseName}.png`
