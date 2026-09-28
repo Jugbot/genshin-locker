@@ -24,7 +24,7 @@ export async function createOCR(
   await Promise.all(Array.from({ length: maxWorkers }, addWorker))
 
   async function addWorker() {
-    const worker = await createWorker('genshin_best_eng', OEM.DEFAULT, {
+    const worker = await createWorker('genshin_fast_eng', OEM.DEFAULT, {
       langPath: tessPath,
       gzip: false,
       cacheMethod: 'none',
