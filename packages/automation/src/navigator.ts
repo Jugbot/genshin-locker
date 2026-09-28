@@ -147,35 +147,36 @@ export class Navigator {
     if (colorUpper.length === 0) {
       colorUpper = colorLower
     }
-    const getPixel = async (x: number, y: number) => {
-      const bytes = await image
-        .clone()
-        .extract({
-          top: Math.floor(y) + offsetY,
-          left: Math.floor(x) + offsetX,
-          width: 1,
-          height: 1,
-        })
-        .raw()
-        .toBuffer()
-      const pixel = Array.from(bytes)
-      if (colorLower.length !== pixel.length) {
-        throw Error(
-          `Pixel test colorLower is not of length ${pixel.length}, was ${colorLower.length}`
-        )
-      }
-      if (colorUpper.length !== pixel.length) {
-        throw Error(
-          `Pixel test colorUpper is not of length ${pixel.length}, was ${colorUpper.length}`
-        )
-      }
-      return pixel
-    }
-    const results = await Promise.all(
-      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers()).map(
-        ([cx, cy]) => getPixel(cx, cy)
-      )
+    const points = Array.from(
+      this.landmarks[ScreenMap.ARTIFACTS][id].centers()
+    ).map(
+      ([cx, cy]): Offset => [Math.floor(cx) + offsetX, Math.floor(cy) + offsetY]
     )
+    // Extract the bounding box of all points once rather than one pipeline per pixel
+    const left = Math.min(...points.map(([x]) => x))
+    const top = Math.min(...points.map(([, y]) => y))
+    const width = Math.max(...points.map(([x]) => x)) - left + 1
+    const height = Math.max(...points.map(([, y]) => y)) - top + 1
+    const { data, info } = await image
+      .clone()
+      .extract({ left, top, width, height })
+      .raw()
+      .toBuffer({ resolveWithObject: true })
+    const { channels } = info
+    if (colorLower.length !== channels) {
+      throw Error(
+        `Pixel test colorLower is not of length ${channels}, was ${colorLower.length}`
+      )
+    }
+    if (colorUpper.length !== channels) {
+      throw Error(
+        `Pixel test colorUpper is not of length ${channels}, was ${colorUpper.length}`
+      )
+    }
+    const results = points.map(([x, y]) => {
+      const start = ((y - top) * width + (x - left)) * channels
+      return Array.from(data.subarray(start, start + channels))
+    })
 
     return results.filter((pixel) => {
       return pixel.every((color, i) => {
