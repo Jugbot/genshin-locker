@@ -152,6 +152,13 @@ export const ArtifactCard = ({
         {artifact.substats.map((stat) => (
           <ArtifactStat key={stat.key} stat={[stat.key, stat.value]} />
         ))}
+        {artifact.unactivatedSubstats.map((stat) => (
+          <ArtifactStat
+            key={stat.key}
+            color="subdued"
+            stat={[stat.key, stat.value]}
+          />
+        ))}
       </Stack.Vertical>
     </Box>
   )

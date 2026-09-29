@@ -18,6 +18,9 @@ import { GenshinWindow } from './window'
 
 type Offset = [x: number, y: number]
 
+// Active substat text is ~83 at its darkest, unactivated text is ~156
+const UNACTIVATED_SUBSTAT_MIN_BRIGHTNESS = 120
+
 export class Navigator {
   gwindow: GenshinWindow
   landmarks: Landmarks
@@ -185,6 +188,33 @@ export class Navigator {
     }).length
   }
 
+  /**
+   * Finds the darkest pixel value in each region of a grayscale image
+   */
+  async #darkestPixels(
+    image: Sharp,
+    id: keyof Landmarks[ScreenMap.ARTIFACTS],
+    offset: Offset = [0, 0]
+  ): Promise<number[]> {
+    const [offsetX, offsetY] = offset
+    return Promise.all(
+      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
+        async (region) => {
+          const pixels = await image
+            .clone()
+            .extract({
+              ...region,
+              left: region.left + offsetX,
+              top: region.top + offsetY,
+            })
+            .raw()
+            .toBuffer()
+          return pixels.reduce((a, b) => Math.min(a, b), 255)
+        }
+      )
+    )
+  }
+
   async getArtifactCount(image: Sharp): Promise<number> {
     const line = await this.#readText(image, 'artifact_count')
     return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
@@ -232,6 +262,7 @@ export class Navigator {
       card_mainstat_key,
       card_level,
       card_substat,
+      card_substat_darkest,
       card_lock,
       card_mainstat_value,
     ] = await Promise.all([
@@ -252,6 +283,7 @@ export class Navigator {
         elixirOffset
       ),
       this.#readTexts(image, 'card_substat', elixirOffset),
+      this.#darkestPixels(imageBW, 'card_substat', elixirOffset),
       this.#pixelTest(
         image.clone().extractChannel('green'),
         'card_lock',
@@ -269,7 +301,14 @@ export class Navigator {
     )
     const level = getNumber(card_level)
     const rarity = card_rarity
-    const substats = getSubstats(card_substat)
+    const unactivated = card_substat_darkest.map(
+      (darkest) => darkest > UNACTIVATED_SUBSTAT_MIN_BRIGHTNESS
+    )
+    const { substats, unactivatedSubstats } = getSubstats(
+      card_substat,
+      unactivated,
+      level
+    )
     const setKey = getArtifactSet(card_set)
     const lock = Boolean(card_lock)
 
@@ -280,7 +319,10 @@ export class Navigator {
         slotKey,
         mainStatKey,
         mainStatValue,
-        ...substats.flatMap((stat) => [stat.key, stat.value]),
+        ...[...substats, ...unactivatedSubstats].flatMap((stat) => [
+          stat.key,
+          stat.value,
+        ]),
       ].join('|'),
       level,
       location: 0,
@@ -291,6 +333,7 @@ export class Navigator {
       setKey,
       slotKey,
       substats,
+      unactivatedSubstats,
     }
   }
 }

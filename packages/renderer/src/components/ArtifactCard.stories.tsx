@@ -26,9 +26,33 @@ FirstStory.args = {
     mainStatKey: MainStatKey.ANEMO_DMG,
     level: 20,
     substats: [{ key: SubStatKey.ATK_FLAT, value: 10 }],
+    unactivatedSubstats: [],
     location: 0,
     lock: false,
     id: '',
   },
   shouldBeLocked: false,
+}
+
+export const Unactivated = Template.bind({})
+
+Unactivated.args = {
+  artifact: {
+    mainStatValue: 47,
+    setKey: SetKey.ObsidianCodex,
+    slotKey: SlotKey.PLUME,
+    rarity: 5,
+    mainStatKey: MainStatKey.ATK_FLAT,
+    level: 0,
+    substats: [
+      { key: SubStatKey.DEF_FLAT, value: 16 },
+      { key: SubStatKey.ENERGY_RECHARGE, value: 5.2 },
+      { key: SubStatKey.ATK_PERCENT, value: 4.1 },
+    ],
+    unactivatedSubstats: [{ key: SubStatKey.CRIT_RATE, value: 3.9 }],
+    location: 0,
+    lock: true,
+    id: '',
+  },
+  shouldBeLocked: true,
 }

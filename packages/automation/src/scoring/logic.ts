@@ -26,7 +26,9 @@ function defaultShouldLock(artifact: Artifact) {
   }
   // Desireable substats have synergy
   const countAllOf = (keys: SubStatKey[]) =>
-    artifact.substats.filter(({ key }) => keys.includes(key)).length
+    [...artifact.substats, ...artifact.unactivatedSubstats].filter(({ key }) =>
+      keys.includes(key)
+    ).length
   const countOneOf = (keys: SubStatKey[]) => (countAllOf(keys) === 0 ? 0 : 1)
   const critScalers = [
     SubStatKey.CRIT_DAMAGE,
