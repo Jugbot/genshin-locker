@@ -1,0 +1,22 @@
+{
+  "id": "BraveHeart|3|flower|hp|430|def_|3.5|atk_|3.5",
+  "level": 0,
+  "location": 0,
+  "lock": false,
+  "mainStatKey": "hp",
+  "mainStatValue": 430,
+  "rarity": 3,
+  "setKey": "BraveHeart",
+  "slotKey": "flower",
+  "substats": [
+    {
+      "key": "def_",
+      "value": 3.5
+    },
+    {
+      "key": "atk_",
+      "value": 3.5
+    }
+  ],
+  "unactivatedSubstats": []
+}

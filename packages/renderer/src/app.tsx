@@ -39,6 +39,15 @@ export const App: React.FC = () => {
     RoutineStatus | Record<string, never>
   >({})
   const [lockWhileScanning, setLockWhileScanning] = React.useState(true)
+  const minRaritySelectOptions = {
+    '1': 'Rarity ≥ 1',
+    '2': 'Rarity ≥ 2',
+    '3': 'Rarity ≥ 3',
+    '4': 'Rarity ≥ 4',
+    '5': 'Rarity = 5',
+  }
+  const [minRarity, setMinRarity] =
+    React.useState<keyof typeof minRaritySelectOptions>('5')
   const [logs, setLogs] = React.useState<string[]>([])
   const routineSelectOptions = {
     SCAN: t('scan'),
@@ -115,7 +124,12 @@ export const App: React.FC = () => {
   const startRoutine = () => {
     setLogs([])
     setArtifactSet({})
-    api.invoke(Channel.START, lockWhileScanning, selectedScript)
+    api.invoke(
+      Channel.START,
+      lockWhileScanning,
+      Number(minRarity),
+      selectedScript
+    )
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
@@ -277,6 +291,13 @@ export const App: React.FC = () => {
                   setLockWhileScanning(val === 'SCAN_AND_LOCK' ? true : false)
                 }}
                 value={routineType}
+              />
+              <StandardSelect
+                size="small"
+                required
+                options={minRaritySelectOptions}
+                onValueChange={setMinRarity}
+                value={minRarity}
               />
               {routineType === 'SCAN_AND_LOCK' && (
                 <>

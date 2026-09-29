@@ -169,6 +169,10 @@ describe('Navigator', () => {
       'unactivatedSubkey',
       'elixir',
       'unactivatedPlume',
+      'fourStar',
+      'threeStar',
+      'twoStar',
+      'oneStar',
     ])('%s', async (baseName) => {
       const pngFile = `${baseName}.png`
       const jsonFile = `${baseName}.json`

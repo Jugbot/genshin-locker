@@ -45,6 +45,7 @@ class TaskManager<S> {
 
 export async function readArtifacts(
   lockWhileScanning: boolean,
+  minRarity: number,
   scriptName?: string
 ) {
   const scriptFunc = await getLockerScript(scriptName)
@@ -104,53 +105,58 @@ export async function readArtifacts(
     return true
   }
 
-  const parseArtifactTask = (thisPageIndex: number, image: Sharp) => () =>
-    navigator.getArtifact(image).then(
-      async (artifact) => {
-        if (artifact.rarity < 5) {
-          // TODO: Add option for rarity
-          // There is not much point to filtering low rarity artifacts
-          mainApi.send(Channel.LOG, 'info', `Skipping, not five star.`)
-          return
-        }
-        if (visitedArtifacts.has(artifact.id)) {
-          mainApi.send(Channel.LOG, 'info', `Skipping, already visited.`)
-          return
-        }
-        visitedArtifacts.add(artifact.id)
-        const shouldBeLocked =
-          (await calculate(scriptFunc, artifact)) ?? artifact.lock
-        if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
-          taskManager.add(
-            'sync',
-            lockArtifactTask(thisPageIndex, () =>
-              mainApi.send(
-                Channel.ARTIFACT,
-                {
-                  ...artifact,
-                  lock: shouldBeLocked,
-                },
-                shouldBeLocked
+  const parseArtifactTask =
+    (thisPageIndex: number, image: Sharp) => async () => {
+      // Check rarity before the full parse to avoid OCR on skipped artifacts
+      if ((await navigator.getRarity(image)) < minRarity) {
+        mainApi.send(Channel.LOG, 'info', `Skipping, below ${minRarity} star.`)
+        return
+      }
+      return navigator.getArtifact(image).then(
+        async (artifact) => {
+          if (visitedArtifacts.has(artifact.id)) {
+            mainApi.send(Channel.LOG, 'info', `Skipping, already visited.`)
+            return
+          }
+          visitedArtifacts.add(artifact.id)
+          const shouldBeLocked =
+            (await calculate(scriptFunc, artifact)) ?? artifact.lock
+          if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
+            taskManager.add(
+              'sync',
+              lockArtifactTask(thisPageIndex, () =>
+                mainApi.send(
+                  Channel.ARTIFACT,
+                  {
+                    ...artifact,
+                    lock: shouldBeLocked,
+                  },
+                  shouldBeLocked
+                )
               )
             )
+          }
+          mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
+        },
+        (reason) => {
+          console.error(reason)
+          mainApi.send(
+            Channel.LOG,
+            'error',
+            `Error parsing artifact, ${reason}`
           )
-        }
-        mainApi.send(Channel.ARTIFACT, artifact, shouldBeLocked)
-      },
-      (reason) => {
-        console.error(reason)
-        mainApi.send(Channel.LOG, 'error', `Error parsing artifact, ${reason}`)
-        return navigator
-          .debugPrint(image)
-          .then((fileName) =>
-            mainApi.send(
-              Channel.LOG,
-              'error',
-              `Saved failing artifact snapshot to ${fileName}`
+          return navigator
+            .debugPrint(image)
+            .then((fileName) =>
+              mainApi.send(
+                Channel.LOG,
+                'error',
+                `Saved failing artifact snapshot to ${fileName}`
+              )
             )
-          )
-      }
-    )
+        }
+      )
+    }
 
   for (;;) {
     let shouldExit = false

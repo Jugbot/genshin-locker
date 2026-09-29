@@ -239,6 +239,10 @@ export class Navigator {
     return max < 128
   }
 
+  async getRarity(image: Sharp): Promise<number> {
+    return this.#pixelTest(image, 'card_rarity', [255, 204, 50])
+  }
+
   async getArtifact(image: Sharp): Promise<Artifact> {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
@@ -256,7 +260,6 @@ export class Navigator {
     const elixirOffset: Offset = [0, elixirOffsetY]
 
     const [
-      card_set,
       card_slot_type,
       card_rarity,
       card_mainstat_key,
@@ -266,16 +269,8 @@ export class Navigator {
       card_lock,
       card_mainstat_value,
     ] = await Promise.all([
-      this.#readText(
-        image
-          .clone()
-          .extractChannel('blue')
-          .threshold(125, { grayscale: false }),
-        'card_set',
-        elixirOffset
-      ),
       this.#readText(imageBWInverted, 'card_slot_type'),
-      this.#pixelTest(image, 'card_rarity', [255, 204, 50]),
+      this.getRarity(image),
       this.#readText(imageBWInverted, 'card_mainstat_key'),
       this.#readText(
         imageBW.clone().threshold(230),
@@ -308,6 +303,14 @@ export class Navigator {
       card_substat,
       unactivated,
       level
+    )
+    const substatLandmark = this.landmarks[ScreenMap.ARTIFACTS]['card_substat']
+    const missingSubstatLines =
+      substatLandmark.repeat_y - substats.length - unactivatedSubstats.length
+    const card_set = await this.#readText(
+      image.clone().extractChannel('blue').threshold(125, { grayscale: false }),
+      'card_set',
+      [0, elixirOffsetY - missingSubstatLines * substatLandmark.h]
     )
     const setKey = getArtifactSet(card_set)
     const lock = Boolean(card_lock)
