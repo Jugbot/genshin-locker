@@ -187,4 +187,37 @@ describe('Navigator', () => {
       expect(artifacts).toEqual(expected)
     })
   })
+
+  describe('end of list', () => {
+    const loadTestImage = (baseName: string) =>
+      sharp(path.join(__dirname, 'testimages', `${baseName}.png`)).removeAlpha()
+
+    test.each([
+      ['sanctifyingUnction', true],
+      ['sanctifyingEssence', true],
+      ['elixir', false],
+      ['fourStar', false],
+      ['oneStar', false],
+    ])('isEnhancementMaterial(%s) is %s', async (baseName, expected) => {
+      const image = loadTestImage(baseName)
+      const navigator = new Navigator(await createTestWindow(image))
+      expect(await navigator.isEnhancementMaterial(image)).toBe(expected)
+    })
+
+    test.each([
+      ['sanctifyingUnction', 'sanctifyingUnction', true],
+      ['sanctifyingUnction', 'sanctifyingEssence', false],
+      ['fourStar', 'threeStar', false],
+    ])(
+      'isSameImage(%s, %s) card is %s',
+      async (baseNameA, baseNameB, expected) => {
+        const imageA = loadTestImage(baseNameA)
+        const imageB = loadTestImage(baseNameB)
+        const navigator = new Navigator(await createTestWindow(imageA))
+        expect(
+          await navigator.isSameImage(imageA, imageB, navigator.cardRegion())
+        ).toBe(expected)
+      }
+    )
+  })
 })

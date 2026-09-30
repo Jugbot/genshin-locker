@@ -13,6 +13,7 @@ import {
   getNumber,
   getSlot,
   getSubstats,
+  removeWhitespace,
 } from './util/scraper'
 import { GenshinWindow } from './window'
 
@@ -20,6 +21,8 @@ type Offset = [x: number, y: number]
 
 // Active substat text is ~83 at its darkest, unactivated text is ~156
 const UNACTIVATED_SUBSTAT_MIN_BRIGHTNESS = 120
+// Largest per-channel difference allowed for two captures to be considered unchanged
+const SAME_IMAGE_MAX_DIFF = 16
 
 export class Navigator {
   gwindow: GenshinWindow
@@ -221,22 +224,53 @@ export class Navigator {
   }
 
   /**
-   * Detects if an image region is empty (i.e. has no edges detected)
+   * The bounding box containing every given region
    */
-  async isEmpty(image: Sharp, region: Region) {
-    const edges = image
-      .clone()
-      .convolve({
-        // Sobel
-        width: 3,
-        height: 3,
-        kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
-      })
-      .extract(region)
-      .toColorspace('b-w')
-    const pixels = await edges.raw().toBuffer()
-    const max = pixels.reduce((a, b) => Math.max(a, b), 0)
-    return max < 128
+  #containingRegion(...regions: Region[]): Region {
+    const left = Math.min(...regions.map((r) => r.left))
+    const top = Math.min(...regions.map((r) => r.top))
+    const right = Math.max(...regions.map((r) => r.left + r.width))
+    const bottom = Math.max(...regions.map((r) => r.top + r.height))
+    return { left, top, width: right - left, height: bottom - top }
+  }
+
+  /**
+   * The region containing all relevant card details
+   */
+  cardRegion(): Region {
+    return this.#containingRegion(
+      ...this.landmarks[ScreenMap.ARTIFACTS]['card_name'].regions(),
+      ...this.landmarks[ScreenMap.ARTIFACTS]['card_substat'].regions()
+    )
+  }
+
+  /**
+   * Detects if a region is (nearly) identical between two images
+   */
+  async isSameImage(a: Sharp, b: Sharp, region: Region) {
+    const [pixelsA, pixelsB] = await Promise.all(
+      [a, b].map((image) => image.clone().extract(region).raw().toBuffer())
+    )
+    if (pixelsA.length !== pixelsB.length) {
+      return false
+    }
+    for (let i = 0; i < pixelsA.length; i += 1) {
+      if (Math.abs(pixelsA[i] - pixelsB[i]) > SAME_IMAGE_MAX_DIFF) {
+        return false
+      }
+    }
+    return true
+  }
+
+  /**
+   * Artifact EXP materials (Sanctifying Unction/Essence) are sorted after all artifacts
+   */
+  async isEnhancementMaterial(image: Sharp): Promise<boolean> {
+    const name = await this.#readText(
+      image.clone().toColorspace('b-w').negate(),
+      'card_name'
+    )
+    return /sanctifying/i.test(removeWhitespace(name))
   }
 
   async getRarity(image: Sharp): Promise<number> {
