@@ -1,58 +1,63 @@
-import { styled } from '@gl/theme'
+import { CSS, styled } from '@gl/theme'
 import * as Progress from '@radix-ui/react-progress'
 import { ComponentProps } from 'react'
 
 import { Box } from './Box'
-import { Heading } from './Heading'
+import { Text } from './Text'
 
 const Root = styled(Progress.Root, {
   position: 'relative',
   overflow: 'hidden',
+  flexGrow: 1,
   backgroundColor: '$bgActionSubdued',
-  borderRadius: '$radius1',
-  height: '$size4',
+  boxShadow: 'inset 0 0 0 1px $colors$borderSubtle',
+  borderRadius: '$radiusMax',
+  height: '$size2',
 })
 
+// Sized by width, not translateX: a translated bar leaves a sliver of color
+// at 0%
 const Indicator = styled(Progress.Indicator, {
   backgroundColor: '$bgActionPrimary',
+  borderRadius: 'inherit',
   position: 'absolute',
-  inset: 0,
-  overflow: 'hidden',
-  transition: 'transform 660ms cubic-bezier(0.65, 0, 0.35, 1)',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  transition: 'width 660ms cubic-bezier(0.65, 0, 0.35, 1)',
 })
 
-export const ProgressBar = (args: ComponentProps<typeof Root>) => {
+type ProgressBarProps = ComponentProps<typeof Root> & { css?: CSS }
+
+export const ProgressBar = ({ css, ...args }: ProgressBarProps) => {
   const { max = 100, value = 0 } = args
 
   const clampedValue = Math.max(0, Math.min(value ?? 0, max))
-  const percentRemaining = ((max - clampedValue) / max) * 100
+  const percentComplete = max > 0 ? (clampedValue / max) * 100 : 0
   const showLabel = args.max !== undefined && args.value !== undefined
 
   return (
-    <Root {...args}>
-      <Indicator style={{ transform: `translateX(-${percentRemaining}%)` }} />
-      <Heading
-        as="div"
-        variant="subheading"
-        css={{
-          visibility: showLabel ? 'visible' : 'hidden',
-          color: '$bgActionPrimary',
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          mixBlendMode: 'difference',
-        }}
-      >
-        <Box as="span" css={{ flex: '1 0 0', textAlign: 'right' }}>
-          {value}
-        </Box>
-        &nbsp;/&nbsp;
-        <Box as="span" css={{ flex: '1 0 0', textAlign: 'left' }}>
-          {max}
-        </Box>
-      </Heading>
-    </Root>
+    <Box
+      css={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '$space3',
+        minWidth: 0,
+        ...css,
+      }}
+    >
+      <Root {...args}>
+        <Indicator style={{ width: `${percentComplete}%` }} />
+      </Root>
+      {showLabel && (
+        <Text
+          as="span"
+          color="subdued"
+          css={{ fontSize: '$fontSize2', whiteSpace: 'nowrap' }}
+        >
+          {value} / {max}
+        </Text>
+      )}
+    </Box>
   )
 }

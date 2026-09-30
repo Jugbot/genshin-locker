@@ -12,17 +12,27 @@ export const ButtonBase = styled('button', {
   userSelect: 'none',
   fontWeight: '$bold',
   lineHeight: '$lineHeight7',
+  fontFamily: '$body',
   borderStyle: 'solid',
-  borderWidth: 0,
+  borderWidth: '$borderWidth1',
   outline: 'none',
   backgroundColor: 'transparent',
   appearance: 'none',
   textDecoration: 'none',
   textTransform: 'capitalize',
-  focusVisible: '$focus',
+  whiteSpace: 'nowrap',
+  transition:
+    'background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out',
+
+  // Offset so the ring stays visible on accent-colored buttons
+  '&:focus-visible': {
+    outline: '2px solid $colors$focusRing',
+    outlineOffset: '2px',
+  },
 
   '&:disabled': {
     cursor: 'not-allowed',
+    opacity: 0.5,
   },
 
   variants: {
@@ -43,14 +53,14 @@ export const ButtonBase = styled('button', {
       subdued: {
         color: '$textActionSubdued',
         backgroundColor: '$bgActionSubdued',
-        borderColor: '$bgActionSubdued',
+        borderColor: '$borderDefault',
         '&:hover:not([disabled]):not(:active)': {
           backgroundColor: '$bgActionSubduedHover',
-          borderColor: '$bgActionSubduedHover',
+          borderColor: '$borderHover',
         },
         '&:active:not([disabled])': {
           backgroundColor: '$bgActionSubduedPressed',
-          borderColor: '$bgActionSubduedPressed',
+          borderColor: '$borderHover',
         },
       },
       transparent: {

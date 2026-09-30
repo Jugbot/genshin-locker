@@ -53,9 +53,14 @@ export const StandardSelect = <T extends string>({
       disabled={props.disabled}
       required={required}
     >
-      <Select.Trigger {...props}>
+      <Select.Trigger variant="subdued" {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{displayValue ?? placeholder}</Text>
+          <Text
+            color="inherit"
+            css={{ fontSize: 'inherit', lineHeight: 'inherit' }}
+          >
+            {displayValue ?? placeholder}
+          </Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>
