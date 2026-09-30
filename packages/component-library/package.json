@@ -21,7 +21,8 @@
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "storybook": "start-storybook -p 6007"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"

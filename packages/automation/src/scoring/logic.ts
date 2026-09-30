@@ -8,14 +8,15 @@ import { Artifact, Channel, MainStatKey, SlotKey, SubStatKey } from '@gl/types'
 import { mainStatDistribution } from '../util/statistics'
 
 import { SCRIPT_DIR } from './const'
+import { ScriptArtifact, toScriptArtifact } from './scriptArtifact'
 
-function defaultShouldLock(artifact: Artifact) {
+function defaultShouldLock(artifact: ScriptArtifact) {
   // Lock anything that already has invested XP
   if (artifact.level > 0) {
     return true
   }
-  // Lock all artifacts with full substats
-  if (artifact.substats.length === 4) {
+  // Lock all artifacts with full (active) substats
+  if (artifact.substats.length === 4 && !artifact.hasInactiveSubstat) {
     return true
   }
   // Lock rare main stats
@@ -26,9 +27,7 @@ function defaultShouldLock(artifact: Artifact) {
   }
   // Desireable substats have synergy
   const countAllOf = (keys: SubStatKey[]) =>
-    [...artifact.substats, ...artifact.unactivatedSubstats].filter(({ key }) =>
-      keys.includes(key)
-    ).length
+    artifact.substats.filter(({ key }) => keys.includes(key)).length
   const countOneOf = (keys: SubStatKey[]) => (countAllOf(keys) === 0 ? 0 : 1)
   const critScalers = [
     SubStatKey.CRIT_DAMAGE,
@@ -64,7 +63,7 @@ function defaultShouldLock(artifact: Artifact) {
 
 type LockResult = boolean | null
 type LockFunction = (
-  artifact: Artifact,
+  artifact: ScriptArtifact,
   utilities: {
     mainStatDistribution: typeof mainStatDistribution
   }
@@ -99,7 +98,7 @@ export async function calculate(
   artifact: Artifact
 ): Promise<boolean | null> {
   try {
-    return await lockFunc(artifact, {
+    return await lockFunc(toScriptArtifact(artifact), {
       mainStatDistribution,
     })
   } catch (e) {
