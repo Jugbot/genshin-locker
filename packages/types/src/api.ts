@@ -16,6 +16,7 @@ export enum Channel {
   CALCULATE = 'calculate',
   SAVE_ARTIFACTS = 'save-artifacts',
   USER_SCRIPT_CHANGE = 'user-script-change',
+  GET_USER_SCRIPTS = 'get-user-scripts',
   OPEN_USER_SCRIPT_FOLDER = 'open-user-script-folder',
 }
 
@@ -35,6 +36,7 @@ export type EventPayload = {
   ]
   [Channel.SAVE_ARTIFACTS]: [success: boolean, args: [artifacts: Artifact[]]]
   [Channel.USER_SCRIPT_CHANGE]: [void, [fileNames: string[]]]
+  [Channel.GET_USER_SCRIPTS]: [fileNames: string[], args: []]
   [Channel.OPEN_USER_SCRIPT_FOLDER]: [void, []]
 }
 
@@ -47,6 +49,7 @@ export type RendererEmitChannels =
   | Channel.START
   | Channel.CALCULATE
   | Channel.SAVE_ARTIFACTS
+  | Channel.GET_USER_SCRIPTS
   | Channel.OPEN_USER_SCRIPT_FOLDER
 
 type MaybePromise<T> = T | Promise<T>

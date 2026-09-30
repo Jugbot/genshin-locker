@@ -2,11 +2,12 @@ import { styled } from '@gl/theme'
 import * as RadixScrollArea from '@radix-ui/react-scroll-area'
 
 const ScrollAreaRoot = styled(RadixScrollArea.Root, {
-  borderRadius: '$radius1',
-  padding: '$space2',
+  borderRadius: '$radius2',
+  padding: '$space3',
   boxSizing: 'border-box',
   overflow: 'hidden',
   backgroundColor: '$bgSecondary',
+  border: '1px solid $borderSubtle',
 })
 
 const ScrollAreaViewport = styled(RadixScrollArea.Viewport, {
@@ -21,7 +22,7 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.ScrollAreaScrollbar, {
   touchAction: 'none',
   padding: '$space1',
   transition: 'background 160ms ease-out',
-  backgroundColor: '$sandDarkA3',
+  backgroundColor: 'transparent',
 
   "&[data-orientation='vertical']": {
     width: '$size2',
@@ -34,7 +35,7 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.ScrollAreaScrollbar, {
 
 const ScrollAreaThumb = styled(RadixScrollArea.ScrollAreaThumb, {
   flex: 1,
-  borderRadius: '$radius1',
+  borderRadius: '$radiusMax',
   position: 'relative',
   backgroundColor: '$layoutHandle',
 

@@ -99,17 +99,18 @@ async function createWindow() {
     shell.openPath(SCRIPT_DIR)
   })
 
-  const updateScriptList = () => {
-    fs.readdir(SCRIPT_DIR, (err, files) => {
-      if (err) {
-        mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
-        console.error(err)
-        return
-      }
-      // Here you can send the files array wherever you need to
-      mainApi.send(Channel.USER_SCRIPT_CHANGE, files)
+  const readScriptList = () =>
+    fs.promises.readdir(SCRIPT_DIR).catch((err) => {
+      mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
+      console.error(err)
+      return []
     })
-  }
+  const updateScriptList = () =>
+    readScriptList().then((files) =>
+      mainApi.send(Channel.USER_SCRIPT_CHANGE, files)
+    )
+
+  mainApi.handle(Channel.GET_USER_SCRIPTS, readScriptList)
 
   fileWatcher.removeAllListeners()
   fileWatcher.addListener('change', updateScriptList)

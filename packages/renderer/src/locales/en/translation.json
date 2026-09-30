@@ -17,5 +17,21 @@
   "substats": "Substats",
   "scan": "Scan Only",
   "scan-and-lock": "Scan And Lock",
-  "handcrafted": "Handcrafted"
+  "handcrafted": "Handcrafted",
+  "locked": "Locked",
+  "unlocked": "Unlocked",
+  "will-lock": "Will be locked",
+  "will-unlock": "Will be unlocked",
+  "artifacts": "Artifacts",
+  "export": "Export",
+  "start": "Start",
+  "no-artifacts": "No artifacts scanned yet",
+  "no-artifacts-hint": "Press Start to scan your artifacts.",
+  "log-placeholder": "Scan output will appear here.",
+  "lock-changed": "Changed",
+  "lock-changed-description": "Locks changed by the routine since the scan started",
+  "stat-locked": "locked",
+  "stat-unlocked": "unlocked",
+  "stat-to-lock": "to lock",
+  "stat-to-unlock": "to unlock"
 }
