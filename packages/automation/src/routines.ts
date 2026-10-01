@@ -48,9 +48,7 @@ export async function readArtifacts(
   minRarity: number,
   scriptName?: string
 ) {
-  const scriptFunc = lockWhileScanning
-    ? await getLockerScript(scriptName)
-    : null
+  const scriptFunc = await getLockerScript(scriptName)
   const taskManager = new TaskManager<boolean>()
   const navigator = new Navigator()
   navigator.gwindow.grab()
@@ -143,7 +141,7 @@ export async function readArtifacts(
           }
           visitedArtifacts.add(artifact.id)
           countScanned()
-          const shouldBeLocked = scriptFunc
+          const shouldBeLocked = lockWhileScanning
             ? (await calculate(scriptFunc, artifact)) ?? artifact.lock
             : artifact.lock
           if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
