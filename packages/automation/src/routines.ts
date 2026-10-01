@@ -68,8 +68,7 @@ export async function readArtifacts(
     await navigator.gwindow.capture()
   )
   mainApi.send(Channel.LOG, 'info', `Reading ${total} artifacts total`)
-  // Rarity-skipped artifacts aren't parsed, so they can't be deduplicated and
-  // may be counted twice after a scroll
+
   let scannedCount = 0
   const reportProgress = (current = scannedCount) =>
     mainApi.send(Channel.PROGRESS, {
