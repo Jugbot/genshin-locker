@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.0.0",
     "@types/yargs": "^17.0.24",
     "electron": "^24.0.0",
     "ts-node": "^10.9.1",

@@ -17,5 +17,7 @@
   "substats": "Substats",
   "scan": "Scan Only",
   "scan-and-lock": "Scan And Lock",
-  "handcrafted": "Handcrafted"
+  "handcrafted": "Handcrafted",
+  "min-rarity": "Rarity ≥ {{rarity}}",
+  "max-rarity": "Rarity = {{rarity}}"
 }

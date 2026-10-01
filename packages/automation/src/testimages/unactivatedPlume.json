@@ -1,0 +1,31 @@
+{
+  "id": "ObsidianCodex|5|plume|atk|47|def|16|enerRech_|5.2|atk_|4.1|critRate_|3.9",
+  "level": 0,
+  "location": 0,
+  "lock": true,
+  "mainStatKey": "atk",
+  "mainStatValue": 47,
+  "rarity": 5,
+  "setKey": "ObsidianCodex",
+  "slotKey": "plume",
+  "substats": [
+    {
+      "key": "def",
+      "value": 16
+    },
+    {
+      "key": "enerRech_",
+      "value": 5.2
+    },
+    {
+      "key": "atk_",
+      "value": 4.1
+    }
+  ],
+  "unactivatedSubstats": [
+    {
+      "key": "critRate_",
+      "value": 3.9
+    }
+  ]
+}

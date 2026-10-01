@@ -1,0 +1,13 @@
+{
+  "id": "Adventurer|2|flower|hp|258",
+  "level": 0,
+  "location": 0,
+  "lock": false,
+  "mainStatKey": "hp",
+  "mainStatValue": 258,
+  "rarity": 2,
+  "setKey": "Adventurer",
+  "slotKey": "flower",
+  "substats": [],
+  "unactivatedSubstats": []
+}

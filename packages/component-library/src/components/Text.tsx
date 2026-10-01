@@ -15,7 +15,7 @@ export const Text = styled('p', {
     },
     color: {
       default: { color: '$textDefault' },
-      subdued: { color: '$textSubdued' },
+      subdued: { color: '$textDisabled' },
       inverted: { color: '$textInverted' },
       success: { color: '$textSuccess' },
       warning: { color: '$textWarning' },

@@ -117,6 +117,7 @@ export interface Artifact {
   mainStatKey: MainStatKey
   level: number
   substats: SubStat[]
+  unactivatedSubstats: SubStat[]
   location: number
   lock: boolean
   id: string

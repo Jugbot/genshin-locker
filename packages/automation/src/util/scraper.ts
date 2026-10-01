@@ -76,12 +76,19 @@ export const getMainStat = (
   return [stringToEnum(mainStatKey, MainStatKey), mainStatValue]
 }
 
-export const getSubstats = (txts: string[]): SubStat[] => {
+export const getSubstats = (
+  txts: string[],
+  unactivated: boolean[],
+  level: number
+): { substats: SubStat[]; unactivatedSubstats: SubStat[] } => {
   let lastIndex = txts.findIndex((txt) => !txt.includes('+'))
   lastIndex = lastIndex === -1 ? txts.length : lastIndex
   const visitedKeys = new Map<string, number>()
-  const substats: SubStat[] = txts.slice(0, lastIndex).map((txt, index) => {
-    const split = removeWhitespace(txt).split('+')
+  const substats: SubStat[] = []
+  const unactivatedSubstats: SubStat[] = []
+  txts.slice(0, lastIndex).forEach((txt, index) => {
+    // Strip suffixes like "(unactivated)" so they can't leak into the value
+    const split = removeWhitespace(txt.replace(/\(.*$/, '')).split('+')
     const [key, value] = cleanedStat(split[0], split[1])
     if (visitedKeys.has(key)) {
       throw Error(
@@ -91,9 +98,23 @@ export const getSubstats = (txts: string[]): SubStat[] => {
       )
     }
     visitedKeys.set(key, index)
-    return { key: stringToEnum(key, SubStatKey), value }
+    const substat = { key: stringToEnum(key, SubStatKey), value }
+    if (!unactivated[index]) {
+      if (unactivatedSubstats.length > 0) {
+        throw Error(`Parsed active substat "${key}" after an unactivated one`)
+      }
+      substats.push(substat)
+      return
+    }
+    if (unactivatedSubstats.length > 0) {
+      throw Error(`Parsed more than one unactivated substat`)
+    }
+    if (level >= 4) {
+      throw Error(`Parsed unactivated substat "${key}" at level ${level}`)
+    }
+    unactivatedSubstats.push(substat)
   })
-  return substats
+  return { substats, unactivatedSubstats }
 }
 export const getArtifactSet = (txt: string): SetKey => {
   const normalizedTxt = txt.toLowerCase().replaceAll(/[^a-z]+/g, '')

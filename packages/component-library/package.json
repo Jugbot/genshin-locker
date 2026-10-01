@@ -60,7 +60,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/react": "^13.4.0",
     "@types/cli-progress": "^3.11.0",
-    "@types/node": "^18.11.11",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.0.0",

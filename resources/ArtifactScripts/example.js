@@ -9,6 +9,7 @@
  * @property {MainStatKey} mainStatKey - The key of the main stat of the artifact.
  * @property {number} level - The level of the artifact.
  * @property {SubStat[]} substats - An array of substats of the artifact.
+ * @property {SubStat[]} unactivatedSubstats - Substats that activate once the artifact reaches +4 (at most one).
  * @property {number} location - The location identifier of the artifact.
  * @property {boolean} lock - Whether the artifact is locked or not.
  * @property {string} id - The unique identifier of the artifact.
@@ -65,7 +66,9 @@ module.exports = (artifact, {mainStatDistribution}) => {
    * @returns {number} The count of matching substats.
    */
   const countAllOf = (keys) =>
-    artifact.substats.filter(({ key }) => keys.includes(key)).length
+    [...artifact.substats, ...artifact.unactivatedSubstats].filter(({ key }) =>
+      keys.includes(key)
+    ).length
   /**
    * Checks if at least one of the given substat keys is present.
    * @param {SubStatKey[]} keys - The substat keys to check.

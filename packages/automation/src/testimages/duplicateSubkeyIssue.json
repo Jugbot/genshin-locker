@@ -20,7 +20,9 @@
     {
       "key": "critDMG_",
       "value": 7
-    },
+    }
+  ],
+  "unactivatedSubstats": [
     {
       "key": "atk_",
       "value": 5.8

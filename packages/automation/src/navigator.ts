@@ -13,10 +13,16 @@ import {
   getNumber,
   getSlot,
   getSubstats,
+  removeWhitespace,
 } from './util/scraper'
 import { GenshinWindow } from './window'
 
 type Offset = [x: number, y: number]
+
+// Active substat text is ~83 at its darkest, unactivated text is ~156
+const UNACTIVATED_SUBSTAT_MIN_BRIGHTNESS = 120
+// Largest per-channel difference allowed for two captures to be considered unchanged
+const SAME_IMAGE_MAX_DIFF = 16
 
 export class Navigator {
   gwindow: GenshinWindow
@@ -147,35 +153,36 @@ export class Navigator {
     if (colorUpper.length === 0) {
       colorUpper = colorLower
     }
-    const getPixel = async (x: number, y: number) => {
-      const bytes = await image
-        .clone()
-        .extract({
-          top: Math.floor(y) + offsetY,
-          left: Math.floor(x) + offsetX,
-          width: 1,
-          height: 1,
-        })
-        .raw()
-        .toBuffer()
-      const pixel = Array.from(bytes)
-      if (colorLower.length !== pixel.length) {
-        throw Error(
-          `Pixel test colorLower is not of length ${pixel.length}, was ${colorLower.length}`
-        )
-      }
-      if (colorUpper.length !== pixel.length) {
-        throw Error(
-          `Pixel test colorUpper is not of length ${pixel.length}, was ${colorUpper.length}`
-        )
-      }
-      return pixel
-    }
-    const results = await Promise.all(
-      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].centers()).map(
-        ([cx, cy]) => getPixel(cx, cy)
-      )
+    const points = Array.from(
+      this.landmarks[ScreenMap.ARTIFACTS][id].centers()
+    ).map(
+      ([cx, cy]): Offset => [Math.floor(cx) + offsetX, Math.floor(cy) + offsetY]
     )
+    // Extract the bounding box of all points once rather than one pipeline per pixel
+    const left = Math.min(...points.map(([x]) => x))
+    const top = Math.min(...points.map(([, y]) => y))
+    const width = Math.max(...points.map(([x]) => x)) - left + 1
+    const height = Math.max(...points.map(([, y]) => y)) - top + 1
+    const { data, info } = await image
+      .clone()
+      .extract({ left, top, width, height })
+      .raw()
+      .toBuffer({ resolveWithObject: true })
+    const { channels } = info
+    if (colorLower.length !== channels) {
+      throw Error(
+        `Pixel test colorLower is not of length ${channels}, was ${colorLower.length}`
+      )
+    }
+    if (colorUpper.length !== channels) {
+      throw Error(
+        `Pixel test colorUpper is not of length ${channels}, was ${colorUpper.length}`
+      )
+    }
+    const results = points.map(([x, y]) => {
+      const start = ((y - top) * width + (x - left)) * channels
+      return Array.from(data.subarray(start, start + channels))
+    })
 
     return results.filter((pixel) => {
       return pixel.every((color, i) => {
@@ -184,67 +191,120 @@ export class Navigator {
     }).length
   }
 
+  /**
+   * Finds the darkest pixel value in each region of a grayscale image
+   */
+  async #darkestPixels(
+    image: Sharp,
+    id: keyof Landmarks[ScreenMap.ARTIFACTS],
+    offset: Offset = [0, 0]
+  ): Promise<number[]> {
+    const [offsetX, offsetY] = offset
+    return Promise.all(
+      Array.from(this.landmarks[ScreenMap.ARTIFACTS][id].regions()).map(
+        async (region) => {
+          const pixels = await image
+            .clone()
+            .extract({
+              ...region,
+              left: region.left + offsetX,
+              top: region.top + offsetY,
+            })
+            .raw()
+            .toBuffer()
+          return pixels.reduce((a, b) => Math.min(a, b), 255)
+        }
+      )
+    )
+  }
+
   async getArtifactCount(image: Sharp): Promise<number> {
     const line = await this.#readText(image, 'artifact_count')
     return Number.parseInt(line.match(/\d+/g)?.[0] ?? '')
   }
 
   /**
-   * Detects if an image region is empty (i.e. has no edges detected)
+   * The bounding box containing every given region
    */
-  async isEmpty(image: Sharp, region: Region) {
-    const edges = image
-      .clone()
-      .convolve({
-        // Sobel
-        width: 3,
-        height: 3,
-        kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
-      })
-      .extract(region)
-      .toColorspace('b-w')
-    const pixels = await edges.raw().toBuffer()
-    const max = pixels.reduce((a, b) => Math.max(a, b), 0)
-    return max < 128
+  #containingRegion(...regions: Region[]): Region {
+    const left = Math.min(...regions.map((r) => r.left))
+    const top = Math.min(...regions.map((r) => r.top))
+    const right = Math.max(...regions.map((r) => r.left + r.width))
+    const bottom = Math.max(...regions.map((r) => r.top + r.height))
+    return { left, top, width: right - left, height: bottom - top }
+  }
+
+  /**
+   * The region containing all relevant card details
+   */
+  cardRegion(): Region {
+    return this.#containingRegion(
+      ...this.landmarks[ScreenMap.ARTIFACTS]['card_name'].regions(),
+      ...this.landmarks[ScreenMap.ARTIFACTS]['card_substat'].regions()
+    )
+  }
+
+  /**
+   * Detects if a region is (nearly) identical between two images
+   */
+  async isSameImage(a: Sharp, b: Sharp, region: Region) {
+    const [pixelsA, pixelsB] = await Promise.all(
+      [a, b].map((image) => image.clone().extract(region).raw().toBuffer())
+    )
+    if (pixelsA.length !== pixelsB.length) {
+      return false
+    }
+    for (let i = 0; i < pixelsA.length; i += 1) {
+      if (Math.abs(pixelsA[i] - pixelsB[i]) > SAME_IMAGE_MAX_DIFF) {
+        return false
+      }
+    }
+    return true
+  }
+
+  /**
+   * Artifact EXP materials (Sanctifying Unction/Essence) are sorted after all artifacts
+   */
+  async isEnhancementMaterial(image: Sharp): Promise<boolean> {
+    const name = await this.#readText(
+      image.clone().toColorspace('b-w').negate(),
+      'card_name'
+    )
+    return /sanctifying/i.test(removeWhitespace(name))
+  }
+
+  async getRarity(image: Sharp): Promise<number> {
+    return this.#pixelTest(image, 'card_rarity', [255, 204, 50])
   }
 
   async getArtifact(image: Sharp): Promise<Artifact> {
     const imageBW = image.clone().toColorspace('b-w')
     const imageBWInverted = imageBW.clone().negate()
 
+    const elixirLandmark = this.landmarks[ScreenMap.ARTIFACTS]['elixir']
     const isElixired = await this.#pixelTest(
       image.clone().extractChannel('blue'),
       'elixir',
       [250],
       [255],
-      [40, 0]
+      [-Math.floor(elixirLandmark.w * 0.48), 0]
     )
 
-    const elixirOffsetY = isElixired
-      ? this.landmarks[ScreenMap.ARTIFACTS]['elixir'].region().height
-      : 0
+    const elixirOffsetY = isElixired ? elixirLandmark.h : 0
     const elixirOffset: Offset = [0, elixirOffsetY]
 
     const [
-      card_set,
       card_slot_type,
       card_rarity,
       card_mainstat_key,
       card_level,
       card_substat,
+      card_substat_darkest,
       card_lock,
       card_mainstat_value,
     ] = await Promise.all([
-      this.#readText(
-        image
-          .clone()
-          .extractChannel('blue')
-          .threshold(125, { grayscale: false }),
-        'card_set',
-        elixirOffset
-      ),
       this.#readText(imageBWInverted, 'card_slot_type'),
-      this.#pixelTest(image, 'card_rarity', [255, 204, 50]),
+      this.getRarity(image),
       this.#readText(imageBWInverted, 'card_mainstat_key'),
       this.#readText(
         imageBW.clone().threshold(230),
@@ -252,6 +312,7 @@ export class Navigator {
         elixirOffset
       ),
       this.#readTexts(image, 'card_substat', elixirOffset),
+      this.#darkestPixels(imageBW, 'card_substat', elixirOffset),
       this.#pixelTest(
         image.clone().extractChannel('green'),
         'card_lock',
@@ -269,7 +330,22 @@ export class Navigator {
     )
     const level = getNumber(card_level)
     const rarity = card_rarity
-    const substats = getSubstats(card_substat)
+    const unactivated = card_substat_darkest.map(
+      (darkest) => darkest > UNACTIVATED_SUBSTAT_MIN_BRIGHTNESS
+    )
+    const { substats, unactivatedSubstats } = getSubstats(
+      card_substat,
+      unactivated,
+      level
+    )
+    const substatLandmark = this.landmarks[ScreenMap.ARTIFACTS]['card_substat']
+    const missingSubstatLines =
+      substatLandmark.repeat_y - substats.length - unactivatedSubstats.length
+    const card_set = await this.#readText(
+      image.clone().extractChannel('blue').threshold(125, { grayscale: false }),
+      'card_set',
+      [0, elixirOffsetY - missingSubstatLines * substatLandmark.h]
+    )
     const setKey = getArtifactSet(card_set)
     const lock = Boolean(card_lock)
 
@@ -280,7 +356,10 @@ export class Navigator {
         slotKey,
         mainStatKey,
         mainStatValue,
-        ...substats.flatMap((stat) => [stat.key, stat.value]),
+        ...[...substats, ...unactivatedSubstats].flatMap((stat) => [
+          stat.key,
+          stat.value,
+        ]),
       ].join('|'),
       level,
       location: 0,
@@ -291,6 +370,7 @@ export class Navigator {
       setKey,
       slotKey,
       substats,
+      unactivatedSubstats,
     }
   }
 }

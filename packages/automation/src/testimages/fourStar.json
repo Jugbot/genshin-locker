@@ -1,0 +1,22 @@
+{
+  "id": "Instructor|4|sands|eleMas|25|critDMG_|4.4|def|17",
+  "level": 0,
+  "location": 0,
+  "lock": true,
+  "mainStatKey": "eleMas",
+  "mainStatValue": 25,
+  "rarity": 4,
+  "setKey": "Instructor",
+  "slotKey": "sands",
+  "substats": [
+    {
+      "key": "critDMG_",
+      "value": 4.4
+    },
+    {
+      "key": "def",
+      "value": 17
+    }
+  ],
+  "unactivatedSubstats": []
+}

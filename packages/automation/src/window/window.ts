@@ -1,7 +1,6 @@
 import koffi from 'koffi'
-import sharp from 'sharp'
 
-import { GBRAtoRGB } from '../util/image'
+import { BGRAtoRGB } from '../util/image'
 
 import { mouseEvent } from './util'
 import { user32, gdi32, BITMAP, BITMAPINFOHEADER, INPUT, vjoy } from './winapi'
@@ -162,7 +161,8 @@ export class GenshinWindow {
   }
 
   async capture() {
-    return this.captureBGRA().then(GBRAtoRGB)
+    const { data, width, height } = await this.captureBGRA()
+    return BGRAtoRGB(data, width, height)
   }
 
   async captureBGRA() {
@@ -206,7 +206,7 @@ export class GenshinWindow {
     const bmpInfo = {
       biSize: koffi.sizeof(BITMAPINFOHEADER),
       biWidth: bmp.bmWidth,
-      biHeight: bmp.bmHeight,
+      biHeight: -Number(bmp.bmHeight),
       biPlanes: 1,
       biBitCount: 32,
       biCompression: BI_RGB,
@@ -241,12 +241,10 @@ export class GenshinWindow {
     gdi32.DeleteObject(hdc)
     user32.ReleaseDC(0, hwndDC)
 
-    return sharp(imageBuf, {
-      raw: {
-        width: Number(bmp.bmWidth),
-        height: Number(bmp.bmHeight),
-        channels: 4,
-      },
-    })
+    return {
+      data: imageBuf,
+      width: Number(bmp.bmWidth),
+      height: Number(bmp.bmHeight),
+    }
   }
 }

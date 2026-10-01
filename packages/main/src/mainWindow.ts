@@ -47,9 +47,9 @@ async function createWindow() {
 
   // IPC methods
   mainApi.webContents = browserWindow.webContents
-  mainApi.handle(Channel.START, (lockWhileScanning, scriptName) => {
+  mainApi.handle(Channel.START, (lockWhileScanning, minRarity, scriptName) => {
     try {
-      readArtifacts(lockWhileScanning, scriptName)
+      readArtifacts(lockWhileScanning, minRarity, scriptName)
     } catch (e) {
       console.error(e)
     }
