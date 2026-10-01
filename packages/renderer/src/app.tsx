@@ -40,11 +40,11 @@ export const App: React.FC = () => {
   >({})
   const [lockWhileScanning, setLockWhileScanning] = React.useState(true)
   const minRaritySelectOptions = {
-    '1': 'Rarity ≥ 1',
-    '2': 'Rarity ≥ 2',
-    '3': 'Rarity ≥ 3',
-    '4': 'Rarity ≥ 4',
-    '5': 'Rarity = 5',
+    '1': t('min-rarity', { rarity: 1 }),
+    '2': t('min-rarity', { rarity: 2 }),
+    '3': t('min-rarity', { rarity: 3 }),
+    '4': t('min-rarity', { rarity: 4 }),
+    '5': t('max-rarity', { rarity: 5 }),
   }
   const [minRarity, setMinRarity] =
     React.useState<keyof typeof minRaritySelectOptions>('5')
