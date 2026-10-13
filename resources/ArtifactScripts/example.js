@@ -8,7 +8,8 @@
  * @property {number} rarity - The rarity level of the artifact.
  * @property {MainStatKey} mainStatKey - The key of the main stat of the artifact.
  * @property {number} level - The level of the artifact.
- * @property {SubStat[]} substats - An array of substats of the artifact.
+ * @property {SubStat[]} substats - An array of substats of the artifact, including an inactive one if present.
+ * @property {boolean} hasInactiveSubstat - Whether the last substat is inactive.
  * @property {number} location - The location identifier of the artifact.
  * @property {boolean} lock - Whether the artifact is locked or not.
  * @property {string} id - The unique identifier of the artifact.

@@ -20,7 +20,9 @@
     {
       "key": "enerRech_",
       "value": 4.5
-    },
+    }
+  ],
+  "unactivatedSubstats": [
     {
       "key": "atk_",
       "value": 4.7

@@ -40,36 +40,37 @@ describe('Navigator', () => {
         const artifacts = await navigator.getArtifact(image)
 
         expect(artifacts).toMatchInlineSnapshot(`
-        {
-          "id": "ObsidianCodex|5|flower|hp|4780|critRate_|13.2|enerRech_|6.5|atk|27|critDMG_|12.4",
-          "level": 20,
-          "location": 0,
-          "lock": true,
-          "mainStatKey": "hp",
-          "mainStatValue": 4780,
-          "rarity": 5,
-          "setKey": "ObsidianCodex",
-          "slotKey": "flower",
-          "substats": [
-            {
-              "key": "critRate_",
-              "value": 13.2,
-            },
-            {
-              "key": "enerRech_",
-              "value": 6.5,
-            },
-            {
-              "key": "atk",
-              "value": 27,
-            },
-            {
-              "key": "critDMG_",
-              "value": 12.4,
-            },
-          ],
-        }
-      `)
+          {
+            "id": "ObsidianCodex|5|flower|hp|4780|critRate_|13.2|enerRech_|6.5|atk|27|critDMG_|12.4",
+            "level": 20,
+            "location": 0,
+            "lock": true,
+            "mainStatKey": "hp",
+            "mainStatValue": 4780,
+            "rarity": 5,
+            "setKey": "ObsidianCodex",
+            "slotKey": "flower",
+            "substats": [
+              {
+                "key": "critRate_",
+                "value": 13.2,
+              },
+              {
+                "key": "enerRech_",
+                "value": 6.5,
+              },
+              {
+                "key": "atk",
+                "value": 27,
+              },
+              {
+                "key": "critDMG_",
+                "value": 12.4,
+              },
+            ],
+            "unactivatedSubstats": [],
+          }
+        `)
       })
 
       test('16x9', async () => {
@@ -84,36 +85,37 @@ describe('Navigator', () => {
         const artifacts = await navigator.getArtifact(image)
 
         expect(artifacts).toMatchInlineSnapshot(`
-        {
-          "id": "ObsidianCodex|5|circlet|critDMG_|62.2|atk|16|critRate_|3.9|atk_|5.8|eleMas|91",
-          "level": 20,
-          "location": 0,
-          "lock": true,
-          "mainStatKey": "critDMG_",
-          "mainStatValue": 62.2,
-          "rarity": 5,
-          "setKey": "ObsidianCodex",
-          "slotKey": "circlet",
-          "substats": [
-            {
-              "key": "atk",
-              "value": 16,
-            },
-            {
-              "key": "critRate_",
-              "value": 3.9,
-            },
-            {
-              "key": "atk_",
-              "value": 5.8,
-            },
-            {
-              "key": "eleMas",
-              "value": 91,
-            },
-          ],
-        }
-      `)
+          {
+            "id": "ObsidianCodex|5|circlet|critDMG_|62.2|atk|16|critRate_|3.9|atk_|5.8|eleMas|91",
+            "level": 20,
+            "location": 0,
+            "lock": true,
+            "mainStatKey": "critDMG_",
+            "mainStatValue": 62.2,
+            "rarity": 5,
+            "setKey": "ObsidianCodex",
+            "slotKey": "circlet",
+            "substats": [
+              {
+                "key": "atk",
+                "value": 16,
+              },
+              {
+                "key": "critRate_",
+                "value": 3.9,
+              },
+              {
+                "key": "atk_",
+                "value": 5.8,
+              },
+              {
+                "key": "eleMas",
+                "value": 91,
+              },
+            ],
+            "unactivatedSubstats": [],
+          }
+        `)
       })
 
       test('43x18', async () => {
@@ -128,53 +130,93 @@ describe('Navigator', () => {
         const artifacts = await navigator.getArtifact(image)
 
         expect(artifacts).toMatchInlineSnapshot(`
-        {
-          "id": "ObsidianCodex|5|flower|hp|4780|critRate_|13.2|enerRech_|6.5|atk|27|critDMG_|12.4",
-          "level": 20,
-          "location": 0,
-          "lock": true,
-          "mainStatKey": "hp",
-          "mainStatValue": 4780,
-          "rarity": 5,
-          "setKey": "ObsidianCodex",
-          "slotKey": "flower",
-          "substats": [
-            {
-              "key": "critRate_",
-              "value": 13.2,
-            },
-            {
-              "key": "enerRech_",
-              "value": 6.5,
-            },
-            {
-              "key": "atk",
-              "value": 27,
-            },
-            {
-              "key": "critDMG_",
-              "value": 12.4,
-            },
-          ],
-        }
-      `)
+          {
+            "id": "ObsidianCodex|5|flower|hp|4780|critRate_|13.2|enerRech_|6.5|atk|27|critDMG_|12.4",
+            "level": 20,
+            "location": 0,
+            "lock": true,
+            "mainStatKey": "hp",
+            "mainStatValue": 4780,
+            "rarity": 5,
+            "setKey": "ObsidianCodex",
+            "slotKey": "flower",
+            "substats": [
+              {
+                "key": "critRate_",
+                "value": 13.2,
+              },
+              {
+                "key": "enerRech_",
+                "value": 6.5,
+              },
+              {
+                "key": "atk",
+                "value": 27,
+              },
+              {
+                "key": "critDMG_",
+                "value": 12.4,
+              },
+            ],
+            "unactivatedSubstats": [],
+          }
+        `)
       })
     })
 
-    test.each(['duplicateSubkeyIssue', 'unactivatedSubkey'])(
-      '%s',
-      async (baseName) => {
-        const pngFile = `${baseName}.png`
-        const jsonFile = `${baseName}.json`
-        const testImagesDir = path.join(__dirname, 'testimages')
-        const imagePath = path.join(testImagesDir, pngFile)
-        const jsonPath = path.join(testImagesDir, jsonFile)
-        const image = sharp(imagePath).removeAlpha()
-        const testGenshinWindow = await createTestWindow(image)
-        const navigator = new Navigator(testGenshinWindow)
-        const expected = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-        const artifacts = await navigator.getArtifact(image)
-        expect(artifacts).toEqual(expected)
+    test.each([
+      'duplicateSubkeyIssue',
+      'unactivatedSubkey',
+      'elixir',
+      'unactivatedPlume',
+      'fourStar',
+      'threeStar',
+      'twoStar',
+      'oneStar',
+    ])('%s', async (baseName) => {
+      const pngFile = `${baseName}.png`
+      const jsonFile = `${baseName}.json`
+      const testImagesDir = path.join(__dirname, 'testimages')
+      const imagePath = path.join(testImagesDir, pngFile)
+      const jsonPath = path.join(testImagesDir, jsonFile)
+      const image = sharp(imagePath).removeAlpha()
+      const testGenshinWindow = await createTestWindow(image)
+      const navigator = new Navigator(testGenshinWindow)
+      const expected = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
+      const artifacts = await navigator.getArtifact(image)
+      expect(artifacts).toEqual(expected)
+    })
+  })
+
+  describe('end of list', () => {
+    const loadTestImage = (baseName: string) =>
+      sharp(path.join(__dirname, 'testimages', `${baseName}.png`)).removeAlpha()
+
+    test.each([
+      ['sanctifyingUnction', true],
+      ['sanctifyingEssence', true],
+      ['elixir', false],
+      ['fourStar', false],
+      ['oneStar', false],
+    ])('isEnhancementMaterial(%s) is %s', async (baseName, expected) => {
+      const image = loadTestImage(baseName)
+      const navigator = new Navigator(await createTestWindow(image))
+      expect(await navigator.isEnhancementMaterial(image)).toBe(expected)
+    })
+
+    test.each([
+      ['sanctifyingUnction', 'sanctifyingUnction', true],
+      ['sanctifyingUnction', 'sanctifyingEssence', false],
+      ['fourStar', 'threeStar', false],
+    ])(
+      'isSameImage(%s, %s) card is %s',
+      async (baseNameA, baseNameB, expected) => {
+        const imageA = loadTestImage(baseNameA)
+        const imageB = loadTestImage(baseNameB)
+        const navigator = new Navigator(await createTestWindow(imageA))
+        expect(
+          await navigator.isSameImage(imageA, imageB, navigator.cardRegion())
+        ).toBe(expected)
       }
     )
   })

@@ -1,0 +1,13 @@
+{
+  "id": "LuckyDog|1|goblet|atk_|3.1",
+  "level": 0,
+  "location": 0,
+  "lock": false,
+  "mainStatKey": "atk_",
+  "mainStatValue": 3.1,
+  "rarity": 1,
+  "setKey": "LuckyDog",
+  "slotKey": "goblet",
+  "substats": [],
+  "unactivatedSubstats": []
+}
