@@ -24,7 +24,6 @@ export const ButtonBase = styled('button', {
   transition:
     'background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out',
 
-  // Offset so the ring stays visible on accent-colored buttons
   '&:focus-visible': {
     outline: '2px solid $colors$focusRing',
     outlineOffset: '2px',

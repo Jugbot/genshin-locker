@@ -15,8 +15,6 @@ const Root = styled(Progress.Root, {
   height: '$size2',
 })
 
-// Sized by width, not translateX: a translated bar leaves a sliver of color
-// at 0%
 const Indicator = styled(Progress.Indicator, {
   backgroundColor: '$bgActionPrimary',
   borderRadius: 'inherit',

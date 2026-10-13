@@ -138,7 +138,6 @@ const sampleArtifacts: Array<{ artifact: Artifact; shouldBeLocked: boolean }> =
     },
   ]
 
-// Every rarity and lock state side by side
 export const Gallery: ComponentStoryFn<typeof ArtifactCard> = () => (
   <Box
     css={{

@@ -5,6 +5,7 @@ import {
   LockClosedIcon,
   LockOpen2Icon,
 } from '@radix-ui/react-icons'
+import { CSS } from '@stitches/react'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -15,7 +16,7 @@ import {
   GiHourglass,
 } from 'react-icons/gi'
 
-const rarityScale = (rarity: number) => {
+const rarityColor = (rarity: number) => {
   switch (rarity) {
     case 5:
       return 'orange'
@@ -120,30 +121,31 @@ const useFormatStat = () => {
   })
 }
 
-const ellipsis = {
+const ellipsis: CSS = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-} as const
+}
 
 interface HeaderProps {
   artifact: Artifact
-  scale: string
 }
 
 // Only the main stat type is shown; its value matters less
-const Header = ({ artifact, scale }: HeaderProps) => {
+const Header = ({ artifact }: HeaderProps) => {
   const { t } = useTranslation('artifact')
   const format = useFormatStat()
   const setName = t(`set.${artifact.setKey}`)
   const main = format(artifact.mainStatKey, artifact.mainStatValue)
+  const color = rarityColor(artifact.rarity)
 
+  const title = `${artifact.rarity}★ ${t(`slot.${artifact.slotKey}`)}`
   const text = (
     <>
       <Heading
         variant="sm"
         title={setName}
-        css={{ fontSize: '$fontSize2', color: `$${scale}11`, ...ellipsis }}
+        css={{ fontSize: '$fontSize2', color: `$${color}11`, ...ellipsis }}
       >
         {setName}
       </Heading>
@@ -172,8 +174,8 @@ const Header = ({ artifact, scale }: HeaderProps) => {
   return (
     <Box
       css={{
-        backgroundColor: `$${scale}3`,
-        borderBottom: `1px solid $${scale}6`,
+        backgroundColor: `$${color}3`,
+        borderBottom: `1px solid $${color}6`,
         padding: '$space3',
         display: 'flex',
         alignItems: 'center',
@@ -181,9 +183,8 @@ const Header = ({ artifact, scale }: HeaderProps) => {
       }}
     >
       <Box
-        // Rarity is otherwise shown only by color
-        title={`${artifact.rarity}★ ${t(`slot.${artifact.slotKey}`)}`}
-        aria-label={`${artifact.rarity}★ ${t(`slot.${artifact.slotKey}`)}`}
+        title={title}
+        aria-label={title}
         css={{
           flexShrink: 0,
           display: 'grid',
@@ -192,8 +193,8 @@ const Header = ({ artifact, scale }: HeaderProps) => {
           height: '$size9',
           borderRadius: '$radius2',
           fontSize: '$fontSize5',
-          color: `$${scale}11`,
-          backgroundColor: `$${scale}5`,
+          color: `$${color}11`,
+          backgroundColor: `$${color}5`,
         }}
       >
         <ArtifactSlotIcon slot={artifact.slotKey} />
@@ -250,23 +251,22 @@ export const ArtifactCard = ({
   css,
   ...props
 }: ArtifactCardProps) => {
-  const scale = rarityScale(artifact.rarity)
+  const color = rarityColor(artifact.rarity)
 
   return (
     <Box
       css={{
         backgroundColor: '$bgElevated',
-        border: `1px solid $${scale}7`,
+        border: `1px solid $${color}7`,
         borderRadius: '$radius2',
         overflow: 'hidden',
-        // Column layout keeps lock footers aligned across a grid row
         display: 'flex',
         flexDirection: 'column',
         ...css,
       }}
       {...props}
     >
-      <Header artifact={artifact} scale={scale} />
+      <Header artifact={artifact} />
       <SubstatList artifact={artifact} />
       <LockStatus locked={artifact.lock} shouldBeLocked={shouldBeLocked} />
     </Box>

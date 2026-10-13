@@ -13,7 +13,6 @@ const PanelHandle = styled(PanelResizeHandle, {
   userSelect: 'none',
   outline: 'none',
 
-  // The grip is only visual; the whole handle stays draggable
   '&::after': {
     content: '""',
     position: 'absolute',
@@ -44,7 +43,7 @@ const PanelHandle = styled(PanelResizeHandle, {
 const PanelPane = styled(PanelItem, {
   display: 'flex',
   gap: '$space2',
-  // Room for focus rings, since panels force `overflow: hidden`
+  // Room for focus rings
   padding: '$space1',
 })
 
