@@ -22,7 +22,9 @@
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
     "build": "vite build",
-    "check-types": "tsc --noEmit"
+    "dev": "vite",
+    "check-types": "tsc --noEmit",
+    "storybook": "start-storybook -p 6006"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"

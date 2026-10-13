@@ -13,6 +13,7 @@
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
     "test": "npx lerna run test",
+    "storybook": "npx lerna run storybook --parallel",
     "compile": "yarn build && electron-builder build --config .electron-builder.config.js",
     "compile:unpacked": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "watch": "node watch.mjs",

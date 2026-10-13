@@ -3,8 +3,9 @@ import { Artifact, MainStatKey, SlotKey, SubStatKey } from '@gl/types'
 import {
   ArrowRightIcon,
   LockClosedIcon,
-  LockOpen1Icon,
+  LockOpen2Icon,
 } from '@radix-ui/react-icons'
+import { CSS } from '@stitches/react'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -15,18 +16,18 @@ import {
   GiHourglass,
 } from 'react-icons/gi'
 
-const rarityColors = (rarity: number) => {
+const rarityColor = (rarity: number) => {
   switch (rarity) {
     case 5:
-      return '$orange8'
+      return 'orange'
     case 4:
-      return '$purple8'
+      return 'purple'
     case 3:
-      return '$blue8'
+      return 'blue'
     case 2:
-      return '$green8'
+      return 'green'
     default:
-      return '$slate8'
+      return 'slate'
   }
 }
 
@@ -48,29 +49,194 @@ const ArtifactSlotIcon = ({ slot }: { slot: SlotKey }) => {
 interface LockProps {
   closed: boolean
 }
-const Lock = ({ closed }: LockProps) => (
-  <Text css={{ color: closed ? '$red11' : '$green11' }}>
-    {closed ? <LockClosedIcon /> : <LockOpen1Icon />}
-  </Text>
-)
+const Lock = ({ closed }: LockProps) =>
+  closed ? <LockClosedIcon /> : <LockOpen2Icon />
 
-interface ArtifactStatProps extends React.ComponentProps<typeof Text> {
-  stat: [key: SubStatKey | MainStatKey, value: number]
+interface LockStatusProps {
+  locked: boolean
+  shouldBeLocked: boolean
 }
 
-const ArtifactStat = ({ stat: [key, value], ...props }: ArtifactStatProps) => {
-  const { t } = useTranslation('artifact')
-
-  let formattedValue = `${value}`
-  if (key.at(-1) === '_') {
-    formattedValue = `${value}%`
+// Unlocking is red since it removes protection
+const lockStatusCss = (locked: boolean, shouldBeLocked: boolean) => {
+  if (locked === shouldBeLocked) {
+    return { color: '$textFaint', iconColor: '$textFaint' }
   }
+  const scale = shouldBeLocked ? 'green' : 'red'
+  return { color: `$${scale}11`, iconColor: `$${scale}11` }
+}
+
+const LockStatus = ({ locked, shouldBeLocked }: LockStatusProps) => {
+  const { t } = useTranslation()
+  const willChange = locked !== shouldBeLocked
+  let label = shouldBeLocked ? t('locked') : t('unlocked')
+  if (willChange) {
+    label = shouldBeLocked ? t('will-lock') : t('will-unlock')
+  }
+  const { iconColor, ...colors } = lockStatusCss(locked, shouldBeLocked)
 
   return (
-    <Box css={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Text {...props}>{t(`stat.${key}`)}</Text>
-      <Text {...props}>{formattedValue}</Text>
+    <Text
+      color="inherit"
+      css={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '$space2',
+        px: '$space3',
+        py: '$space2',
+        borderTop: '1px solid $borderSubtle',
+        fontSize: '$fontSize1',
+        fontWeight: willChange ? '$bold' : '$regular',
+        ...colors,
+      }}
+    >
+      <Box
+        as="span"
+        css={{ display: 'inline-flex', alignItems: 'center', gap: '$space1' }}
+      >
+        {willChange && (
+          <>
+            <Box as="span" css={{ display: 'inline-flex', opacity: 0.6 }}>
+              <Lock closed={locked} />
+            </Box>
+            <ArrowRightIcon width={12} />
+          </>
+        )}
+        <Box as="span" css={{ display: 'inline-flex', color: iconColor }}>
+          <Lock closed={shouldBeLocked} />
+        </Box>
+      </Box>
+      {label}
+    </Text>
+  )
+}
+
+type StatKey = SubStatKey | MainStatKey
+
+const useFormatStat = () => {
+  const { t } = useTranslation('artifact')
+  return (key: StatKey, value: number) => ({
+    label: t(`stat.${key}`),
+    value: key.at(-1) === '_' ? `${value}%` : `${value}`,
+  })
+}
+
+const ellipsis: CSS = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+}
+
+interface HeaderProps {
+  artifact: Artifact
+}
+
+// Only the main stat type is shown; its value matters less
+const Header = ({ artifact }: HeaderProps) => {
+  const { t } = useTranslation('artifact')
+  const format = useFormatStat()
+  const setName = t(`set.${artifact.setKey}`)
+  const main = format(artifact.mainStatKey, artifact.mainStatValue)
+  const color = rarityColor(artifact.rarity)
+
+  const title = `${artifact.rarity}★ ${t(`slot.${artifact.slotKey}`)}`
+  const text = (
+    <>
+      <Heading
+        variant="sm"
+        title={setName}
+        css={{ fontSize: '$fontSize2', color: `$${color}11`, ...ellipsis }}
+      >
+        {setName}
+      </Heading>
+      <Text
+        css={{
+          fontSize: '$fontSize2',
+          display: 'flex',
+          gap: '$space2',
+          alignItems: 'baseline',
+          minWidth: 0,
+        }}
+      >
+        <Box as="span" css={{ color: '$textDefault', ...ellipsis }}>
+          {main.label}
+        </Box>
+        <Box
+          as="span"
+          css={{ color: '$textFaint', flexShrink: 0, fontSize: '$fontSize1' }}
+        >
+          Lv. {artifact.level}
+        </Box>
+      </Text>
+    </>
+  )
+
+  return (
+    <Box
+      css={{
+        backgroundColor: `$${color}3`,
+        borderBottom: `1px solid $${color}6`,
+        padding: '$space3',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '$space3',
+      }}
+    >
+      <Box
+        title={title}
+        aria-label={title}
+        css={{
+          flexShrink: 0,
+          display: 'grid',
+          placeItems: 'center',
+          width: '$size9',
+          height: '$size9',
+          borderRadius: '$radius2',
+          fontSize: '$fontSize5',
+          color: `$${color}11`,
+          backgroundColor: `$${color}5`,
+        }}
+      >
+        <ArtifactSlotIcon slot={artifact.slotKey} />
+      </Box>
+      <Box css={{ flexGrow: 1, minWidth: 0 }}>{text}</Box>
     </Box>
+  )
+}
+
+const SubstatList = ({ artifact }: { artifact: Artifact }) => {
+  const format = useFormatStat()
+  const substats = [
+    ...artifact.substats.map((s) => ({ ...s, inactive: false })),
+    ...artifact.unactivatedSubstats.map((s) => ({ ...s, inactive: true })),
+  ]
+
+  return (
+    <Stack.Vertical css={{ padding: '$space3', gap: '$space1', flexGrow: 1 }}>
+      {substats.map(({ key, value, inactive }) => {
+        const stat = format(key, value)
+        return (
+          <Box
+            key={key}
+            css={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              gap: '$space2',
+              fontSize: '$fontSize2',
+              opacity: inactive ? 0.5 : 1,
+            }}
+          >
+            <Text as="span" color="subdued" css={{ fontSize: 'inherit' }}>
+              {stat.label}
+            </Text>
+            <Text as="span" css={{ fontSize: 'inherit' }}>
+              {stat.value}
+            </Text>
+          </Box>
+        )
+      })}
+    </Stack.Vertical>
   )
 }
 
@@ -85,81 +251,24 @@ export const ArtifactCard = ({
   css,
   ...props
 }: ArtifactCardProps) => {
-  const { t } = useTranslation('artifact')
+  const color = rarityColor(artifact.rarity)
 
   return (
     <Box
       css={{
-        backgroundColor: '$slate5',
-        borderRadius: '$radius1',
+        backgroundColor: '$bgElevated',
+        border: `1px solid $${color}7`,
+        borderRadius: '$radius2',
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
         ...css,
       }}
       {...props}
     >
-      <Box
-        css={{
-          backgroundColor: rarityColors(artifact.rarity),
-          borderBottom: '2px solid $colors$textDefault',
-          padding: '$space2',
-          display: 'flex',
-          flexWrap: 'nowrap',
-          alignItems: 'center',
-          gap: '$space2',
-        }}
-      >
-        <Box css={{ flexGrow: 1, overflow: 'hidden' }}>
-          <Heading
-            variant="md"
-            css={{
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {t(`set.${artifact.setKey}`)}
-          </Heading>
-        </Box>
-        <Heading variant="md" css={{ flexGrow: 0, display: 'contents' }}>
-          <ArtifactSlotIcon slot={artifact.slotKey} />
-        </Heading>
-      </Box>
-      <Stack.Horizontal
-        css={{
-          backgroundColor: '$slate7',
-          padding: '$space2',
-          justifyContent: 'center',
-        }}
-      >
-        <Lock closed={artifact.lock} />
-        <Text>
-          <ArrowRightIcon />
-        </Text>
-        <Lock closed={shouldBeLocked} />
-      </Stack.Horizontal>
-      <Stack.Vertical
-        css={{
-          padding: '$space2',
-        }}
-      >
-        <Heading variant="sm">lvl {artifact.level}</Heading>
-        <b>
-          <ArtifactStat
-            variant="body"
-            stat={[artifact.mainStatKey, artifact.mainStatValue]}
-          />
-        </b>
-        {artifact.substats.map((stat) => (
-          <ArtifactStat key={stat.key} stat={[stat.key, stat.value]} />
-        ))}
-        {artifact.unactivatedSubstats.map((stat) => (
-          <ArtifactStat
-            key={stat.key}
-            color="subdued"
-            stat={[stat.key, stat.value]}
-          />
-        ))}
-      </Stack.Vertical>
+      <Header artifact={artifact} />
+      <SubstatList artifact={artifact} />
+      <LockStatus locked={artifact.lock} shouldBeLocked={shouldBeLocked} />
     </Box>
   )
 }

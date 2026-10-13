@@ -4,9 +4,10 @@ import * as RadixMenuBar from '@radix-ui/react-menubar'
 const MenuBarRoot = styled(RadixMenuBar.Root, {
   '-webkit-app-region': 'drag',
   display: 'flex',
+  alignItems: 'center',
   backgroundColor: '$menubarBackground',
   color: '$menubarColor',
-  padding: '$space2',
+  px: '$space3',
   width: '100%',
 })
 

@@ -7,4 +7,7 @@ export default {
     'storybook-dark-mode',
   ],
   framework: '@storybook/react',
+  core: {
+    builder: 'webpack5',
+  },
 }

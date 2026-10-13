@@ -68,6 +68,18 @@ export async function readArtifacts(
     await navigator.gwindow.capture()
   )
   mainApi.send(Channel.LOG, 'info', `Reading ${total} artifacts total`)
+
+  let scannedCount = 0
+  const reportProgress = (current = scannedCount) =>
+    mainApi.send(Channel.PROGRESS, {
+      current: Math.min(current, total),
+      max: total,
+    })
+  const countScanned = () => {
+    scannedCount++
+    reportProgress()
+  }
+  reportProgress()
   const { repeat_y: rowsPerPage } =
     navigator.landmarks[ScreenMap.ARTIFACTS].list_item
 
@@ -117,6 +129,7 @@ export async function readArtifacts(
       // Check rarity before the full parse to avoid OCR on skipped artifacts
       if ((await navigator.getRarity(image)) < minRarity) {
         mainApi.send(Channel.LOG, 'info', `Skipping, below ${minRarity} star.`)
+        countScanned()
         return
       }
       return navigator.getArtifact(image).then(
@@ -126,8 +139,10 @@ export async function readArtifacts(
             return
           }
           visitedArtifacts.add(artifact.id)
-          const shouldBeLocked =
-            (await calculate(scriptFunc, artifact)) ?? artifact.lock
+          countScanned()
+          const shouldBeLocked = lockWhileScanning
+            ? (await calculate(scriptFunc, artifact)) ?? artifact.lock
+            : artifact.lock
           if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
             taskManager.add(
               'sync',
@@ -147,6 +162,7 @@ export async function readArtifacts(
         },
         (reason) => {
           console.error(reason)
+          countScanned()
           mainApi.send(
             Channel.LOG,
             'error',
@@ -178,6 +194,7 @@ export async function readArtifacts(
             shouldExit = true
           } else if (!shouldContinue) {
             mainApi.send(Channel.LOG, 'info', `Reached the end`)
+            reportProgress(total)
             shouldExit = true
           }
         })
