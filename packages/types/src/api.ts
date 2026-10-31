@@ -15,6 +15,7 @@ export enum Channel {
   ARTIFACT = 'artifact',
   CALCULATE = 'calculate',
   SAVE_ARTIFACTS = 'save-artifacts',
+  COPY_ARTIFACTS = 'copy-artifacts',
   USER_SCRIPT_CHANGE = 'user-script-change',
   GET_USER_SCRIPTS = 'get-user-scripts',
   OPEN_USER_SCRIPT_FOLDER = 'open-user-script-folder',
@@ -32,6 +33,7 @@ export type EventPayload = {
     [scriptName: string | undefined, artifacts: Artifact[]]
   ]
   [Channel.SAVE_ARTIFACTS]: [success: boolean, args: [artifacts: Artifact[]]]
+  [Channel.COPY_ARTIFACTS]: [void, [artifacts: Artifact[]]]
   [Channel.USER_SCRIPT_CHANGE]: [void, [fileNames: string[]]]
   [Channel.GET_USER_SCRIPTS]: [fileNames: string[], args: []]
   [Channel.OPEN_USER_SCRIPT_FOLDER]: [void, []]
@@ -46,6 +48,7 @@ export type RendererEmitChannels =
   | Channel.START
   | Channel.CALCULATE
   | Channel.SAVE_ARTIFACTS
+  | Channel.COPY_ARTIFACTS
   | Channel.GET_USER_SCRIPTS
   | Channel.OPEN_USER_SCRIPT_FOLDER
 

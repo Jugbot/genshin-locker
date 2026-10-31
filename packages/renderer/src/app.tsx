@@ -13,6 +13,8 @@ import {
 import { CSS, loadGlobalStyles, rotate } from '@gl/theme'
 import { ArtifactData, Channel, RoutineStatus } from '@gl/types'
 import {
+  CheckIcon,
+  CopyIcon,
   DownloadIcon,
   LockClosedIcon,
   LockOpen2Icon,
@@ -231,7 +233,7 @@ export const App: React.FC = () => {
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
-  const exportFile = () => {
+  const saveFile = () => {
     setIsSaving(true)
     api
       .invoke(
@@ -239,6 +241,24 @@ export const App: React.FC = () => {
         artifacts.map(({ artifact }) => artifact)
       )
       .then(() => setIsSaving(false))
+  }
+
+  const [isCopied, setIsCopied] = React.useState(false)
+  const copiedTimeout = React.useRef<number>()
+  const copyToClipboard = () => {
+    api
+      .invoke(
+        Channel.COPY_ARTIFACTS,
+        artifacts.map(({ artifact }) => artifact)
+      )
+      .then(() => {
+        setIsCopied(true)
+        window.clearTimeout(copiedTimeout.current)
+        copiedTimeout.current = window.setTimeout(
+          () => setIsCopied(false),
+          1500
+        )
+      })
   }
 
   const sortedArtifacts = React.useMemo(
@@ -329,7 +349,7 @@ export const App: React.FC = () => {
                   flexDirection: 'column',
                 }}
               >
-                <Stack.Horizontal css={{ gap: '$space4', px: '$space1' }}>
+                <Stack.Horizontal css={{ gap: '$space4', pl: '$space1' }}>
                   <Heading variant="sm">{t('artifacts')}</Heading>
                   <Stat
                     label={t('stat-locked')}
@@ -354,23 +374,34 @@ export const App: React.FC = () => {
                     <LockOpen2Icon />
                   </Stat>
                   <Box css={{ flexGrow: 1 }} />
-                  <Button
-                    onClick={exportFile}
-                    variant="subdued"
-                    size="small"
-                    disabled={isSaving || artifacts.length === 0}
-                  >
-                    {isSaving ? (
-                      <UpdateIcon
-                        style={{
-                          animation: `${rotate} 1s linear infinite`,
-                        }}
-                      />
-                    ) : (
-                      <DownloadIcon />
-                    )}
-                    {t('export')}
-                  </Button>
+                  <Stack.Horizontal css={{ gap: '$space1' }}>
+                    <Button
+                      onClick={saveFile}
+                      variant="subdued"
+                      size="small"
+                      disabled={isSaving || artifacts.length === 0}
+                    >
+                      {isSaving ? (
+                        <UpdateIcon
+                          style={{
+                            animation: `${rotate} 1s linear infinite`,
+                          }}
+                        />
+                      ) : (
+                        <DownloadIcon />
+                      )}
+                      {t('save')}
+                    </Button>
+                    <Button
+                      onClick={copyToClipboard}
+                      variant="subdued"
+                      size="small"
+                      disabled={artifacts.length === 0}
+                    >
+                      {isCopied ? <CheckIcon /> : <CopyIcon />}
+                      {t('copy')}
+                    </Button>
+                  </Stack.Horizontal>
                 </Stack.Horizontal>
                 <ScrollArea.Root
                   css={{
