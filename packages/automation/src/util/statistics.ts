@@ -102,7 +102,7 @@ function subStatNumberRarity(artifact: Artifact) {
 export function artifactRarity(artifact: Artifact) {
   let rarity = 1
   rarity *= subStatOccurance(
-    artifact.substats.map((s) => s.key),
+    [...artifact.substats, ...artifact.unactivatedSubstats].map((s) => s.key),
     artifact.mainStatKey
   )
   rarity *= subStatNumberRarity(artifact)

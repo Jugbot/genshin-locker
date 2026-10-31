@@ -21,7 +21,8 @@
     "format": "prettier . -u --ignore-path=\"../../.gitignore\" --check",
     "lint:write": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\" --fix",
     "lint": "eslint . --max-warnings=0 --ignore-path=\"../../.gitignore\"",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "storybook": "start-storybook -p 6007"
   },
   "bugs": {
     "url": "https://github.com/Jugbot/genshin-locker/issues"
@@ -60,7 +61,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/react": "^13.4.0",
     "@types/cli-progress": "^3.11.0",
-    "@types/node": "^18.11.11",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.0.0",

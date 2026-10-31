@@ -13,6 +13,7 @@ interface StandardSelectProps<T extends string>
   onValueChange: (value: T) => void
   placeholder?: string
   required?: boolean
+  prefix?: string
 }
 
 export const StandardSelect = <T extends string>({
@@ -21,6 +22,7 @@ export const StandardSelect = <T extends string>({
   value,
   placeholder = '(none)',
   required = false,
+  prefix,
   ...props
 }: StandardSelectProps<T>) => {
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null)
@@ -53,9 +55,27 @@ export const StandardSelect = <T extends string>({
       disabled={props.disabled}
       required={required}
     >
-      <Select.Trigger {...props}>
+      <Select.Trigger variant="subdued" {...props}>
         <Select.Value asChild>
-          <Text color="inherit">{displayValue ?? placeholder}</Text>
+          <Text
+            color="inherit"
+            css={{ fontSize: 'inherit', lineHeight: 'inherit' }}
+          >
+            {prefix && (
+              <Text
+                as="span"
+                color="subdued"
+                css={{
+                  fontSize: 'inherit',
+                  lineHeight: 'inherit',
+                  mr: '$space1',
+                }}
+              >
+                {prefix}
+              </Text>
+            )}
+            {displayValue ?? placeholder}
+          </Text>
         </Select.Value>
         <Text color="inherit">
           <Select.Icon asChild>

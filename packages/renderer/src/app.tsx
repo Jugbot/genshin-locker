@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonIcon,
   Heading,
   MenuBar,
   Panel,
@@ -11,21 +10,103 @@ import {
   Text,
   TextArea,
 } from '@gl/component-library'
-import { loadGlobalStyles, rotate } from '@gl/theme'
+import { CSS, loadGlobalStyles, rotate } from '@gl/theme'
 import { ArtifactData, Channel, RoutineStatus } from '@gl/types'
-import { ExternalLinkIcon, UpdateIcon } from '@radix-ui/react-icons'
+import {
+  CheckIcon,
+  CopyIcon,
+  DownloadIcon,
+  LockClosedIcon,
+  LockOpen2Icon,
+  UpdateIcon,
+} from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { GiOpenFolder, GiPlayButton } from 'react-icons/gi'
+import { GiJeweledChalice, GiOpenFolder, GiPlayButton } from 'react-icons/gi'
 
 import { version as appVersion } from '../../../package.json'
 
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
-import { useThemeClass } from './hooks'
+import { usePersistentState, useThemeClass } from './hooks'
 import { initTranslations } from './i18n'
 
 initTranslations()
+
+// Used when there's no title bar overlay, e.g. in a browser
+const TITLEBAR_FALLBACK_HEIGHT = '32px'
+
+interface StatProps {
+  label: string
+  value: number
+  // Changes not applied yet
+  pending?: { value: number; color: string; description: string }
+  children: React.ReactNode
+}
+
+const Stat = ({ label, value, pending, children }: StatProps) => (
+  <Text
+    color="subdued"
+    css={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '$space1',
+      fontSize: '$fontSize2',
+      whiteSpace: 'nowrap',
+    }}
+  >
+    {children}
+    <Box as="span" css={{ color: '$textDefault', fontWeight: '$bold' }}>
+      {value}
+    </Box>
+    {!!pending?.value && (
+      <Box
+        as="span"
+        title={`${pending.value} ${pending.description}`}
+        css={{ color: pending.color }}
+      >
+        (
+        <Box as="span" css={{ fontWeight: '$bold' }}>
+          +{pending.value}
+        </Box>
+        )
+      </Box>
+    )}
+    {label}
+  </Text>
+)
+
+interface StatGroupProps {
+  label: string
+  description: string
+  css?: CSS
+  children: React.ReactNode
+}
+
+const StatGroup = ({ label, description, css, children }: StatGroupProps) => (
+  <Stack.Horizontal
+    title={description}
+    css={{
+      gap: '$space3',
+      pl: '$space4',
+      borderLeft: '1px solid $borderDefault',
+      ...css,
+    }}
+  >
+    <Text
+      as="span"
+      css={{
+        color: '$textFaint',
+        fontSize: '$fontSize1',
+        textTransform: 'uppercase',
+        letterSpacing: '$letterSpacing2',
+      }}
+    >
+      {label}
+    </Text>
+    {children}
+  </Stack.Horizontal>
+)
 
 export const App: React.FC = () => {
   loadGlobalStyles()
@@ -35,19 +116,31 @@ export const App: React.FC = () => {
     Record<string, ArtifactData>
   >({})
   const artifacts = Object.values(artifactSet)
+  const [scannedLocks, setScannedLocks] = React.useState<
+    Record<string, boolean>
+  >({})
   const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>
   >({})
-  const [lockWhileScanning, setLockWhileScanning] = React.useState(true)
-  const [logs, setLogs] = React.useState<string[]>([])
-  const routineSelectOptions = {
-    SCAN: t('scan'),
-    SCAN_AND_LOCK: t('scan-and-lock'),
+  const minRaritySelectOptions = {
+    '1': t('min-rarity', { rarity: 1 }),
+    '2': t('min-rarity', { rarity: 2 }),
+    '3': t('min-rarity', { rarity: 3 }),
+    '4': t('min-rarity', { rarity: 4 }),
+    '5': t('max-rarity', { rarity: 5 }),
   }
+  const [minRarity, setMinRarity] = usePersistentState<
+    keyof typeof minRaritySelectOptions
+  >(
+    'minRarity',
+    '5',
+    (value) => typeof value === 'string' && value in minRaritySelectOptions
+  )
+  const [logs, setLogs] = React.useState<string[]>([])
   const [customScriptNames, setCustomScriptNames] = React.useState<string[]>([])
-  const [selectedScript, setSelectedScript] = React.useState<string>()
-  const [routineType, setRoutineType] =
-    React.useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
+  const [selectedScript, setSelectedScript] = usePersistentState<
+    string | undefined
+  >('selectedScript', undefined, (value) => typeof value === 'string')
 
   React.useEffect(() => {
     const recalculate = (scriptName?: string) =>
@@ -69,12 +162,20 @@ export const App: React.FC = () => {
             ),
           }))
         )
-    // If a file no longer exists switch to the default
-    if (selectedScript && !customScriptNames.includes(selectedScript)) {
-      setSelectedScript(undefined)
-    } else {
-      recalculate(selectedScript)
+
+    if (!selectedScript) {
+      // No script means no locking, so clear pending changes from an earlier
+      setArtifactSet((last) =>
+        Object.fromEntries(
+          Object.entries(last).map(([id, data]) => [
+            id,
+            { ...data, shouldBeLocked: data.artifact.lock },
+          ])
+        )
+      )
+      return
     }
+    recalculate(selectedScript)
     // FIXME: Avoid artifacts update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customScriptNames, selectedScript])
@@ -85,6 +186,9 @@ export const App: React.FC = () => {
         ...old,
         [artifact.id]: { artifact, shouldBeLocked },
       }))
+      setScannedLocks((old) =>
+        artifact.id in old ? old : { ...old, [artifact.id]: artifact.lock }
+      )
     })
   }, [])
 
@@ -103,10 +207,18 @@ export const App: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    return api.on(Channel.USER_SCRIPT_CHANGE, (fileNames) => {
+    const updateScriptNames = (fileNames: string[]) => {
       setCustomScriptNames(fileNames)
-    })
-  }, [])
+      // If a file no longer exists switch to none
+      setSelectedScript((script) =>
+        script && fileNames.includes(script) ? script : undefined
+      )
+    }
+    const unsubscribe = api.on(Channel.USER_SCRIPT_CHANGE, updateScriptNames)
+    // The list may have been pushed before this listener existed
+    api.invoke(Channel.GET_USER_SCRIPTS).then(updateScriptNames)
+    return unsubscribe
+  }, [setSelectedScript])
 
   const handleOpenUserScripts = () => {
     api.invoke(Channel.OPEN_USER_SCRIPT_FOLDER)
@@ -115,11 +227,13 @@ export const App: React.FC = () => {
   const startRoutine = () => {
     setLogs([])
     setArtifactSet({})
-    api.invoke(Channel.START, lockWhileScanning, selectedScript)
+    setScannedLocks({})
+    setRoutineStatus({})
+    api.invoke(Channel.START, Number(minRarity), selectedScript)
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
-  const exportFile = () => {
+  const saveFile = () => {
     setIsSaving(true)
     api
       .invoke(
@@ -129,17 +243,45 @@ export const App: React.FC = () => {
       .then(() => setIsSaving(false))
   }
 
+  const [isCopied, setIsCopied] = React.useState(false)
+  const copiedTimeout = React.useRef<number>()
+  const copyToClipboard = () => {
+    api
+      .invoke(
+        Channel.COPY_ARTIFACTS,
+        artifacts.map(({ artifact }) => artifact)
+      )
+      .then(() => {
+        setIsCopied(true)
+        window.clearTimeout(copiedTimeout.current)
+        copiedTimeout.current = window.setTimeout(
+          () => setIsCopied(false),
+          1500
+        )
+      })
+  }
+
   const sortedArtifacts = React.useMemo(
     // TODO: Sort controls
     () => artifacts.slice().sort(),
     [artifacts]
   )
-  const lockedAmount = React.useMemo(
-    // TODO: Sort controls
-    () => artifacts.filter((a) => a.shouldBeLocked).length,
-    [artifacts]
-  )
-  const unlockedAmount = artifacts.length - lockedAmount
+  const lockCounts = React.useMemo(() => {
+    const count = (predicate: (a: ArtifactData) => boolean) =>
+      artifacts.filter(predicate).length
+    return {
+      locked: count((a) => a.artifact.lock),
+      unlocked: count((a) => !a.artifact.lock),
+      toLock: count((a) => !a.artifact.lock && a.shouldBeLocked),
+      toUnlock: count((a) => a.artifact.lock && !a.shouldBeLocked),
+      lockedByRoutine: count(
+        (a) => !scannedLocks[a.artifact.id] && a.artifact.lock
+      ),
+      unlockedByRoutine: count(
+        (a) => scannedLocks[a.artifact.id] && !a.artifact.lock
+      ),
+    }
+  }, [artifacts, scannedLocks])
 
   const logString = React.useMemo(() => logs.join('\n'), [logs])
 
@@ -161,28 +303,30 @@ export const App: React.FC = () => {
           position: 'fixed',
           left: 'env(titlebar-area-x, 0)',
           top: 'env(titlebar-area-y, 0)',
-          width: 'env(titlebar-area-width)',
-          height: 'env(titlebar-area-height)',
+          width: 'env(titlebar-area-width, 100%)',
+          height: `env(titlebar-area-height, ${TITLEBAR_FALLBACK_HEIGHT})`,
           boxSizing: 'border-box',
         }}
       >
         <Heading
           variant="subheading"
           css={{
-            lineHeight: 'env(titlebar-area-height)',
-            mt: '-$space2',
+            color: 'inherit',
             fontWeight: 'bolder',
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '$space2',
           }}
         >
-          Genshin Locker{' '}
-          <Box css={{ display: 'inline-block', fontWeight: 'normal' }}>
-            {appVersion}
+          Genshin Locker
+          <Box as="span" css={{ fontWeight: 'normal', opacity: 0.6 }}>
+            v{appVersion}
           </Box>
         </Heading>
       </MenuBar.Root>
       <Box
         css={{
-          mt: 'env(titlebar-area-height)',
+          mt: `env(titlebar-area-height, ${TITLEBAR_FALLBACK_HEIGHT})`,
           padding: '$space2',
           flexGrow: 1,
           minHeight: 0,
@@ -190,9 +334,12 @@ export const App: React.FC = () => {
       >
         <Panel.Root autoSaveId="mainPanel" direction="vertical">
           <Panel.Pane
+            defaultSize={70}
             css={{
               alignItems: 'stretch',
               overflow: 'hidden',
+              // The nested pane provides the focus ring padding
+              padding: 0,
             }}
           >
             <Panel.Root autoSaveId="subPanel" direction="horizontal">
@@ -202,58 +349,110 @@ export const App: React.FC = () => {
                   flexDirection: 'column',
                 }}
               >
-                <Stack.Horizontal
-                  css={{
-                    backgroundColor: '$bgSecondary',
-                    padding: '$space2',
-                    borderRadius: '$radius1',
-                  }}
-                >
-                  <Text>Locked: {lockedAmount}</Text>
-                  <Text>Unlocked: {unlockedAmount}</Text>
-                  <Box css={{ flexGrow: 1 }} />
-                  <ButtonIcon
-                    onClick={exportFile}
-                    variant="transparent"
-                    size="small"
+                <Stack.Horizontal css={{ gap: '$space4', pl: '$space1' }}>
+                  <Heading variant="sm">{t('artifacts')}</Heading>
+                  <Stat
+                    label={t('stat-locked')}
+                    value={lockCounts.locked}
+                    pending={{
+                      value: lockCounts.toLock,
+                      color: '$green11',
+                      description: t('stat-to-lock'),
+                    }}
                   >
-                    {isSaving ? (
-                      <UpdateIcon
-                        style={{
-                          animation: `${rotate} 1s linear infinite`,
-                        }}
-                      />
-                    ) : (
-                      <ExternalLinkIcon />
-                    )}
-                  </ButtonIcon>
+                    <LockClosedIcon />
+                  </Stat>
+                  <Stat
+                    label={t('stat-unlocked')}
+                    value={lockCounts.unlocked}
+                    pending={{
+                      value: lockCounts.toUnlock,
+                      color: '$red11',
+                      description: t('stat-to-unlock'),
+                    }}
+                  >
+                    <LockOpen2Icon />
+                  </Stat>
+                  <Box css={{ flexGrow: 1 }} />
+                  <Stack.Horizontal css={{ gap: '$space1' }}>
+                    <Button
+                      onClick={saveFile}
+                      variant="subdued"
+                      size="small"
+                      disabled={isSaving || artifacts.length === 0}
+                    >
+                      {isSaving ? (
+                        <UpdateIcon
+                          style={{
+                            animation: `${rotate} 1s linear infinite`,
+                          }}
+                        />
+                      ) : (
+                        <DownloadIcon />
+                      )}
+                      {t('save')}
+                    </Button>
+                    <Button
+                      onClick={copyToClipboard}
+                      variant="subdued"
+                      size="small"
+                      disabled={artifacts.length === 0}
+                    >
+                      {isCopied ? <CheckIcon /> : <CopyIcon />}
+                      {t('copy')}
+                    </Button>
+                  </Stack.Horizontal>
                 </Stack.Horizontal>
                 <ScrollArea.Root
                   css={{
                     flexGrow: 1,
+                    position: 'relative',
                   }}
                 >
                   <ScrollArea.Viewport>
-                    <Box
-                      css={{
-                        display: 'grid',
-                        gridTemplateColumns:
-                          'repeat(auto-fill, minmax(15em, 1fr))',
-                        gridAutoRows: 'min-content',
-                        gap: '$space3',
-                      }}
-                    >
-                      {sortedArtifacts.map(({ artifact, shouldBeLocked }) => (
-                        <ArtifactCard
-                          key={artifact.id}
-                          artifact={artifact}
-                          shouldBeLocked={shouldBeLocked}
-                          css={{
-                            animation: '$fadeIn',
-                          }}
-                        />
-                      ))}
-                    </Box>
+                    {sortedArtifacts.length === 0 ? (
+                      <Stack.Vertical
+                        css={{
+                          position: 'absolute',
+                          inset: 0,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '$space1',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <Text css={{ fontSize: '$fontSize7' }} color="subdued">
+                          <GiJeweledChalice />
+                        </Text>
+                        <Text css={{ fontWeight: '$bold' }}>
+                          {t('no-artifacts')}
+                        </Text>
+                        <Text color="subdued" css={{ fontSize: '$fontSize2' }}>
+                          {t('no-artifacts-hint')}
+                        </Text>
+                      </Stack.Vertical>
+                    ) : (
+                      <Box
+                        css={{
+                          display: 'grid',
+                          gridTemplateColumns:
+                            'repeat(auto-fill, minmax(15em, 1fr))',
+                          gridAutoRows: 'min-content',
+                          gap: '$space3',
+                        }}
+                      >
+                        {sortedArtifacts.map(({ artifact, shouldBeLocked }) => (
+                          <ArtifactCard
+                            key={artifact.id}
+                            artifact={artifact}
+                            shouldBeLocked={shouldBeLocked}
+                            css={{
+                              animation: '$fadeIn',
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    )}
                   </ScrollArea.Viewport>
                   <ScrollArea.Scrollbar orientation="vertical">
                     <ScrollArea.Thumb />
@@ -263,49 +462,78 @@ export const App: React.FC = () => {
             </Panel.Root>
           </Panel.Pane>
           <Panel.Handle />
-          <Panel.Pane css={{ flexDirection: 'column' }}>
+          <Panel.Pane defaultSize={30} css={{ flexDirection: 'column' }}>
             <Stack.Horizontal>
-              <Button variant="subdued" onClick={startRoutine} size="small">
+              <Button variant="primary" onClick={startRoutine} size="small">
                 <GiPlayButton />
+                {t('start')}
               </Button>
               <StandardSelect
                 size="small"
                 required
-                options={routineSelectOptions}
-                onValueChange={(val) => {
-                  setRoutineType(val)
-                  setLockWhileScanning(val === 'SCAN_AND_LOCK' ? true : false)
-                }}
-                value={routineType}
+                prefix={t('rarity')}
+                options={minRaritySelectOptions}
+                onValueChange={setMinRarity}
+                value={minRarity}
               />
-              {routineType === 'SCAN_AND_LOCK' && (
-                <>
-                  <StandardSelect
-                    size="small"
-                    options={customScriptNames}
-                    onValueChange={setSelectedScript}
-                    value={selectedScript}
-                    placeholder={'(default)'}
-                    css={{
-                      textTransform: 'none',
-                    }}
-                  />
-                  <Button
-                    variant="subdued"
-                    size="small"
-                    onClick={handleOpenUserScripts}
-                  >
-                    <GiOpenFolder />
-                  </Button>
-                </>
-              )}
+              <StandardSelect
+                size="small"
+                prefix={t('script')}
+                options={customScriptNames}
+                onValueChange={setSelectedScript}
+                value={selectedScript}
+                placeholder={'(none)'}
+                css={{
+                  textTransform: 'none',
+                }}
+              />
+              <Button
+                variant="subdued"
+                size="small"
+                onClick={handleOpenUserScripts}
+              >
+                <GiOpenFolder />
+              </Button>
               <ProgressBar
                 value={routineStatus.current}
                 max={routineStatus.max}
-                css={{ flexGrow: 1, height: '$size8' }}
+                css={{ flexGrow: 1, ml: '$space2' }}
               />
+              {selectedScript && (
+                <StatGroup
+                  label={t('lock-changed')}
+                  description={t('lock-changed-description')}
+                  css={{
+                    flexShrink: 0,
+                    ml: '$space3',
+                    height: '$size8',
+                    boxSizing: 'border-box',
+                    px: '$space3',
+                    border: '1px solid $borderSubtle',
+                    borderRadius: '$radius1',
+                  }}
+                >
+                  <Stat
+                    label={t('stat-locked')}
+                    value={lockCounts.lockedByRoutine}
+                  >
+                    <LockClosedIcon />
+                  </Stat>
+                  <Stat
+                    label={t('stat-unlocked')}
+                    value={lockCounts.unlockedByRoutine}
+                  >
+                    <LockOpen2Icon />
+                  </Stat>
+                </StatGroup>
+              )}
             </Stack.Horizontal>
-            <TextArea readOnly css={{ flexGrow: 1 }} value={logString} />
+            <TextArea
+              readOnly
+              css={{ flexGrow: 1 }}
+              value={logString}
+              placeholder={t('log-placeholder')}
+            />
           </Panel.Pane>
         </Panel.Root>
       </Box>

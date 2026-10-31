@@ -41,7 +41,7 @@ export const Heading = styled('h1', {
     },
     color: {
       default: { color: '$textDefault' },
-      subdued: { color: '$textSubdued' },
+      subdued: { color: '$textDisabled' },
       inverted: { color: '$textInverted' },
       success: { color: '$textSuccess' },
       warning: { color: '$textWarning' },

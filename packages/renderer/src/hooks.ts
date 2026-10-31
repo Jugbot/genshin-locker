@@ -29,3 +29,35 @@ export const useThemeClass = () => {
 
   return themeClassMap[theme]
 }
+
+// useState that is restored from localStorage on the next launch
+export const usePersistentState = <T>(
+  key: string,
+  initial: T,
+  isValid: (value: unknown) => boolean = () => true
+) => {
+  const [value, setValue] = React.useState<T>(() => {
+    try {
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsed: unknown = JSON.parse(stored)
+        if (isValid(parsed)) {
+          return parsed as T
+        }
+      }
+    } catch {
+      // Fall back to the initial value
+    }
+    return initial
+  })
+
+  React.useEffect(() => {
+    if (value === undefined) {
+      localStorage.removeItem(key)
+    } else {
+      localStorage.setItem(key, JSON.stringify(value))
+    }
+  }, [key, value])
+
+  return [value, setValue] as const
+}

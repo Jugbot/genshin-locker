@@ -2,7 +2,7 @@
   "name": "genshin-locker",
   "private": true,
   "productName": "genshin-locker",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "Genshin artifact scraper and manager",
   "main": "packages/main/dist/index.cjs",
   "scripts": {
@@ -13,6 +13,7 @@
     "check-types": "npx lerna run check-types",
     "build": "npx lerna run build",
     "test": "npx lerna run test",
+    "storybook": "npx lerna run storybook --parallel",
     "compile": "yarn build && electron-builder build --config .electron-builder.config.js",
     "compile:unpacked": "yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "watch": "node watch.mjs",
@@ -41,7 +42,7 @@
     "@gl/renderer": "*"
   },
   "engines": {
-    "node": "^18.17.0"
+    "node": ">=20.0.0"
   },
   "workspaces": [
     "packages/*"

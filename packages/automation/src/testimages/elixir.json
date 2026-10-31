@@ -1,0 +1,30 @@
+{
+  "id": "SilkenMoonsSerenade|5|goblet|eleMas|187|critRate_|6.6|enerRech_|13|atk|35|atk_|9.3",
+  "level": 20,
+  "location": 0,
+  "lock": true,
+  "mainStatKey": "eleMas",
+  "mainStatValue": 187,
+  "rarity": 5,
+  "setKey": "SilkenMoonsSerenade",
+  "slotKey": "goblet",
+  "substats": [
+    {
+      "key": "critRate_",
+      "value": 6.6
+    },
+    {
+      "key": "enerRech_",
+      "value": 13
+    },
+    {
+      "key": "atk",
+      "value": 35
+    },
+    {
+      "key": "atk_",
+      "value": 9.3
+    }
+  ],
+  "unactivatedSubstats": []
+}

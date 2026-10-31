@@ -98,3 +98,6 @@ out/
 
 # NX
 .nx/
+
+# Agents
+.playwright-mcp/

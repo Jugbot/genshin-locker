@@ -17,9 +17,12 @@ const SelectIcon = styled(RadixSelect.Icon)
 
 const SelectContent = styled(RadixSelect.Content, {
   overflow: 'hidden',
-  backgroundColor: '$bgTertiary',
-  borderRadius: '$radius1',
+  backgroundColor: '$bgElevated',
+  border: '1px solid $borderDefault',
+  borderRadius: '$radius2',
+  boxShadow: '$shadow1',
   width: 'fit-content',
+  zIndex: 10,
 })
 
 const SelectViewport = styled(RadixSelect.Viewport, {
@@ -33,6 +36,8 @@ const SelectItem = styled(RadixSelect.Item, {
   padding: '$space1 $space6 $space1 $space6',
   position: 'relative',
   userSelect: 'none',
+  cursor: 'pointer',
+  fontSize: '$fontSize2',
 
   '&[data-disabled]': {
     pointerEvents: 'none',
@@ -67,7 +72,7 @@ const scrollButtonCss: CSS = {
   alignItems: 'center',
   justifyContent: 'center',
   height: '$space6',
-  color: '$textActionPrimary',
+  color: '$textDefault',
   cursor: 'default',
 }
 

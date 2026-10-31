@@ -28,7 +28,7 @@
     "url": "https://github.com/Jugbot/genshin-locker/issues"
   },
   "devDependencies": {
-    "@types/node": "^18.11.11",
+    "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "electron": "^24.0.0",

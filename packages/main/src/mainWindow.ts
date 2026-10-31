@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, shell } from 'electron'
 import fs from 'fs'
 import { join } from 'node:path'
 import { URL } from 'node:url'
@@ -12,9 +12,21 @@ import {
 } from '@gl/automation'
 import { mainApi } from '@gl/ipc-api'
 import { MENUBAR_BACKCOLOR, MENUBAR_COLOR } from '@gl/theme'
-import { ArtifactData, Channel } from '@gl/types'
+import { Artifact, ArtifactData, Channel } from '@gl/types'
 
 import { store } from './store'
+
+const toGOOD = (artifacts: Artifact[]) =>
+  JSON.stringify(
+    {
+      format: 'GOOD',
+      version: 1,
+      source: 'Genshin Locker',
+      artifacts,
+    },
+    null,
+    2
+  )
 
 fs.cpSync(RESOURCES_SCRIPT_DIR, SCRIPT_DIR, {
   recursive: true,
@@ -47,9 +59,9 @@ async function createWindow() {
 
   // IPC methods
   mainApi.webContents = browserWindow.webContents
-  mainApi.handle(Channel.START, (lockWhileScanning, scriptName) => {
+  mainApi.handle(Channel.START, (minRarity, scriptName) => {
     try {
-      readArtifacts(lockWhileScanning, scriptName)
+      readArtifacts(minRarity, scriptName)
     } catch (e) {
       console.error(e)
     }
@@ -77,39 +89,38 @@ async function createWindow() {
       })
       .then(({ filePath, canceled }) => {
         if (filePath) {
-          fs.writeFileSync(
-            filePath,
-            JSON.stringify(
-              {
-                format: 'GOOD',
-                version: 1,
-                source: 'Genshin Locker',
-                artifacts,
-              },
-              null,
-              2
-            )
-          )
+          fs.writeFileSync(filePath, toGOOD(artifacts))
         }
         return !canceled
       })
+  })
+  mainApi.handle(Channel.COPY_ARTIFACTS, (artifacts) => {
+    clipboard.writeText(toGOOD(artifacts))
   })
 
   mainApi.handle(Channel.OPEN_USER_SCRIPT_FOLDER, () => {
     shell.openPath(SCRIPT_DIR)
   })
 
-  const updateScriptList = () => {
-    fs.readdir(SCRIPT_DIR, (err, files) => {
-      if (err) {
+  const readScriptList = () =>
+    fs.promises
+      .readdir(SCRIPT_DIR, { withFileTypes: true })
+      .then((entries) =>
+        entries
+          .filter((entry) => entry.isFile() && /\.c?js$/.test(entry.name))
+          .map((entry) => entry.name)
+      )
+      .catch((err) => {
         mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
         console.error(err)
-        return
-      }
-      // Here you can send the files array wherever you need to
+        return []
+      })
+  const updateScriptList = () =>
+    readScriptList().then((files) =>
       mainApi.send(Channel.USER_SCRIPT_CHANGE, files)
-    })
-  }
+    )
+
+  mainApi.handle(Channel.GET_USER_SCRIPTS, readScriptList)
 
   fileWatcher.removeAllListeners()
   fileWatcher.addListener('change', updateScriptList)
