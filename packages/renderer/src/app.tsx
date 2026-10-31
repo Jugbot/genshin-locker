@@ -440,12 +440,14 @@ export const App: React.FC = () => {
               <StandardSelect
                 size="small"
                 required
+                prefix={t('rarity')}
                 options={minRaritySelectOptions}
                 onValueChange={setMinRarity}
                 value={minRarity}
               />
               <StandardSelect
                 size="small"
+                prefix={t('script')}
                 options={customScriptNames}
                 onValueChange={setSelectedScript}
                 value={selectedScript}
