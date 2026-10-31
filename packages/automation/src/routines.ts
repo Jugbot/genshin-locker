@@ -43,11 +43,7 @@ class TaskManager<S> {
   }
 }
 
-export async function readArtifacts(
-  lockWhileScanning: boolean,
-  minRarity: number,
-  scriptName?: string
-) {
+export async function readArtifacts(minRarity: number, scriptName?: string) {
   const scriptFunc = await getLockerScript(scriptName)
   const taskManager = new TaskManager<boolean>()
   const navigator = new Navigator()
@@ -140,10 +136,9 @@ export async function readArtifacts(
           }
           visitedArtifacts.add(artifact.id)
           countScanned()
-          const shouldBeLocked = lockWhileScanning
-            ? (await calculate(scriptFunc, artifact)) ?? artifact.lock
-            : artifact.lock
-          if (lockWhileScanning && shouldBeLocked !== artifact.lock) {
+          const shouldBeLocked =
+            (await calculate(scriptFunc, artifact)) ?? artifact.lock
+          if (shouldBeLocked !== artifact.lock) {
             taskManager.add(
               'sync',
               lockArtifactTask(thisPageIndex, () =>

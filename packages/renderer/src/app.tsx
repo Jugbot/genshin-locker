@@ -120,7 +120,6 @@ export const App: React.FC = () => {
   const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>
   >({})
-  const [lockWhileScanning, setLockWhileScanning] = React.useState(true)
   const minRaritySelectOptions = {
     '1': t('min-rarity', { rarity: 1 }),
     '2': t('min-rarity', { rarity: 2 }),
@@ -131,14 +130,8 @@ export const App: React.FC = () => {
   const [minRarity, setMinRarity] =
     React.useState<keyof typeof minRaritySelectOptions>('5')
   const [logs, setLogs] = React.useState<string[]>([])
-  const routineSelectOptions = {
-    SCAN: t('scan'),
-    SCAN_AND_LOCK: t('scan-and-lock'),
-  }
   const [customScriptNames, setCustomScriptNames] = React.useState<string[]>([])
   const [selectedScript, setSelectedScript] = React.useState<string>()
-  const [routineType, setRoutineType] =
-    React.useState<keyof typeof routineSelectOptions>('SCAN_AND_LOCK')
 
   React.useEffect(() => {
     const recalculate = (scriptName?: string) =>
@@ -161,9 +154,8 @@ export const App: React.FC = () => {
           }))
         )
 
-    if (routineType === 'SCAN') {
-      // Scan Only never runs the script, so clear pending changes from an
-      // earlier locking run
+    if (!selectedScript) {
+      // No script means no locking, so clear pending changes from an earlier
       setArtifactSet((last) =>
         Object.fromEntries(
           Object.entries(last).map(([id, data]) => [
@@ -174,15 +166,15 @@ export const App: React.FC = () => {
       )
       return
     }
-    // If a file no longer exists switch to the default
-    if (selectedScript && !customScriptNames.includes(selectedScript)) {
+    // If a file no longer exists switch to none
+    if (!customScriptNames.includes(selectedScript)) {
       setSelectedScript(undefined)
     } else {
       recalculate(selectedScript)
     }
     // FIXME: Avoid artifacts update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customScriptNames, selectedScript, routineType])
+  }, [customScriptNames, selectedScript])
 
   React.useEffect(() => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
@@ -228,12 +220,7 @@ export const App: React.FC = () => {
     setArtifactSet({})
     setScannedLocks({})
     setRoutineStatus({})
-    api.invoke(
-      Channel.START,
-      lockWhileScanning,
-      Number(minRarity),
-      selectedScript
-    )
+    api.invoke(Channel.START, Number(minRarity), selectedScript)
   }
 
   const [isSaving, setIsSaving] = React.useState(false)
@@ -446,47 +433,33 @@ export const App: React.FC = () => {
               <StandardSelect
                 size="small"
                 required
-                options={routineSelectOptions}
-                onValueChange={(val) => {
-                  setRoutineType(val)
-                  setLockWhileScanning(val === 'SCAN_AND_LOCK' ? true : false)
-                }}
-                value={routineType}
-              />
-              <StandardSelect
-                size="small"
-                required
                 options={minRaritySelectOptions}
                 onValueChange={setMinRarity}
                 value={minRarity}
               />
-              {routineType === 'SCAN_AND_LOCK' && (
-                <>
-                  <StandardSelect
-                    size="small"
-                    options={customScriptNames}
-                    onValueChange={setSelectedScript}
-                    value={selectedScript}
-                    placeholder={'(none)'}
-                    css={{
-                      textTransform: 'none',
-                    }}
-                  />
-                  <Button
-                    variant="subdued"
-                    size="small"
-                    onClick={handleOpenUserScripts}
-                  >
-                    <GiOpenFolder />
-                  </Button>
-                </>
-              )}
+              <StandardSelect
+                size="small"
+                options={customScriptNames}
+                onValueChange={setSelectedScript}
+                value={selectedScript}
+                placeholder={'(none)'}
+                css={{
+                  textTransform: 'none',
+                }}
+              />
+              <Button
+                variant="subdued"
+                size="small"
+                onClick={handleOpenUserScripts}
+              >
+                <GiOpenFolder />
+              </Button>
               <ProgressBar
                 value={routineStatus.current}
                 max={routineStatus.max}
                 css={{ flexGrow: 1, ml: '$space2' }}
               />
-              {routineType === 'SCAN_AND_LOCK' && (
+              {selectedScript && (
                 <StatGroup
                   label={t('lock-changed')}
                   description={t('lock-changed-description')}

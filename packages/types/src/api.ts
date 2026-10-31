@@ -23,10 +23,7 @@ export enum Channel {
 export type LogMode = 'info' | 'warn' | 'error'
 
 export type EventPayload = {
-  [Channel.START]: [
-    void,
-    [lockWhileScanning: boolean, minRarity: number, scriptName?: string]
-  ]
+  [Channel.START]: [void, [minRarity: number, scriptName?: string]]
   [Channel.PROGRESS]: [void, [progress: RoutineStatus]]
   [Channel.ARTIFACT]: [void, [artifact: Artifact, shouldLock: boolean]]
   [Channel.LOG]: [void, [mode: LogMode, text: string]]
