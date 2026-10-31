@@ -26,7 +26,7 @@ import { version as appVersion } from '../../../package.json'
 
 import { api } from './api'
 import { ArtifactCard, StandardSelect } from './components'
-import { useThemeClass } from './hooks'
+import { usePersistentState, useThemeClass } from './hooks'
 import { initTranslations } from './i18n'
 
 initTranslations()
@@ -127,11 +127,18 @@ export const App: React.FC = () => {
     '4': t('min-rarity', { rarity: 4 }),
     '5': t('max-rarity', { rarity: 5 }),
   }
-  const [minRarity, setMinRarity] =
-    React.useState<keyof typeof minRaritySelectOptions>('5')
+  const [minRarity, setMinRarity] = usePersistentState<
+    keyof typeof minRaritySelectOptions
+  >(
+    'minRarity',
+    '5',
+    (value) => typeof value === 'string' && value in minRaritySelectOptions
+  )
   const [logs, setLogs] = React.useState<string[]>([])
   const [customScriptNames, setCustomScriptNames] = React.useState<string[]>([])
-  const [selectedScript, setSelectedScript] = React.useState<string>()
+  const [selectedScript, setSelectedScript] = usePersistentState<
+    string | undefined
+  >('selectedScript', undefined, (value) => typeof value === 'string')
 
   React.useEffect(() => {
     const recalculate = (scriptName?: string) =>
@@ -166,12 +173,7 @@ export const App: React.FC = () => {
       )
       return
     }
-    // If a file no longer exists switch to none
-    if (!customScriptNames.includes(selectedScript)) {
-      setSelectedScript(undefined)
-    } else {
-      recalculate(selectedScript)
-    }
+    recalculate(selectedScript)
     // FIXME: Avoid artifacts update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customScriptNames, selectedScript])
@@ -203,13 +205,18 @@ export const App: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    const unsubscribe = api.on(Channel.USER_SCRIPT_CHANGE, (fileNames) => {
+    const updateScriptNames = (fileNames: string[]) => {
       setCustomScriptNames(fileNames)
-    })
+      // If a file no longer exists switch to none
+      setSelectedScript((script) =>
+        script && fileNames.includes(script) ? script : undefined
+      )
+    }
+    const unsubscribe = api.on(Channel.USER_SCRIPT_CHANGE, updateScriptNames)
     // The list may have been pushed before this listener existed
-    api.invoke(Channel.GET_USER_SCRIPTS).then(setCustomScriptNames)
+    api.invoke(Channel.GET_USER_SCRIPTS).then(updateScriptNames)
     return unsubscribe
-  }, [])
+  }, [setSelectedScript])
 
   const handleOpenUserScripts = () => {
     api.invoke(Channel.OPEN_USER_SCRIPT_FOLDER)
