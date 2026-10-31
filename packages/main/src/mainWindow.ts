@@ -100,11 +100,18 @@ async function createWindow() {
   })
 
   const readScriptList = () =>
-    fs.promises.readdir(SCRIPT_DIR).catch((err) => {
-      mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
-      console.error(err)
-      return []
-    })
+    fs.promises
+      .readdir(SCRIPT_DIR, { withFileTypes: true })
+      .then((entries) =>
+        entries
+          .filter((entry) => entry.isFile() && /\.c?js$/.test(entry.name))
+          .map((entry) => entry.name)
+      )
+      .catch((err) => {
+        mainApi.send(Channel.LOG, 'error', 'Error reading the user directory')
+        console.error(err)
+        return []
+      })
   const updateScriptList = () =>
     readScriptList().then((files) =>
       mainApi.send(Channel.USER_SCRIPT_CHANGE, files)
