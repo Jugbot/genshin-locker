@@ -34,18 +34,6 @@ initTranslations()
 // Used when there's no title bar overlay, e.g. in a browser
 const TITLEBAR_FALLBACK_HEIGHT = '32px'
 
-// Keeps the lock state from the first scan, to tell which locks the routine
-// changed
-type TrackedArtifact = ArtifactData & { scannedLock: boolean }
-
-const track = (
-  data: ArtifactData,
-  previous?: TrackedArtifact
-): TrackedArtifact => ({
-  ...data,
-  scannedLock: previous?.scannedLock ?? data.artifact.lock,
-})
-
 interface StatProps {
   label: string
   value: number
@@ -123,9 +111,12 @@ export const App: React.FC = () => {
   const themeClass = useThemeClass()
   const { t } = useTranslation()
   const [artifactSet, setArtifactSet] = React.useState<
-    Record<string, TrackedArtifact>
+    Record<string, ArtifactData>
   >({})
   const artifacts = Object.values(artifactSet)
+  const [scannedLocks, setScannedLocks] = React.useState<
+    Record<string, boolean>
+  >({})
   const [routineStatus, setRoutineStatus] = React.useState<
     RoutineStatus | Record<string, never>
   >({})
@@ -164,11 +155,12 @@ export const App: React.FC = () => {
             ...Object.fromEntries(
               data.map((artifactData) => [
                 artifactData.artifact.id,
-                track(artifactData, last[artifactData.artifact.id]),
+                artifactData,
               ])
             ),
           }))
         )
+
     if (routineType === 'SCAN') {
       // Scan Only never runs the script, so clear pending changes from an
       // earlier locking run
@@ -196,8 +188,11 @@ export const App: React.FC = () => {
     return api.on(Channel.ARTIFACT, (artifact, shouldBeLocked) => {
       setArtifactSet((old) => ({
         ...old,
-        [artifact.id]: track({ artifact, shouldBeLocked }, old[artifact.id]),
+        [artifact.id]: { artifact, shouldBeLocked },
       }))
+      setScannedLocks((old) =>
+        artifact.id in old ? old : { ...old, [artifact.id]: artifact.lock }
+      )
     })
   }, [])
 
@@ -231,6 +226,7 @@ export const App: React.FC = () => {
   const startRoutine = () => {
     setLogs([])
     setArtifactSet({})
+    setScannedLocks({})
     setRoutineStatus({})
     api.invoke(
       Channel.START,
@@ -257,17 +253,21 @@ export const App: React.FC = () => {
     [artifacts]
   )
   const lockCounts = React.useMemo(() => {
-    const count = (predicate: (a: TrackedArtifact) => boolean) =>
+    const count = (predicate: (a: ArtifactData) => boolean) =>
       artifacts.filter(predicate).length
     return {
       locked: count((a) => a.artifact.lock),
       unlocked: count((a) => !a.artifact.lock),
       toLock: count((a) => !a.artifact.lock && a.shouldBeLocked),
       toUnlock: count((a) => a.artifact.lock && !a.shouldBeLocked),
-      lockedByRoutine: count((a) => !a.scannedLock && a.artifact.lock),
-      unlockedByRoutine: count((a) => a.scannedLock && !a.artifact.lock),
+      lockedByRoutine: count(
+        (a) => !scannedLocks[a.artifact.id] && a.artifact.lock
+      ),
+      unlockedByRoutine: count(
+        (a) => scannedLocks[a.artifact.id] && !a.artifact.lock
+      ),
     }
-  }, [artifacts])
+  }, [artifacts, scannedLocks])
 
   const logString = React.useMemo(() => logs.join('\n'), [logs])
 
@@ -467,7 +467,7 @@ export const App: React.FC = () => {
                     options={customScriptNames}
                     onValueChange={setSelectedScript}
                     value={selectedScript}
-                    placeholder={'(default)'}
+                    placeholder={'(none)'}
                     css={{
                       textTransform: 'none',
                     }}
