@@ -12,14 +12,16 @@ TODO
   - Scoring method popularity/rarity with and/or condition
 - [x] export data
 - [x] 16:9 (1920×1080), 16:10 (1920×1200)
-  - [ ] Adding screen resolutions readme
-- [ ] Install instructions + images
+  - [x] Adding screen resolutions readme
+- [x] Install instructions + images
 - [x] Bundle sharp, tesseract
-- [ ] Save settings in local storage
+- [x] Save settings in local storage
 - [x] GL window icon
+- [ ] Gamepad support.
 
 Stretch:
 
+- Character & weapon scanning.
 - scrape data from from other languages of lineup simulator
 - bg art
 - scan other pages
@@ -48,7 +50,7 @@ Fun:
 
 -->
 
-![App Screenshot](https://github.com/Jugbot/genshin-locker/assets/5402388/4d9746c2-70e7-4de1-bbab-552cffff3542)
+![App Screenshot](https://github.com/user-attachments/assets/996426d8-9184-48ee-9988-960859f2e183)
 
 # Genshin Artifact Locker
 
@@ -58,7 +60,7 @@ Download the latest [release](https://github.com/Jugbot/genshin-locker/releases)
 
 > [!CAUTION]
 > **Before you use this!**
-> Note interacting with the game and more importantly, modifying game state with external tools is a gray area as far as the TOS is concerned, so don't use this if you aren't willing to risk your account being banned.
+> Note interacting with the game and more importantly, modifying game state with external tools is a gray area as far as the TOS is concerned, so don't use this if you aren't willing to risk your account being banned. That being said, I've been using this for years now without any issue.
 
 ### Features
 
@@ -69,14 +71,9 @@ Download the latest [release](https://github.com/Jugbot/genshin-locker/releases)
 - [x] Export artifacts to other popular tools such as [Genshin Optimizer].
 - [x] Light mode for freaks.
 
-### Upcoming
-
-- [ ] Character & weapon scanning.
-- [ ] Gamepad support.
-
 ### Usage
 
-1. Open Genshin Impact. Make sure you don't have hdr enabled and that the controls are set to keyboard.
+1. Open Genshin Impact. Make sure you don't have HDR enabled and that the controls are set to keyboard.
 2. Open the artifact tab. From here you can apply any in-game filters to specify what artifacts to parse.
 3. You can change the logic determining which components to lock by editing the script [`example.js`](https://github.com/Jugbot/genshin-locker/blob/main/resources/ArtifactScripts/example.js). Usually you would run the scanner first in "Scan" mode and then preview changes in logic in the right pane.
 4. Run the scanner. Press [SPACE] to stop the scanning early.
